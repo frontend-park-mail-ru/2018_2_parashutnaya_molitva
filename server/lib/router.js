@@ -13,7 +13,7 @@ module.exports = class Router {
     on(routeRaw, req, res) {
         const route = new Route(routeRaw);
         const callback = this.routes.get(route.route);
-        if (callback !== undefined){
+        if (this.routes.has(route.route)){
             callback(req, res);
             return;
         }

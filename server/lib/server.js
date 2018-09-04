@@ -8,6 +8,8 @@ module.exports = class Server {
                 router.on(url, req, res);
             } catch (e) {
                 console.log(e.toString());
+                res.statusCode = 404;
+                res.end('404');
             }
         })
     }
