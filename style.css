@@ -1,4 +1,4 @@
-.menu-button {
+.menu__button {
     -moz-appearance: button;
     appearance: button;
 
@@ -18,7 +18,7 @@
     font-family: arial, sans-serif;
 }
 
-.menu-button-container {
+.menu {
     height: 400px;
     width: 400px;
     position: fixed;
