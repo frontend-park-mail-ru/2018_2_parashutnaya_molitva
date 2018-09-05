@@ -1,21 +1,19 @@
-.menu__button {
-    -moz-appearance: button;
-    appearance: button;
+body {
+    font-family: arial, sans-serif;
+}
 
+.menu__button {
     text-decoration: none;
     color: initial;
-    font: button;
 
     text-align: center;
     background-color: lightgray;
 
-    border: none;
     font-size: 16px;
     padding: 10px 20px;
     cursor: pointer;
     margin: 10px 2px;
     width: 128px;
-    font-family: arial, sans-serif;
 }
 
 .menu {
@@ -33,13 +31,11 @@
 }
 
 table {
-    font-family: arial, sans-serif;
     border-collapse: collapse;
-    width: 100%;
 }
 
 td, th {
-    border: 1px solid #dddddd;
+    border: 1px solid #cccccc;
     text-align: left;
     padding: 8px;
 }
