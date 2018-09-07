@@ -1,0 +1,28 @@
+{
+  "name": "kekmate",
+  "version": "0.1.0",
+  "description": "crazy chess game",
+  "main": "server/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./server/."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/frontend-park-mail-ru/2018_2_parashutnaya_molitva.git"
+  },
+  "keywords": [
+    "chess",
+    "game",
+    "simple"
+  ],
+  "author": "Parachute_pray",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/frontend-park-mail-ru/2018_2_parashutnaya_molitva/issues"
+  },
+  "homepage": "https://github.com/frontend-park-mail-ru/2018_2_parashutnaya_molitva#readme",
+  "dependencies": {
+    "debug": "^3.1.0"
+  }
+}

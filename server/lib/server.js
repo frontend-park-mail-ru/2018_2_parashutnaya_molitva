@@ -14,7 +14,7 @@ module.exports = class Server {
         })
     }
 
-    listen(port){
+    listen(port) {
         if (!this.server) {
             throw new Error('Server haven\'t been started');
         }
