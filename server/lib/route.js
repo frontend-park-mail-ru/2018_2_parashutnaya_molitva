@@ -1,10 +1,9 @@
-
-module.exports = class Route{
-    constructor(path){
+module.exports = class Route {
+    constructor(path) {
         this.path = path;
     }
 
-    get route(){
+    get route() {
         return this.path;
     }
 

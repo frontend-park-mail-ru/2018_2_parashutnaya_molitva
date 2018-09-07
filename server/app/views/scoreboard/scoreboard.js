@@ -9,6 +9,6 @@ module.exports = (req, res) => {
             res.end();
         })
         .catch(() => {
-            res.statusCode=404;
+            res.statusCode = 404;
         });
 };
