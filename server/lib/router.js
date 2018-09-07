@@ -1,5 +1,5 @@
-
 const Route = require('./route.js');
+const servePublic = require('./servePublic.js');
 
 module.exports = class Router {
     constructor(){
@@ -11,6 +11,10 @@ module.exports = class Router {
     }
 
     on(routeRaw, req, res) {
+        if (servePublic.serveIfPublic(routeRaw, req, res) ){
+            return;
+        }
+
         const route = new Route(routeRaw);
         const callback = this.routes.get(route.route);
         if (this.routes.has(route.route)){
