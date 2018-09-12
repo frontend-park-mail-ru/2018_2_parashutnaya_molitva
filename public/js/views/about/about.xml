@@ -1,9 +1,0 @@
-<fest:template xmlns:fest="http://fest.mail.ru" context_name="params">
-    <div class="menu">
-        <a class="menu__button" href="https://github.com/frontend-park-mail-ru/2018_2_parashutnaya_molitva">Repo</a>
-        <a class="menu__button" href="https://github.com/SinimaWath">@SinimaWath</a>
-        <a class="menu__button" href="https://github.com/ksenobait09">@ksenobait09</a>
-        <a class="menu__button" href="https://github.com/Chubasik">@Chubasik</a>
-        <a class="menu__button" href="/">Menu</a>
-    </div>
-</fest:template>

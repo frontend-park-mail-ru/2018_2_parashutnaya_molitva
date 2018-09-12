@@ -1,4 +1,0 @@
-class AboutModel {
-}
-
-export {AboutModel}
