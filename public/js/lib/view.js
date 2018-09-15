@@ -1,4 +1,4 @@
-class View {
+export default class View {
     constructor (template) {
         this.el = document.createElement('div');
         this.template = template
@@ -8,6 +8,9 @@ class View {
         root.appendChild(this.el);
         return this
     }
-}
 
-export {View}
+    hide(root){
+        root.innerHTML = '';
+        return this;
+    }
+}

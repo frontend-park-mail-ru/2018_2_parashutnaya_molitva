@@ -6,7 +6,4 @@ export default class AboutController {
         this.aboutView = new AboutView();
         this.aboutModel = new AboutModel();
     }
-    renderPage(pageBody) {
-        this.aboutView.render(pageBody)
-    }
 }

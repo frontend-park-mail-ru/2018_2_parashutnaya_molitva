@@ -1,7 +1,7 @@
 import View from '../../lib/view.js';
-import template from './menu.xml';
+import template from './notfound.xml';
 
-export default class MenuView extends View {
+export default class NotFoundView extends View {
     constructor() {
         super(template)
     }

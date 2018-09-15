@@ -1,7 +1,5 @@
-class ScoreboardModel {
+export default class ScoreboardModel {
     getData() {
-        return fetch('/api/scoreboard')
+        return fetch('/api/scoreboard').json();
     }
 }
-
-export {ScoreboardModel}
