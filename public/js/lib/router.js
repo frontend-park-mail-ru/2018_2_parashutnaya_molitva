@@ -1,23 +1,28 @@
-// TODO: Переделать для SPA
-// class Router {
-//     constructor() {
-//         this.routes = new Map();
-//     }
-//
-//     add(route, view) {
-//         this.routes.set(route, view);
-//     }
-//
-//     on(routeRaw, req, res) {
-//         const route = new Route(routeRaw);
-//         const callback = this.routes.get(route.route);
-//         if (this.routes.has(route.route)) {
-//             callback(req, res);
-//             return;
-//         }
-//
-//         throw new Error('No such route! : ' + route.toString());
-//     }
-// }
-//
-// export {Router}
+export default class Router {
+    constructor(root) {
+        this.root = root;
+        this.routes = new Map();
+    }
+
+    add(path, view) {
+        this.routes.set(path, view);
+    }
+
+    change(path){
+        if (this.routes.has(path)){
+            let view = this.routes.get(path);
+            view.render(this.root);
+        }
+        // TODO: Add default 404 View
+    }
+
+    start() {
+        this.root.addEventListener('click', (ev) => {
+            if (ev.target.tagName === 'A') {
+                this.change(ev.target.pathname);
+            }
+        });
+
+        this.change(window.location.pathname)
+    }
+}

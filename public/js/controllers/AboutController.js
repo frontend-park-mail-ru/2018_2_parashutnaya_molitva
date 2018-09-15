@@ -1,14 +1,12 @@
 import {AboutView} from "../views/about/AboutView";
 import {AboutModel} from '../models/AboutModel'
 
-class AboutController {
+export default class AboutController {
     constructor() {
         this.aboutView = new AboutView();
         this.aboutModel = new AboutModel();
     }
     renderPage(pageBody) {
-        this.aboutView.render().appendTo(pageBody);
+        this.aboutView.render(pageBody)
     }
 }
-
-export {AboutController}

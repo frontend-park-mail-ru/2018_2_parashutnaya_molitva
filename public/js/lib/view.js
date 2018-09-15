@@ -3,13 +3,10 @@ class View {
         this.el = document.createElement('div');
         this.template = template
     }
-    render(data) {
+    render(root, data) {
         this.el.innerHTML = this.template(data);
+        root.appendChild(this.el);
         return this
-    }
-    appendTo(node) {
-        node.appendChild(this.el);
-        return this;
     }
 }
 

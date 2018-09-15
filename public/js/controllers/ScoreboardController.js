@@ -1,7 +1,7 @@
 import {ScoreboardView} from "../views/scoreboard/ScoreboardView";
 import {ScoreboardModel} from '../models/ScoreboardModel'
 
-class ScoreboardController {
+export default class ScoreboardController {
     constructor() {
         this.scoreboardView = new ScoreboardView();
         this.scoreboardModel = new ScoreboardModel();
@@ -11,5 +11,3 @@ class ScoreboardController {
         this.scoreboardView.render().appendTo(pageBody);
     }
 }
-
-export {ScoreboardController}
