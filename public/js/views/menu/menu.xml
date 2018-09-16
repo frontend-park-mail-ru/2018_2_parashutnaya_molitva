@@ -1,7 +1,8 @@
-
-<div class="menu">
-    <a class="menu__button">Singleplayer</a>
-    <a class="menu__button">Multiplayer</a>
-    <a class="menu__button" href="/scoreboard/">Scoreboard</a>
-    <a class="menu__button" href="/about/">About</a>
-</div>
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="params">
+    <div class="menu">
+        <a class="menu__button">Singleplayer</a>
+        <a class="menu__button">Multiplayer</a>
+        <a class="menu__button" href="/scoreboard">Scoreboard</a>
+        <a class="menu__button" href="/about">About</a>
+    </div>
+</fest:template>

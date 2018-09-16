@@ -1,4 +1,4 @@
-import {View} from '../../lib/view.js'
+import View from '../../lib/view.js';
 import template from './scoreboard.xml';
 
 class ScoreboardView extends View {
