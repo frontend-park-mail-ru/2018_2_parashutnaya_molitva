@@ -13,7 +13,6 @@ export default class Router {
     }
 
     _change(path){
-        debugger;
         if (this.currentRoute === path) {
             return
         }
