@@ -11,6 +11,26 @@ export default class SigninController {
 
     onSubmit(ev, data){
         ev.preventDefault();
-        this.router._change("/");
+
+        this.signinModel.signin((xhr)=>{
+            if (xhr.status === 401){
+                const err = JSON.parse(xhr.responseText);
+                switch (err.error) {
+                    case 'empty':
+                        this.signinView.showEmptyWarning();
+                        break;
+                    case 'invalid email':
+                        this.signinView.showNotValidEmailWarning();
+                        break;
+                    default:
+                }
+            }
+        }, data)
+
+        //     debugger;
+        //     if (xhr.status === 200) {
+        //         this.router._change("/");
+        //     }
+        // }, data);
     }
 }

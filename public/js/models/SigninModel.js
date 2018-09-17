@@ -5,7 +5,7 @@ export default class SigninModel{
 
     signin(callback, data){
         const xhr = new XMLHttpRequest();
-        xhr.open("POST", "/signin", true);
+        xhr.open("POST", "/api/signin", true);
         xhr.withCredentials = true;
 
         xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
