@@ -1,6 +1,6 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="params">
     <div class="signin">
-        <div class="signin__warning" ></div>
+        <div class="signin__warning"></div>
         <form class="signin__form" novalidate="novalidate">
             <label class="signin_label" for="email">Email</label>
             <input class="signin__input" type="email" name="email" id="email" placeholder="Email" autofocus="true"/>

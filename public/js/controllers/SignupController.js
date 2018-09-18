@@ -1,5 +1,5 @@
-import {errors, SigninView} from "../views/signin/SigninView.js"
-import SigninModel from "../models/SigninModel";
+import {errors, SigninView} from "../views/signup/SignupView.js"
+import SigninModel from "../models/SignupModel";
 
 export default class SigninController {
     constructor(router) {

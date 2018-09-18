@@ -8,11 +8,16 @@ export default class Router {
         this.currentRoute = null;
     }
 
+    toStartPage(){
+        this._change("/");
+    }
+
     add(path, view) {
         this.routes.set(path, view);
     }
 
     _change(path){
+
         if (this.currentRoute === path) {
             return
         }

@@ -8,11 +8,11 @@ import SigninController from "./controllers/SiginController";
 document.addEventListener('DOMContentLoaded', () => {
     const pageBody = document.getElementById('pageBody');
 
+    let router = new Router(pageBody);
     const aboutController = new AboutController();
     const scoreboardController = new ScoreboardController();
     const menuController = new MenuController();
-    const signinController = new SigninController();
-    let router = new Router(pageBody);
+    const signinController = new SigninController(router);
 
     router.add('/about', aboutController.aboutView);
     router.add('/scoreboard', scoreboardController.scoreboardView);

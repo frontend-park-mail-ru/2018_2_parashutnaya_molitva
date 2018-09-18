@@ -1,16 +1,17 @@
 import View from "../../lib/view.js"
 import template from "./signin.xml"
 
-const emptyWarning = "Email or password is empty";
-const invalidWarning = "Email is invalid";
+export const errors = {
+    emptyWarning: "Email or password is empty",
+    invalidWarning: "Email is invalid",
+};
 
-export default class SigninView extends View {
-    constructor(){
+export class SigninView extends View {
+    constructor() {
         super(template);
-        this.listeners = new Map();
     }
 
-    render(root, data){
+    render(root, data) {
         super.render(root, data);
         let form = this.el.querySelector(".signin__form");
         this.warning = this.el.querySelector(".signin__warning");
@@ -20,17 +21,13 @@ export default class SigninView extends View {
         form.addEventListener("submit", this.formSubmitCallback);
     }
 
-    addListener(name, func){
-        this.listeners.set(name, func);
-    }
-
     static validateEmail(email) {
         // RFC 2822. Покрывает 99.99% адресов.
         let re = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
         return re.test(String(email).toLowerCase());
     }
 
-    showWarning(text){
+    showWarning(text) {
         this.clearWarning();
         this.warning.innerHTML = `<p>${text}</p>`;
     }
@@ -40,18 +37,18 @@ export default class SigninView extends View {
     }
 
 
-    formValidation(ev, form){
+    formValidation(ev, form) {
         ev.preventDefault();
         const email = form.elements["email"];
         const pass = form.elements["password"];
 
-        if (!email.value || !pass.value){
-            this.showWarning(emptyWarning);
+        if (!email.value || !pass.value) {
+            this.showWarning(errors.emptyWarning);
             return;
         }
 
-        if (!SigninView.validateEmail(email.value)){
-            this.showWarning(invalidWarning);
+        if (!SigninView.validateEmail(email.value)) {
+            this.showWarning(errors.invalidWarning);
             return;
         }
 

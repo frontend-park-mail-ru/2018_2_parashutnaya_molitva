@@ -1,7 +1,7 @@
-export default class SigninModel {
-    signin(callback, data) {
+export default class SignupModel {
+    signup(callback, data) {
         const xhr = new XMLHttpRequest();
-        xhr.open("POST", "/api/signin", true);
+        xhr.open("POST", "/api/signup", true);
         xhr.withCredentials = true;
 
         xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
