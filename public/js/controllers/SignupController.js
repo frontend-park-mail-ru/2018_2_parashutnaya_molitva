@@ -1,12 +1,12 @@
-import {errors, SigninView} from "../views/signup/SignupView.js"
-import SigninModel from "../models/SignupModel";
+import SignupView from "../views/signup/SignupView.js"
+import SignupModel from "../models/SignupModel";
 
-export default class SigninController {
+export default class SignupController {
     constructor(router) {
-        this.signinView = new SigninView();
-        this.signinModel = new SigninModel();
+        this.signupView = new SignupView();
+        this.signupModel = new SignupModel();
         this.router = router;
-        this.signinView.addListener('submit', this.onSubmit.bind(this));
+        this.signupView.addListener('submit', this.onSubmit.bind(this));
     }
 
     onSubmit(ev, data) {

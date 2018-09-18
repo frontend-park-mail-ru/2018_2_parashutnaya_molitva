@@ -18,7 +18,7 @@ body {
 
 .menu,
 .signin,
-.signup {gi
+.signup {
     height: 400px;
     width: 400px;
     position: fixed;
@@ -58,14 +58,20 @@ body {
     font-size: 16px;
     padding: 10px 20px;
     margin-top: 10px;
+    margin-right: 2px;
     background-color: #4CAF50;
+    border: 2px solid #4CAF50;
     color: white;
-    border: none;
     border-radius: 0.2rem;
 }
 
 .signup__submit:hover {
+    border-color: #3e8e41;
     background-color: #3e8e41;
+}
+
+.signup__submit:focus {
+    display: none;
 }
 
 .signup__input-warning {
@@ -75,6 +81,24 @@ body {
 .signup__input-warning:focus {
     box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, .25);
 
+}
+
+.signup__back-button {
+    background-color: #e7e7e7;
+    color: black;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 10px 20px;
+    margin-top: 10px;
+    border: 2px solid #e7e7e7;
+    border-radius: 0.2rem;
+    display: inline-block;
+}
+
+.signup__back-button:hover {
+    background-color: white;
+    color: black;
+    border: 2px solid #e7e7e7;
 }
 
 .signin__form {
