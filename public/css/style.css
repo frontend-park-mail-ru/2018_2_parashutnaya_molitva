@@ -17,7 +17,8 @@ body {
 }
 
 .menu,
-.signin{
+.signin,
+.signup {gi
     height: 400px;
     width: 400px;
     position: fixed;
@@ -31,8 +32,49 @@ body {
     justify-content: center;
 }
 
-.menu__button-hide{
-    display :none !important;
+.menu__button-hide {
+    display: none !important;
+}
+
+.signup__input {
+    width: 80%;
+    font-size: 16px;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    border-width: 1px;
+    border-radius: 2px;
+}
+
+.signup__warning {
+    margin-top: -5px;
+    font-size: 13px;
+    margin-bottom: 5px;
+    color: red;
+    display: none;
+}
+
+.signup__submit {
+    font-size: 16px;
+    padding: 10px 20px;
+    margin-top: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 0.2rem;
+}
+
+.signup__submit:hover {
+    background-color: #3e8e41;
+}
+
+.signup__input-warning {
+    border-color: red;
+}
+
+.signup__input-warning:focus {
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, .25);
+
 }
 
 .signin__form {
