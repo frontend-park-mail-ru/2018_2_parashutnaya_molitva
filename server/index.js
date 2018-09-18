@@ -57,18 +57,34 @@ let users = {
 
 app.post('/api/signin', (req, res) => {
     const email = req.body.email;
-    const pass = req.body.pass;
+    const pass = req.body.password;
 
-    if (!pass || !email) {
-        return res.status(401).json({error: emptyWarning});
+    if (!email) {
+        return res.status(401).json({
+            field: "email",
+            error: emptyEmailWarning,
+        });
+    }
+
+    if (!pass) {
+        return res.status(401).json({
+            field: "pass",
+            error: emptyPasswordWarning,
+        });
     }
 
     if (!validEmail(email)) {
-        return res.status(401).json({error: invalidWarning});
+        return res.status(401).json({
+            field: "email",
+            error: invalidWarning,
+        });
     }
 
     if (!users[email] || !(users[email].pass === pass)) {
-        return res.status(401).json({error: invalidPersonalData});
+        return res.status(401).json({
+            field: "all",
+            error: invalidPersonalData,
+        });
     }
 
     const id = uuidv4();
