@@ -15,10 +15,7 @@ export class SigninView extends View {
         super.render(root, data);
         let form = this.el.querySelector(".signin__form");
         this.warning = this.el.querySelector(".signin__warning");
-        this.formSubmitCallback = (ev) => {
-            this.formValidation(ev, form)
-        };
-        form.addEventListener("submit", this.formSubmitCallback);
+        form.addEventListener("submit", this._formValidation.bind(this, form));
     }
 
     static validateEmail(email) {
@@ -28,16 +25,16 @@ export class SigninView extends View {
     }
 
     showWarning(text) {
-        this.clearWarning();
+        this._clearWarning();
         this.warning.innerHTML = `<p>${text}</p>`;
     }
 
-    clearWarning() {
+    _clearWarning() {
         this.warning.innerHTML = "";
     }
 
 
-    formValidation(ev, form) {
+    _formValidation(form, ev) {
         ev.preventDefault();
         const email = form.elements["email"];
         const pass = form.elements["password"];
@@ -52,7 +49,7 @@ export class SigninView extends View {
             return;
         }
 
-        this.clearWarning();
+        this._clearWarning();
         let data = {
             email: email.value,
             pass: pass.value,

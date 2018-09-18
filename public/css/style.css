@@ -36,6 +36,11 @@ body {
     display: none !important;
 }
 
+
+.signup_form {
+    padding: 6px;
+}
+
 .signup__input {
     width: 80%;
     font-size: 16px;
@@ -51,6 +56,9 @@ body {
     font-size: 13px;
     margin-bottom: 5px;
     color: red;
+}
+
+.signup__warning-hidden {
     display: none;
 }
 
@@ -75,7 +83,7 @@ body {
 }
 
 .signup__input-warning {
-    border-color: red;
+    outline: red auto 3px;
 }
 
 .signup__input-warning:focus {
