@@ -1,25 +1,20 @@
 import MenuView from '../views/menu/MenuView.js';
 import MenuModel from '../models/MenuModel.js';
+import EventBus from "../lib/eventbus";
+
+const eventList = [
+    'checkAuthResponse',
+    'checkAuth',
+    'signout',
+    'signoutResponse',
+];
 
 export default class MenuController {
     constructor() {
-        this.menuView = new MenuView();
-        this.menuModel = new MenuModel();
-        this.menuView.addListener('render', this.onRender.bind(this));
-        this.menuView.addListener('signout', this.onSignout.bind(this));
+        this._eventBus = new EventBus(eventList);
+        this.menuView = new MenuView(this._eventBus);
+        this.menuModel = new MenuModel(this._eventBus);
     }
 
-    onRender() {
-        this.menuModel.checkSession((xhr)=>{
-            if (xhr.status === 200){
-                this.menuView.showAuthUserMenu();
-            }
-        })
-    }
-
-    onSignout() {
-        this.menuModel.removeSession();
-        this.menuView.showUnauthUserMenu();
-    }
 }
 
