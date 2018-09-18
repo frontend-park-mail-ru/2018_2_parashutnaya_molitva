@@ -15,7 +15,7 @@ export default class SignupController {
         this.signinModel.signin((xhr) => {
             if (xhr.status === 401) {
                 const err = JSON.parse(xhr.responseText);
-                this.signinView.showWarning(err.error)
+                SignupView.showWarning(err.error)
             } else if (xhr.status === 200) {
                 this.router.toStartPage();
             }
