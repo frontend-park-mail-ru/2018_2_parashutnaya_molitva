@@ -23,7 +23,7 @@ export class SigninView extends View {
         ev.preventDefault();
         const data = {
             email: form.elements["email"].value,
-            password: form.elements["password"].value,
+            pass: form.elements["password"].value,
         };
         this._eventBus.triggerEvent("signin", data);
     }
@@ -31,10 +31,8 @@ export class SigninView extends View {
     _onSubmitResponse(data) {
         const field = data.field;
         const error = data.error;
-        if (error) {
-           if (field){
-               this.showWarning(error);
-           }
+        if (error && field) {
+            this.showWarning(error);
         }
     }
 

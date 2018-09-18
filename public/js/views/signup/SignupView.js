@@ -9,39 +9,104 @@ const invalidPasswordWarning = "Must contain at least 8 characters, 1 number, 1 
 const invalidPassAndRepass = "Password and Repeat password is different";
 
 export default class SignupView extends View {
-
-    constructor() {
-        super(template)
+    constructor(eventBus) {
+        super(template, eventBus);
+        this._eventBus.subscribeToEvent('changeEmailResponse', this._onChangeEmailResponse.bind(this));
+        this._eventBus.subscribeToEvent('changePasswordResponse', this._onChangePassResponse.bind(this));
+        this._eventBus.subscribeToEvent('changePasswordRepeatResponse', this._onChangeRepassResponse.bind(this));
+        this._eventBus.subscribeToEvent('signupResponse', this._onSignupResponse.bind(this));
     }
 
     render(root, data = {}) {
         super.render(root, data);
         let warnings = this.el.querySelectorAll(".signup__warning");
         this._emailWarning = warnings[0];
-        this._passWarnings = [warnings[1], warnings[2]];
+        this._passWarning = warnings[1];
+        this._repassWarning = warnings[2];
 
-        let form = this.el.querySelector(".signup__form");
-        //debugger;
-        let emailEl = form.elements['email'];
-        emailEl.addEventListener('change', this._formEmailValidation.bind(this, emailEl));
+        this._form = this.el.querySelector(".signup__form");
 
-        let password = form.elements['password'];
-        let repassword = form.elements['password-repeat'];
-        password.addEventListener('change', this._formPassValidation.bind(this, password));
-        repassword.addEventListener('change', this._formRepassValidation.bind(this, repassword, password));
+        let emailEl = this._form.elements['email'];
+        emailEl.addEventListener('change', this._onChangeEmail.bind(this, emailEl));
 
-        form.addEventListener('submit', this._formValidation.bind(this, form));
+        let password = this._form.elements['password'];
+        let repassword = this._form.elements['password-repeat'];
+        password.addEventListener('change', this._onChangePass.bind(this, password, repassword));
+        repassword.addEventListener('change', this._onChangeRepass.bind(this, repassword, password));
+
+        this._form.addEventListener('submit', this._onSubmit.bind(this));
     }
 
-    static validateEmail(email) {
-        // RFC 2822. Покрывает 99.99% адресов.
-        let re = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-        return re.test(String(email).toLowerCase());
+    _onSignupResponse(data){
+        const field = data.field;
+        const error = data.error;
+
+        if (error && field) {
+            switch (field) {
+                case 'email':
+                    this._onChangeEmailResponse({error});
+                    break;
+                case 'pass':
+                    this._onChangePassResponse({error});
+                    break;
+                case 'repass':
+                    this._onChangeRepassResponse({error});
+                    break;
+                default:
+                    console.log('SignupView: _onSignupResponse: no such field: ', field);
+            }
+        }
+        // TODO: Если пустая ошибка или нет поля. Но этот коллбэк вызывается только если Модель получила ошибку 401 от сервера.
     }
 
-    static validPass(pass) {
-        let re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.{8,})/;
-        return re.test(pass);
+    _onChangeRepassResponse(data) {
+        this._onChangeResponseTmpl(data.error, 'password-repeat', this._repassWarning)
+    }
+
+    _onChangePassResponse(data) {
+       this._onChangeResponseTmpl(data.error, 'password', this._passWarning)
+    }
+
+    _onChangeEmailResponse(data) {
+        this._onChangeResponseTmpl(data.error, 'email', this._emailWarning)
+    }
+
+    _onChangeResponseTmpl(error, name, warning){
+        const el = this._form.elements[name];
+
+        if (error) {
+            SignupView.showWarning(el, warning, error);
+            return;
+        }
+
+        SignupView._clearWarning(el, warning);
+    }
+
+    _onChangeRepass(repassEl, passEl) {
+        const repass = repassEl.value;
+        const pass = passEl.value;
+        this._eventBus.triggerEvent('changePasswordRepeat', {repass, pass});
+    }
+
+    _onChangePass(passEl, repassEl) {
+        const pass = passEl.value;
+        const repass = repassEl.value;
+        this._eventBus.triggerEvent('changePassword', {pass, repass});
+
+    }
+
+    _onChangeEmail(emailEl) {
+        const email = emailEl.value;
+        this._eventBus.triggerEvent('changeEmail', {email});
+    }
+
+    _onSubmit(ev) {
+        ev.preventDefault();
+        const email = this._form.elements['email'].value;
+        const pass = this._form.elements['password'].value;
+        const repass = this._form.elements['password-repeat'].value;
+
+        this._eventBus.triggerEvent('signup', {email, pass, repass});
     }
 
     static showWarning(el, warningEl, text) {
@@ -56,79 +121,4 @@ export default class SignupView extends View {
         warningEl.innerHTML = '';
     }
 
-    _formRepassValidation(repassEl, passEl) {
-        const repass = repassEl.value;
-        const pass = passEl.value;
-
-        if (!repass) {
-            SignupView.showWarning(passEl, this._passWarnings[1], emptyRepasswordWarning);
-            this._valid = false;
-            return;
-        }
-
-
-        if (repass !== pass) {
-            SignupView.showWarning(repassEl, this._passWarnings[1], invalidPassAndRepass);
-            this._valid = false;
-            return;
-        }
-
-        this._valid = true;
-        SignupView._clearWarning(passEl, this._passWarnings[1]);
-    }
-
-    _formPassValidation(passEl) {
-        const pass = passEl.value;
-        if (!pass) {
-            SignupView.showWarning(passEl, this._passWarnings[0], emptyPasswordWarning);
-            this._valid = false;
-            return;
-        }
-
-        if (!SignupView.validPass(pass)) {
-            SignupView.showWarning(passEl, this._passWarnings[0], invalidPasswordWarning);
-            this._valid = false;
-            return;
-        }
-
-        this._valid = true;
-        SignupView._clearWarning(passEl, this._passWarnings[0]);
-    }
-
-    _formEmailValidation(el) {
-        const email = el.value;
-
-        if (!email) {
-            SignupView.showWarning(el, this._emailWarning, emptyEmailWarning);
-            this._valid = false;
-            return;
-        }
-
-        if (!SignupView.validateEmail(email)) {
-            SignupView.showWarning(el, this._emailWarning, invalidEmailWarning);
-            this._valid = false;
-            return;
-        }
-
-        this._valid = true;
-        SignupView._clearWarning(el, this._emailWarning);
-    }
-
-    _formValidation(form, ev) {
-        ev.preventDefault();
-        const email = form.elements["email"];
-        const pass = form.elements['password'];
-        const repass = form.elements['password-repeat'];
-
-        if (this._valid) {
-            const data = {
-                email: email.value,
-                pass: pass.value,
-                repass: repass.value,
-            };
-
-            this.listeners.get('submit')(ev, data);
-        }
-
-    }
 }

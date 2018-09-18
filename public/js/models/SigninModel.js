@@ -10,7 +10,7 @@ export default class SigninModel {
 
     _onSignin(data) {
         const email = data.email;
-        const pass = data.password;
+        const pass = data.pass;
 
         if (!email) {
             const res = {

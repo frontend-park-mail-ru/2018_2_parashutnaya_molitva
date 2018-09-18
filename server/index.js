@@ -43,8 +43,11 @@ function validEmail(email) {
 }
 
 function validPass(pass) {
-    let re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
-    return re.test(pass);
+    // На продакшене исопльзовать регулярку
+    // let re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.{8,})/;
+    // return re.test(pass);
+
+    return true;
 }
 
 let sessionids = {};
@@ -57,7 +60,7 @@ let users = {
 
 app.post('/api/signin', (req, res) => {
     const email = req.body.email;
-    const pass = req.body.password;
+    const pass = req.body.pass;
 
     if (!email) {
         return res.status(401).json({
@@ -97,28 +100,43 @@ app.post('/api/signin', (req, res) => {
 
 app.post('/api/signup', (req, res) => {
     const email = req.body.email;
-    const pass = req.body.email;
+    const pass = req.body.pass;
 
     if (!email) {
-        return res.status(401).json({email: {error: emptyEmailWarning}});
+        return res.status(401).json({
+            field: 'email',
+            error: emptyEmailWarning,
+        });
     }
 
     if (!pass) {
-        return res.status(401).json({pass: {error: emptyPasswordWarning}});
+        return res.status(401).json({
+            field: 'pass',
+            error: emptyPasswordWarning,
+        });
     }
 
     if (!validEmail(email)) {
-        return res.status(401).json({email: {error: invalidWarning}});
+        return res.status(401).json({
+            field: 'email',
+            error: invalidWarning,
+        });
     }
 
     if (users[email]) {
-        return res.status(401).json({email: {error: existUser}});
+        return res.status(401).json({
+            field: 'email',
+            error: existUser,
+        });
     }
 
+    console.log(pass);
     if (!validPass(pass)) {
-        return res.status(401).json({pass: {error: invalidPasswordData}});
+        return res.status(401).json({
+            field: 'pass',
+            error: invalidPasswordData
+        });
     }
-
 
     users[email] = {
         email,

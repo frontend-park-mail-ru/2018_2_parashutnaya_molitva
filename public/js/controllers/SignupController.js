@@ -1,24 +1,24 @@
 import SignupView from "../views/signup/SignupView.js"
 import SignupModel from "../models/SignupModel";
+import EventBus from "../lib/eventbus";
+
+const eventList = [
+    'signup',
+    'signupResponse',
+    'signupSuccess',
+    'changeEmail',
+    'changeEmailResponse',
+    'changePassword',
+    'changePasswordResponse',
+    'changePasswordRepeat',
+    'changePasswordRepeatResponse',
+];
 
 export default class SignupController {
     constructor(router) {
-        this.signupView = new SignupView();
-        this.signupModel = new SignupModel();
-        this.router = router;
-        this.signupView.addListener('submit', this.onSubmit.bind(this));
-    }
-
-    onSubmit(ev, data) {
-        ev.preventDefault();
-
-        this.signinModel.signin((xhr) => {
-            if (xhr.status === 401) {
-                const err = JSON.parse(xhr.responseText);
-                SignupView.showWarning(err.error)
-            } else if (xhr.status === 200) {
-                this.router.toStartPage();
-            }
-        }, data)
+        this._eventBus = new EventBus(eventList);
+        this._eventBus.subscribeToEvent('signupSuccess', router.toStartPage.bind(router));
+        this.signupView = new SignupView(this._eventBus);
+        this.signupModel = new SignupModel(this._eventBus);
     }
 }
