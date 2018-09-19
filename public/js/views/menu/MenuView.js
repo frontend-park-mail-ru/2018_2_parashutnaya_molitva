@@ -39,7 +39,7 @@ export default class MenuView extends View {
 
         signoutButton.classList.remove("hidden");
 
-        signoutButton.addEventListener('click', ()=>{
+        signoutButton.addEventListener('click', () => {
             this._eventBus.triggerEvent('signout');
         });
     }
