@@ -1,14 +1,14 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="params">
-    <div class="signin">
-        <div class="signin__warning"></div>
+    <div class="section">
+        <div class="warning signin__warning"></div>
         <form class="signin__form" novalidate="novalidate">
-            <label class="signin_label" for="email">Email</label>
-            <input class="signin__input" type="email" name="email" id="email" placeholder="Email" autofocus="true"/>
+            <label class="signin__label" for="email">Email</label>
+            <input class="input signin__input" type="email" name="email" id="email" placeholder="Email" autofocus="true"/>
 
-            <label class="signin_label" for="password">Password</label>
-            <input class="signin__input" type="password" name="password" id="password" placeholder="Password"/>
+            <label class="input signin_label" for="password">Password</label>
+            <input class="input signin__input" type="password" name="password" id="password" placeholder="Password"/>
 
-            <input class="signin__submit" type="submit" name="submit"/>
+            <input class="button signin__submit" type="submit" name="submit"/>
         </form>
     </div>
 </fest:template>

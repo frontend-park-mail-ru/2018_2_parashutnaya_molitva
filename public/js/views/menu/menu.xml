@@ -1,11 +1,11 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="params">
-    <div class="menu">
-        <a class="menu__button">Singleplayer</a>
-        <a class="menu__button">Multiplayer</a>
-        <a class="menu__button menu__button-signin" href="/signin">Sign in</a>
-        <a class="menu__button menu__button-signup" href="/signup">Sign up</a>
-        <a class="menu__button menu__button-signout menu__button-hide" href="/">Sign out</a>
-        <a class="menu__button" href="/scoreboard">Scoreboard</a>
-        <a class="menu__button" href="/about">About</a>
+    <div class="section">
+        <a class="button menu__button">Singleplayer</a>
+        <a class="button menu__button">Multiplayer</a>
+        <a class="button menu__button menu__button-signin" href="/signin">Sign in</a>
+        <a class="button menu__button menu__button-signup" href="/signup">Sign up</a>
+        <a class="button menu__button menu__button-signout hidden" href="/">Sign out</a>
+        <a class="button menu__button" href="/scoreboard">Scoreboard</a>
+        <a class="button menu__button" href="/about">About</a>
     </div>
 </fest:template>
