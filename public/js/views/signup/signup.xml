@@ -1,22 +1,22 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="params">
-    <div class="signup">
+    <div class="section">
         <form class="signup__form" novalidate="novalidate">
 
             <label for="email">Email</label>
-            <input class="signup__input" type="email" name="email" id="email" autocomplete="autocomplete"/>
-            <div class="signup__warning signup__warning-hidden"></div>
+            <input class="input signup__input" type="email" name="email" id="email" autocomplete="autocomplete"/>
+            <div class="warning signup__warning hidden"></div>
 
             <label for="password">Password</label>
-            <input class="signup__input" type="password" name="password" id="password" autocomplete="autocomplete"/>
-            <div class="signup__warning signup__warning-hidden"></div>
+            <input class="input signup__input" type="password" name="password" id="password" autocomplete="autocomplete"/>
+            <div class="warning signup__warning hidden"></div>
 
             <label for="password-repeat">Repeat password</label>
-            <input class="signup__input" type="password" name="password-repeat" id="password-repeat" autocomplete="autocomplete"/>
-            <div class="signup__warning signup__warning-hidden"></div>
+            <input class="input signup__input" type="password" name="password-repeat" id="password-repeat" autocomplete="autocomplete"/>
+            <div class="warning signup__warning hidden"></div>
 
-            <input class="signup__submit" type="submit" name="submit" value="sign up"/>
+            <input class="button signup__submit" type="submit" name="submit" value="sign up"/>
 
-            <a class="signup__back-button" href="/">Menu</a>
+            <a class="button signup__back-button" href="/">Menu</a>
         </form>
     </div>
 </fest:template>

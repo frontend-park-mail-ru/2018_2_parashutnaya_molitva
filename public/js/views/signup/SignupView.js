@@ -111,13 +111,13 @@ export default class SignupView extends View {
 
     static showWarning(el, warningEl, text) {
         el.classList.add("signup__input_warning");
-        warningEl.classList.remove("signup__warning_hidden");
+        warningEl.classList.remove("hidden");
         warningEl.innerHTML = `${text}`;
     }
 
     static _clearWarning(el, warningEl) {
         el.classList.remove("signup__input_warning");
-        warningEl.classList.add("signup__warning_hidden");
+        warningEl.classList.add("hidden");
         warningEl.innerHTML = '';
     }
 
