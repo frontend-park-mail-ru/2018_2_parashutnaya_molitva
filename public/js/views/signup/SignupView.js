@@ -1,13 +1,6 @@
 import View from '../../lib/view.js';
 import template from './signup.xml';
 
-const emptyEmailWarning = "Email is empty";
-const emptyPasswordWarning = "Password is empty";
-const emptyRepasswordWarning = "Please repeat password";
-const invalidEmailWarning = "Email is invalid";
-const invalidPasswordWarning = "Must contain at least 8 characters, 1 number, 1 upper and 1 lowercase";
-const invalidPassAndRepass = "Password and Repeat password is different";
-
 export default class SignupView extends View {
     constructor(eventBus) {
         super(template, eventBus);
