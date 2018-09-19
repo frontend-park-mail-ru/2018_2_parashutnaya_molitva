@@ -1,11 +1,6 @@
 import View from "../../lib/view.js"
 import template from "./signin.xml"
 
-export const errors = {
-    emptyWarning: "Email or password is empty",
-    invalidWarning: "Email is invalid",
-};
-
 export class SigninView extends View {
     constructor(eventBus) {
         super(template, eventBus);
