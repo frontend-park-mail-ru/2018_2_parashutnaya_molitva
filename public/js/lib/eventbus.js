@@ -15,10 +15,10 @@ export default class EventBus {
      * @param callback Function функция, которая выполнится при событии
      */
     subscribeToEvent(eventName, callback) {
-        if (!this.events.has(eventName)){
+        if (!this.events.has(eventName)) {
             throw "EventBus: Unknown event in";
         }
-        
+
         this.events.get(eventName).push(callback);
     }
 

@@ -55,7 +55,7 @@ let users = {
     "sinimawath@gmail.com": {
         email: "sinimawath@gmail.com",
         pass: "asd",
-        score : 10,
+        score: 10,
     }
 };
 
@@ -142,7 +142,7 @@ app.post('/api/signup', (req, res) => {
     users[email] = {
         email,
         pass,
-        score : 10,
+        score: 10,
     };
 
     console.log(users[email].pass);

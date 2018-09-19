@@ -31,7 +31,7 @@ export default class SigninModel {
             return;
         }
 
-        if (!SigninModel.validateEmail(email)){
+        if (!SigninModel.validateEmail(email)) {
 
             const res = {
                 field: "email",

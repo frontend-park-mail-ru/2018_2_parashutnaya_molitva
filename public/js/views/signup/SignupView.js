@@ -37,7 +37,7 @@ export default class SignupView extends View {
         this._form.addEventListener('submit', this._onSubmit.bind(this));
     }
 
-    _onSignupResponse(data){
+    _onSignupResponse(data) {
         const field = data.field;
         const error = data.error;
 
@@ -64,14 +64,14 @@ export default class SignupView extends View {
     }
 
     _onChangePassResponse(data) {
-       this._onChangeResponseTmpl(data.error, 'password', this._passWarning)
+        this._onChangeResponseTmpl(data.error, 'password', this._passWarning)
     }
 
     _onChangeEmailResponse(data) {
         this._onChangeResponseTmpl(data.error, 'email', this._emailWarning)
     }
 
-    _onChangeResponseTmpl(error, name, warning){
+    _onChangeResponseTmpl(error, name, warning) {
         const el = this._form.elements[name];
 
         if (error) {

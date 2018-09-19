@@ -6,7 +6,7 @@ const errNotEqualPassRePass = "Password and Password Repeat are not equal";
 
 export default class SignupModel {
 
-    constructor(eventBus){
+    constructor(eventBus) {
         this._eventBus = eventBus;
         this._eventBus.subscribeToEvent('changeEmail', this._onChangeEmail.bind(this));
         this._eventBus.subscribeToEvent('changePassword', this._onChangePassword.bind(this));
@@ -14,22 +14,22 @@ export default class SignupModel {
         this._eventBus.subscribeToEvent('signup', this._onSignup.bind(this));
 
         this._validInputMap = {
-            pass : false,
-            repass : false,
-            email : false,
+            pass: false,
+            repass: false,
+            email: false,
         };
     }
 
-    _onSignup(data){
+    _onSignup(data) {
 
         const isValid = Object.entries(this._validInputMap).reduce((res, el) => (res && el[1]), true);
 
-        if (isValid){
+        if (isValid) {
 
             this._signup((xhr) => {
-                if (xhr.status === 200){
+                if (xhr.status === 200) {
                     this._eventBus.triggerEvent('signupSuccess', {});
-                }else if (xhr.status === 401) {
+                } else if (xhr.status === 401) {
                     const err = JSON.parse(xhr.responseText);
                     this._eventBus.triggerEvent('signupResponse', err);
                 }
@@ -41,16 +41,16 @@ export default class SignupModel {
         }
     }
 
-    _onChangePasswordRepeat(data){
+    _onChangePasswordRepeat(data) {
         const repass = data.repass;
         const pass = data.pass;
-        if (!repass){
+        if (!repass) {
             this._validInputMap['repass'] = false;
             this._eventBus.triggerEvent('changePasswordRepeatResponse', {error: errPassIsEmpty});
             return;
         }
 
-        if (pass !== repass){
+        if (pass !== repass) {
             this._validInputMap['repass'] = false;
             this._eventBus.triggerEvent('changePasswordRepeatResponse', {error: errNotEqualPassRePass});
             return;
@@ -60,15 +60,15 @@ export default class SignupModel {
         this._eventBus.triggerEvent('changePasswordRepeatResponse', {});
     }
 
-    _onChangePassword(data){
+    _onChangePassword(data) {
         const pass = data.pass;
-        if (!pass){
+        if (!pass) {
             this._validInputMap['pass'] = false;
             this._eventBus.triggerEvent('changePasswordResponse', {error: errPassIsEmpty});
             return;
         }
 
-        if (!SignupModel.validatePass(pass)){
+        if (!SignupModel.validatePass(pass)) {
             this._validInputMap['pass'] = false;
             this._eventBus.triggerEvent('changePasswordResponse', {error: errInvalidPasswordData});
             return;
@@ -78,15 +78,15 @@ export default class SignupModel {
         this._eventBus.triggerEvent('changePasswordResponse', {});
     }
 
-    _onChangeEmail(data){
+    _onChangeEmail(data) {
         const email = data.email;
-        if (!email){
+        if (!email) {
             this._validInputMap['email'] = false;
             this._eventBus.triggerEvent('changeEmailResponse', {error: errEmailIsEmpty});
             return;
         }
 
-        if (!SignupModel.validateEmail(email)){
+        if (!SignupModel.validateEmail(email)) {
             this._validInputMap['email'] = false;
             this._eventBus.triggerEvent('changeEmailResponse', {error: errEmailIsInvalid});
             return;
