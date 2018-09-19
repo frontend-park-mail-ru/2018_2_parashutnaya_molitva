@@ -5,6 +5,7 @@ import EventBus from "../lib/eventbus";
 const eventList = [
     'load',
     'loadResponse',
+    'loadWaiting',
 ];
 
 export default class ScoreboardController {

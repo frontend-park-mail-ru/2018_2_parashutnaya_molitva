@@ -5,12 +5,13 @@ export default class ScoreboardModel {
     }
 
     _onLoad() {
-        this._getData((data) => {
+        this._getDataJson((data) => {
             this._eventBus.triggerEvent('loadResponse', data);
         });
+        this._eventBus.triggerEvent('loadWaiting');
     }
 
-    _getData(callback) {
-        return fetch('/api/scoreboard').then(res => res.json()).then(callback);
+    _getDataJson(callback) {
+        return fetch('/api/scoreboard').then(res => res.json()).then(callback).catch();
     }
 }

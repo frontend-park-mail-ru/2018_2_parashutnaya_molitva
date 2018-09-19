@@ -1,5 +1,5 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="params">
-    <div class="section">
+    <div class="signin section">
         <div class="warning signin__warning"></div>
         <form class="signin__form" novalidate="novalidate">
             <label class="signin__label" for="email">Email</label>
