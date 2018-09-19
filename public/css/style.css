@@ -32,10 +32,9 @@ body {
     justify-content: center;
 }
 
-.menu__button-hide {
+.menu__button_hidden {
     display: none !important;
 }
-
 
 .signup_form {
     padding: 6px;
@@ -58,7 +57,7 @@ body {
     color: red;
 }
 
-.signup__warning-hidden {
+.signup__warning_hidden {
     display: none;
 }
 
@@ -82,11 +81,11 @@ body {
     display: none;
 }
 
-.signup__input-warning {
+.signup__input_warning {
     outline: red auto 3px;
 }
 
-.signup__input-warning:focus {
+.signup__input_warning:focus {
     box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, .25);
 
 }

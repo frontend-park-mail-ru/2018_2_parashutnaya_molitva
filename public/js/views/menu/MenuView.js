@@ -34,10 +34,10 @@ export default class MenuView extends View {
     }
 
     _showAuthUserMenu({signinButton, signupButton, signoutButton} = {}) {
-        signinButton.classList.add("menu__button-hide");
-        signupButton.classList.add("menu__button-hide");
+        signinButton.classList.add("menu__button_hidden");
+        signupButton.classList.add("menu__button_hidden");
 
-        signoutButton.classList.remove("menu__button-hide");
+        signoutButton.classList.remove("menu__button_hidden");
 
         signoutButton.addEventListener('click', ()=>{
             this._eventBus.triggerEvent('signout');
@@ -45,8 +45,8 @@ export default class MenuView extends View {
     }
 
     _showUnauthUserMenu({signinButton, signupButton, signoutButton} = {}) {
-        signinButton.classList.remove("menu__button-hide");
-        signupButton.classList.remove("menu__button-hide");
-        signoutButton.classList.add("menu__button-hide");
+        signinButton.classList.remove("menu__button_hidden");
+        signupButton.classList.remove("menu__button_hidden");
+        signoutButton.classList.add("menu__button_hidden");
     }
 }

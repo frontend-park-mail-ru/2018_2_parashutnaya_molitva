@@ -54,7 +54,8 @@ let sessionids = {};
 let users = {
     "sinimawath@gmail.com": {
         email: "sinimawath@gmail.com",
-        pass: "asd"
+        pass: "asd",
+        score : 10,
     }
 };
 
@@ -140,7 +141,8 @@ app.post('/api/signup', (req, res) => {
 
     users[email] = {
         email,
-        pass
+        pass,
+        score : 10,
     };
 
     console.log(users[email].pass);
