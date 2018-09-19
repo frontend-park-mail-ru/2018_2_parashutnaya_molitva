@@ -18,16 +18,6 @@ app.use(express.static(publicRoot));
 app.use(cookie());
 app.use(body.json());
 
-
-app.get('/api/scoreboard', (req, res) => {
-    res.json([
-        {
-            'username': 'usernameTest',
-            'score': '1488'
-        }
-    ]);
-});
-
 const emptyWarning = "Email or password is empty";
 const emptyEmailWarning = "Email is empty";
 const emptyPasswordWarning = "Password is empty";
@@ -55,9 +45,57 @@ let users = {
     "sinimawath@gmail.com": {
         email: "sinimawath@gmail.com",
         pass: "asd",
-        score : 10,
+        score: 10,
     }
 };
+
+
+app.get('/api/scoreboard', (req, res) => {
+    res.status(200).json([
+        {
+            'username': 'usernameTest',
+            'score': '1488',
+        },
+        {
+            'username': 'usernameTest',
+            'score': '1488',
+        },
+        {
+            'username': 'usernameTest',
+            'score': '1488',
+        },
+        {
+            'username': 'usernameTest',
+            'score': '1488',
+        },
+        {
+            'username': 'usernameTest',
+            'score': '1488',
+        },
+        {
+            'username': 'usernameTest',
+            'score': '1488',
+        },
+        {
+            'username': 'usernameTest',
+            'score': '1488',
+        },
+        {
+            'username': 'usernameTest',
+            'score': '1488',
+        },
+        {
+            'username': 'usernameTest',
+            'score': '1488',
+        },
+        {
+            'username': 'usernameTest',
+            'score': '1488',
+        },
+
+    ]);
+});
+
 
 app.post('/api/signin', (req, res) => {
     const email = req.body.email;
@@ -142,7 +180,7 @@ app.post('/api/signup', (req, res) => {
     users[email] = {
         email,
         pass,
-        score : 10,
+        score: 10,
     };
 
     console.log(users[email].pass);
