@@ -18,8 +18,4 @@ export default class View {
         return this;
     }
 
-    addListener(name, func) {
-        this.listeners.set(name, func);
-    }
-
 }
