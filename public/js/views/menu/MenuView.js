@@ -1,15 +1,21 @@
 import View from '../../lib/view.js';
 import template from './menu.xml';
+import UserBlockController from "../../controllers/UserBlockController";
 
 export default class MenuView extends View {
     constructor(eventBus) {
         super(template, eventBus);
         this._eventBus.subscribeToEvent("checkAuthResponse", this._onRenderResponse.bind(this));
         this._eventBus.subscribeToEvent("signoutResponse", this._onRenderResponse.bind(this));
+
+        this._userBlockController = new UserBlockController();
     }
 
     render(root, data = {}) {
         super.render(root, data);
+
+        // this.el.querySelector(".user");
+        this._userBlockController.userBlockView.render(this.el.querySelector(".user"));
         this._eventBus.triggerEvent("checkAuth");
     }
 
