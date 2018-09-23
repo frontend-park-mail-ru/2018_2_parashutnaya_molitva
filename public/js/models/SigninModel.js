@@ -1,4 +1,5 @@
 import Validation from "../lib/validation";
+import doReq from "../lib/net";
 
 
 export default class SigninModel {
@@ -33,33 +34,20 @@ export default class SigninModel {
             return;
         }
 
-        this._signin((xhr) => {
-            if (xhr.status === 401) {
-                const res = JSON.parse(xhr.responseText);
-                this._eventBus.triggerEvent("signinResponse", res);
-            } else if (xhr.status === 200) {
-                console.log('Is ok');
-                this._eventBus.triggerEvent('signinSuccess');
-            }
-        }, data);
-
-    }
-
-    _signin(callback, data) {
-        const xhr = new XMLHttpRequest();
-        xhr.open("POST", "/api/signin", true);
-        xhr.withCredentials = true;
-
-        xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
-
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState !== 4) {
-                return;
-            }
-
-            callback(xhr)
-        };
-
-        xhr.send(JSON.stringify(data))
+        doReq({
+            callback: (resp) => {
+                if (resp.status === 401) {
+                    resp.json().then((parsedData) => this._eventBus.triggerEvent("signinResponse", parsedData));
+                } else if (resp.status === 200) {
+                    this._eventBus.triggerEvent('signinSuccess');
+                }
+            },
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8',
+            },
+            credentials: 'same-origin',
+        })
     }
 }
