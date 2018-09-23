@@ -2,21 +2,30 @@ body {
     font-family: arial, sans-serif;
 }
 
-.menu__button {
-    text-decoration: none;
-    color: initial;
+/*common*/
 
-    text-align: center;
-    background-color: lightgray;
-
+.button {
     font-size: 16px;
     padding: 10px 20px;
     cursor: pointer;
-    margin: 10px 2px;
-    width: 128px;
+    display: inline-block;
+    text-decoration: none;
 }
 
-.menu {
+.input {
+    width: 80%;
+    font-size: 16px;
+    padding: 10px 20px;
+    border-width: 1px;
+    border-radius: 2px;
+}
+
+.warning {
+    font-size: 13px;
+    color: red;
+}
+
+.section {
     height: 400px;
     width: 400px;
     position: fixed;
@@ -29,6 +38,99 @@ body {
     align-items: center;
     justify-content: center;
 }
+
+.hidden {
+    display: none !important;
+}
+
+/*menu components*/
+
+.menu__button {
+    text-decoration: none;
+    color: initial;
+
+    text-align: center;
+    background-color: lightgray;
+
+    margin: 10px 2px;
+    width: 128px;
+}
+
+/*signup components*/
+
+.signup_form {
+    padding: 6px;
+}
+
+.signup__input {
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.signup__warning {
+    margin-top: -5px;
+    margin-bottom: 5px;
+}
+
+.signup__submit {
+    margin-top: 10px;
+    margin-right: 2px;
+    background-color: #4CAF50;
+    border: 2px solid #4CAF50;
+    color: white;
+    border-radius: 0.2rem;
+}
+
+.signup__submit:hover {
+    border-color: #3e8e41;
+    background-color: #3e8e41;
+}
+
+.signup__submit:focus {
+    display: none;
+}
+
+.signup__input_warning {
+    outline: red auto 3px;
+}
+
+.signup__input_warning:focus {
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, .25);
+
+}
+
+.signup__back-button {
+    background-color: #e7e7e7;
+    color: black;
+    margin-top: 10px;
+    border: 2px solid #e7e7e7;
+    border-radius: 0.2rem;
+}
+
+.signup__back-button:hover {
+    background-color: white;
+    color: black;
+    border: 2px solid #e7e7e7;
+}
+
+/*signin components*/
+
+.signin__form {
+    text-align: center;
+}
+
+.signin__input {
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.signin__submit {
+    background-color: lightgray;
+    border: none;
+    margin: 10px 2px;
+}
+
+/*hz*/
 
 table {
     border-collapse: collapse;

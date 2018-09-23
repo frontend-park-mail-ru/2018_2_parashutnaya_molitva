@@ -1,26 +1,27 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="params">
-    <div class="menu">
-        <table style="width:100%">
-            <thead>
-                <tr>
-                    <th>Screen name</th>
-                    <th>Score</th>
-                </tr>
-            </thead>
-            <tbody>
-                <fest:for iterate="params.users" index="i" value="userData">
+    <div class="scoreboard section">
+            <div class="scoreboard__loading hidden">Loading...</div>
+            <table style="width:100%">
+                <thead>
                     <tr>
-                        <td>
-                            <fest:value>userData.username</fest:value>
-                        </td>
-                        <td>
-                            <fest:value>userData.score</fest:value>
-                        </td>
+                        <th>Screen name</th>
+                        <th>Score</th>
                     </tr>
-                </fest:for>
-            </tbody>
-        </table>
-        <a class="menu__button" href="/">Menu</a>
+                </thead>
+                <tbody>
+                    <fest:for iterate="params.users" index="i" value="userData">
+                        <tr>
+                            <td>
+                                <fest:value>userData.username</fest:value>
+                            </td>
+                            <td>
+                                <fest:value>userData.score</fest:value>
+                            </td>
+                        </tr>
+                    </fest:for>
+                </tbody>
+            </table>
+            <a class="button menu__button" href="/">Menu</a>
     </div>
 </fest:template>
 

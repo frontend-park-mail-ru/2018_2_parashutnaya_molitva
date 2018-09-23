@@ -8,17 +8,21 @@ export default class Router {
         this.currentRoute = null;
     }
 
+    toStartPage() {
+        this._change("/");
+    }
+
     add(path, view) {
         this.routes.set(path, view);
     }
 
-    _change(path){
-        debugger;
+    _change(path) {
+
         if (this.currentRoute === path) {
             return
         }
 
-        if (this.routes.has(path)){
+        if (this.routes.has(path)) {
 
             let currentView = this.routes.get(this.currentRoute) || this.notFoundView;
             currentView.hide(this.root);
@@ -27,7 +31,7 @@ export default class Router {
             view.render(this.root);
 
             this.currentRoute = path;
-        }else {
+        } else {
 
             let currentView = this.routes.get(this.currentRoute);
             currentView.hide(this.root);
@@ -37,8 +41,8 @@ export default class Router {
         }
     }
 
-    static _normalizePath(path){
-      return path.charAt(path.length - 1) === '/' && path !== '/' ? path.slice(0, path.length - 1) : path;
+    static _normalizePath(path) {
+        return path.charAt(path.length - 1) === '/' && path !== '/' ? path.slice(0, path.length - 1) : path;
     }
 
     start() {
