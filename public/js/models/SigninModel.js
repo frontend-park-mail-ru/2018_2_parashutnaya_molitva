@@ -48,6 +48,7 @@ export default class SigninModel {
                 'Content-Type': 'application/json; charset=utf-8',
             },
             credentials: 'same-origin',
+            url : '/api/signin',
         })
     }
 }
