@@ -1,6 +1,5 @@
-const errEmailIsEmpty = "Email is empty";
-const errPassIsEmpty = "Pass is empty";
-const errEmailIsInvalid = "Email is invalid";
+import Validation from "../lib/validation";
+
 
 export default class SigninModel {
     constructor(eventBus) {
@@ -11,32 +10,25 @@ export default class SigninModel {
     _onSignin(data) {
         const email = data.email;
         const pass = data.pass;
+        const errEmail = Validation.validateEmail(email, true);
 
-        if (!email) {
+        if (errEmail) {
             const res = {
                 field: "email",
-                error: errEmailIsEmpty,
+                error: errEmail,
             };
             this._eventBus.triggerEvent("signinResponse", res);
-            return;
         }
 
-        if (!pass) {
+
+        const errPass = Validation.validatePassword(pass, false);
+
+        if (errPass) {
             const res = {
                 field: "pass",
-                error: errPassIsEmpty,
+                error: errPass,
             };
 
-            this._eventBus.triggerEvent("signinResponse", res);
-            return;
-        }
-
-        if (!SigninModel.validateEmail(email)) {
-
-            const res = {
-                field: "email",
-                error: errEmailIsInvalid,
-            };
             this._eventBus.triggerEvent("signinResponse", res);
             return;
         }
@@ -69,11 +61,5 @@ export default class SigninModel {
         };
 
         xhr.send(JSON.stringify(data))
-    }
-
-    static validateEmail(email) {
-        // RFC 2822. Покрывает 99.99% адресов.
-        let re = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-        return re.test(String(email).toLowerCase());
     }
 }

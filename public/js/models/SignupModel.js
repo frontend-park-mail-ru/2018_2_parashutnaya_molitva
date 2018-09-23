@@ -1,11 +1,6 @@
-const errEmailIsEmpty = "Email is empty";
-const errPassIsEmpty = "Pass is empty";
-const errEmailIsInvalid = "Email is invalid";
-const errInvalidPasswordData = "Must contain at least 8 characters, 1 number, 1 upper and 1 lowercase";
-const errNotEqualPassRePass = "Password and Password Repeat are not equal";
+import Validation from "../lib/validation";
 
 export default class SignupModel {
-
     constructor(eventBus) {
         this._eventBus = eventBus;
         this._eventBus.subscribeToEvent('changeEmail', this._onChangeEmail.bind(this));
@@ -44,15 +39,11 @@ export default class SignupModel {
     _onChangePasswordRepeat(data) {
         const repass = data.repass;
         const pass = data.pass;
-        if (!repass) {
-            this._validInputMap['repass'] = false;
-            this._eventBus.triggerEvent('changePasswordRepeatResponse', {error: errPassIsEmpty});
-            return;
-        }
+        const errRepass = Validation.validateRepass(repass, pass);
 
-        if (pass !== repass) {
+        if (errRepass) {
             this._validInputMap['repass'] = false;
-            this._eventBus.triggerEvent('changePasswordRepeatResponse', {error: errNotEqualPassRePass});
+            this._eventBus.triggerEvent('changePasswordRepeatResponse', {error: errRepass});
             return;
         }
 
@@ -62,15 +53,10 @@ export default class SignupModel {
 
     _onChangePassword(data) {
         const pass = data.pass;
-        if (!pass) {
+        const errPass = Validation.validatePassword(pass, true);
+        if (errPass) {
             this._validInputMap['pass'] = false;
-            this._eventBus.triggerEvent('changePasswordResponse', {error: errPassIsEmpty});
-            return;
-        }
-
-        if (!SignupModel.validatePass(pass)) {
-            this._validInputMap['pass'] = false;
-            this._eventBus.triggerEvent('changePasswordResponse', {error: errInvalidPasswordData});
+            this._eventBus.triggerEvent('changePasswordResponse', {error: errPass});
             return;
         }
 
@@ -80,15 +66,10 @@ export default class SignupModel {
 
     _onChangeEmail(data) {
         const email = data.email;
-        if (!email) {
+        const errEmail = Validation.validateEmail(email, true);
+        if (errEmail) {
             this._validInputMap['email'] = false;
-            this._eventBus.triggerEvent('changeEmailResponse', {error: errEmailIsEmpty});
-            return;
-        }
-
-        if (!SignupModel.validateEmail(email)) {
-            this._validInputMap['email'] = false;
-            this._eventBus.triggerEvent('changeEmailResponse', {error: errEmailIsInvalid});
+            this._eventBus.triggerEvent('changeEmailResponse', {error: errEmail});
             return;
         }
 
@@ -121,12 +102,5 @@ export default class SignupModel {
         return re.test(String(email).toLowerCase());
     }
 
-    static validatePass(pass) {
-        // На продакшене исопльзовать регулярку
-        // let re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.{8,})/;
-        // return re.test(pass);
-
-        return true;
-    }
 
 }
