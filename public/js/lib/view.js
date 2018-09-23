@@ -2,7 +2,6 @@ export default class View {
     constructor(template, eventBus) {
         this.el = document.createElement('div');
         this.template = template;
-        this.listeners = new Map();
         this._eventBus = eventBus;
     }
 
