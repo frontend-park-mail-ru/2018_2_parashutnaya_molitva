@@ -1,8 +1,7 @@
 import View from "../../lib/view";
-import template from './userBlock.xml';
-import UserBlockController from "../../controllers/UserBlockController";
+import template from './headerBar.xml';
 
-export default class UserBlockView extends View {
+export default class HeaderBarView extends View {
     constructor(eventBus) {
         super(template, eventBus);
         this._eventBus.subscribeToEvent("checkAuthResponse", this._onRenderResponse.bind(this));
@@ -51,21 +50,4 @@ export default class UserBlockView extends View {
         signupButton.classList.remove("hidden");
         signoutButton.classList.add("hidden");
     }
-
-    // _showAuthUserMenu({signinButton, signupButton, signoutButton} = {}) {
-    //     signinButton.classList.add("hidden");
-    //     signupButton.classList.add("hidden");
-    //
-    //     signoutButton.classList.remove("hidden");
-    //
-    //     signoutButton.addEventListener('click', () => {
-    //         this._eventBus.triggerEvent('signout');
-    //     });
-    // }
-    //
-    // _showUnauthUserMenu({signinButton, signupButton, signoutButton} = {}) {
-    //     signinButton.classList.remove("hidden");
-    //     signupButton.classList.remove("hidden");
-    //     signoutButton.classList.add("hidden");
-    // }
 }

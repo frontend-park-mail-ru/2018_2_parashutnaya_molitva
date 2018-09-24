@@ -1,4 +1,4 @@
-export default class UserBlockModel {
+export default class HeaderBarModel {
 
     constructor(eventBus) {
         this._eventBus = eventBus;
@@ -29,7 +29,7 @@ export default class UserBlockModel {
     }
 
     _onSignout() {
-        UserBlockModel.removeSession();
+        HeaderBarModel.removeSession();
         this._eventBus.triggerEvent("signoutResponse", {isAuth: false});
     }
 
