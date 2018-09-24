@@ -130,6 +130,25 @@ body {
     margin: 10px 2px;
 }
 
+/* header */
+ .header-bar {
+     display: flex;
+     flex-direction: row;
+     justify-content: flex-end;
+     background-color: #59626B;
+ }
+
+.header-bar__button {
+    text-decoration: none;
+    color: initial;
+
+    text-align: center;
+    background-color: lightgray;
+
+    margin: 10px 2px;
+    width: 128px;
+}
+
 /*hz*/
 
 table {
