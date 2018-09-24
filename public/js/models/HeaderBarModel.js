@@ -1,3 +1,5 @@
+import Net from "../lib/net";
+
 export default class HeaderBarModel {
 
     constructor(eventBus) {
@@ -14,18 +16,14 @@ export default class HeaderBarModel {
     }
 
     _checkSession(callback) {
-        const xhr = new XMLHttpRequest();
-        xhr.withCredentials = true;
-        xhr.open("GET", "/api/checkSession", true);
-        xhr.onreadystatechange = () => {
-            if (xhr.readyState !== 4) {
-                return
-            }
-
-            callback(xhr);
-        };
-        xhr.send();
-
+        Net.doGet({url:"/api/checkSession"})
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`fetch error (url: ${response.url}, status: ${response.status})`);
+                }
+                callback(response);
+            })
+            .catch(error => console.error(error));
     }
 
     _onSignout() {
@@ -34,9 +32,12 @@ export default class HeaderBarModel {
     }
 
     static removeSession() {
-        const xhr = new XMLHttpRequest();
-        xhr.withCredentials = true;
-        xhr.open("GET", "/api/removeSession", true);
-        xhr.send();
+        Net.doGet({url:"/api/removeSession"})
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`fetch error (url: ${response.url}, status: ${response.status})`);
+                }
+            })
+            .catch(error => console.error(error));
     }
 }

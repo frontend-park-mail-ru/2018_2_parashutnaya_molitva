@@ -28,10 +28,11 @@ export default class SignupModel {
             }).then(resp => {
                 if (resp.status === 200) {
                     this._eventBus.triggerEvent('signupSuccess', {});
+                } else {
+                    resp
+                        .json()
+                        .then(data => this._eventBus.triggerEvent('signupResponse', data));
                 }
-                resp
-                    .json()
-                    .then(data => this._eventBus.triggerEvent('signupResponse', data));
             }).catch(err => {
                 console.error(err.message);
             });
