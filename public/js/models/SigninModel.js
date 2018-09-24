@@ -1,5 +1,5 @@
 import Validation from "../lib/validation";
-import doReq from "../lib/net";
+import Net from "../lib/net";
 
 
 export default class SigninModel {
@@ -34,21 +34,17 @@ export default class SigninModel {
             return;
         }
 
-        doReq({
-            callback: (resp) => {
-                if (resp.status === 401) {
-                    resp.json().then((parsedData) => this._eventBus.triggerEvent("signinResponse", parsedData));
-                } else if (resp.status === 200) {
-                    this._eventBus.triggerEvent('signinSuccess');
-                }
-            },
-            method: "POST",
-            body: JSON.stringify(data),
-            headers: {
-                'Content-Type': 'application/json; charset=utf-8',
-            },
-            credentials: 'same-origin',
-            url : '/api/signin',
-        })
+        Net.doPost({
+            url: '/api/signin/',
+            body: data,
+        }).then(resp => {
+            if (resp.status === 200) {
+                this._eventBus.triggerEvent('signinSuccess', {});
+            } else {
+                resp
+                    .json()
+                    .then(data => this._eventBus.triggerEvent('signinResponse', data));
+            }
+        });
     }
 }
