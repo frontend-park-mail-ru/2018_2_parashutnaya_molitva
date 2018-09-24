@@ -1,0 +1,7 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="params">
+    <div class="header-bar">
+        <a class="button header-bar__button header-bar__button-signin" href="/signin">Sign in</a>
+        <a class="button header-bar__button header-bar__button-signup" href="/signup">Sign up</a>
+        <a class="button header-bar__button header-bar__button-signout hidden" href="/">Sign out</a>
+    </div>
+</fest:template>
