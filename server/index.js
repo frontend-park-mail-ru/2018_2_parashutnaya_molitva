@@ -49,51 +49,69 @@ let users = {
     }
 };
 
+const scoreboard = {
+    pagesCount: 4,
+    linksCount: 3,
+    lineInPage: 3,
+};
+
+const scoreboardUsers = [
+    {
+        'username': 'usernameTest1',
+        'score': '1488',
+    },
+    {
+        'username': 'usernameTest2',
+        'score': '1488',
+    },
+    {
+        'username': 'usernameTest3',
+        'score': '1488',
+    },
+    {
+        'username': 'usernameTest4',
+        'score': '1488',
+    },
+    {
+        'username': 'usernameTest5',
+        'score': '1488',
+    },
+    {
+        'username': 'usernameTest6',
+        'score': '1488',
+    },
+    {
+        'username': 'usernameTest7',
+        'score': '1488',
+    },
+    {
+        'username8': 'usernameTest8',
+        'score': '1488',
+    },
+    {
+        'username': 'usernameTest',
+        'score': '1488',
+    },
+    {
+        'username': 'usernameTest',
+        'score': '1488',
+    },
+];
+
+
+app.get('/api/scoreboard/pages/', (req, res) => {
+   const page = req.query.page;
+   console.log(page);
+   res.status(200).json(scoreboardUsers.filter((val, index) => {
+       if (index >= (page - 1 ) * scoreboard.lineInPage && index <= page * scoreboard.lineInPage) {
+           return val;
+       }
+   }));
+
+});
 
 app.get('/api/scoreboard', (req, res) => {
-    res.status(200).json([
-        {
-            'username': 'usernameTest',
-            'score': '1488',
-        },
-        {
-            'username': 'usernameTest',
-            'score': '1488',
-        },
-        {
-            'username': 'usernameTest',
-            'score': '1488',
-        },
-        {
-            'username': 'usernameTest',
-            'score': '1488',
-        },
-        {
-            'username': 'usernameTest',
-            'score': '1488',
-        },
-        {
-            'username': 'usernameTest',
-            'score': '1488',
-        },
-        {
-            'username': 'usernameTest',
-            'score': '1488',
-        },
-        {
-            'username': 'usernameTest',
-            'score': '1488',
-        },
-        {
-            'username': 'usernameTest',
-            'score': '1488',
-        },
-        {
-            'username': 'usernameTest',
-            'score': '1488',
-        },
-
-    ]);
+    res.status(200).json(scoreboard);
 });
 
 

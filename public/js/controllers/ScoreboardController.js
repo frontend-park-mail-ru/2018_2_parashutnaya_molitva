@@ -6,6 +6,8 @@ const eventList = [
     'load',
     'loadResponse',
     'loadWaiting',
+    'loadPaginator',
+    'loadPaginatorResponse'
 ];
 
 export default class ScoreboardController {

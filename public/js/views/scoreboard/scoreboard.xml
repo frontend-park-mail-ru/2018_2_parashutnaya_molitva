@@ -1,6 +1,6 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="params">
     <div class="scoreboard section">
-    <div class="scoreboard__loading hidden">Loading...</div>
+        <div class="scoreboard__loading hidden">Loading...</div>
         <table style="width:100%">
             <thead>
                 <tr>
@@ -21,6 +21,7 @@
                 </fest:for>
             </tbody>
         </table>
+        <div class="paginator"></div>
         <a class="button menu__button" href="/">Menu</a>
     </div>
 </fest:template>

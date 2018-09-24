@@ -43,10 +43,22 @@ body {
     display: none !important;
 }
 
+/* paginator components */
+
+.paginator__link {
+    display: inline-block;
+    padding: 8px 16px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.paginator__link_current {
+    background-color: #3e8e41;
+}
+
 /*menu components*/
 
 .menu__button {
-    text-decoration: none;
     color: initial;
 
     text-align: center;
