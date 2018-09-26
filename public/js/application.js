@@ -5,16 +5,31 @@ import MenuController from './controllers/MenuController.js';
 import Router from './lib/router.js';
 import SigninController from "./controllers/SiginController";
 import SignupController from "./controllers/SignupController";
+import HeaderBarController from "./controllers/HeaderBarController";
+import EventBus from "./lib/eventbus";
 
 document.addEventListener('DOMContentLoaded', () => {
-    const pageBody = document.getElementById('pageBody');
+    const mainBody = document.querySelector('.main');
+    const headerBody = document.querySelector('.header');
+    let router = new Router(mainBody);
 
-    let router = new Router(pageBody);
-    const aboutController = new AboutController();
-    const scoreboardController = new ScoreboardController();
-    const menuController = new MenuController();
+    const events = [
+        'mainRender',
+    ];
+
+    const globalEventBus = new EventBus(events);
+
+    const aboutController = new AboutController(globalEventBus);
+    const scoreboardController = new ScoreboardController(globalEventBus);
+    const menuController = new MenuController(globalEventBus);
     const signinController = new SigninController(router);
     const signupContoller = new SignupController(router);
+
+    const headerBarController = new HeaderBarController();
+
+    globalEventBus.subscribeToEvent('mainRender', () => {
+        headerBarController.headerBarView.render(headerBody);
+    });
 
     router.add('/about', aboutController.aboutView);
     router.add('/scoreboard', scoreboardController.scoreboardView);

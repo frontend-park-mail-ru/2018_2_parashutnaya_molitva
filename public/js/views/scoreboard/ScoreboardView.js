@@ -3,8 +3,8 @@ import template from './scoreboard.xml';
 import Paginator from "../../components/paginator";
 
 class ScoreboardView extends View {
-    constructor(eventBus) {
-        super(template, eventBus);
+    constructor({eventBus = {}, globalEventBus = {}} = {}) {
+        super(template, eventBus, globalEventBus);
         this._eventBus.subscribeToEvent('loadResponse', this._onLoadResponse.bind(this));
         this._eventBus.subscribeToEvent('loadWaiting', this._onLoadWaiting.bind(this));
         this._eventBus.subscribeToEvent('loadPaginatorResponse', this._onLoadPaginatorResponse.bind(this));
@@ -14,6 +14,7 @@ class ScoreboardView extends View {
 
     render(root, data = {}) {
         super.render(root, data);
+        this._globalEventBus.triggerEvent('mainRender');
         this._loadingEl = this.el.querySelector(".scoreboard__loading");
         this._eventBus.triggerEvent('loadPaginator');
         this._eventBus.triggerEvent('load', {pageNum: 1});

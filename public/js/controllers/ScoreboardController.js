@@ -11,11 +11,11 @@ const eventList = [
 ];
 
 export default class ScoreboardController {
-    constructor() {
-        this._eventBus = new EventBus(eventList);
+    constructor({globalEventBus = {}} = {}) {
+        const eventBus = new EventBus(eventList);
 
-        this.scoreboardView = new ScoreboardView(this._eventBus);
-        this.scoreboardModel = new ScoreboardModel(this._eventBus);
+        this.scoreboardView = new ScoreboardView({eventBus, globalEventBus});
+        this.scoreboardModel = new ScoreboardModel(eventBus);
 
     }
 }

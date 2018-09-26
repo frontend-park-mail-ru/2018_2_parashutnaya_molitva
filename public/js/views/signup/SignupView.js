@@ -2,7 +2,7 @@ import View from '../../lib/view.js';
 import template from './signup.xml';
 
 export default class SignupView extends View {
-    constructor(eventBus) {
+    constructor({eventBus = {}} = {}) {
         super(template, eventBus);
         this._eventBus.subscribeToEvent('changeEmailResponse', this._onChangeEmailResponse.bind(this));
         this._eventBus.subscribeToEvent('changePasswordResponse', this._onChangePassResponse.bind(this));

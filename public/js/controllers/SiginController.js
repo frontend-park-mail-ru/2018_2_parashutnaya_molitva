@@ -10,10 +10,10 @@ const eventList = [
 
 export default class SigninController {
     constructor(router) {
-        this._eventBus = new EventBus(eventList);
-        this._eventBus.subscribeToEvent('signinSuccess', router.toStartPage.bind(router));
+        const eventBus = new EventBus(eventList);
+        eventBus.subscribeToEvent('signinSuccess', router.toStartPage.bind(router));
 
-        this.signinView = new SigninView(this._eventBus);
-        this.signinModel = new SigninModel(this._eventBus);
+        this.signinView = new SigninView({eventBus});
+        this.signinModel = new SigninModel(eventBus);
     }
 }

@@ -16,9 +16,9 @@ const eventList = [
 
 export default class SignupController {
     constructor(router) {
-        this._eventBus = new EventBus(eventList);
-        this._eventBus.subscribeToEvent('signupSuccess', router.toStartPage.bind(router));
-        this.signupView = new SignupView(this._eventBus);
-        this.signupModel = new SignupModel(this._eventBus);
+        const eventBus = new EventBus(eventList);
+        eventBus.subscribeToEvent('signupSuccess', router.toStartPage.bind(router));
+        this.signupView = new SignupView({eventBus});
+        this.signupModel = new SignupModel(eventBus);
     }
 }
