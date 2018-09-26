@@ -38,7 +38,7 @@ class ScoreboardView extends View {
                 pagesCount: data.result.pagesCount,
                 linksCount: data.result.linksCount,
                 clickCallback,
-                styleClassesCurrent: ['paginator__link_current'],
+                styleClassesCurrent: ['paginator__button_current'],
                 styleClassesOther: ['button'],
             });
             this._paginator.render(root);
