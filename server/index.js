@@ -50,8 +50,8 @@ let users = {
 };
 
 const scoreboard = {
-    pagesCount: 4,
-    linksCount: 3,
+    pagesCount: 3,
+    linksCount: 2,
     lineInPage: 3,
 };
 
@@ -85,33 +85,57 @@ const scoreboardUsers = [
         'score': '1488',
     },
     {
-        'username8': 'usernameTest8',
+        'username': 'usernameTest8',
         'score': '1488',
     },
     {
-        'username': 'usernameTest',
+        'username': 'usernameTest9',
         'score': '1488',
     },
     {
-        'username': 'usernameTest',
+        'username': 'usernameTest10',
         'score': '1488',
     },
 ];
 
 
 app.get('/api/scoreboard/pages/', (req, res) => {
-   const page = req.query.page;
-   console.log(page);
-   res.status(200).json(scoreboardUsers.filter((val, index) => {
-       if (index >= (page - 1 ) * scoreboard.lineInPage && index <= page * scoreboard.lineInPage) {
-           return val;
-       }
-   }));
+    const page = req.query.page;
+    const lines = req.query.lines;
+    const first = (page - 1) * lines;
+    const last = page * lines >= scoreboardUsers.length ? scoreboardUsers.length : page * lines ;
+
+    console.log(page);
+    res.status(200).json(scoreboardUsers.filter((val, index) => {
+        if (index >= first && index < last) {
+            return val;
+        }
+    }));
 
 });
 
 app.get('/api/scoreboard', (req, res) => {
-    res.status(200).json(scoreboard);
+    const lines = req.query.lines;
+    if (lines !== undefined) {
+        if (lines === 0) {
+            res.status(400).json({
+                error: 'lines can\'t be equal to 0',
+            });
+            return;
+        }
+
+        const pagesCount = (scoreboardUsers.length / lines ^ 0) + (scoreboard.length % lines === 0 ? 0 : 1);
+        res.status(200).json({
+            error: '',
+            result: {
+                pagesCount
+            },
+        });
+
+        return;
+    }
+
+    res.status(400).end();
 });
 
 

@@ -1,13 +1,13 @@
 // 1 2 3, 5
 const nope = () => null;
 export default class Paginator {
-    constructor({pagesCount, linksCount, clickCallback = nope, styleClassCurrent, styleClassOther} = {}) {
+    constructor({pagesCount, linksCount, clickCallback = nope, styleClassesCurrent = [], styleClassesOther = []} = {}) {
         this._pagesCount = pagesCount;
         this._linksCount = linksCount;
         this._clickCallback = clickCallback;
         this._links = [];
-        this._styleClassCurrent = styleClassCurrent;
-        this._styleClassOther = styleClassOther;
+        this._styleClassesCurrent = styleClassesCurrent;
+        this._styleClassesOther = styleClassesOther;
 
         this._firstNum = 1;
         this._lastNum = (this._linksCount < this._pagesCount ? this._linksCount : this._pagesCount);
@@ -17,16 +17,19 @@ export default class Paginator {
             this._links[i].addEventListener('click', this._onLinkClick.bind(this));
             this._links[i].textContent = i + 1;
             if (i === 0) {
-                this._links[i].classList.add(this._styleClassCurrent);
+                this._styleClassesCurrent.forEach(classVal => {
+                    this._links[i].classList.add(classVal);
+                });
             }
 
-            this._links[i].classList.add(this._styleClassOther);
+            this._styleClassesOther.forEach(classVal => {
+                this._links[i].classList.add(classVal);
+            });
 
         }
     }
 
     render(root) {
-
         // Отменить выделение блока
         root.addEventListener('mousedown', (e) => e.preventDefault());
         this._links.forEach(val => root.appendChild(val));
@@ -38,29 +41,39 @@ export default class Paginator {
 
         if (typeof +linkStr === "number") {
             const linkNum = +linkStr;
-            if (linkNum === (this._lastNum + this._firstNum) / 2 || linkNum === 1
-                || linkNum === this._pagesCount) {
+
+            if (linkNum === (this._lastNum + this._firstNum) / 2
+                || (linkNum < (1 + this._linksCount) / 2 && this._firstNum === 1)
+                || (linkNum > (this._pagesCount - this._linksCount + this._pagesCount) / 2
+                    && this._lastNum === this._pagesCount)
+                || linkNum === this._pagesCount ) {
                 this._change(this._firstNum, this._lastNum, linkNum);
             } else if (linkNum > (this._lastNum + this._firstNum) / 2) {
                 this._change(this._firstNum + 1, this._lastNum + 1, linkNum);
             } else if (linkNum < (this._lastNum + this._firstNum) / 2) {
                 this._change(this._firstNum - 1, this._lastNum - 1, linkNum);
             }
+
             this._clickCallback(linkNum);
         }
     }
 
     _change(firstNum, lastNum, current) {
         this._firstNum = firstNum;
-        this._lastNum = lastNum;
+        this._lastNum = (lastNum >= this._pagesCount ? this._pagesCount : lastNum);
         this._links.forEach(val => {
             if (firstNum === current) {
-                val.classList.add(this._styleClassCurrent);
+                this._styleClassesCurrent.forEach(classVal => {
+                    val.classList.add(classVal);
+                });
             } else {
-                if (val.classList.contains(this._styleClassCurrent)) {
-                    val.classList.remove(this._styleClassCurrent);
-                }
+                this._styleClassesCurrent.forEach(classVal => {
+                    if (val.classList.contains(classVal)) {
+                        val.classList.remove(classVal);
+                    }
+                });
             }
+
             val.textContent = firstNum++;
 
         })

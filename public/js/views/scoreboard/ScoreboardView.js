@@ -8,7 +8,6 @@ class ScoreboardView extends View {
         this._eventBus.subscribeToEvent('loadResponse', this._onLoadResponse.bind(this));
         this._eventBus.subscribeToEvent('loadWaiting', this._onLoadWaiting.bind(this));
         this._eventBus.subscribeToEvent('loadPaginatorResponse', this._onLoadPaginatorResponse.bind(this));
-
         this._paginator = null;
     }
 
@@ -22,7 +21,13 @@ class ScoreboardView extends View {
     }
 
     _onLoadPaginatorResponse(data) {
-        if (data.pagesCount !== undefined && data.linksCount !== undefined) {
+
+        if (data.error) {
+            console.error(data.error);
+            return;
+        }
+
+        if (data.result.pagesCount !== undefined && data.result.linksCount !== undefined) {
 
             const clickCallback = (pageNum) => {
                 this._eventBus.triggerEvent('load', {pageNum});
@@ -30,11 +35,11 @@ class ScoreboardView extends View {
 
             const root = this.el.querySelector(".paginator");
             this._paginator = new Paginator({
-                pagesCount: data.pagesCount,
-                linksCount: data.linksCount,
+                pagesCount: data.result.pagesCount,
+                linksCount: data.result.linksCount,
                 clickCallback,
-                styleClassCurrent: 'paginator__link_current',
-                styleClassOther: 'paginator__link',
+                styleClassesCurrent: ['paginator__link_current'],
+                styleClassesOther: ['button'],
             });
             this._paginator.render(root);
         } else {
@@ -63,7 +68,9 @@ class ScoreboardView extends View {
         }
 
         this.el.innerHTML = this.template({users: data});
-        this._paginator.render(this.el.querySelector('.paginator'));
+        if (this._paginator !== null) {
+            this._paginator.render(this.el.querySelector('.paginator'));
+        }
     }
 }
 
