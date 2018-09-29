@@ -10,10 +10,10 @@ const eventList = [
 ];
 
 export default class MenuController {
-    constructor() {
-        this._eventBus = new EventBus(eventList);
-        this.menuView = new MenuView(this._eventBus);
-        this.menuModel = new MenuModel(this._eventBus);
+    constructor({globalEventBus = {}} = {}) {
+        const eventBus = new EventBus(eventList);
+        this.menuView = new MenuView({eventBus, globalEventBus});
+        this.menuModel = new MenuModel(eventBus);
     }
 
 }

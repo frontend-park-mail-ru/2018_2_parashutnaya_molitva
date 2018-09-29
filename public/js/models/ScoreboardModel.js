@@ -25,6 +25,7 @@ export default class ScoreboardModel {
     }
 
     _onLoad({pageNum = 1} = {}) {
+        this._eventBus.triggerEvent('loadWaiting');
         Net.doGet({
             url: `/api/scoreboard/pages?page=${pageNum}&lines=${this._pageLines}`
         }).then(resp => {
@@ -38,7 +39,5 @@ export default class ScoreboardModel {
             console.error(err);
             this._eventBus.triggerEvent('loadResponse', {});
         });
-
-        this._eventBus.triggerEvent('loadWaiting');
     }
 }

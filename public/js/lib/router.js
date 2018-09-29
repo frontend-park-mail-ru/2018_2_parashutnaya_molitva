@@ -1,43 +1,70 @@
-import NotFoundView from '../views/notfound/NotFoundView.js';
-
 export default class Router {
     constructor(root) {
         this.root = root;
         this.routes = new Map();
-        this.notFoundView = new NotFoundView();
+
         this.currentRoute = null;
+        this.isCurrentNotFound = false;
     }
 
+    /**
+     * Переходит на начальную страницу с путем '/'
+     */
     toStartPage() {
         this._change("/");
     }
 
-    add(path, view) {
-        this.routes.set(path, view);
+    /**
+     * Добавляет маршрут для роутера.
+     * @param path путь при переходе на который будет вызвана view
+     * @param root элемент куда будет рисоваться view, по-умолчание это this.root
+     * @param view компонент, который отрисуется
+     */
+    add(path, root = this.root, view) {
+        this.routes.set(path, {
+            root,
+            view
+        });
     }
 
-    _change(path) {
+    /**
+     * Устанавливает View компонент, который будет отрисовываться, если не найден запрашиваемый маршрут
+     * @param root элемент куда будет рисоваться view, по-умолчание это this.root
+     * @param view компонент, который отрисуется
+     */
+    setNotFoundView(root = this.root, view){
+        this.notFoundView = view;
+        this.notFoundViewRoot = root;
+    }
 
+    /**
+     * Переход на маршрут с путем path
+     * @param path путь
+     * @private
+     */
+    _change(path) {
         if (this.currentRoute === path) {
-            return
+            return;
+        }
+
+
+        let currentData = this.routes.get(this.currentRoute);
+        if (currentData) {
+            currentData.view.hide(currentData.root);
+        }
+
+        if (this.isCurrentNotFound){
+            this.notFoundView.hide(this.notFoundViewRoot);
         }
 
         if (this.routes.has(path)) {
-
-            let currentView = this.routes.get(this.currentRoute) || this.notFoundView;
-            currentView.hide(this.root);
-
-            let view = this.routes.get(path);
-            view.render(this.root);
-
+            let data = this.routes.get(path);
+            data.view.render(data.root);
             this.currentRoute = path;
         } else {
-
-            let currentView = this.routes.get(this.currentRoute);
-            currentView.hide(this.root);
-
-            this.notFoundView.render(this.root);
+            this.notFoundView.render(this.notFoundViewRoot);
             this.currentRoute = null;
+            this.isCurrentNotFound = true;
         }
     }
 
@@ -45,6 +72,9 @@ export default class Router {
         return path.charAt(path.length - 1) === '/' && path !== '/' ? path.slice(0, path.length - 1) : path;
     }
 
+    /**
+     * Запускает роутер
+     */
     start() {
         this.root.addEventListener('click', (ev) => {
             if (ev.target.tagName === 'A') {

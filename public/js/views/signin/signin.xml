@@ -3,12 +3,15 @@
         <div class="warning signin__warning"></div>
         <form class="signin__form" novalidate="novalidate">
             <label class="signin__label" for="email">Email</label>
-            <input class="input signin__input" type="email" name="email" id="email" placeholder="Email" autofocus="true"/>
+            <input class="input signin__input" type="email" name="email" id="email" placeholder="Email" autofocus="true"
+                   autocomplete="autocomplete"/>
 
             <label class="input signin_label" for="password">Password</label>
-            <input class="input signin__input" type="password" name="password" id="password" placeholder="Password"/>
+            <input class="input signin__input" type="password" name="password" id="password" placeholder="Password"
+                   autocomplete="autocomplete"/>
 
-            <input class="button signin__submit" type="submit" name="submit"/>
+            <input class="button signup__submit" type="submit" name="submit" value="Sign in"/>
+            <a class="button signup__back-button" href="/">Menu</a>
         </form>
     </div>
 </fest:template>

@@ -2,7 +2,7 @@ import View from "../../lib/view.js"
 import template from "./signin.xml"
 
 export class SigninView extends View {
-    constructor(eventBus) {
+    constructor({eventBus = {}} = {}) {
         super(template, eventBus);
         this._eventBus.subscribeToEvent("signinResponse", this._onSubmitResponse.bind(this));
     }
