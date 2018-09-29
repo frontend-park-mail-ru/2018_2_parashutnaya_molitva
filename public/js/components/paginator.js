@@ -1,5 +1,5 @@
 // 1 2 3, 5
-const nope = () => null;
+const noop = () => null;
 export default class Paginator {
     /**
      * Создает пагинатор
@@ -9,7 +9,7 @@ export default class Paginator {
      * @param styleClassesCurrent стили для кнопки, которая указывает на текущую страницу
      * @param styleClassesOther общие стили для кнопки
      */
-    constructor({pagesCount, linksCount, clickCallback = nope, styleClassesCurrent = [], styleClassesOther = []} = {}) {
+    constructor ({ pagesCount, linksCount, clickCallback = noop, styleClassesCurrent = [], styleClassesOther = [] } = {}) {
         this._pagesCount = pagesCount;
         this._linksCount = linksCount;
         this._clickCallback = clickCallback;
@@ -33,7 +33,6 @@ export default class Paginator {
             this._styleClassesOther.forEach(classVal => {
                 this._links[i].classList.add(classVal);
             });
-
         }
     }
 
@@ -41,25 +40,25 @@ export default class Paginator {
      * Вставляет пагинатор в root элемент
      * @param root
      */
-    render(root) {
+    render (root) {
         root.innerHTML = '';
         // Отменить выделение блока
         root.addEventListener('mousedown', (e) => e.preventDefault());
         this._links.forEach(val => root.appendChild(val));
     }
 
-    _onLinkClick(ev) {
+    _onLinkClick (ev) {
         ev.preventDefault();
         const linkStr = ev.target.textContent;
 
-        if (typeof +linkStr === "number") {
+        if (typeof +linkStr === 'number') {
             const linkNum = +linkStr;
 
-            if (linkNum === (this._lastNum + this._firstNum) / 2
-                || (linkNum < (1 + this._linksCount) / 2 && this._firstNum === 1)
-                || (linkNum > (this._pagesCount - this._linksCount + this._pagesCount) / 2
-                    && this._lastNum === this._pagesCount)
-                || linkNum === this._pagesCount ) {
+            if (linkNum === (this._lastNum + this._firstNum) / 2 ||
+                (linkNum < (1 + this._linksCount) / 2 && this._firstNum === 1) ||
+                (linkNum > (this._pagesCount - this._linksCount + this._pagesCount) / 2 &&
+                    this._lastNum === this._pagesCount) ||
+                linkNum === this._pagesCount) {
                 this._change(this._firstNum, this._lastNum, linkNum);
             } else if (linkNum > (this._lastNum + this._firstNum) / 2) {
                 this._change(this._firstNum + 1, this._lastNum + 1, linkNum);
@@ -71,7 +70,7 @@ export default class Paginator {
         }
     }
 
-    _change(firstNum, lastNum, current) {
+    _change (firstNum, lastNum, current) {
         this._firstNum = firstNum;
         this._lastNum = (lastNum >= this._pagesCount ? this._pagesCount : lastNum);
         this._links.forEach(val => {
@@ -88,8 +87,6 @@ export default class Paginator {
             }
 
             val.textContent = firstNum++;
-
-        })
+        });
     }
-
 }

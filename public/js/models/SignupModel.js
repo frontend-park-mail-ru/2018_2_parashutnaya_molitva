@@ -1,8 +1,8 @@
-import Validation from "../lib/validation";
-import Net from "../lib/net";
+import Validation from '../lib/validation';
+import Net from '../lib/net';
 
 export default class SignupModel {
-    constructor(eventBus) {
+    constructor (eventBus) {
         this._eventBus = eventBus;
         this._eventBus.subscribeToEvent('changeEmail', this._onChangeEmail.bind(this));
         this._eventBus.subscribeToEvent('changePassword', this._onChangePassword.bind(this));
@@ -12,19 +12,17 @@ export default class SignupModel {
         this._validInputMap = {
             pass: false,
             repass: false,
-            email: false,
+            email: false
         };
     }
 
-    _onSignup(data) {
-
+    _onSignup (data) {
         const isValid = Object.entries(this._validInputMap).reduce((res, el) => (res && el[1]), true);
 
         if (isValid) {
-
             Net.doPost({
                 url: '/api/signup',
-                body: data,
+                body: data
             }).then(resp => {
                 if (resp.status === 200) {
                     this._eventBus.triggerEvent('signupSuccess', {});
@@ -43,14 +41,14 @@ export default class SignupModel {
         }
     }
 
-    _onChangePasswordRepeat(data) {
+    _onChangePasswordRepeat (data) {
         const repass = data.repass;
         const pass = data.pass;
         const errRepass = Validation.validateRepass(repass, pass);
 
         if (errRepass) {
             this._validInputMap['repass'] = false;
-            this._eventBus.triggerEvent('changePasswordRepeatResponse', {error: errRepass});
+            this._eventBus.triggerEvent('changePasswordRepeatResponse', { error: errRepass });
             return;
         }
 
@@ -58,12 +56,12 @@ export default class SignupModel {
         this._eventBus.triggerEvent('changePasswordRepeatResponse', {});
     }
 
-    _onChangePassword(data) {
+    _onChangePassword (data) {
         const pass = data.pass;
         const errPass = Validation.validatePassword(pass, true);
         if (errPass) {
             this._validInputMap['pass'] = false;
-            this._eventBus.triggerEvent('changePasswordResponse', {error: errPass});
+            this._eventBus.triggerEvent('changePasswordResponse', { error: errPass });
             return;
         }
 
@@ -71,12 +69,12 @@ export default class SignupModel {
         this._eventBus.triggerEvent('changePasswordResponse', {});
     }
 
-    _onChangeEmail(data) {
+    _onChangeEmail (data) {
         const email = data.email;
         const errEmail = Validation.validateEmail(email, true);
         if (errEmail) {
             this._validInputMap['email'] = false;
-            this._eventBus.triggerEvent('changeEmailResponse', {error: errEmail});
+            this._eventBus.triggerEvent('changeEmailResponse', { error: errEmail });
             return;
         }
 

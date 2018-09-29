@@ -1,5 +1,5 @@
 export default class Router {
-    constructor(root) {
+    constructor (root) {
         this.root = root;
         this.routes = new Map();
 
@@ -10,8 +10,8 @@ export default class Router {
     /**
      * Переходит на начальную страницу с путем '/'
      */
-    toStartPage() {
-        this._change("/");
+    toStartPage () {
+        this._change('/');
     }
 
     /**
@@ -20,7 +20,7 @@ export default class Router {
      * @param root элемент куда будет рисоваться view, по-умолчание это this.root
      * @param view компонент, который отрисуется
      */
-    add(path, root = this.root, view) {
+    add (path, root = this.root, view) {
         this.routes.set(path, {
             root,
             view
@@ -32,7 +32,7 @@ export default class Router {
      * @param root элемент куда будет рисоваться view, по-умолчание это this.root
      * @param view компонент, который отрисуется
      */
-    setNotFoundView(root = this.root, view){
+    setNotFoundView (root = this.root, view) {
         this.notFoundView = view;
         this.notFoundViewRoot = root;
     }
@@ -42,18 +42,17 @@ export default class Router {
      * @param path путь
      * @private
      */
-    _change(path) {
+    _change (path) {
         if (this.currentRoute === path) {
             return;
         }
-
 
         let currentData = this.routes.get(this.currentRoute);
         if (currentData) {
             currentData.view.hide(currentData.root);
         }
 
-        if (this.isCurrentNotFound){
+        if (this.isCurrentNotFound) {
             this.notFoundView.hide(this.notFoundViewRoot);
         }
 
@@ -68,14 +67,14 @@ export default class Router {
         }
     }
 
-    static _normalizePath(path) {
+    static _normalizePath (path) {
         return path.charAt(path.length - 1) === '/' && path !== '/' ? path.slice(0, path.length - 1) : path;
     }
 
     /**
      * Запускает роутер
      */
-    start() {
+    start () {
         this.root.addEventListener('click', (ev) => {
             if (ev.target.tagName === 'A') {
                 ev.preventDefault();
@@ -84,6 +83,5 @@ export default class Router {
         });
 
         this._change(Router._normalizePath(window.location.pathname));
-
     }
 }

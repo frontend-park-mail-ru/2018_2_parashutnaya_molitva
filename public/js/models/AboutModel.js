@@ -1,4 +1,4 @@
 class AboutModel {
 }
 
-export {AboutModel}
+export { AboutModel };

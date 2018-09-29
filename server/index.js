@@ -18,21 +18,20 @@ app.use(express.static(publicRoot));
 app.use(cookie());
 app.use(body.json());
 
-const emptyWarning = "Email or password is empty";
-const emptyEmailWarning = "Email is empty";
-const emptyPasswordWarning = "Password is empty";
-const invalidWarning = "Email is invalid";
-const invalidPersonalData = "No such user with that Email or Password";
-const invalidPasswordData = "Must contain at least 8 characters, 1 number, 1 upper and 1 lowercase";
-const existUser = "User with such email already exist";
+const emptyEmailWarning = 'Email is empty';
+const emptyPasswordWarning = 'Password is empty';
+const invalidWarning = 'Email is invalid';
+const invalidPersonalData = 'No such user with that Email or Password';
+const invalidPasswordData = 'Must contain at least 8 characters, 1 number, 1 upper and 1 lowercase';
+const existUser = 'User with such email already exists';
 
-function validEmail(email) {
+function validEmail (email) {
     // RFC 2822. Покрывает 99.99% адресов.
     let re = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
     return re.test(String(email).toLowerCase());
 }
 
-function validPass(pass) {
+function validPass (pass) {
     // На продакшене исопльзовать регулярку
     // let re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.{8,})/;
     // return re.test(pass);
@@ -42,78 +41,76 @@ function validPass(pass) {
 
 let sessionids = {};
 let users = {
-    "sinimawath@gmail.com": {
-        email: "sinimawath@gmail.com",
-        pass: "asd",
-        score: 10,
+    'sinimawath@gmail.com': {
+        email: 'sinimawath@gmail.com',
+        pass: 'asd',
+        score: 10
     }
 };
 
 const scoreboard = {
     pagesCount: 3,
     linksCount: 2,
-    lineInPage: 3,
+    lineInPage: 3
 };
 
 const scoreboardUsers = [
     {
         'username': 'usernameTest1',
-        'score': '1488',
+        'score': '1488'
     },
     {
         'username': 'usernameTest2',
-        'score': '1488',
+        'score': '1488'
     },
     {
         'username': 'usernameTest3',
-        'score': '1488',
+        'score': '1488'
     },
     {
         'username': 'usernameTest4',
-        'score': '1488',
+        'score': '1488'
     },
     {
         'username': 'usernameTest5',
-        'score': '1488',
+        'score': '1488'
     },
     {
         'username': 'usernameTest6',
-        'score': '1488',
+        'score': '1488'
     },
     {
         'username': 'usernameTest7',
-        'score': '1488',
+        'score': '1488'
     },
     {
         'username': 'usernameTest8',
-        'score': '1488',
+        'score': '1488'
     },
     {
         'username': 'usernameTest9',
-        'score': '1488',
+        'score': '1488'
     },
     {
         'username': 'usernameTest10',
-        'score': '1488',
-    },
+        'score': '1488'
+    }
 ];
-
 
 app.get('/api/scoreboard/pages/', (req, res) => {
     const page = req.query.page;
     const lines = req.query.lines;
     const first = (page - 1) * lines;
-    const last = page * lines >= scoreboardUsers.length ? scoreboardUsers.length : page * lines ;
+    const last = page * lines >= scoreboardUsers.length ? scoreboardUsers.length : page * lines;
     let data = {
-        result : scoreboardUsers.filter((val, index) => {
+        result: scoreboardUsers.filter((val, index) => {
             if (index >= first && index < last) {
                 return val;
             }
-        }),
+        })
     };
     console.log(page);
     res.status(200).json(data);
-
 });
 
 app.get('/api/scoreboard', (req, res) => {
@@ -121,7 +118,7 @@ app.get('/api/scoreboard', (req, res) => {
     if (lines !== undefined) {
         if (lines === 0) {
             res.status(400).json({
-                error: 'lines can\'t be equal to 0',
+                error: 'lines can\'t be equal to 0'
             });
             return;
         }
@@ -131,7 +128,7 @@ app.get('/api/scoreboard', (req, res) => {
             error: '',
             result: {
                 pagesCount
-            },
+            }
         });
 
         return;
@@ -140,46 +137,44 @@ app.get('/api/scoreboard', (req, res) => {
     res.status(400).end();
 });
 
-
 app.post('/api/signin', (req, res) => {
     const email = req.body.email;
     const pass = req.body.pass;
 
     if (!email) {
         return res.status(401).json({
-            field: "email",
-            error: emptyEmailWarning,
+            field: 'email',
+            error: emptyEmailWarning
         });
     }
 
     if (!pass) {
         return res.status(401).json({
-            field: "pass",
-            error: emptyPasswordWarning,
+            field: 'pass',
+            error: emptyPasswordWarning
         });
     }
 
     if (!validEmail(email)) {
         return res.status(401).json({
-            field: "email",
-            error: invalidWarning,
+            field: 'email',
+            error: invalidWarning
         });
     }
 
     if (!users[email] || !(users[email].pass === pass)) {
         return res.status(401).json({
-            field: "all",
-            error: invalidPersonalData,
+            field: 'all',
+            error: invalidPersonalData
         });
     }
 
     const id = uuidv4();
     sessionids[id] = email;
-    res.cookie("sessionid", id, {expires: new Date(Date.now() + 90000)});
+    res.cookie('sessionid', id, { expires: new Date(Date.now() + 90000) });
     res.status(200);
     res.end();
 });
-
 
 app.post('/api/signup', (req, res) => {
     const email = req.body.email;
@@ -188,28 +183,28 @@ app.post('/api/signup', (req, res) => {
     if (!email) {
         return res.status(401).json({
             result: 'email',
-            error: emptyEmailWarning,
+            error: emptyEmailWarning
         });
     }
 
     if (!pass) {
         return res.status(401).json({
             result: 'pass',
-            error: emptyPasswordWarning,
+            error: emptyPasswordWarning
         });
     }
 
     if (!validEmail(email)) {
         return res.status(401).json({
             result: 'email',
-            error: invalidWarning,
+            error: invalidWarning
         });
     }
 
     if (users[email]) {
         return res.status(401).json({
             result: 'email',
-            error: existUser,
+            error: existUser
         });
     }
 
@@ -224,13 +219,13 @@ app.post('/api/signup', (req, res) => {
     users[email] = {
         email,
         pass,
-        score: 10,
+        score: 10
     };
 
     console.log(users[email].pass);
     const cookie = uuidv4();
     sessionids[cookie] = email;
-    res.cookie("sessionid", cookie, {expires: new Date(Date.now() + 900000)});
+    res.cookie('sessionid', cookie, { expires: new Date(Date.now() + 900000) });
     res.status(200).end();
 });
 
@@ -238,19 +233,18 @@ app.get('/api/checkSession', (req, res) => {
     let cookie = req.cookies['sessionid'];
     let email = sessionids[cookie];
     if (!email || !users[email]) {
-        return res.status(401).json({error: "Invalid cookie"});
+        return res.status(401).json({ error: 'Invalid cookie' });
     }
 
     res.status(200).end();
 });
-
 
 app.get('/api/removeSession', (req, res) => {
     res.clearCookie('sessionid').status(200).end();
 });
 
 app.get('*', (req, res) => {
-    fs.readFile(indexPath, {encoding: "utf-8"}, (err, file) => {
+    fs.readFile(indexPath, { encoding: 'utf-8' }, (err, file) => {
         if (err) {
             log(err);
             res.statusCode = 404;
@@ -261,7 +255,6 @@ app.get('*', (req, res) => {
         res.end();
     });
 });
-
 
 app.listen(process.env.PORT || port, function () {
     log(`Server listening port ${process.env.PORT || port}`);

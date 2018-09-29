@@ -1,6 +1,5 @@
 export default class MenuModel {
-
-    constructor(eventBus) {
+    constructor (eventBus) {
         this._eventBus = eventBus;
     }
 }
