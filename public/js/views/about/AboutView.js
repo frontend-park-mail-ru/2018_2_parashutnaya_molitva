@@ -8,7 +8,6 @@ class AboutView extends View {
 
     render(root, data = {}) {
         super.render(root, data);
-        this._globalEventBus.triggerEvent('mainRender');
     }
 }
 

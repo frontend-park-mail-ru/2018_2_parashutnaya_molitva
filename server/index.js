@@ -104,13 +104,15 @@ app.get('/api/scoreboard/pages/', (req, res) => {
     const lines = req.query.lines;
     const first = (page - 1) * lines;
     const last = page * lines >= scoreboardUsers.length ? scoreboardUsers.length : page * lines ;
-
+    let data = {
+        result : scoreboardUsers.filter((val, index) => {
+            if (index >= first && index < last) {
+                return val;
+            }
+        }),
+    };
     console.log(page);
-    res.status(200).json(scoreboardUsers.filter((val, index) => {
-        if (index >= first && index < last) {
-            return val;
-        }
-    }));
+    res.status(200).json(data);
 
 });
 
@@ -185,28 +187,28 @@ app.post('/api/signup', (req, res) => {
 
     if (!email) {
         return res.status(401).json({
-            field: 'email',
+            result: 'email',
             error: emptyEmailWarning,
         });
     }
 
     if (!pass) {
         return res.status(401).json({
-            field: 'pass',
+            result: 'pass',
             error: emptyPasswordWarning,
         });
     }
 
     if (!validEmail(email)) {
         return res.status(401).json({
-            field: 'email',
+            result: 'email',
             error: invalidWarning,
         });
     }
 
     if (users[email]) {
         return res.status(401).json({
-            field: 'email',
+            result: 'email',
             error: existUser,
         });
     }
@@ -214,7 +216,7 @@ app.post('/api/signup', (req, res) => {
     console.log(pass);
     if (!validPass(pass)) {
         return res.status(401).json({
-            field: 'pass',
+            result: 'pass',
             error: invalidPasswordData
         });
     }

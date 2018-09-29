@@ -10,9 +10,9 @@ const eventList = [
 ];
 
 export default class HeaderBarController {
-    constructor() {
+    constructor({globalEventBus = {}} = {}) {
         this._eventBus = new EventBus(eventList);
-        this.headerBarView = new HeaderBarView(this._eventBus);
+        this.headerBarView = new HeaderBarView(this._eventBus, globalEventBus);
         this.headerBarModel = new HeaderBarModel(this._eventBus);
     }
 }

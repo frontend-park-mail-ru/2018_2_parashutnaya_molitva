@@ -3,12 +3,10 @@ import template from './menu.xml';
 
 export default class MenuView extends View {
     constructor({eventBus = {}, globalEventBus = {}} = {}) {
-        super(template, eventBus, globalEventBus);
-        this._globalEventBus = globalEventBus;
+        super(template, eventBus);
     }
 
     render(root, data = {}) {
         super.render(root, data);
-        this._globalEventBus.triggerEvent('mainRender');
     }
 }

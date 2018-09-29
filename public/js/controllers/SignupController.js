@@ -15,9 +15,12 @@ const eventList = [
 ];
 
 export default class SignupController {
-    constructor(router) {
+    constructor({router, globalEventBus} = {}) {
         const eventBus = new EventBus(eventList);
-        eventBus.subscribeToEvent('signupSuccess', router.toStartPage.bind(router));
+        eventBus.subscribeToEvent('signupSuccess', () => {
+            router.toStartPage();
+            globalEventBus.triggerEvent('renderHeaderBar');
+        });
         this.signupView = new SignupView({eventBus});
         this.signupModel = new SignupModel(eventBus);
     }

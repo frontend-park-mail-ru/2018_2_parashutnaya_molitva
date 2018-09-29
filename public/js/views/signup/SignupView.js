@@ -31,9 +31,8 @@ export default class SignupView extends View {
     }
 
     _onSignupResponse(data) {
-        const field = data.field;
+        const field = data.result;
         const error = data.error;
-
         if (error && field) {
             switch (field) {
                 case 'email':
@@ -49,7 +48,6 @@ export default class SignupView extends View {
                     console.log('SignupView: _onSignupResponse: no such field: ', field);
             }
         }
-        // TODO: Если пустая ошибка или нет поля. Но этот коллбэк вызывается только если Модель получила ошибку 401 от сервера.
     }
 
     _onChangeRepassResponse(data) {

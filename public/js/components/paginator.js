@@ -1,6 +1,14 @@
 // 1 2 3, 5
 const nope = () => null;
 export default class Paginator {
+    /**
+     * Создает пагинатор
+     * @param pagesCount сколько всего страниц в пагинаторе
+     * @param linksCount сколько кнопок в пагинаторе
+     * @param clickCallback действие при клике на кнопку
+     * @param styleClassesCurrent стили для кнопки, которая указывает на текущую страницу
+     * @param styleClassesOther общие стили для кнопки
+     */
     constructor({pagesCount, linksCount, clickCallback = nope, styleClassesCurrent = [], styleClassesOther = []} = {}) {
         this._pagesCount = pagesCount;
         this._linksCount = linksCount;
@@ -29,7 +37,12 @@ export default class Paginator {
         }
     }
 
+    /**
+     * Вставляет пагинатор в root элемент
+     * @param root
+     */
     render(root) {
+        root.innerHTML = '';
         // Отменить выделение блока
         root.addEventListener('mousedown', (e) => e.preventDefault());
         this._links.forEach(val => root.appendChild(val));

@@ -13,7 +13,6 @@ const eventList = [
 export default class ScoreboardController {
     constructor({globalEventBus = {}} = {}) {
         const eventBus = new EventBus(eventList);
-
         this.scoreboardView = new ScoreboardView({eventBus, globalEventBus});
         this.scoreboardModel = new ScoreboardModel(eventBus);
 
