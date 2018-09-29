@@ -2,7 +2,7 @@ import AboutController from './controllers/AboutController';
 import ScoreboardController from './controllers/ScoreboardController';
 import MenuController from './controllers/MenuController.js';
 import Router from './lib/router.js';
-import SigninController from './controllers/SiginController';
+import SigninController from './controllers/SigninController';
 import SignupController from './controllers/SignupController';
 import HeaderBarController from './controllers/HeaderBarController';
 import NotFoundView from './views/notfound/NotFoundView';
