@@ -49,51 +49,93 @@ let users = {
     }
 };
 
+const scoreboard = {
+    pagesCount: 3,
+    linksCount: 2,
+    lineInPage: 3,
+};
+
+const scoreboardUsers = [
+    {
+        'username': 'usernameTest1',
+        'score': '1488',
+    },
+    {
+        'username': 'usernameTest2',
+        'score': '1488',
+    },
+    {
+        'username': 'usernameTest3',
+        'score': '1488',
+    },
+    {
+        'username': 'usernameTest4',
+        'score': '1488',
+    },
+    {
+        'username': 'usernameTest5',
+        'score': '1488',
+    },
+    {
+        'username': 'usernameTest6',
+        'score': '1488',
+    },
+    {
+        'username': 'usernameTest7',
+        'score': '1488',
+    },
+    {
+        'username': 'usernameTest8',
+        'score': '1488',
+    },
+    {
+        'username': 'usernameTest9',
+        'score': '1488',
+    },
+    {
+        'username': 'usernameTest10',
+        'score': '1488',
+    },
+];
+
+
+app.get('/api/scoreboard/pages/', (req, res) => {
+    const page = req.query.page;
+    const lines = req.query.lines;
+    const first = (page - 1) * lines;
+    const last = page * lines >= scoreboardUsers.length ? scoreboardUsers.length : page * lines ;
+
+    console.log(page);
+    res.status(200).json(scoreboardUsers.filter((val, index) => {
+        if (index >= first && index < last) {
+            return val;
+        }
+    }));
+
+});
 
 app.get('/api/scoreboard', (req, res) => {
-    res.status(200).json([
-        {
-            'username': 'usernameTest',
-            'score': '1488',
-        },
-        {
-            'username': 'usernameTest',
-            'score': '1488',
-        },
-        {
-            'username': 'usernameTest',
-            'score': '1488',
-        },
-        {
-            'username': 'usernameTest',
-            'score': '1488',
-        },
-        {
-            'username': 'usernameTest',
-            'score': '1488',
-        },
-        {
-            'username': 'usernameTest',
-            'score': '1488',
-        },
-        {
-            'username': 'usernameTest',
-            'score': '1488',
-        },
-        {
-            'username': 'usernameTest',
-            'score': '1488',
-        },
-        {
-            'username': 'usernameTest',
-            'score': '1488',
-        },
-        {
-            'username': 'usernameTest',
-            'score': '1488',
-        },
+    const lines = req.query.lines;
+    if (lines !== undefined) {
+        if (lines === 0) {
+            res.status(400).json({
+                error: 'lines can\'t be equal to 0',
+            });
+            return;
+        }
 
-    ]);
+        const pagesCount = (scoreboardUsers.length / lines ^ 0) + (scoreboard.length % lines === 0 ? 0 : 1);
+        res.status(200).json({
+            error: '',
+            result: {
+                pagesCount
+            },
+        });
+
+        return;
+    }
+
+    res.status(400).end();
 });
 
 
