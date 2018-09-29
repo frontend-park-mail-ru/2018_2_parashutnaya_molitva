@@ -49,7 +49,8 @@ class ScoreboardView extends View {
     }
 
     _onLoadWaiting() {
-        this._loadingEl.classList.remove("hidden");
+        // Индикатор загрузки появляется только, если загрузка происходит дольше 100 мс
+        this._loadingTimeOut = setTimeout( () => this._loadingEl.classList.remove("hidden"), 100);
 
     }
 
@@ -64,6 +65,8 @@ class ScoreboardView extends View {
         if (this._isClosed) {
             return;
         }
+
+        clearTimeout(this._loadingTimeOut);
         this._endLoadWaiting();
         const error = data.error;
         if (error) {
