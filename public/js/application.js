@@ -17,14 +17,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const globalEventBus = new EventBus(['renderHeaderBar']);
 
+    const headerBarController = new HeaderBarController({globalEventBus});
+    headerBarController.headerBarView.render(header);
+
     const aboutController = new AboutController();
     const scoreboardController = new ScoreboardController();
     const menuController = new MenuController();
     const signinController = new SigninController({router, globalEventBus});
     const signupContoller = new SignupController({router, globalEventBus});
 
-    const headerBarController = new HeaderBarController({globalEventBus});
-    headerBarController.headerBarView.render(header);
 
     router.add('/about', main, aboutController.aboutView);
     router.add('/scoreboard', main, scoreboardController.scoreboardView);

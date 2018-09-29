@@ -10,7 +10,8 @@ export default class HeaderBarView extends View {
     }
 
     render(root, data = {}) {
-        super.render(root, data)
+        super.render(root, data);
+        this._eventBus.triggerEvent("checkAuth");
     }
 
     _onRenderHeader(){
