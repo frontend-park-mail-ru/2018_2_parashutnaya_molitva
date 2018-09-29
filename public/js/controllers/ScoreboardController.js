@@ -1,6 +1,6 @@
-import {ScoreboardView} from "../views/scoreboard/ScoreboardView";
+import { ScoreboardView } from '../views/scoreboard/ScoreboardView';
 import ScoreboardModel from '../models/ScoreboardModel';
-import EventBus from "../lib/eventbus";
+import EventBus from '../lib/eventbus';
 
 const eventList = [
     'load',
@@ -11,10 +11,9 @@ const eventList = [
 ];
 
 export default class ScoreboardController {
-    constructor({globalEventBus = {}} = {}) {
+    constructor ({ globalEventBus = {} } = {}) {
         const eventBus = new EventBus(eventList);
-        this.scoreboardView = new ScoreboardView({eventBus, globalEventBus});
+        this.scoreboardView = new ScoreboardView({ eventBus, globalEventBus });
         this.scoreboardModel = new ScoreboardModel(eventBus);
-
     }
 }

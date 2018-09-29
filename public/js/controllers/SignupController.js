@@ -1,6 +1,6 @@
-import SignupView from "../views/signup/SignupView.js"
-import SignupModel from "../models/SignupModel";
-import EventBus from "../lib/eventbus";
+import SignupView from '../views/signup/SignupView.js';
+import SignupModel from '../models/SignupModel';
+import EventBus from '../lib/eventbus';
 
 const eventList = [
     'signup',
@@ -11,17 +11,17 @@ const eventList = [
     'changePassword',
     'changePasswordResponse',
     'changePasswordRepeat',
-    'changePasswordRepeatResponse',
+    'changePasswordRepeatResponse'
 ];
 
 export default class SignupController {
-    constructor({router, globalEventBus} = {}) {
+    constructor ({ router, globalEventBus } = {}) {
         const eventBus = new EventBus(eventList);
         eventBus.subscribeToEvent('signupSuccess', () => {
             router.toStartPage();
             globalEventBus.triggerEvent('renderHeaderBar');
         });
-        this.signupView = new SignupView({eventBus});
+        this.signupView = new SignupView({ eventBus });
         this.signupModel = new SignupModel(eventBus);
     }
 }

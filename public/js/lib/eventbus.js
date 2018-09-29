@@ -2,11 +2,11 @@ export default class EventBus {
     /**
      * @param listOfEvents Array[string] массив ивентов, доступных в этом eventBus
      */
-    constructor(listOfEvents) {
+    constructor (listOfEvents) {
         this.events = new Map();
         listOfEvents.forEach((eventName) =>
             this.events.set(eventName, [])
-        )
+        );
     }
 
     /**
@@ -14,9 +14,9 @@ export default class EventBus {
      * @param eventName string имя события
      * @param callback Function функция, которая выполнится при событии
      */
-    subscribeToEvent(eventName, callback) {
+    subscribeToEvent (eventName, callback) {
         if (!this.events.has(eventName)) {
-            throw "EventBus: Unknown event in";
+            throw new Error('EventBus: Unknown event in');
         }
 
         this.events.get(eventName).push(callback);
@@ -27,13 +27,13 @@ export default class EventBus {
      * @param eventName string имя события
      * @param args
      */
-    triggerEvent(eventName, ...args) {
+    triggerEvent (eventName, ...args) {
         if (!this.events.has(eventName)) {
-            throw "EventBus: Unknown event in";
+            throw new Error('EventBus: Unknown event in');
         }
         let eventListeners = this.events.get(eventName);
         eventListeners.forEach((callback) =>
             callback(...args)
-        )
+        );
     }
 }
