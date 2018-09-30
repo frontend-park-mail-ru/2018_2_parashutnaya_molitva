@@ -5,6 +5,7 @@
   "main": "server/index.js",
   "scripts": {
     "start": "node ./server/.",
+    "prestart": "npm run fest",
     "build-prod": "webpack --mode production",
     "build": "webpack --mode development",
     "lint": "eslint .",

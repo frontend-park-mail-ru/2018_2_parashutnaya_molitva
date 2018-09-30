@@ -1,3 +1,5 @@
 public/dist
 /node_modules
 webpack.config.js
+fest
+**/*.tmpl.js
