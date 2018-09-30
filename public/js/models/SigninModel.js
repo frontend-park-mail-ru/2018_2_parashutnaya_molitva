@@ -35,8 +35,11 @@ export default class SigninModel {
         }
 
         Net.doPost({
-            url: '/api/signin/',
-            body: data,
+            url: '/api/session',
+            body: {
+                email: data.email,
+                password: data.pass,
+            }
         }).then(resp => {
             if (resp.status === 200) {
                 this._eventBus.triggerEvent('signinSuccess', {});

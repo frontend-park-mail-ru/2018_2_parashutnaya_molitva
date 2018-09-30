@@ -28,6 +28,7 @@
     "cookie-parser": "^1.4.3",
     "debug": "^3.1.0",
     "express": "^4.16.3",
+    "express-http-proxy": "^1.4.0",
     "fest": "^0.12.1",
     "fest-webpack-loader": "^1.1.1",
     "uuid": "^3.3.2",

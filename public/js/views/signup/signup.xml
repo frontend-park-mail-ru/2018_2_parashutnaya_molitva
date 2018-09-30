@@ -1,7 +1,7 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="params">
     <div class="signup section">
+        <div class="warning signin__warning"></div>
         <form class="signup__form" novalidate="novalidate">
-
             <label for="email">Email</label>
             <input class="input signup__input" type="email" name="email" id="email" autocomplete="autocomplete"
                    autofocus="true" placeholder="Email"/>

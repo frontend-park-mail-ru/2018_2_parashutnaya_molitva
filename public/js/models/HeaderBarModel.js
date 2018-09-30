@@ -16,7 +16,7 @@ export default class HeaderBarModel {
     }
 
     _checkSession(callback) {
-        Net.doGet({url:"/api/checkSession"})
+        Net.doGet({url:"/api/session"})
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`fetch error (url: ${response.url}, status: ${response.status})`);
@@ -32,7 +32,7 @@ export default class HeaderBarModel {
     }
 
     static removeSession() {
-        Net.doGet({url:"/api/removeSession"})
+        Net.doDelete({url:"/api/session"})
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`fetch error (url: ${response.url}, status: ${response.status})`);

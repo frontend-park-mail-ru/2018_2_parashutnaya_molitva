@@ -24,9 +24,8 @@ export class SigninView extends View {
     }
 
     _onSubmitResponse(data) {
-        const field = data.field;
         const error = data.error;
-        if (error && field) {
+        if (error) {
             this.showWarning(error);
         }
     }

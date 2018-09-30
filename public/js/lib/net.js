@@ -1,10 +1,13 @@
 const noop = () => null;
+
+const serverURL = "http://localhost:8080";
+
 export default class Net {
     static doPost({url = '/', body = {}} = {}) {
-        return fetch(url, {
+        return fetch(serverURL + url, {
             method: 'POST',
             body: JSON.stringify(body),
-            credentials : "include",
+            credentials: "include",
             mode: "cors",
             headers: {
                 'Content-Type': 'application/json; charset=utf-8',
@@ -13,10 +16,17 @@ export default class Net {
     }
 
     static doGet({url = '/'} = {}) {
-        return fetch(url, {
+        return fetch(serverURL + url, {
             method: 'GET',
-            credentials : "include",
+            credentials: "include",
         });
+    }
+
+    static doDelete({url = '/', body = {}} = {}) {
+        return fetch(serverURL + url, {
+            method: 'DELETE',
+            credentials: 'include',
+        })
     }
 
 }

@@ -1,4 +1,4 @@
-const port = 4000;
+const port = 4001;
 
 const path = require('path');
 const express = require('express');
@@ -8,6 +8,7 @@ const log = debug('*');
 const fs = require('fs');
 const cookie = require('cookie-parser');
 const uuidv4 = require('uuid/v4');
+const proxy = require('express-http-proxy');
 
 log('Starting server');
 const app = express();
@@ -17,6 +18,14 @@ const indexPath = path.resolve(__dirname, '../public/index.html');
 app.use(express.static(publicRoot));
 app.use(cookie());
 app.use(body.json());
+
+//
+// app.use('/api/*', proxy('http://localhost:4041/', {
+//     proxyReqPathResolver: function (req) {
+//         return req.originalUrl;
+//     }
+// }));
+
 
 const emptyWarning = "Email or password is empty";
 const emptyEmailWarning = "Email is empty";
@@ -103,9 +112,9 @@ app.get('/api/scoreboard/pages/', (req, res) => {
     const page = req.query.page;
     const lines = req.query.lines;
     const first = (page - 1) * lines;
-    const last = page * lines >= scoreboardUsers.length ? scoreboardUsers.length : page * lines ;
+    const last = page * lines >= scoreboardUsers.length ? scoreboardUsers.length : page * lines;
     let data = {
-        result : scoreboardUsers.filter((val, index) => {
+        result: scoreboardUsers.filter((val, index) => {
             if (index >= first && index < last) {
                 return val;
             }
@@ -248,8 +257,9 @@ app.get('/api/checkSession', (req, res) => {
 app.get('/api/removeSession', (req, res) => {
     res.clearCookie('sessionid').status(200).end();
 });
-
+//
 app.get('*', (req, res) => {
+    log("index path: ", indexPath);
     fs.readFile(indexPath, {encoding: "utf-8"}, (err, file) => {
         if (err) {
             log(err);
@@ -261,7 +271,6 @@ app.get('*', (req, res) => {
         res.end();
     });
 });
-
 
 app.listen(process.env.PORT || port, function () {
     log(`Server listening port ${process.env.PORT || port}`);
