@@ -1,5 +1,4 @@
 import View from '../../lib/view.js';
-//import template from './scoreboard.tmpl.xml';
 import Paginator from '../../components/paginator.js';
 import template from './scoreboard.tmpl.js';
 
