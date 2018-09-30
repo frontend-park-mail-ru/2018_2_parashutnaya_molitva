@@ -1,25 +1,63 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="params">
-    <div class="profile section">
-        <form class="profile__avatar-form">
-        <div class="avatar-and-change-button">
-            <img src="{params.sharedData.currentUser.image}" class="avatar-and-change-button__avatar"/>
+    <fest:var name="avatar"><fest:value>params.user.avatar</fest:value></fest:var>
+    <section class="section profile">
+        <figure class="profile__avatar">
+            <form enctype="multipart/form-data">
+                <img src="{avatar}" height="200"
+                     width="200"></img>
+                <input type="file" name="avatar"></input>
+            </form>
+        </figure>
+        <article class="profile__info">
 
-            <div class="">
-                <button class="" type="button">Select img</button>
-                <input class="file-upload-button__input" type="file" name="file"/>
+            <div class="profile-row" id="email">
+                <div class="profile__data">
+                    Email:
+                </div>
+                <div class="profile__data">
+                    <fest:value>params.user.email</fest:value>
+                </div>
+                <button class="profile__edit-button">Edit</button>
             </div>
+
+            <div class="profile-row" id="email-form">
+                <form class="wrapper hidden">
+                    <label for="email">Email:</label>
+                    <input type="email" name="email" class="input signup__input" id="email" value="sinimawath@gmail.com">
+                    </input>
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+
+            <div class="profile-row" id="password">
+                <div class="profile__data">
+                    Password:
+                </div>
+                <div class="profile__data">
+                    --
+                </div>
+                <button class="profile__edit-button">Button</button>
+            </div>
+
+        <div class="profile-row hidden" id="password-form">
+            <form class="">
+                <label for="password">password:</label>
+                <input type="password" name="password" class="input signup__input" id="password" value="password"></input>
+                <button type="submit">Submit</button>
+            </form>
         </div>
-        </form>
+        <div class="profile-row" id="score">
+            <div class="profile__data">
+                Score:
+            </div>
+            <div class="profile__data">
+                <fest:value>params.user.score</fest:value>
+            </div>
+            <button class="profile__edit-button">
+                Button
+            </button>
+        </div>
+    </article>
+</section>
 
-        <label for="email">Email</label>
-        <input class="input profile__input" type="email" name="email" id="email" autocomplete="autocomplete"
-               autofocus="true" placeholder="Email"/>
-        <div class="warning signup__warning hidden"></div>
-
-        <label for="password">Password</label>
-        <input class="input profile__input" type="password" name="password" id="password" autocomplete="autocomplete"
-               placeholder="Password"/>
-        <div class="warning profile__warning hidden"></div>
-
-    </div>
 </fest:template>

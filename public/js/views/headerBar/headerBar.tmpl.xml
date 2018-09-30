@@ -1,8 +1,8 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="params">
-    <div class="header-bar">
-        <fest:var name="isAuth">params.isAuth</fest:var>
+    <div class="header header-bar">
         <fest:choose>
             <fest:when test="params.isAuth === true">
+                <a href="/profile" class="button header-bar__avatar"></a>
                 <a class="button header-bar__button header-bar__button-signout" href="/">Sign out</a>
             </fest:when>
             <fest:otherwise>

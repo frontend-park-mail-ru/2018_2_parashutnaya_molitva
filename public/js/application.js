@@ -8,18 +8,21 @@ import SignupController from './controllers/SignupController.js';
 import HeaderBarController from './controllers/HeaderBarController.js';
 import NotFoundView from './views/notfound/NotFoundView.js';
 import EventBus from './lib/eventbus.js';
+import User from "./lib/user.js";
 
 document.addEventListener('DOMContentLoaded', () => {
     const page = document.querySelector('#page');
     const main = document.querySelector('.main');
-    const header = document.querySelector('.header');
+    const header = document.querySelector('header');
 
     let router = new Router(page);
 
-    const globalEventBus = new EventBus(['renderHeaderBar']);
+    const globalEventBus = new EventBus(['renderHeaderBar', 'setUser', 'removeUser', 'checkUser', 'checkUserResponse']);
 
     const headerBarController = new HeaderBarController({ globalEventBus });
     headerBarController.headerBarView.render(header);
+
+    let user = new User(globalEventBus);
 
     const aboutController = new AboutController();
     const scoreboardController = new ScoreboardController();
@@ -31,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
     router.add('/about', main, aboutController.aboutView);
     router.add('/scoreboard', main, scoreboardController.scoreboardView);
     router.add('/signin', main, signinController.signinView);
-    router.add('/profile', main, profilerControlleer.signinView);
+    router.add('/profile', main, profilerControlleer.profileView);
     router.add('/signup', main, signupContoller.signupView);
     router.add('/', main, menuController.menuView);
 

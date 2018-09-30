@@ -1,7 +1,5 @@
-
-const noop = () => null;
-
 const serverURL = "http://localhost:8080";
+const storageURL = serverURL + "/storage/";
 
 export default class Net {
     static doPost({url = '/', body = {}} = {}) {
@@ -29,6 +27,14 @@ export default class Net {
             method: 'DELETE',
             credentials: 'include',
         })
+    }
+
+    static getServerURL() {
+        return serverURL;
+    }
+
+    static getStorageURL() {
+        return storageURL;
     }
 
 }
