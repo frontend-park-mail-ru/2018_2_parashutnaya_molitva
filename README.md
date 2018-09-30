@@ -8,3 +8,8 @@
 - Цыганков Максим [@Chubasik](https://github.com/Chubasik)
 
 ## Описание
+
+
+## Репозиторий бекенда
+
+https://github.com/go-park-mail-ru/2018_2_parashutnaya_molitva
