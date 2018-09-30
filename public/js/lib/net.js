@@ -1,7 +1,7 @@
 
 const noop = () => null;
 
-const serverURL = "http://localhost:8080";
+const serverURL = "http://localhost:3334";
 
 export default class Net {
     static doPost({url = '/', body = {}} = {}) {

@@ -24,20 +24,15 @@ class ScoreboardView extends View {
     }
 
     _onLoadPaginatorResponse (data) {
-        if (data.error) {
-            console.error(data.error);
-            return;
-        }
-
-        if (data.result.pagesCount !== undefined && data.result.linksCount !== undefined) {
+        if (data.pagesCount !== undefined && data.linksCount !== undefined) {
             const clickCallback = (pageNum) => {
                 this._eventBus.triggerEvent('load', { pageNum });
             };
 
             const root = this.el.querySelector('.paginator');
             this._paginator = new Paginator({
-                pagesCount: data.result.pagesCount,
-                linksCount: data.result.linksCount,
+                pagesCount: data.pagesCount,
+                linksCount: data.linksCount,
                 clickCallback,
                 styleClassesCurrent: ['paginator__button_current'],
                 styleClassesOther: ['button']
@@ -67,13 +62,8 @@ class ScoreboardView extends View {
 
         clearTimeout(this._loadingTimeOut);
         this._endLoadWaiting();
-        const error = data.error;
-        if (error) {
-            console.error(error);
-            return;
-        }
 
-        super.render(null, { users: data.result });
+        super.render(null, { users: data });
 
         if (this._paginator !== null) {
             this._paginator.render(this.el.querySelector('.paginator'));
