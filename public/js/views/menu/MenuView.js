@@ -1,4 +1,7 @@
 import View from '../../lib/view.js';
+
+// import template from './menu.tmpl.xml';
+
 import template from './menu.tmpl.js';
 
 export default class MenuView extends View {

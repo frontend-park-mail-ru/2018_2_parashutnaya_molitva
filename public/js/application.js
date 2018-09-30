@@ -2,6 +2,7 @@ import AboutController from './controllers/AboutController.js';
 import ScoreboardController from './controllers/ScoreboardController.js';
 import MenuController from './controllers/MenuController.js';
 import Router from './lib/router.js';
+import ProfileController from './controllers/ProfileController.js';
 import SigninController from './controllers/SigninController.js';
 import SignupController from './controllers/SignupController.js';
 import HeaderBarController from './controllers/HeaderBarController.js';
@@ -25,10 +26,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const menuController = new MenuController();
     const signinController = new SigninController({ router, globalEventBus });
     const signupContoller = new SignupController({ router, globalEventBus });
+    const profilerControlleer = new ProfileController({ router, globalEventBus });
 
     router.add('/about', main, aboutController.aboutView);
     router.add('/scoreboard', main, scoreboardController.scoreboardView);
     router.add('/signin', main, signinController.signinView);
+    router.add('/profile', main, profilerControlleer.signinView);
     router.add('/signup', main, signupContoller.signupView);
     router.add('/', main, menuController.menuView);
 

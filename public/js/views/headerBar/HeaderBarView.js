@@ -1,4 +1,7 @@
 import View from '../../lib/view.js';
+
+// import template from './headerBar.tmpl.xml';
+
 import template from './headerBar.tmpl.js';
 
 export default class HeaderBarView extends View {
