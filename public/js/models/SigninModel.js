@@ -1,5 +1,5 @@
-import Validation from '../lib/validation';
-import Net from '../lib/net';
+import Validation from '../lib/validation.js';
+import Net from '../lib/net.js';
 
 export default class SigninModel {
     constructor (eventBus) {

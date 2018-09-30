@@ -1,5 +1,6 @@
 import View from '../../lib/view.js';
-import template from './about.xml';
+// import template from './about.tmpl.xml';
+import template from './about.tmpl.js'
 
 class AboutView extends View {
     constructor ({ eventBus = {}, globalEventBus = {} } = {}) {

@@ -1,4 +1,4 @@
-import Net from '../lib/net';
+import Net from '../lib/net.js';
 
 export default class HeaderBarModel {
     constructor (eventBus) {

@@ -1,6 +1,6 @@
 import MenuView from '../views/menu/MenuView.js';
 import MenuModel from '../models/MenuModel.js';
-import EventBus from '../lib/eventbus';
+import EventBus from '../lib/eventbus.js';
 
 const eventList = [
     'checkAuthResponse',

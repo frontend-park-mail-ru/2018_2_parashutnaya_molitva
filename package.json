@@ -8,7 +8,8 @@
     "build-prod": "webpack --mode production",
     "build": "webpack --mode development",
     "lint": "eslint .",
-    "lint-fix": "eslint --fix ."
+    "lint-fix": "eslint --fix .",
+    "fest": "node ./fest/bin/fest-build// --dir=public --wrapper=module"
   },
   "repository": {
     "type": "git",

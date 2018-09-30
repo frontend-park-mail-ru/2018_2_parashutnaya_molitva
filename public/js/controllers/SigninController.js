@@ -1,6 +1,6 @@
 import SigninView from '../views/signin/SigninView.js';
-import SigninModel from '../models/SigninModel';
-import EventBus from '../lib/eventbus';
+import SigninModel from '../models/SigninModel.js';
+import EventBus from '../lib/eventbus.js';
 
 const eventList = [
     'signin',

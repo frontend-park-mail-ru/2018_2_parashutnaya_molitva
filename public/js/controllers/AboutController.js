@@ -1,5 +1,5 @@
-import { AboutView } from '../views/about/AboutView';
-import { AboutModel } from '../models/AboutModel';
+import { AboutView } from '../views/about/AboutView.js';
+import { AboutModel } from '../models/AboutModel.js';
 
 export default class AboutController {
     constructor ({ globalEventBus = {} } = {}) {
