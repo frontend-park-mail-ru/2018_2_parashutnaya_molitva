@@ -14,8 +14,8 @@ export default class HeaderBarModel {
         });
     }
 
-    _checkSession (callback) {
-        Net.doGet({ url: '/api/checkSession' })
+    _checkSession(callback) {
+        Net.doGet({url:"/api/session"})
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`fetch error (url: ${response.url}, status: ${response.status})`);
@@ -30,8 +30,8 @@ export default class HeaderBarModel {
         this._eventBus.triggerEvent('signoutResponse', { isAuth: false });
     }
 
-    static removeSession () {
-        Net.doGet({ url: '/api/removeSession' })
+    static removeSession() {
+        Net.doDelete({url:"/api/session"})
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`fetch error (url: ${response.url}, status: ${response.status})`);

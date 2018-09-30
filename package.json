@@ -38,6 +38,7 @@
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-standard": "^4.0.0",
     "express": "^4.16.3",
+    "express-http-proxy": "^1.4.0",
     "fest": "git+https://github.com/ksenobait09/fest.git#0.9",
     "fest-webpack-loader": "^1.1.1",
     "uuid": "^3.3.2",

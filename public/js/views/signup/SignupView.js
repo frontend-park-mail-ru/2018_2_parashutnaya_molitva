@@ -14,7 +14,9 @@ export default class SignupView extends View {
 
     render (root, data = {}) {
         super.render(root, data);
+
         let warnings = this.el.querySelectorAll('.signup__warning');
+
         this._emailWarning = warnings[0];
         this._passWarning = warnings[1];
         this._repassWarning = warnings[2];
@@ -32,24 +34,38 @@ export default class SignupView extends View {
         this._form.addEventListener('submit', this._onSubmit.bind(this));
     }
 
-    _onSignupResponse (data) {
-        const field = data.result;
+
+    _showWarning(text) {
+        this._clearWarning();
+        this._warning.innerHTML = `<p>${text}</p>`;
+    }
+
+    _clearWarning() {
+        this._warning.innerHTML = "";
+    }
+
+    _onSignupResponse(data) {
         const error = data.error;
-        if (error && field) {
-            switch (field) {
-            case 'email':
-                this._onChangeEmailResponse({ error });
-                break;
-            case 'pass':
-                this._onChangePassResponse({ error });
-                break;
-            case 'repass':
-                this._onChangeRepassResponse({ error });
-                break;
-            default:
-                console.log('SignupView: _onSignupResponse: no such field: ', field);
-            }
+        if (error){
+            this._showWarning(error)
+        } else {
+            this._clearWarning();
         }
+        // if (error && field) {
+        //     switch (field) {
+        //         case 'email':
+        //             this._onChangeEmailResponse({error});
+        //             break;
+        //         case 'pass':
+        //             this._onChangePassResponse({error});
+        //             break;
+        //         case 'repass':
+        //             this._onChangeRepassResponse({error});
+        //             break;
+        //         default:
+        //             console.log('SignupView: _onSignupResponse: no such field: ', field);
+        //     }
+        // }
     }
 
     _onChangeRepassResponse (data) {

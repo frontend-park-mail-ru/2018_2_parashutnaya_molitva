@@ -1,4 +1,4 @@
-const port = 4000;
+const port = 4001;
 
 const path = require('path');
 const express = require('express');
@@ -8,6 +8,7 @@ const log = debug('*');
 const fs = require('fs');
 const cookie = require('cookie-parser');
 const uuidv4 = require('uuid/v4');
+const proxy = require('express-http-proxy');
 
 log('Starting server');
 const app = express();
@@ -242,9 +243,10 @@ app.get('/api/checkSession', (req, res) => {
 app.get('/api/removeSession', (req, res) => {
     res.clearCookie('sessionid').status(200).end();
 });
-
+//
 app.get('*', (req, res) => {
-    fs.readFile(indexPath, { encoding: 'utf-8' }, (err, file) => {
+    log("index path: ", indexPath);
+    fs.readFile(indexPath, {encoding: "utf-8"}, (err, file) => {
         if (err) {
             log(err);
             res.statusCode = 404;
