@@ -1,8 +1,10 @@
 import View from '../../lib/view.js';
-import template from './signup.xml';
+
+// import template from './signup.tmpl.xml';
+import template from './signup.tmpl.js';
 
 export default class SignupView extends View {
-    constructor({eventBus = {}} = {}) {
+    constructor ({ eventBus = {} } = {}) {
         super(template, eventBus);
         this._eventBus.subscribeToEvent('changeEmailResponse', this._onChangeEmailResponse.bind(this));
         this._eventBus.subscribeToEvent('changePasswordResponse', this._onChangePassResponse.bind(this));
@@ -10,15 +12,16 @@ export default class SignupView extends View {
         this._eventBus.subscribeToEvent('signupResponse', this._onSignupResponse.bind(this));
     }
 
-    render(root, data = {}) {
+    render (root, data = {}) {
         super.render(root, data);
-        this._warning = this.el.querySelector(".warning.signin__warning");
-        let warnings = this.el.querySelectorAll(".signup__warning");
+
+        let warnings = this.el.querySelectorAll('.signup__warning');
+
         this._emailWarning = warnings[0];
         this._passWarning = warnings[1];
         this._repassWarning = warnings[2];
 
-        this._form = this.el.querySelector(".signup__form");
+        this._form = this.el.querySelector('.signup__form');
 
         let emailEl = this._form.elements['email'];
         emailEl.addEventListener('change', this._onChangeEmail.bind(this, emailEl));
@@ -30,6 +33,7 @@ export default class SignupView extends View {
 
         this._form.addEventListener('submit', this._onSubmit.bind(this));
     }
+
 
     _showWarning(text) {
         this._clearWarning();
@@ -64,19 +68,19 @@ export default class SignupView extends View {
         // }
     }
 
-    _onChangeRepassResponse(data) {
-        this._onChangeResponseTmpl(data.error, 'password-repeat', this._repassWarning)
+    _onChangeRepassResponse (data) {
+        this._onChangeResponseTmpl(data.error, 'password-repeat', this._repassWarning);
     }
 
-    _onChangePassResponse(data) {
-        this._onChangeResponseTmpl(data.error, 'password', this._passWarning)
+    _onChangePassResponse (data) {
+        this._onChangeResponseTmpl(data.error, 'password', this._passWarning);
     }
 
-    _onChangeEmailResponse(data) {
-        this._onChangeResponseTmpl(data.error, 'email', this._emailWarning)
+    _onChangeEmailResponse (data) {
+        this._onChangeResponseTmpl(data.error, 'email', this._emailWarning);
     }
 
-    _onChangeResponseTmpl(error, name, warning) {
+    _onChangeResponseTmpl (error, name, warning) {
         const el = this._form.elements[name];
 
         if (error) {
@@ -87,43 +91,41 @@ export default class SignupView extends View {
         SignupView._clearWarning(el, warning);
     }
 
-    _onChangeRepass(repassEl, passEl) {
+    _onChangeRepass (repassEl, passEl) {
         const repass = repassEl.value;
         const pass = passEl.value;
-        this._eventBus.triggerEvent('changePasswordRepeat', {repass, pass});
+        this._eventBus.triggerEvent('changePasswordRepeat', { repass, pass });
     }
 
-    _onChangePass(passEl, repassEl) {
+    _onChangePass (passEl, repassEl) {
         const pass = passEl.value;
         const repass = repassEl.value;
-        this._eventBus.triggerEvent('changePassword', {pass, repass});
-
+        this._eventBus.triggerEvent('changePassword', { pass, repass });
     }
 
-    _onChangeEmail(emailEl) {
+    _onChangeEmail (emailEl) {
         const email = emailEl.value;
-        this._eventBus.triggerEvent('changeEmail', {email});
+        this._eventBus.triggerEvent('changeEmail', { email });
     }
 
-    _onSubmit(ev) {
+    _onSubmit (ev) {
         ev.preventDefault();
         const email = this._form.elements['email'].value;
         const pass = this._form.elements['password'].value;
         const repass = this._form.elements['password-repeat'].value;
 
-        this._eventBus.triggerEvent('signup', {email, pass, repass});
+        this._eventBus.triggerEvent('signup', { email, pass, repass });
     }
 
-    static showWarning(el, warningEl, text) {
-        el.classList.add("signup__input_warning");
-        warningEl.classList.remove("hidden");
+    static showWarning (el, warningEl, text) {
+        el.classList.add('signup__input_warning');
+        warningEl.classList.remove('hidden');
         warningEl.innerHTML = `${text}`;
     }
 
-    static _clearWarning(el, warningEl) {
-        el.classList.remove("signup__input_warning");
-        warningEl.classList.add("hidden");
+    static _clearWarning (el, warningEl) {
+        el.classList.remove('signup__input_warning');
+        warningEl.classList.add('hidden');
         warningEl.innerHTML = '';
     }
-
 }

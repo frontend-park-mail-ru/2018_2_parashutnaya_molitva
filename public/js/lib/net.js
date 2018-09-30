@@ -1,3 +1,4 @@
+
 const noop = () => null;
 
 const serverURL = "http://localhost:8080";
@@ -10,10 +11,11 @@ export default class Net {
             credentials: "include",
             mode: "cors",
             headers: {
-                'Content-Type': 'application/json; charset=utf-8',
+                'Content-Type': 'application/json; charset=utf-8'
             }
         });
     }
+
 
     static doGet({url = '/'} = {}) {
         return fetch(serverURL + url, {

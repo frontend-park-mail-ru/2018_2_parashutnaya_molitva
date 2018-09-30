@@ -1,5 +1,5 @@
 export default class View {
-    constructor(template, eventBus, globalEventBus) {
+    constructor (template, eventBus, globalEventBus) {
         this.el = document.createElement('div');
         this.template = template;
         this._eventBus = eventBus;
@@ -7,8 +7,8 @@ export default class View {
         this._prevRoot = null;
     }
 
-    render(root, data) {
-        if (root === undefined || root === null){
+    render (root, data) {
+        if (root === undefined || root === null) {
             root = this._prevRoot;
         } else {
             this._prevRoot = root;
@@ -17,12 +17,11 @@ export default class View {
         root.innerHTML = '';
         root.appendChild(this.el);
 
-        return this
-    }
-
-    hide(root) {
-        root.innerHTML = '';
         return this;
     }
 
+    hide (root) {
+        root.innerHTML = '';
+        return this;
+    }
 }

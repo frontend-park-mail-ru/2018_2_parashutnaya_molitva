@@ -1,36 +1,34 @@
-import Validation from "../lib/validation";
-import Net from "../lib/net";
-
+import Validation from '../lib/validation.js';
+import Net from '../lib/net.js';
 
 export default class SigninModel {
-    constructor(eventBus) {
+    constructor (eventBus) {
         this._eventBus = eventBus;
         this._eventBus.subscribeToEvent('signin', this._onSignin.bind(this));
     }
 
-    _onSignin(data) {
+    _onSignin (data) {
         const email = data.email;
         const pass = data.pass;
         const errEmail = Validation.validateEmail(email, true);
 
         if (errEmail) {
             const res = {
-                field: "email",
-                error: errEmail,
+                field: 'email',
+                error: errEmail
             };
-            this._eventBus.triggerEvent("signinResponse", res);
+            this._eventBus.triggerEvent('signinResponse', res);
         }
-
 
         const errPass = Validation.validatePassword(pass, false);
 
         if (errPass) {
             const res = {
-                field: "pass",
-                error: errPass,
+                field: 'pass',
+                error: errPass
             };
 
-            this._eventBus.triggerEvent("signinResponse", res);
+            this._eventBus.triggerEvent('signinResponse', res);
             return;
         }
 

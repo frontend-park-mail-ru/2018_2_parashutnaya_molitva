@@ -1,7 +1,7 @@
-import Net from "../lib/net";
+import Net from '../lib/net.js';
 
 export default class ScoreboardModel {
-    constructor(eventBus) {
+    constructor (eventBus) {
         this._eventBus = eventBus;
         this._eventBus.subscribeToEvent('load', this._onLoad.bind(this));
         this._eventBus.subscribeToEvent('loadPaginator', this._onLoadPaginator.bind(this));
@@ -10,21 +10,20 @@ export default class ScoreboardModel {
         this._pageLines = 3;
     }
 
-    _onLoadPaginator() {
+    _onLoadPaginator () {
         Net.doGet({
-            url: `/api/scoreboard/?lines=${this._pageLines}`,
+            url: `/api/scoreboard/?lines=${this._pageLines}`
         })
             .then(resp => resp.json())
             .then(data => {
-
-                if (data.result){
+                if (data.result) {
                     data.result.linksCount = this._linksCount;
                 }
                 this._eventBus.triggerEvent('loadPaginatorResponse', data);
-            })
+            });
     }
 
-    _onLoad({pageNum = 1} = {}) {
+    _onLoad ({ pageNum = 1 } = {}) {
         this._eventBus.triggerEvent('loadWaiting');
         Net.doGet({
             url: `/api/scoreboard/pages?page=${pageNum}&lines=${this._pageLines}`

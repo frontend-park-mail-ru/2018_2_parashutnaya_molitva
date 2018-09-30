@@ -1,12 +1,15 @@
 import View from '../../lib/view.js';
-import template from './menu.xml';
+
+// import template from './menu.tmpl.xml';
+
+import template from './menu.tmpl.js';
 
 export default class MenuView extends View {
-    constructor({eventBus = {}, globalEventBus = {}} = {}) {
+    constructor ({ eventBus = {}, globalEventBus = {} } = {}) {
         super(template, eventBus);
     }
 
-    render(root, data = {}) {
+    render (root, data = {}) {
         super.render(root, data);
     }
 }

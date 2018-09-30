@@ -1,13 +1,12 @@
-const errEmailIsEmpty = "Email is empty";
-const errPassIsEmpty = "Pass is empty";
-const errRePassIsEmpty = "RePass is empty";
-const errEmailIsInvalid = "Email is invalid";
-const errInvalidPasswordData = "Must contain at least 8 characters, 1 number, 1 upper and 1 lowercase";
-const errNotEqualPassRePass = "Password and Password Repeat are not equal";
+const errEmailIsEmpty = 'Email is empty';
+const errPassIsEmpty = 'Pass is empty';
+const errRePassIsEmpty = 'RePass is empty';
+const errEmailIsInvalid = 'Email is invalid';
+const errInvalidPasswordData = 'Must contain at least 8 characters, 1 number, 1 upper and 1 lowercase';
+const errNotEqualPassRePass = 'Password and Password Repeat are not equal';
 
 export default class Validation {
-    static validateEmail(email, withRegex = false) {
-
+    static validateEmail (email, withRegex = false) {
         if (!email) {
             return errEmailIsEmpty;
         }
@@ -17,7 +16,7 @@ export default class Validation {
         }
     }
 
-    static validatePassword(pass, withRegex = false) {
+    static validatePassword (pass, withRegex = false) {
         if (!pass) {
             return errPassIsEmpty;
         }
@@ -26,7 +25,7 @@ export default class Validation {
         }
     }
 
-    static validateRepass(repass, pass) {
+    static validateRepass (repass, pass) {
         const errRepass = Validation.validatePassword(repass);
         if (errRepass) {
             return errRePassIsEmpty;
@@ -37,13 +36,13 @@ export default class Validation {
         }
     }
 
-    static validateEmailRegex(email) {
+    static validateEmailRegex (email) {
         // RFC 2822. Покрывает 99.99% адресов.
         let re = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
         return re.test(String(email).toLowerCase());
     }
 
-    static validatePassRegex(pass) {
+    static validatePassRegex (pass) {
         let re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.{8,})/;
         return re.test(pass);
     }
