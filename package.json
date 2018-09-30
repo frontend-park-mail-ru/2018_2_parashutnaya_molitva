@@ -8,7 +8,8 @@
     "build-prod": "webpack --mode production",
     "build": "webpack --mode development",
     "lint": "eslint .",
-    "lint-fix": "eslint --fix ."
+    "lint-fix": "eslint --fix .",
+    "build-templates": "scripts/build-templates.sh ./node_modules/fest/bin/fest-build public/js/views"
   },
   "repository": {
     "type": "git",
