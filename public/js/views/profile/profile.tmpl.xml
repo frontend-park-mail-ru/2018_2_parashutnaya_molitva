@@ -9,7 +9,7 @@
         <figure class="profile__avatar">
             <form>
                 <img src="{avatar}" height="200"
-                     width="200" class="js-avatar"></img>
+                     width="200" class="profile__img js-avatar"></img>
                 <input type="file" class="js-upload-avatar" name="avatar"></input>
             </form>
         </figure>
@@ -44,7 +44,7 @@
                 <div class="profile__data">
                     --
                 </div>
-                <button class="profile__edit-button">Button</button>
+                <button class="profile__edit-button">Edit</button>
             </div>
 
             <div class="profile-row hidden js-password-form">
@@ -65,6 +65,9 @@
                 <div class="profile__data">
                     <fest:value>params.user.score</fest:value>
                 </div>
+            </div>
+            <div class="profile__row">
+                <a href="" class="button menu__button">Menu</a>
             </div>
         </article>
     </section>

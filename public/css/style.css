@@ -183,6 +183,11 @@ body {
     flex: 1;
 }
 
+.profile__img {
+    border: 1px solid gray;
+    border-radius: 3px;
+}
+
 .profile__edit-button{
     width: 50px
 }
