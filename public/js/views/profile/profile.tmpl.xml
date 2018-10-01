@@ -1,35 +1,43 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="params">
-    <fest:var name="avatar"><fest:value>params.user.avatar</fest:value></fest:var>
+    <fest:var name="avatar">
+        <fest:value>params.user.avatar</fest:value>
+    </fest:var>
+    <fest:var name="email">
+        <fest:value>params.user.email</fest:value>
+    </fest:var>
     <section class="section profile">
         <figure class="profile__avatar">
-            <form enctype="multipart/form-data">
+            <form>
                 <img src="{avatar}" height="200"
-                     width="200"></img>
-                <input type="file" name="avatar"></input>
+                     width="200" class="js-avatar"></img>
+                <input type="file" class="js-upload-avatar" name="avatar"></input>
             </form>
         </figure>
         <article class="profile__info">
 
-            <div class="profile-row" id="email">
+            <div class="profile-row js-email-row">
                 <div class="profile__data">
                     Email:
                 </div>
-                <div class="profile__data">
+                <div class="profile__data js-email-field">
                     <fest:value>params.user.email</fest:value>
                 </div>
                 <button class="profile__edit-button">Edit</button>
             </div>
 
-            <div class="profile-row" id="email-form">
-                <form class="wrapper hidden">
+            <div class="profile-row hidden js-email-form">
+                <form name="email-form">
                     <label for="email">Email:</label>
-                    <input type="email" name="email" class="input signup__input" id="email" value="sinimawath@gmail.com">
+                    <input type="email" name="email" class="input signup__input" id="email" value="{email}">
                     </input>
-                    <button type="submit">Submit</button>
+                    <div class="warning signup__warning hidden js-warning-email"></div>
+
+                    <input class="button signup__submit js-button-submit" type="submit" name="submit" value="Submit"/>
+                    <button class="button signup__back-button js-button-cancel">Cancel</button>
                 </form>
             </div>
 
-            <div class="profile-row" id="password">
+            <div class="profile-row js-password-row">
                 <div class="profile__data">
                     Password:
                 </div>
@@ -39,25 +47,26 @@
                 <button class="profile__edit-button">Button</button>
             </div>
 
-        <div class="profile-row hidden" id="password-form">
-            <form class="">
-                <label for="password">password:</label>
-                <input type="password" name="password" class="input signup__input" id="password" value="password"></input>
-                <button type="submit">Submit</button>
-            </form>
-        </div>
-        <div class="profile-row" id="score">
-            <div class="profile__data">
-                Score:
+            <div class="profile-row hidden js-password-form">
+                <form name="password-form">
+                    <label for="password-pass">Password:</label>
+                    <input type="password" name="password" class="input signup__input" id="password-pass" value="password"/>
+                    <div class="warning signup__warning hidden js-warning-password"></div>
+
+                    <input class="button signup__submit js-button-submit" type="submit" name="submit" value="Submit"/>
+                    <button class="button signup__back-button js-button-cancel">Cancel</button>
+                </form>
             </div>
-            <div class="profile__data">
-                <fest:value>params.user.score</fest:value>
+
+            <div class="profile-row js-score-row">
+                <div class="profile__data">
+                    Score:
+                </div>
+                <div class="profile__data">
+                    <fest:value>params.user.score</fest:value>
+                </div>
             </div>
-            <button class="profile__edit-button">
-                Button
-            </button>
-        </div>
-    </article>
-</section>
+        </article>
+    </section>
 
 </fest:template>

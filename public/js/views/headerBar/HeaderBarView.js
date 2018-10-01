@@ -35,6 +35,8 @@ export default class HeaderBarView extends View {
             let avatar = this.el.querySelector('.header-bar__avatar');
 
             avatar.style.backgroundImage = `url(${data.avatar})`;
+            const avatarRect = avatar.getBoundingClientRect();
+            avatar.style.backgroundSize = `${avatarRect.width}px ${avatarRect.height}px`;
 
             let signoutButton = this.el.querySelector('.header-bar__button-signout');
             signoutButton.addEventListener('click', () => {

@@ -9,6 +9,10 @@ export default class Api {
 
     }
 
+    static checkSession(){
+        return Net.doGet({url : "/api/session"})
+    }
+
     static removeSession() {
         Net.doDelete({url: "/api/session"})
             .then(response => {
@@ -36,6 +40,26 @@ export default class Api {
                 email,
                 password,
             }
+        })
+    }
+
+    static updateUser({guid, email, password, avatar} = {}){
+        return Net.doPut({
+            url: `/api/user/${guid}`,
+            body : {
+                email,
+                password,
+                avatar,
+            }
+        })
+    }
+
+    static uploadAvatar({avatar} = {}){
+        let formData = new FormData();
+        formData.append("avatar", avatar);
+        return Net.doPostFormData({
+            url: '/api/avatar',
+            body: formData,
         })
     }
 }

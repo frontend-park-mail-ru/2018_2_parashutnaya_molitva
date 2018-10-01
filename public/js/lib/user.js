@@ -34,8 +34,6 @@ export default class User {
         this.score = score;
         this.avatar = avatar;
         this.guid = guid;
-
-        debugger;
     }
 
     removeUser() {

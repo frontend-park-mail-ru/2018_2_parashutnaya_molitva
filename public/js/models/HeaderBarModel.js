@@ -29,7 +29,7 @@ export default class HeaderBarModel {
     }
 
     _onCheckAuth() {
-        Net.doGet({url: "/api/session"})
+        Api.checkSession()
             .then(response => {
                 if (response.status !== 200) {
                     response.json().then(data => this._eventBus.triggerEvent('checkAuthResponse', {

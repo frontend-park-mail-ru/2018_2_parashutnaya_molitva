@@ -8,6 +8,19 @@ const eventList = [
     'checkAuthError',
     'loadUser',
     'loadUserResponse',
+    'changeEmail',
+    'changeEmailResponse',
+    'changePassword',
+    'changePasswordResponse',
+    'changeAvatar',
+    'changeAvatarResponse',
+    'changeAvatarSuccess',
+    'submitEmail',
+    'submitEmailResponse',
+    'submitEmailSuccess',
+    'submitPassword',
+    'submitPasswordResponse',
+    'submitPasswordSuccess',
 ];
 
 export default class ProfileController {

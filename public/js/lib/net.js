@@ -14,7 +14,6 @@ export default class Net {
         });
     }
 
-
     static doGet({url = '/'} = {}) {
         return fetch(serverURL + url, {
             method: 'GET',
@@ -37,4 +36,24 @@ export default class Net {
         return storageURL;
     }
 
+    static doPut({url = '/', body = {}} = {}) {
+        return fetch(serverURL + url, {
+            method: 'PUT',
+            body: JSON.stringify(body),
+            credentials: "include",
+            mode: "cors",
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8'
+            }
+        });
+    }
+
+    static doPostFormData({url = '/', body = {}} = {}) {
+        return fetch(serverURL + url, {
+            method: 'POST',
+            body,
+            mode: "cors",
+            credentials: "include",
+        })
+    }
 }

@@ -51,21 +51,6 @@ export default class SignupView extends View {
         } else {
             this._clearWarning();
         }
-        // if (error && field) {
-        //     switch (field) {
-        //         case 'email':
-        //             this._onChangeEmailResponse({error});
-        //             break;
-        //         case 'pass':
-        //             this._onChangePassResponse({error});
-        //             break;
-        //         case 'repass':
-        //             this._onChangeRepassResponse({error});
-        //             break;
-        //         default:
-        //             console.log('SignupView: _onSignupResponse: no such field: ', field);
-        //     }
-        // }
     }
 
     _onChangeRepassResponse (data) {
