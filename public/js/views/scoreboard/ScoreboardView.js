@@ -49,6 +49,7 @@ class ScoreboardView extends View {
     }
 
     _endLoadWaiting () {
+        clearTimeout(this._loadingTimeOut);
         if (!this._loadingEl.classList.contains('hidden')) {
             this._loadingEl.classList.add('hidden');
         }
@@ -60,7 +61,6 @@ class ScoreboardView extends View {
             return;
         }
 
-        clearTimeout(this._loadingTimeOut);
         this._endLoadWaiting();
 
         super.render(null, { users: data });
@@ -73,7 +73,7 @@ class ScoreboardView extends View {
     }
 
     _initAfterRender () {
-        this._loadingEl = this.el.querySelector('.scoreboard__loading');
+        this._loadingEl = this.el.querySelector('.loading');
         const backBtn = this.el.querySelector('.button.menu__button');
         backBtn.addEventListener('click', () => { this._isClosed = true; });
     }

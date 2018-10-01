@@ -136,13 +136,13 @@ body {
 }
 
 /* header */
- .header {
-     display: flex;
-     flex-direction: row;
-     justify-content: flex-end;
-     min-height: 60px;
-     background-color: #59626B;
- }
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    min-height: 60px;
+    background-color: #59626B;
+}
 
 .header-bar__button {
     color: initial;
@@ -152,7 +152,7 @@ body {
     width: 128px;
 }
 
-.header-bar__avatar{
+.header-bar__avatar {
     background-color: white;
     margin: 10px 2px;
 }
@@ -188,26 +188,27 @@ body {
     border-radius: 3px;
 }
 
-.profile__edit-button{
+.profile__edit-button {
     width: 50px
 }
+
 .profile__info {
     flex: 4;
 }
 
+/*table*/
 
-/*hz*/
-
-table {
+.table {
     border-collapse: collapse;
+    width: 100%;
 }
 
-td, th {
+.td, .th {
     border: 1px solid #cccccc;
     text-align: left;
     padding: 8px;
 }
 
-tr:nth-child(even) {
+.tr:nth-child(even) {
     background-color: #dddddd;
 }

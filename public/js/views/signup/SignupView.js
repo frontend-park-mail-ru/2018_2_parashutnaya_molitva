@@ -9,27 +9,32 @@ export default class SignupView extends View {
         this._eventBus.subscribeToEvent('changeEmailResponse', this._onChangeEmailResponse.bind(this));
         this._eventBus.subscribeToEvent('changePasswordResponse', this._onChangePassResponse.bind(this));
         this._eventBus.subscribeToEvent('changePasswordRepeatResponse', this._onChangeRepassResponse.bind(this));
+        this._eventBus.subscribeToEvent('loadWaiting', this._onLoadWaiting.bind(this));
         this._eventBus.subscribeToEvent('signupResponse', this._onSignupResponse.bind(this));
     }
 
     render (root, data = {}) {
         super.render(root, data);
 
-        let warnings = this.el.querySelectorAll('.signup__warning');
 
-        this._emailWarning = warnings[0];
-        this._passWarning = warnings[1];
-        this._repassWarning = warnings[2];
+        this._loadingEl = this.el.querySelector('.loading');
+
+        this._warning = this.el.querySelector('.js-warning-common');
+
+        this._emailWarning = this.el.querySelector('.js-warning-email');
+        this._passWarning = this.el.querySelector('.js-warning-password');
+        this._repassWarning = this.el.querySelector('.js-warning-repassword');
 
         this._form = this.el.querySelector('.signup__form');
 
-        let emailEl = this._form.elements['email'];
-        emailEl.addEventListener('change', this._onChangeEmail.bind(this, emailEl));
+        this._emailInput = this._form.elements['email'];
+        this._emailInput.addEventListener('change', this._onChangeEmail.bind(this, this._emailInput));
 
-        let password = this._form.elements['password'];
-        let repassword = this._form.elements['password-repeat'];
-        password.addEventListener('change', this._onChangePass.bind(this, password, repassword));
-        repassword.addEventListener('change', this._onChangeRepass.bind(this, repassword, password));
+        this._passwordInput = this._form.elements['password'];
+        this._repasswordInput = this._form.elements['password-repeat'];
+
+        this._passwordInput.addEventListener('change', this._onChangePass.bind(this, this._passwordInput, this._repasswordInput));
+        this._repasswordInput.addEventListener('change', this._onChangeRepass.bind(this, this._repasswordInput, this._passwordInput));
 
         this._form.addEventListener('submit', this._onSubmit.bind(this));
     }
@@ -45,6 +50,7 @@ export default class SignupView extends View {
     }
 
     _onSignupResponse(data) {
+        this._endLoadWaiting();
         const error = data.error;
         if (error){
             this._showWarning(error)
@@ -54,20 +60,18 @@ export default class SignupView extends View {
     }
 
     _onChangeRepassResponse (data) {
-        this._onChangeResponseTmpl(data.error, 'password-repeat', this._repassWarning);
+        this._onChangeResponseTmpl(data.error, this._repasswordInput, this._repassWarning);
     }
 
     _onChangePassResponse (data) {
-        this._onChangeResponseTmpl(data.error, 'password', this._passWarning);
+        this._onChangeResponseTmpl(data.error, this._passwordInput, this._passWarning);
     }
 
     _onChangeEmailResponse (data) {
-        this._onChangeResponseTmpl(data.error, 'email', this._emailWarning);
+        this._onChangeResponseTmpl(data.error, this._emailInput, this._emailWarning);
     }
 
-    _onChangeResponseTmpl (error, name, warning) {
-        const el = this._form.elements[name];
-
+    _onChangeResponseTmpl (error, el, warning) {
         if (error) {
             SignupView.showWarning(el, warning, error);
             return;
@@ -88,8 +92,8 @@ export default class SignupView extends View {
         this._eventBus.triggerEvent('changePassword', { pass, repass });
     }
 
-    _onChangeEmail (emailEl) {
-        const email = emailEl.value;
+    _onChangeEmail (emailInput) {
+        const email = emailInput.value;
         this._eventBus.triggerEvent('changeEmail', { email });
     }
 
@@ -100,6 +104,18 @@ export default class SignupView extends View {
         const repass = this._form.elements['password-repeat'].value;
 
         this._eventBus.triggerEvent('signup', { email, pass, repass });
+    }
+
+    _onLoadWaiting () {
+        // Индикатор загрузки появляется только, если загрузка происходит дольше 100 мс
+        this._loadingTimeOut = setTimeout(() => this._loadingEl.classList.remove('hidden'), 100);
+    }
+
+    _endLoadWaiting () {
+        clearTimeout(this._loadingTimeOut);
+        if (!this._loadingEl.classList.contains('hidden')) {
+            this._loadingEl.classList.add('hidden');
+        }
     }
 
     static showWarning (el, warningEl, text) {

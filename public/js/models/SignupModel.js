@@ -20,6 +20,7 @@ export default class SignupModel {
         const isValid = Object.entries(this._validInputMap).reduce((res, el) => (res && el[1]), true);
 
         if (isValid) {
+            this._eventBus.triggerEvent('loadWaiting');
             Api.signUp({
                 email : data.email,
                 password : data.pass,

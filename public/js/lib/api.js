@@ -62,4 +62,16 @@ export default class Api {
             body: formData,
         })
     }
+
+    static getUserCount(){
+        return Net.doGet({
+            url: `/api/user/count/`
+        });
+    }
+
+    static getScore({limit = 5, offset = 0} = {}){
+        return Net.doGet({
+            url: `/api/user/score/?limit=${limit}&offset=${offset}`
+        });
+    }
 }
