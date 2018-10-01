@@ -11,7 +11,8 @@ const eventList = [
     'changePassword',
     'changePasswordResponse',
     'changePasswordRepeat',
-    'changePasswordRepeatResponse'
+    'changePasswordRepeatResponse',
+    'loadWaiting',
 ];
 
 export default class SignupController {

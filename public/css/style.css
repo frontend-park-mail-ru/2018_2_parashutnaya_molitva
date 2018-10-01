@@ -136,13 +136,13 @@ body {
 }
 
 /* header */
- .header {
-     display: flex;
-     flex-direction: row;
-     justify-content: flex-end;
-     min-height: 60px;
-     background-color: #59626B;
- }
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    min-height: 60px;
+    background-color: #59626B;
+}
 
 .header-bar__button {
     color: initial;
@@ -152,18 +152,63 @@ body {
     width: 128px;
 }
 
-/*hz*/
-
-table {
-    border-collapse: collapse;
+.header-bar__avatar {
+    background-color: white;
+    margin: 10px 2px;
 }
 
-td, th {
+/* profile */
+
+.profile {
+    width: 700px;
+    flex-direction: row;
+    margin-left: -350px;
+    justify-content: space-between;
+
+}
+
+.profile-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+}
+
+.profile__data {
+    margin-right: 10px;
+}
+
+.profile__avatar {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.profile__img {
+    border: 1px solid gray;
+    border-radius: 3px;
+}
+
+.profile__edit-button {
+    width: 50px
+}
+
+.profile__info {
+    flex: 4;
+}
+
+/*table*/
+
+.table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.td, .th {
     border: 1px solid #cccccc;
     text-align: left;
     padding: 8px;
 }
 
-tr:nth-child(even) {
+.tr:nth-child(even) {
     background-color: #dddddd;
 }

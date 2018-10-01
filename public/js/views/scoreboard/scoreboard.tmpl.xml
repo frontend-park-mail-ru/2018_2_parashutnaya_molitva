@@ -1,20 +1,20 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="params">
     <div class="scoreboard section">
-        <div class="scoreboard__loading hidden">Loading...</div>
-        <table style="width:100%">
+        <div class="loading hidden">Loading...</div>
+        <table class="table">
             <thead>
-                <tr>
+                <tr class="tr">
                     <th>Screen name</th>
                     <th>Score</th>
                 </tr>
             </thead>
             <tbody>
                 <fest:for iterate="params.users" index="i" value="userData">
-                    <tr>
-                        <td>
+                    <tr class="tr">
+                        <td class="td">
                             <fest:value>userData.email</fest:value>
                         </td>
-                        <td>
+                        <td class="td">
                             <fest:value>userData.score</fest:value>
                         </td>
                     </tr>

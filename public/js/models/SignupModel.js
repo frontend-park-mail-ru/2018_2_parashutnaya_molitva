@@ -1,5 +1,5 @@
 import Validation from '../lib/validation.js';
-import Net from '../lib/net.js';
+import Api from "../lib/api.js";
 
 export default class SignupModel {
     constructor (eventBus) {
@@ -20,12 +20,10 @@ export default class SignupModel {
         const isValid = Object.entries(this._validInputMap).reduce((res, el) => (res && el[1]), true);
 
         if (isValid) {
-            Net.doPost({
-                url: '/api/user',
-                body: {
-                    email: data.email,
-                    password: data.pass,
-                },
+            this._eventBus.triggerEvent('loadWaiting');
+            Api.signUp({
+                email : data.email,
+                password : data.pass,
             }).then(resp => {
                 if (resp.status === 200) {
                     this._eventBus.triggerEvent('signupSuccess', {});

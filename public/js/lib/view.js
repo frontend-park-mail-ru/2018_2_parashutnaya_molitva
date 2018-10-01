@@ -7,7 +7,13 @@ export default class View {
         this._prevRoot = null;
     }
 
-    render (root, data) {
+    /**
+     * Компилирует шаблон в root элемент. Сохраняет последний root в this._prevRoot
+     * @param root если root === null, то рендрится в this._prevRoot
+     * @param data
+     * @returns {View}
+     */
+    render (root, data = {}) {
         if (root === undefined || root === null) {
             root = this._prevRoot;
         } else {

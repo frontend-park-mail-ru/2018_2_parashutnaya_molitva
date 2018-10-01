@@ -1,13 +1,13 @@
 import Validation from '../lib/validation.js';
-import Net from '../lib/net.js';
+import Api from "../lib/api.js";
 
 export default class SigninModel {
-    constructor (eventBus) {
+    constructor(eventBus) {
         this._eventBus = eventBus;
         this._eventBus.subscribeToEvent('signin', this._onSignin.bind(this));
     }
 
-    _onSignin (data) {
+    _onSignin(data) {
         const email = data.email;
         const pass = data.pass;
         const errEmail = Validation.validateEmail(email, true);
@@ -32,15 +32,16 @@ export default class SigninModel {
             return;
         }
 
-        Net.doPost({
-            url: '/api/session',
-            body: {
-                email: data.email,
-                password: data.pass,
-            }
+        this._eventBus.triggerEvent('loadWaiting');
+
+        Api.signIn({
+            email,
+            password : data.pass,
         }).then(resp => {
             if (resp.status === 200) {
-                this._eventBus.triggerEvent('signinSuccess', {});
+                resp
+                    .json()
+                    .then(data => this._eventBus.triggerEvent('signinSuccess', data))
             } else {
                 resp
                     .json()

@@ -5,16 +5,20 @@ import EventBus from '../lib/eventbus.js';
 const eventList = [
     'signin',
     'signinResponse',
-    'signinSuccess'
+    'signinSuccess',
+    'loadWaiting',
 ];
 
 export default class SigninController {
     constructor ({ router, globalEventBus } = {}) {
+
         const eventBus = new EventBus(eventList);
-        eventBus.subscribeToEvent('signinSuccess', () => {
+
+        eventBus.subscribeToEvent('signinSuccess', (data) => {
             router.toStartPage();
-            globalEventBus.triggerEvent('renderHeaderBar');
+            globalEventBus.triggerEvent('renderHeaderBar', data);
         });
+
         this.signinView = new SigninView({ eventBus });
         this.signinModel = new SigninModel(eventBus);
     }
