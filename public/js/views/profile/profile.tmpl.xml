@@ -28,7 +28,8 @@
             <div class="profile-row hidden js-email-form">
                 <form name="email-form">
                     <label for="email">Email:</label>
-                    <input type="email" name="email" class="input signup__input" id="email" value="{email}">
+                    <input type="email" name="email" class="input signup__input" id="email" value="{email}"
+                    autocomplete="autocomplete" autofocus="true">
                     </input>
                     <div class="warning signup__warning hidden js-warning-email"></div>
 
@@ -50,7 +51,8 @@
             <div class="profile-row hidden js-password-form">
                 <form name="password-form">
                     <label for="password-pass">Password:</label>
-                    <input type="password" name="password" class="input signup__input" id="password-pass" value="password"/>
+                    <input type="password" name="password" class="input signup__input" id="password-pass" value="password"
+                           autocomplete="autocomplete" autofocus="true"/>
                     <div class="warning signup__warning hidden js-warning-password"></div>
 
                     <input class="button signup__submit js-button-submit" type="submit" name="submit" value="Submit"/>

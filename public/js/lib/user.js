@@ -6,11 +6,16 @@ export default class User {
         this.guid = null;
 
         this._globalEventBus = globalEventBus;
+
         this._globalEventBus.subscribeToEvent('setUser', this.setUser.bind(this));
         this._globalEventBus.subscribeToEvent('removeUser', this.removeUser.bind(this));
         this._globalEventBus.subscribeToEvent('checkUser', this.checkUser.bind(this));
     }
 
+    /**
+     * Если хотя бы одно поле не задано, то пользователь считается не загруженным.
+     * Перед тем как пойти на сервер, нужно проверить есть ли уже пользователь или нет
+     */
     checkUser() {
         let isUpload = true;
         if (this.email === null || this.score === null
@@ -29,6 +34,13 @@ export default class User {
 
     }
 
+    /**
+     * Устанавливает значения для юзера, можно тригерить 'setUser' -ом глобального EventBus
+     * @param email
+     * @param score
+     * @param avatar
+     * @param guid
+     */
     setUser({email, score, avatar, guid}) {
         this.email = email;
         this.score = score;
@@ -36,6 +48,10 @@ export default class User {
         this.guid = guid;
     }
 
+
+    /**
+     * Удаляет данные пользователя
+     */
     removeUser() {
         this.email = null;
         this.score = null;

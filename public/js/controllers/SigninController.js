@@ -5,7 +5,8 @@ import EventBus from '../lib/eventbus.js';
 const eventList = [
     'signin',
     'signinResponse',
-    'signinSuccess'
+    'signinSuccess',
+    'loadWaiting',
 ];
 
 export default class SigninController {

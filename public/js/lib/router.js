@@ -67,6 +67,12 @@ export default class Router {
         }
     }
 
+    /**
+     * Удаляет суффикс '/', если path != '/'
+     * @param path
+     * @returns {string}
+     * @private
+     */
     static _normalizePath (path) {
         return path.charAt(path.length - 1) === '/' && path !== '/' ? path.slice(0, path.length - 1) : path;
     }

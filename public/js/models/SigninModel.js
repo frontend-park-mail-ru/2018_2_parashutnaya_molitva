@@ -32,6 +32,8 @@ export default class SigninModel {
             return;
         }
 
+        this._eventBus.triggerEvent('loadWaiting');
+
         Api.signIn({
             email,
             password : data.pass,
