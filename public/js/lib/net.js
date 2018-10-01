@@ -1,7 +1,5 @@
-
-const noop = () => null;
-
-const serverURL = "http://localhost:3334";
+const serverURL = "http://localhost:8080";
+const storageURL = serverURL + "/storage/";
 
 export default class Net {
     static doPost({url = '/', body = {}} = {}) {
@@ -15,7 +13,6 @@ export default class Net {
             }
         });
     }
-
 
     static doGet({url = '/'} = {}) {
         return fetch(serverURL + url, {
@@ -31,4 +28,32 @@ export default class Net {
         })
     }
 
+    static getServerURL() {
+        return serverURL;
+    }
+
+    static getStorageURL() {
+        return storageURL;
+    }
+
+    static doPut({url = '/', body = {}} = {}) {
+        return fetch(serverURL + url, {
+            method: 'PUT',
+            body: JSON.stringify(body),
+            credentials: "include",
+            mode: "cors",
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8'
+            }
+        });
+    }
+
+    static doPostFormData({url = '/', body = {}} = {}) {
+        return fetch(serverURL + url, {
+            method: 'POST',
+            body,
+            mode: "cors",
+            credentials: "include",
+        })
+    }
 }

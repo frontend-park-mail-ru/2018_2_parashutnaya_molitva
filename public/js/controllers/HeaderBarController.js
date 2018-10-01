@@ -6,13 +6,15 @@ const eventList = [
     'checkAuthResponse',
     'checkAuth',
     'signout',
-    'signoutResponse'
+    'signoutResponse',
+    'loadAvatarResponse',
+    'loadAvatar',
 ];
 
 export default class HeaderBarController {
     constructor ({ globalEventBus = {} } = {}) {
         this._eventBus = new EventBus(eventList);
         this.headerBarView = new HeaderBarView(this._eventBus, globalEventBus);
-        this.headerBarModel = new HeaderBarModel(this._eventBus);
+        this.headerBarModel = new HeaderBarModel(this._eventBus, globalEventBus);
     }
 }
