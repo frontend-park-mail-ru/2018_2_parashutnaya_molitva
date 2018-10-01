@@ -12,28 +12,31 @@ export default class ScoreboardModel {
 
     _onLoadPaginator () {
         Net.doGet({
-            url: `/api/scoreboard/?lines=${this._pageLines}`
+            url: `/api/user/count/`
         })
             .then(resp => resp.json())
-            .then(data => {
-                if (data.result) {
-                    data.result.linksCount = this._linksCount;
+            .then(users => {
+                if (users.count) {
+                    this._totalUsersCount = users.count;
+                    this._eventBus.triggerEvent('loadPaginatorResponse', {
+                        pagesCount: this._totalUsersCount / this._pageLines,
+                        linksCount: this._linksCount
+                    });
                 }
-                this._eventBus.triggerEvent('loadPaginatorResponse', data);
             });
     }
 
     _onLoad ({ pageNum = 1 } = {}) {
         this._eventBus.triggerEvent('loadWaiting');
         Net.doGet({
-            url: `/api/scoreboard/pages?page=${pageNum}&lines=${this._pageLines}`
+            url: `/api/user/score/?limit=${this._pageLines}&offset=${this._pageLines * (pageNum - 1)}`
         }).then(resp => {
             if (resp.status === 200) {
                 return resp.json();
             }
             throw new Error("Can't load scoreboard: " + resp.status);
         }).then(data =>
-            this._eventBus.triggerEvent('loadResponse', data)
+            this._eventBus.triggerEvent('loadResponse', data.scores)
         ).catch(err => {
             console.error(err);
             this._eventBus.triggerEvent('loadResponse', {});
