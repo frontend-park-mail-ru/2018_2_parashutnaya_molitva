@@ -1,0 +1,28 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="params">
+    <div class="scoreboard section">
+        <div class="loading hidden">Loading...</div>
+        <table class="table">
+            <thead>
+                <tr class="tr">
+                    <th>Screen name</th>
+                    <th>Score</th>
+                </tr>
+            </thead>
+            <tbody>
+                <fest:for iterate="params.users" index="i" value="userData">
+                    <tr class="tr">
+                        <td class="td">
+                            <fest:value>userData.email</fest:value>
+                        </td>
+                        <td class="td">
+                            <fest:value>userData.score</fest:value>
+                        </td>
+                    </tr>
+                </fest:for>
+            </tbody>
+        </table>
+        <div class="paginator"></div>
+        <a class="button menu__button" href="/">Menu</a>
+    </div>
+</fest:template>
+

@@ -1,0 +1,4 @@
+class AboutModel {
+}
+
+export { AboutModel };

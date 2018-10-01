@@ -1,0 +1,15 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="params">
+    <div class="header header-bar">
+        <fest:choose>
+            <fest:when test="params.isAuth === true">
+                <a href="/profile" class="button header-bar__avatar"></a>
+                <a class="button header-bar__button header-bar__button-signout" href="/">Sign out</a>
+            </fest:when>
+            <fest:otherwise>
+                <a class="button header-bar__button header-bar__button-signin" href="/signin">Sign in</a>
+                <a class="button header-bar__button header-bar__button-signup" href="/signup">Sign up</a>
+            </fest:otherwise>
+        </fest:choose>
+
+    </div>
+</fest:template>

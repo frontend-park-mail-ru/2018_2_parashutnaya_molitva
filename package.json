@@ -1,0 +1,49 @@
+{
+  "name": "kekmate",
+  "version": "0.1.0",
+  "description": "crazy chess game",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node ./server/.",
+    "prestart": "npm run fest",
+    "build-prod": "webpack --mode production",
+    "build": "webpack --mode development",
+    "lint": "eslint .",
+    "lint-fix": "eslint --fix .",
+    "fest": "fest-build --dir=public --wrapper=module"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/frontend-park-mail-ru/2018_2_parashutnaya_molitva.git"
+  },
+  "keywords": [
+    "chess",
+    "game",
+    "simple"
+  ],
+  "author": "Parachute_pray",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/frontend-park-mail-ru/2018_2_parashutnaya_molitva/issues"
+  },
+  "homepage": "https://github.com/frontend-park-mail-ru/2018_2_parashutnaya_molitva#readme",
+  "devDependencies": {
+    "body-parser": "^1.18.3",
+    "cookie-parser": "^1.4.3",
+    "debug": "^3.1.0",
+    "eslint": "^5.6.1",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-node": "^7.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "express": "^4.16.3",
+    "express-http-proxy": "^1.4.0",
+    "fest": "git+https://github.com/ksenobait09/fest.git#0.9",
+    "fest-webpack-loader": "^1.1.1",
+    "uuid": "^3.3.2",
+    "webpack": "^4.18.0",
+    "webpack-cli": "^3.1.0"
+  },
+  "dependencies": {}
+}

@@ -1,0 +1,26 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="params">
+    <div class="signup section">
+        <div class="loading hidden">Loading...</div>
+        <div class="warning signin__warning js-warning-common"></div>
+        <form class="signup__form" novalidate="novalidate">
+            <label for="email">Email</label>
+            <input class="input signup__input" type="email" name="email" id="email" autocomplete="autocomplete"
+                   autofocus="true" placeholder="Email"/>
+            <div class="warning signup__warning hidden js-warning-email"></div>
+
+            <label for="password">Password</label>
+            <input class="input signup__input" type="password" name="password" id="password" autocomplete="autocomplete"
+                   placeholder="Password"/>
+            <div class="warning signup__warning hidden js-warning-password"></div>
+
+            <label for="password-repeat">Repeat password</label>
+            <input class="input signup__input" type="password" name="password-repeat" id="password-repeat" autocomplete="autocomplete"
+                   placeholder="Repeat Password"/>
+            <div class="warning signup__warning hidden js-warning-repassword"></div>
+
+            <input class="button signup__submit" type="submit" name="submit" value="Sign up"/>
+
+            <a class="button signup__back-button" href="/">Menu</a>
+        </form>
+    </div>
+</fest:template>
