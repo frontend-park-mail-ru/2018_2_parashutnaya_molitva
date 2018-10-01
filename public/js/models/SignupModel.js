@@ -1,5 +1,5 @@
 import Validation from '../lib/validation.js';
-import Api from "../lib/api.js";
+import Api from '../lib/api.js';
 
 export default class SignupModel {
     constructor (eventBus) {
@@ -22,8 +22,8 @@ export default class SignupModel {
         if (isValid) {
             this._eventBus.triggerEvent('loadWaiting');
             Api.signUp({
-                email : data.email,
-                password : data.pass,
+                email: data.email,
+                password: data.pass
             }).then(resp => {
                 if (resp.status === 200) {
                     this._eventBus.triggerEvent('signupSuccess', {});

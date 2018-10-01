@@ -6,12 +6,11 @@ const eventList = [
     'signin',
     'signinResponse',
     'signinSuccess',
-    'loadWaiting',
+    'loadWaiting'
 ];
 
 export default class SigninController {
     constructor ({ router, globalEventBus } = {}) {
-
         const eventBus = new EventBus(eventList);
 
         eventBus.subscribeToEvent('signinSuccess', (data) => {

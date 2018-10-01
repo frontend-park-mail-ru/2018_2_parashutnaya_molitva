@@ -7,5 +7,9 @@
     },
     "globals": {
         "fetch": false
+    },
+    "env": {
+        "browser": true,
+        "node": true
     }
 }

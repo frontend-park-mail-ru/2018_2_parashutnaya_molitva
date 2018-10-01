@@ -8,7 +8,7 @@ const eventList = [
     'signout',
     'signoutResponse',
     'loadAvatarResponse',
-    'loadAvatar',
+    'loadAvatar'
 ];
 
 export default class HeaderBarController {

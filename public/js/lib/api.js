@@ -1,32 +1,29 @@
-import Net from "./net.js";
-
+import Net from './net.js';
 
 export default class Api {
-
     /**
      * Загрузить пользователя по guid
-     * @param user_guid
+     * @param userGuid
      * @returns {Promise<Response | never>}
      */
-    static loadUser(user_guid) {
-        return Net.doGet({url: `/api/user/${user_guid}`})
-            .then(resp => resp.json())
-
+    static loadUser (userGuid) {
+        return Net.doGet({ url: `/api/user/${userGuid}` })
+            .then(resp => resp.json());
     }
 
     /**
-     * Проверяет сессию, response содержит user_guid текущей сессии
+     * Проверяет сессию, response содержит userGuid текущей сессии
      * @returns {Promise<Response>}
      */
-    static checkSession(){
-        return Net.doGet({url : "/api/session"})
+    static checkSession () {
+        return Net.doGet({ url: '/api/session' });
     }
 
     /**
      * Удаляет текущую сессию
      */
-    static removeSession() {
-        Net.doDelete({url: "/api/session"})
+    static removeSession () {
+        Net.doDelete({ url: '/api/session' })
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`fetch error (url: ${response.url}, status: ${response.status})`);
@@ -36,19 +33,19 @@ export default class Api {
     }
 
     /**
-     * Авторизует пользователя, response содержит user_guid авторизованного пользователя
+     * Авторизует пользователя, response содержит userGuid авторизованного пользователя
      * @param email
      * @param password
      * @returns {Promise<Response>}
      */
-    static signIn({email, password} = {}) {
+    static signIn ({ email, password } = {}) {
         return Net.doPost({
             url: '/api/session',
             body: {
                 email,
-                password,
+                password
             }
-        })
+        });
     }
 
     /**
@@ -57,14 +54,14 @@ export default class Api {
      * @param password
      * @returns {Promise<Response>}
      */
-    static signUp({email, password} = {}) {
+    static signUp ({ email, password } = {}) {
         return Net.doPost({
             url: '/api/user',
             body: {
                 email,
-                password,
+                password
             }
-        })
+        });
     }
 
     /**
@@ -75,15 +72,15 @@ export default class Api {
      * @param avatar
      * @returns {Promise<Response>}
      */
-    static updateUser({guid, email, password, avatar} = {}){
+    static updateUser ({ guid, email, password, avatar } = {}) {
         return Net.doPut({
             url: `/api/user/${guid}`,
-            body : {
+            body: {
                 email,
                 password,
-                avatar,
+                avatar
             }
-        })
+        });
     }
 
     /**
@@ -91,20 +88,20 @@ export default class Api {
      * @param avatar
      * @returns {Promise<Response>}
      */
-    static uploadAvatar({avatar} = {}){
+    static uploadAvatar ({ avatar } = {}) {
         let formData = new FormData();
-        formData.append("avatar", avatar);
+        formData.append('avatar', avatar);
         return Net.doPostFormData({
             url: '/api/avatar',
-            body: formData,
-        })
+            body: formData
+        });
     }
 
     /**
      * Возвращает количетво пользователей
      * @returns {Promise<Response>}
      */
-    static getUserCount(){
+    static getUserCount () {
         return Net.doGet({
             url: `/api/user/count/`
         });
@@ -116,7 +113,7 @@ export default class Api {
      * @param offset начиная с какого пользователя
      * @returns {Promise<Response>}
      */
-    static getScore({limit = 5, offset = 0} = {}){
+    static getScore ({ limit = 5, offset = 0 } = {}) {
         return Net.doGet({
             url: `/api/user/score/?limit=${limit}&offset=${offset}`
         });

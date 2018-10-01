@@ -1,20 +1,19 @@
-const serverURL = "http://localhost:8080";
-const storageURL = serverURL + "/storage/";
+const serverURL = 'http://localhost:8080';
+const storageURL = serverURL + '/storage/';
 
 export default class Net {
-
     /**
      * Пост запрос, с JSON body
      * @param url
      * @param body
      * @returns {Promise<Response>}
      */
-    static doPost({url = '/', body = {}} = {}) {
+    static doPost ({ url = '/', body = {} } = {}) {
         return fetch(serverURL + url, {
             method: 'POST',
             body: JSON.stringify(body),
-            credentials: "include",
-            mode: "cors",
+            credentials: 'include',
+            mode: 'cors',
             headers: {
                 'Content-Type': 'application/json; charset=utf-8'
             }
@@ -26,10 +25,10 @@ export default class Net {
      * @param url
      * @returns {Promise<Response>}
      */
-    static doGet({url = '/'} = {}) {
+    static doGet ({ url = '/' } = {}) {
         return fetch(serverURL + url, {
             method: 'GET',
-            credentials: "include",
+            credentials: 'include'
         });
     }
 
@@ -39,18 +38,18 @@ export default class Net {
      * @param body
      * @returns {Promise<Response>}
      */
-    static doDelete({url = '/', body = {}} = {}) {
+    static doDelete ({ url = '/', body = {} } = {}) {
         return fetch(serverURL + url, {
             method: 'DELETE',
-            credentials: 'include',
-        })
+            credentials: 'include'
+        });
     }
 
     /**
      * Возвращает url api server-a
      * @returns {string}
      */
-    static getServerURL() {
+    static getServerURL () {
         return serverURL;
     }
 
@@ -58,7 +57,7 @@ export default class Net {
      * Возвращает url статики пользователя
      * @returns {string}
      */
-    static getStorageURL() {
+    static getStorageURL () {
         return storageURL;
     }
 
@@ -68,12 +67,12 @@ export default class Net {
      * @param body
      * @returns {Promise<Response>}
      */
-    static doPut({url = '/', body = {}} = {}) {
+    static doPut ({ url = '/', body = {} } = {}) {
         return fetch(serverURL + url, {
             method: 'PUT',
             body: JSON.stringify(body),
-            credentials: "include",
-            mode: "cors",
+            credentials: 'include',
+            mode: 'cors',
             headers: {
                 'Content-Type': 'application/json; charset=utf-8'
             }
@@ -86,12 +85,12 @@ export default class Net {
      * @param body
      * @returns {Promise<Response>}
      */
-    static doPostFormData({url = '/', body = {}} = {}) {
+    static doPostFormData ({ url = '/', body = {} } = {}) {
         return fetch(serverURL + url, {
             method: 'POST',
             body,
-            mode: "cors",
-            credentials: "include",
-        })
+            mode: 'cors',
+            credentials: 'include'
+        });
     }
 }

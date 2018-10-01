@@ -20,7 +20,7 @@ const eventList = [
     'submitEmailSuccess',
     'submitPassword',
     'submitPasswordResponse',
-    'submitPasswordSuccess',
+    'submitPasswordSuccess'
 ];
 
 export default class ProfileController {
