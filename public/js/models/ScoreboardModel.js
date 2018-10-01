@@ -1,7 +1,7 @@
-import Api from "../lib/api.js";
+import Api from '../lib/api.js';
 
 export default class ScoreboardModel {
-    constructor(eventBus) {
+    constructor (eventBus) {
         this._eventBus = eventBus;
         this._eventBus.subscribeToEvent('load', this._onLoad.bind(this));
         this._eventBus.subscribeToEvent('loadPaginator', this._onLoadPaginator.bind(this));
@@ -10,7 +10,7 @@ export default class ScoreboardModel {
         this._pageLines = 3;
     }
 
-    _onLoadPaginator() {
+    _onLoadPaginator () {
         Api.getUserCount()
             .then(resp => resp.json())
             .then(users => {
@@ -24,11 +24,11 @@ export default class ScoreboardModel {
             });
     }
 
-    _onLoad({pageNum = 1} = {}) {
+    _onLoad ({ pageNum = 1 } = {}) {
         this._eventBus.triggerEvent('loadWaiting');
         Api.getScore({
             limit: this._pageLines,
-            offset: this._pageLines * (pageNum - 1),
+            offset: this._pageLines * (pageNum - 1)
         }).then(resp => {
             if (resp.status === 200) {
                 return resp.json();

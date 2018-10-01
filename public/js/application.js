@@ -8,7 +8,7 @@ import SignupController from './controllers/SignupController.js';
 import HeaderBarController from './controllers/HeaderBarController.js';
 import NotFoundView from './views/notfound/NotFoundView.js';
 import EventBus from './lib/eventbus.js';
-import User from "./lib/user.js";
+import User from './lib/user.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     const page = document.querySelector('#page');

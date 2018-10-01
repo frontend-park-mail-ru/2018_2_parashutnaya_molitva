@@ -1,5 +1,5 @@
 export default class User {
-    constructor(globalEventBus) {
+    constructor (globalEventBus) {
         this.email = null;
         this.score = null;
         this.avatar = null;
@@ -16,22 +16,22 @@ export default class User {
      * Если хотя бы одно поле не задано, то пользователь считается не загруженным.
      * Перед тем как пойти на сервер, нужно проверить есть ли уже пользователь или нет
      */
-    checkUser() {
+    checkUser () {
         let isUpload = true;
-        if (this.email === null || this.score === null
-            || this.avatar === null || this.guid === null) {
+        if (this.email === null || this.score === null ||
+            this.avatar === null || this.guid === null) {
             isUpload = false;
         }
 
         this._globalEventBus.triggerEvent('checkUserResponse', {
-            isUpload, user: {
-                email : this.email,
-                score : this.score,
-                avatar : this.avatar,
-                guid : this.guid,
+            isUpload,
+            user: {
+                email: this.email,
+                score: this.score,
+                avatar: this.avatar,
+                guid: this.guid
             }
         });
-
     }
 
     /**
@@ -41,23 +41,20 @@ export default class User {
      * @param avatar
      * @param guid
      */
-    setUser({email, score, avatar, guid}) {
+    setUser ({ email, score, avatar, guid }) {
         this.email = email;
         this.score = score;
         this.avatar = avatar;
         this.guid = guid;
     }
 
-
     /**
      * Удаляет данные пользователя
      */
-    removeUser() {
+    removeUser () {
         this.email = null;
         this.score = null;
         this.avatar = null;
         this.guid = null;
     }
-
-
 }
