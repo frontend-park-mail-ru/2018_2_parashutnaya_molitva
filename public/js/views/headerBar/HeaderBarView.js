@@ -44,7 +44,7 @@ export default class HeaderBarView extends View {
     }
 
     _onAuthResponse (data) {
-        if (data.isAuth === undefined || data.isAuth === null) {
+        if (data.isAuth == null) {
             console.log('No isAuth param');
             super.render(null);
             return;

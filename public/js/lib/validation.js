@@ -5,6 +5,8 @@ const errEmailIsInvalid = 'Email is invalid';
 const errInvalidPasswordData = 'Must contain at least 8 characters, 1 number, 1 upper and 1 lowercase';
 const errNotEqualPassRePass = 'Password and Password Repeat are not equal';
 
+let emailRe = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+let passRe = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.{8,})/;
 export default class Validation {
     /**
      * Валидирует email.
@@ -60,8 +62,7 @@ export default class Validation {
      * @returns {boolean}
      */
     static validateEmailRegex (email) {
-        let re = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-        return re.test(String(email).toLowerCase());
+        return emailRe.test(String(email).toLowerCase());
     }
 
     /**
@@ -70,7 +71,6 @@ export default class Validation {
      * @returns {boolean}
      */
     static validatePassRegex (pass) {
-        let re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.{8,})/;
-        return re.test(pass);
+        return passRe.test(pass);
     }
 }
