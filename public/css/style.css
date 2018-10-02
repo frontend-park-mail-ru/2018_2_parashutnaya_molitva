@@ -196,6 +196,10 @@ body {
     flex: 4;
 }
 
+.profile__form{
+    padding-bottom: 5px;
+}
+
 /*table*/
 
 .table {
