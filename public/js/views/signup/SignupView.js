@@ -50,11 +50,29 @@ export default class SignupView extends View {
     _onSignupResponse (data) {
         this._endLoadWaiting();
         const error = data.error;
-        if (error) {
-            this._showWarning(error);
-        } else {
-            this._clearWarning();
+        const field = data.field;
+
+        if (!field){
+            if (error) {
+                this._showWarning(error);
+            } else {
+                this._clearWarning();
+            }
+            return
         }
+
+        switch (field) {
+            case "email":
+                this._onChangeEmailResponse(data);
+                break;
+            case "password":
+                this._onChangePassResponse(data);
+                break;
+            default:
+                console.error("Undefined field:" + field);
+                break;
+        }
+
     }
 
     _onChangeRepassResponse (data) {
