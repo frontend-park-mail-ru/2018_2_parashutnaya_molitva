@@ -27,10 +27,19 @@ export default class ProfileModel {
                 if (!res.avatar || res.error) {
                     this._eventBus.triggerEvent('changeAvatarResponse', res);
                 } else {
-                    Api.updateUser({guid: this._currentUserGUID, avatar: res.avatar});
-                    this._eventBus.triggerEvent('changeAvatarSuccess', {avatar: Net.getStorageURL() + res.avatar});
-                    this._globalEventBus.triggerEvent('removeUser');
-                    this._globalEventBus.triggerEvent('renderHeaderBar');
+                    Api.updateUser({guid: this._currentUserGUID, avatar: res.avatar}).
+                        then(resp => {
+                            if (resp.ok){
+                                this._eventBus.triggerEvent('changeAvatarSuccess', {avatar: Net.getStorageURL() + res.avatar});
+                                this._globalEventBus.triggerEvent('removeUser');
+                                this._globalEventBus.triggerEvent('renderHeaderBar');
+                            } else {
+                                resp.json().then(errResp => {
+                                    console.error(errResp.error);
+                                })
+                            }
+                    });
+
                 }
             });
     }
