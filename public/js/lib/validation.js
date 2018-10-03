@@ -9,6 +9,9 @@ const errImageSizeIsNotValid = 'Image size must be less than 5 MB';
 
 let emailRe = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
 let passRe = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.{8,})/;
+
+const validImageSize = 5 * (1 << 20);
+
 export default class Validation {
     /**
      * Валидирует email.
@@ -88,7 +91,7 @@ export default class Validation {
             return errImageExtensionIsInvalid;
         }
         const size = avatar.size;
-        if (size > 5 * 1000 * 1000) {
+        if (size > validImageSize) {
             return errImageSizeIsNotValid;
         }
     }
