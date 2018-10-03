@@ -4,6 +4,8 @@ const errRePassIsEmpty = 'RePass is empty';
 const errEmailIsInvalid = 'Email is invalid';
 const errInvalidPasswordData = 'Must contain at least 8 characters, 1 number, 1 upper and 1 lowercase';
 const errNotEqualPassRePass = 'Password and Password Repeat are not equal';
+const errImageExtensionIsInvalid = 'Image extension is not valid';
+const errImageSizeIsNotValid = 'Image size must be less than 5 MB';
 
 let emailRe = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
 let passRe = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.{8,})/;
@@ -72,5 +74,22 @@ export default class Validation {
      */
     static validatePassRegex (pass) {
         return passRe.test(pass);
+    }
+
+    /**
+     * Валидирует расширение и размер изображения.
+     * @param avatar
+     * @returns {string}
+     */
+    static validateAvatar (avatar) {
+        const validExtensions = new Set(['gif', 'png', 'bmp', 'jpeg', 'jpg']);
+        const extension = avatar.name.substring(avatar.name.lastIndexOf('.') + 1).toLowerCase();
+        if (!validExtensions.has(extension)) {
+            return errImageExtensionIsInvalid;
+        }
+        const size = avatar.size;
+        if (size > 5 * 1000 * 1000) {
+            return errImageSizeIsNotValid;
+        }
     }
 }

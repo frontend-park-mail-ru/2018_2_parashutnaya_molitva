@@ -52,27 +52,26 @@ export default class SignupView extends View {
         const error = data.error;
         const field = data.field;
 
-        if (!field){
+        if (!field) {
             if (error) {
                 this._showWarning(error);
             } else {
                 this._clearWarning();
             }
-            return
+            return;
         }
 
         switch (field) {
-            case "email":
-                this._onChangeEmailResponse(data);
-                break;
-            case "password":
-                this._onChangePassResponse(data);
-                break;
-            default:
-                console.error("Undefined field:" + field);
-                break;
+        case 'email':
+            this._onChangeEmailResponse(data);
+            break;
+        case 'password':
+            this._onChangePassResponse(data);
+            break;
+        default:
+            console.error('Undefined field:' + field);
+            break;
         }
-
     }
 
     _onChangeRepassResponse (data) {
