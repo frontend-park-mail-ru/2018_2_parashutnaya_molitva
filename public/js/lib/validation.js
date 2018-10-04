@@ -90,8 +90,8 @@ export default class Validation {
         if (!validExtensions.has(extension)) {
             return errImageExtensionIsInvalid;
         }
-        const size = avatar.size;
-        if (size > validImageSize) {
+
+        if (avatar.size > validImageSize) {
             return errImageSizeIsNotValid;
         }
     }
