@@ -21,14 +21,13 @@ export default class ProfileModel {
     _onChangeAvatar (data) {
         const avatar = data.avatar;
 
-        // ===
         const errAvatar = Validation.validateAvatar(avatar);
         if (errAvatar) {
             this._eventBus.triggerEvent('changeAvatarResponse', { error: errAvatar });
             console.log(errAvatar);
             return;
         }
-        // ===
+
         Api.uploadAvatar({ avatar })
             .then(res => res.json())
             .then(res => {
