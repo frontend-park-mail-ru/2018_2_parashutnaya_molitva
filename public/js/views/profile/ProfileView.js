@@ -3,7 +3,7 @@ import template from './profile.tmpl.xml';
 import SignupView from '../signup/SignupView.js';
 
 export default class ProfileView extends View {
-    constructor({eventBus = {}} = {}) {
+    constructor ({ eventBus = {} } = {}) {
         super(template, eventBus);
         this._eventBus.subscribeToEvent('checkAuthResponse', this._onCheckAuthResponse.bind(this));
         this._eventBus.subscribeToEvent('loadUserResponse', this._onLoadUserResponse.bind(this));
@@ -16,34 +16,34 @@ export default class ProfileView extends View {
         this._eventBus.subscribeToEvent('submitPasswordSuccess', this._onSubmitPasswordSucces.bind(this));
     }
 
-    render(root, data = {}) {
+    render (root, data = {}) {
         this._prevRoot = root;
         this._eventBus.triggerEvent('checkAuth');
     }
 
-    _onChangeAvatarResponse(data) {
+    _onChangeAvatarResponse (data) {
         if (data.error) {
             this._showElement(this._avatarUploaderWarning);
             this._avatarUploaderWarning.innerHTML = data.error;
         } else {
             this._hideElement(this._avatarUploaderWarning);
-            this._avatarUploaderWarning.innerHTML = "";
+            this._avatarUploaderWarning.innerHTML = '';
         }
     }
 
-    _onChangeAvatarSuccess(data) {
+    _onChangeAvatarSuccess (data) {
         if (!data.avatar) {
             console.log('No avatar');
             return;
         }
 
         this._avatarUploaderWarning.classList.add('hidden');
-        this._avatarUploaderWarning.innerHTML = "";
+        this._avatarUploaderWarning.innerHTML = '';
 
         this._avatar.src = data.avatar;
     }
 
-    _onCheckAuthResponse(data = {}) {
+    _onCheckAuthResponse (data = {}) {
         if (data.error || !data.isAuth) {
             this._eventBus.triggerEvent('checkAuthError');
             return;
@@ -52,7 +52,7 @@ export default class ProfileView extends View {
         this._eventBus.triggerEvent('loadUser', data);
     }
 
-    _onLoadUserResponse(data = {}) {
+    _onLoadUserResponse (data = {}) {
         if (data.error || !data.user) {
             this._eventBus.triggerEvent('checkAuthError');
             return;
@@ -63,7 +63,7 @@ export default class ProfileView extends View {
         this._initElements();
     }
 
-    _initElements() {
+    _initElements () {
         this._avatar = this.el.querySelector('.js-avatar');
         this._avatarUploader = this.el.querySelector('.js-upload-avatar');
         this._avatarUploaderWarning = this.el.querySelector('.js-warning-avatar');
@@ -95,9 +95,9 @@ export default class ProfileView extends View {
         this._initEventBusEvents();
     }
 
-    _initElementsEvents() {
+    _initElementsEvents () {
         this._avatarUploader.addEventListener('change', () => {
-            this._eventBus.triggerEvent('changeAvatar', {avatar: this._avatarUploader.files[0]});
+            this._eventBus.triggerEvent('changeAvatar', { avatar: this._avatarUploader.files[0] });
         });
 
         this._emailEditButton.addEventListener('click', () => {
@@ -112,7 +112,7 @@ export default class ProfileView extends View {
 
         this._emailSubmitButton.addEventListener('click', (ev) => {
             ev.preventDefault();
-            this._eventBus.triggerEvent('submitEmail', {email: this._emailInputEmailForm.value});
+            this._eventBus.triggerEvent('submitEmail', { email: this._emailInputEmailForm.value });
         });
 
         this._passwordEditButton.addEventListener('click', () => {
@@ -127,11 +127,11 @@ export default class ProfileView extends View {
 
         this._passwordSubmitButton.addEventListener('click', (ev) => {
             ev.preventDefault();
-            this._eventBus.triggerEvent('submitPassword', {pass: this._passwordInputPasswordForm.value});
+            this._eventBus.triggerEvent('submitPassword', { pass: this._passwordInputPasswordForm.value });
         });
     }
 
-    _initEventBusEvents() {
+    _initEventBusEvents () {
         this._emailInputEmailForm.addEventListener('input',
             this._onChangeEmail.bind(this, this._emailInputEmailForm));
 
@@ -139,7 +139,7 @@ export default class ProfileView extends View {
             this._onChangePass.bind(this, this._passwordInputPasswordForm));
     }
 
-    _onSubmitEmailSucces(data) {
+    _onSubmitEmailSucces (data) {
         this._hideElement(this._emailFormWrapper);
         this._showElement(this._emailBlock);
 
@@ -150,30 +150,30 @@ export default class ProfileView extends View {
         this._emailField.innerHTML = data.email;
     }
 
-    _onSubmitPasswordSucces(data) {
+    _onSubmitPasswordSucces (data) {
         this._hideElement(this._passwordFormWrapper);
         this._showElement(this._passwordBlock);
     }
 
-    _onChangePass(passEl) {
+    _onChangePass (passEl) {
         const pass = passEl.value;
-        this._eventBus.triggerEvent('changePassword', {pass});
+        this._eventBus.triggerEvent('changePassword', { pass });
     }
 
-    _onChangeEmail(emailEl) {
+    _onChangeEmail (emailEl) {
         const email = emailEl.value;
-        this._eventBus.triggerEvent('changeEmail', {email});
+        this._eventBus.triggerEvent('changeEmail', { email });
     }
 
-    _onChangePassResponse(data) {
+    _onChangePassResponse (data) {
         this._onChangeResponseTmpl(data.error, this._passwordInputPasswordForm, this._passWarning);
     }
 
-    _onChangeEmailResponse(data) {
+    _onChangeEmailResponse (data) {
         this._onChangeResponseTmpl(data.error, this._emailInputEmailForm, this._emailWarning);
     }
 
-    _onChangeResponseTmpl(error, el, warning) {
+    _onChangeResponseTmpl (error, el, warning) {
         if (error) {
             SignupView.showWarning(el, warning, error);
             return;
@@ -182,13 +182,13 @@ export default class ProfileView extends View {
         SignupView._clearWarning(el, warning);
     }
 
-    _showElement(el) {
+    _showElement (el) {
         if (el.classList.contains('hidden')) {
             el.classList.remove('hidden');
         }
     }
 
-    _hideElement(el) {
+    _hideElement (el) {
         el.classList.add('hidden');
     }
 }
