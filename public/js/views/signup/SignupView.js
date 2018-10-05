@@ -1,7 +1,5 @@
 import View from '../../lib/view.js';
-
-// import template from './signup.tmpl.xml';
-import template from './signup.tmpl.js';
+import template from './signup.tmpl.xml';
 
 export default class SignupView extends View {
     constructor ({ eventBus = {} } = {}) {

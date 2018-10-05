@@ -1,3 +1,5 @@
+import './menuButton.css';
+
 const noop = () => null;
 const elementClass = 'button menu__button';
 export default class MenuButton {

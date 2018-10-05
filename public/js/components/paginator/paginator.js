@@ -1,4 +1,5 @@
-// 1 2 3, 5
+import './paginator.css';
+
 const noop = () => null;
 export default class Paginator {
     /**
