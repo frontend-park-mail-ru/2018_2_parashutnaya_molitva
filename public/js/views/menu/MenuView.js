@@ -1,7 +1,5 @@
 import View from '../../lib/view.js';
-
-// import template from './menu.tmpl.xml';
-
+import Menu from '../../components/menu.js';
 import template from './menu.tmpl.js';
 
 export default class MenuView extends View {
@@ -11,5 +9,15 @@ export default class MenuView extends View {
 
     render (root, data = {}) {
         super.render(root, data);
+
+        const menuSection = this.el.querySelector('.menu.section');
+        const menu = new Menu([
+            { textLabel: 'Singleplayer' },
+            { textLabel: 'Multiplayer' },
+            { textLabel: 'Scoreboard', href: '/scoreboard' },
+            { textLabel: 'About', href: '/about' }
+        ]);
+
+        menu.render(menuSection);
     }
 }
