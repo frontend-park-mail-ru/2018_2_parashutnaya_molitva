@@ -82,7 +82,7 @@ export default class Router {
      */
     start () {
         this.root.addEventListener('click', (ev) => {
-            if (ev.target.tagName === 'A') {
+            if (ev.target.tagName === 'A' && ev.target.hostname === location.hostname) {
                 ev.preventDefault();
                 this._change(Router._normalizePath(ev.target.pathname));
             }
