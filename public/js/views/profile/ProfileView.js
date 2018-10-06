@@ -69,7 +69,7 @@ export default class ProfileView extends View {
         this._avatarUploaderWarning = this.el.querySelector('.js-warning-avatar');
 
         this._emailBlock = this.el.querySelector('.js-email-row');
-        this._emailEditButton = this._emailBlock.querySelector('button');
+        // this._emailEditButton = this._emailBlock.querySelector('button');
         this._emailField = this._emailBlock.querySelector('.js-email-field');
 
         this._emailFormWrapper = this.el.querySelector('.js-email-form');
@@ -100,10 +100,10 @@ export default class ProfileView extends View {
             this._eventBus.triggerEvent('changeAvatar', { avatar: this._avatarUploader.files[0] });
         });
 
-        this._emailEditButton.addEventListener('click', () => {
-            this._showElement(this._emailFormWrapper);
-            this._hideElement(this._emailBlock);
-        });
+        // this._emailEditButton.addEventListener('click', () => {
+        //     this._showElement(this._emailFormWrapper);
+        //     this._hideElement(this._emailBlock);
+        // });
         this._emailCancelButton.addEventListener('click', (ev) => {
             ev.preventDefault();
             this._hideElement(this._emailFormWrapper);
