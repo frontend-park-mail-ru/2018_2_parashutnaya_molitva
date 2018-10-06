@@ -43,24 +43,6 @@ body {
     display: none !important;
 }
 
-/* paginator components */
-
-.paginator__button_current {
-    background-color: #3e8e41;
-}
-
-/*menu components*/
-
-.menu__button {
-    color: initial;
-
-    text-align: center;
-    background-color: lightgray;
-
-    margin: 10px 2px;
-    width: 128px;
-}
-
 /*signup components*/
 
 .signup_form {

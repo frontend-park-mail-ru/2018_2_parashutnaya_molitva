@@ -1,8 +1,5 @@
 import View from '../../lib/view.js';
-
-// import template from './headerBar.tmpl.xml';
-
-import template from './headerBar.tmpl.js';
+import template from './headerBar.tmpl.xml';
 
 export default class HeaderBarView extends View {
     constructor (eventBus, globalEventBus) {

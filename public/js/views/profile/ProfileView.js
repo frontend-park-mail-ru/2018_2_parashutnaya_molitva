@@ -1,5 +1,5 @@
 import View from '../../lib/view.js';
-import template from './profile.tmpl.js';
+import template from './profile.tmpl.xml';
 import SignupView from '../signup/SignupView.js';
 
 export default class ProfileView extends View {
