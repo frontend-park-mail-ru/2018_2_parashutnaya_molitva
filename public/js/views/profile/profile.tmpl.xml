@@ -23,7 +23,7 @@
                 <div class="profile__data js-email-field">
                     <fest:value>params.user.email</fest:value>
                 </div>
-                <button class="profile__edit-button">Edit</button>
+                <!--<button class="profile__edit-button">Edit</button>-->
             </div>
 
             <div class="profile-row hidden js-email-form">
