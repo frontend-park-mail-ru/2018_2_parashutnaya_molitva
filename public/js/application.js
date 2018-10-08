@@ -17,7 +17,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let router = new Router(page);
 
-    const globalEventBus = new EventBus(['renderHeaderBar', 'setUser', 'removeUser', 'checkUser', 'checkUserResponse']);
+    const globalEventBus = new EventBus(['renderHeaderBar', 'setUser', 'removeUser',
+        'checkUser', 'checkUserResponse']);
 
     const headerBarController = new HeaderBarController({ globalEventBus });
     headerBarController.headerBarView.render(header);
