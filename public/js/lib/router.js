@@ -18,9 +18,9 @@ export default class Router {
      */
     toStartPage (delPrev = false) {
         if (delPrev) {
-            window.history.go(-1);
+            window.history.replaceState(null, null, "/");
         }
-        this._change('/');
+        this._change('/', false);
     }
 
     /**
