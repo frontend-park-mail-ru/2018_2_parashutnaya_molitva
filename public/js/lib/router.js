@@ -20,7 +20,8 @@ export default class Router {
         if (delPrev) {
             window.history.replaceState(null, null, "/");
         }
-        this._change('/', false);
+
+        this._change('/', !delPrev);
     }
 
     /**
