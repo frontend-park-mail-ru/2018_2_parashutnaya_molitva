@@ -6,7 +6,7 @@ export default class Router {
         this.currentRoute = null;
         this.isCurrentNotFound = false;
 
-        window.addEventListener('popstate', (ev) => {
+        window.addEventListener('popstate', () => {
             const pathname = Router._normalizePath(location.pathname);
             this._change(pathname, false);
         });
@@ -14,8 +14,12 @@ export default class Router {
 
     /**
      * Переходит на начальную страницу с путем '/'
+     * @param delPrev удаляет из истории Путь из которого сделан переход
      */
-    toStartPage () {
+    toStartPage (delPrev = false) {
+        if (delPrev) {
+            window.history.go(-1);
+        }
         this._change('/');
     }
 
