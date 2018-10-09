@@ -28,7 +28,7 @@ export default class ProfileController {
         const eventBus = new EventBus(eventList);
 
         eventBus.subscribeToEvent('checkAuthError', () => {
-            router.toStartPage();
+            router.toStartPage(true);
         });
 
         this.profileView = new ProfileView({ eventBus });
