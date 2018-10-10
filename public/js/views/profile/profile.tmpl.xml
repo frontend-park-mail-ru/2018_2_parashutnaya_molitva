@@ -70,7 +70,7 @@
                 </div>
             </div>
             <div class="profile__row">
-                <a href="" class="button menu__button">Menu</a>
+                <a href="/" class="button menu__button">Menu</a>
             </div>
         </article>
     </section>
