@@ -136,6 +136,7 @@ body {
 
 .header-bar__avatar {
     background-color: white;
+    background-size: cover;
     margin: 10px 2px;
 }
 
