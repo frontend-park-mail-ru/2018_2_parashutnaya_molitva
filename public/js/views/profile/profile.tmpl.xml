@@ -10,7 +10,7 @@
             <form class="profile__form">
                 <img src="{avatar}" height="200"
                      width="200" class="profile__img js-avatar"></img>
-                <input type="file" class="js-upload-avatar" name="avatar"></input>
+                <input type="file" class="js-upload-avatar" name="avatar" accept="image/jpeg,image/png" ></input>
             </form>
             <div class="warning signup__warning hidden js-warning-avatar"></div>
         </figure>
@@ -70,7 +70,7 @@
                 </div>
             </div>
             <div class="profile__row">
-                <a href="" class="button menu__button">Menu</a>
+                <a href="/" class="button menu__button">Menu</a>
             </div>
         </article>
     </section>
