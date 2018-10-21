@@ -1,4 +1,5 @@
 const path = require('path');
+const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 
 const conf = {
     entry: {
@@ -7,6 +8,9 @@ const conf = {
     output: {
         filename: 'application.js',
         path: path.resolve(__dirname, 'public/dist'),
+    },
+    resolve: {
+        modules: ['node_modules'],
     },
     module: {
         rules: [
@@ -30,7 +34,12 @@ const conf = {
                 ]
             },
         ]
-    }
+    },
+    plugins : [
+        new ServiceWorkerWebpackPlugin({
+            entry: path.join(__dirname, 'public/js/sw.js'),
+        }),
+    ]
 };
 
 module.exports = (env, options) => {

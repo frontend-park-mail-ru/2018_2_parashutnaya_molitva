@@ -10,7 +10,12 @@ import NotFoundView from './views/notfound/NotFoundView.js';
 import EventBus from './lib/eventbus.js';
 import User from './lib/user.js';
 
+import runtime from 'serviceworker-webpack-plugin/lib/runtime.js';
+
 document.addEventListener('DOMContentLoaded', () => {
+    if ('serviceWorker' in navigator) {
+        const registration = runtime.register();
+    }
     const page = document.querySelector('#page');
     const main = document.querySelector('.main');
     const header = document.querySelector('header');
