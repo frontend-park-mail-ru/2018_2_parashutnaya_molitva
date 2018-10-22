@@ -9,11 +9,11 @@ import HeaderBarController from './controllers/HeaderBarController.js';
 import NotFoundView from './views/notfound/NotFoundView.js';
 import EventBus from './lib/eventbus.js';
 import User from './lib/user.js';
-
-import runtime from 'serviceworker-webpack-plugin/lib/runtime.js';
+import runtime from 'serviceworker-webpack-plugin/lib/runtime';
+import '../css/style.css';
 
 document.addEventListener('DOMContentLoaded', () => {
-    if ('serviceWorker' in navigator) {
+    if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || window.location.hostname === 'localhost')) {
         const registration = runtime.register();
     }
     const page = document.querySelector('#page');

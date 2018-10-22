@@ -1,16 +1,13 @@
 const path = require('path');
 const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 const conf = {
     entry: {
         application: './public/js/application.js'
     },
     output: {
-        filename: 'application.js',
-        path: path.resolve(__dirname, 'public/dist'),
-    },
-    resolve: {
-        modules: ['node_modules'],
+        path: path.resolve(__dirname + '/public/dist/'),
     },
     module: {
         rules: [
@@ -29,7 +26,7 @@ const conf = {
             {
                 test: /\.css$/,
                 use: [
-                    { loader: "style-loader" },
+                    { loader: MiniCssExtractPlugin.loader},
                     { loader: "css-loader" }
                 ]
             },
@@ -38,6 +35,9 @@ const conf = {
     plugins : [
         new ServiceWorkerWebpackPlugin({
             entry: path.join(__dirname, 'public/js/sw.js'),
+        }),
+        new MiniCssExtractPlugin({
+           filename: "style.css",
         }),
     ]
 };
