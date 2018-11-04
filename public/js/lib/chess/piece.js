@@ -93,4 +93,128 @@ export default class Piece {
             return 'X';
         }
     }
+
+    /**
+     * white rook
+     * @returns {Piece}
+     */
+    static rw () {
+        return new Piece(PIECE_TYPE.ROOK, PIECE_COLOR.WHITE);
+    }
+
+    /**
+     * white knight
+     * @returns {Piece}
+     */
+    static nw () {
+        return new Piece(PIECE_TYPE.KNIGHT, PIECE_COLOR.WHITE);
+    }
+
+    /**
+     * white bishop
+     * @returns {Piece}
+     */
+    static bw () {
+        return new Piece(PIECE_TYPE.BISHOP, PIECE_COLOR.WHITE);
+    }
+
+    /**
+     * white queen
+     * @returns {Piece}
+     */
+    static qw () {
+        return new Piece(PIECE_TYPE.QUEEN, PIECE_COLOR.WHITE);
+    }
+
+    /**
+     * white king
+     * @returns {Piece}
+     */
+    static kw () {
+        return new Piece(PIECE_TYPE.KING, PIECE_COLOR.WHITE);
+    }
+
+    /**
+     * white pawn
+     * @returns {Piece}
+     */
+    static pw () {
+        return new Piece(PIECE_TYPE.PAWN, PIECE_COLOR.WHITE);
+    }
+
+    /**
+     * white en passant
+     * @returns {Piece}
+     */
+    static ew () {
+        return new Piece(PIECE_TYPE.EN_PASSANT, PIECE_COLOR.WHITE);
+    }
+
+    /**
+     * black rook
+     * @returns {Piece}
+     */
+    static rb () {
+        return new Piece(PIECE_TYPE.ROOK, PIECE_COLOR.BLACK);
+    }
+
+    /**
+     * black knight
+     * @returns {Piece}
+     */
+    static nb () {
+        return new Piece(PIECE_TYPE.KNIGHT, PIECE_COLOR.BLACK);
+    }
+
+    /**
+     * black bishop
+     * @returns {Piece}
+     */
+    static bb () {
+        return new Piece(PIECE_TYPE.BISHOP, PIECE_COLOR.BLACK);
+    }
+
+    /**
+     * black queen
+     * @returns {Piece}
+     */
+    static qb () {
+        return new Piece(PIECE_TYPE.QUEEN, PIECE_COLOR.BLACK);
+    }
+
+    /**
+     * black king
+     * @returns {Piece}
+     */
+    static kb () {
+        return new Piece(PIECE_TYPE.KING, PIECE_COLOR.BLACK);
+    }
+
+    /**
+     * black pawn
+     * @returns {Piece}
+     */
+    static pb () {
+        return new Piece(PIECE_TYPE.PAWN, PIECE_COLOR.BLACK);
+    }
+
+    /**
+     * black en passant
+     * @returns {Piece}
+     */
+    static eb () {
+        return new Piece(PIECE_TYPE.EN_PASSANT, PIECE_COLOR.BLACK);
+    }
+
+    /**
+     * empty piece
+     * @returns {Piece}
+     */
+    static em () {
+        return new Piece(PIECE_TYPE.EMPTY, PIECE_COLOR.NONE);
+    }
+
+    static no () {
+        return new Piece(PIECE_TYPE.NONE, PIECE_COLOR.NONE);
+    }
 }
