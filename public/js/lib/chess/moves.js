@@ -1,5 +1,4 @@
 import { PIECE_TYPE, PIECE_COLOR } from './enums';
-import Board from './board';
 import Coord from './coord';
 import Utils from './utils';
 import Piece from './piece';
@@ -54,7 +53,48 @@ export default class Moves {
                     availableMoves[uci] = moveBoard;
                 }
             }
+
+            const pieceAtDoubleForward = board.pieceAt(doubleForwardAbs);
+            if (pieceAtDoubleForward.type() === PIECE_TYPE.EMPTY && !pawn.isMoved()) {
+                let moveBoard = board.copy();
+                moveBoard.movePiece(pos, doubleForwardAbs);
+                moveBoard.removeEnPassant();
+                moveBoard.setPieceAt(enPassantAbs, new Piece(PIECE_TYPE.EN_PASSANT, pawn.color()));
+                availableMoves[Utils.coordsToUcis(pos, doubleForwardAbs)] = moveBoard;
+            }
         }
+
+        const captureMultipliers = [new Coord(1, 1), new Coord(1, -1)];
+
+        captureMultipliers.forEach(m => {
+            const captureAbs = captureRel.multiply(m).add(pos);
+            const pieceAtCapture = board.pieceAt(captureAbs);
+
+            if (pieceAtCapture.color() !== pawn.color() && pieceAtCapture.color() !== PIECE_COLOR.NONE) {
+                const uci = Utils.coordsToUcis(pos, captureAbs);
+                // promotion
+                if ((pawn.color() === PIECE_COLOR.WHITE && captureAbs.r() === 7) ||
+                    (pawn.color() === PIECE_COLOR.BLACK && captureAbs.r() === 0)) {
+                    for (const key in promotionMap) {
+                        let moveBoard = board.copy();
+                        moveBoard.movePiece(pos, captureAbs);
+                        moveBoard.setPieceAt(captureAbs, new Piece(promotionMap[key], pawn.color()));
+                        moveBoard.removeEnPassant();
+                        availableMoves[uci + key] = moveBoard;
+                    }
+                } else {
+                    let moveBoard = board.copy();
+                    moveBoard.movePiece(pos, captureAbs);
+                    moveBoard.removeEnPassant();
+                    if (pieceAtCapture.type() === PIECE_TYPE.EN_PASSANT) {
+                        const pawnEnPassantAbs = pawnEnPassantRel.add(captureAbs);
+                        moveBoard.setPieceAt(pawnEnPassantAbs, Piece.em());
+                    }
+                    availableMoves[uci] = moveBoard;
+                }
+            }
+        });
+
         return availableMoves;
     }
 }
