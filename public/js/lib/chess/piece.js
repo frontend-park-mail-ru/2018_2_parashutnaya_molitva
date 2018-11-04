@@ -12,6 +12,13 @@ export default class Piece {
         this._isMoved = false;
     }
 
+    copy () {
+        let copied = new Piece(this._pieceType, this._pieceColor);
+        copied._isMoved = this._isMoved;
+
+        return copied;
+    }
+
     /**
      * _pieceType getter
      * @returns {PIECE_TYPE}
