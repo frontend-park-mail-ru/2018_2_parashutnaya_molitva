@@ -26,6 +26,14 @@ export default class Board {
     }
 
     /**
+     * assigns board as value
+     * @param {Board} other
+     */
+    assign (other) {
+        this._field = other.copy()._field;
+    }
+
+    /**
      * board copy
      * @returns {Board}
      */
@@ -41,6 +49,15 @@ export default class Board {
         }
         copied._field = field;
         return copied;
+    }
+
+    moveUci (uci) {
+        const availableMoves = this.pseudoLegalMoves(false);
+        const newBoard = availableMoves[uci];
+        if (newBoard === 'undefined') {
+            return;
+        }
+        this.assign(newBoard);
     }
 
     /**

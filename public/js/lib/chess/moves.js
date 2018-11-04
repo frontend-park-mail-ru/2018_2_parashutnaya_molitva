@@ -30,7 +30,7 @@ export default class Moves {
 
         const forwardAbs = forwardRel.add(pos);
         const doubleForwardAbs = doubleForwardRel.add(pos);
-        const enPassantAbs = enPassantRel.add(pos);
+        const enPassantAbs = enPassantRel.add(doubleForwardAbs);
 
         if (!attackOnly) {
             const pieceAtForward = board.pieceAt(forwardAbs);
