@@ -31,11 +31,10 @@ export default class Utils {
      */
     static coordsToUcis (from, to) {
         let result = '';
-        result += coordToUciColumnKeys[from.c];
-        result += coordToUciRowKeys[from.r];
-        result += coordToUciColumnKeys[to.c];
-        result += coordToUciRowKeys[to.r];
-
+        result += coordToUciColumnKeys[from.c()];
+        result += coordToUciRowKeys[from.r()];
+        result += coordToUciColumnKeys[to.c()];
+        result += coordToUciRowKeys[to.r()];
         return result;
     }
 }

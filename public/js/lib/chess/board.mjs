@@ -1,6 +1,7 @@
 import { PIECE_TYPE, PIECE_COLOR } from './enums';
 import Piece from './piece';
 import Coord from './coord';
+import Moves from './moves';
 
 export default class Board {
     /**
@@ -65,6 +66,18 @@ export default class Board {
         return this._field[pos.r()][pos.c()];
     }
 
+    /**
+     * sets `piece` at `pos`
+     * @param {Coord} pos
+     * @param {Piece} piece
+     */
+    setPieceAt (pos, piece) {
+        this._field[pos.r()][pos.c()] = piece;
+    }
+
+    /**
+     * prints board
+     */
     print () {
         let field = '';
         for (let i = 7; i >= 0; i--) {
@@ -76,5 +89,77 @@ export default class Board {
         }
 
         console.log(field);
+    }
+
+    /**
+     * prints unfiltered moves
+     */
+    printPseudoLegalMoves () {
+        const pseudoLegalMoves = this.pseudoLegalMoves(false);
+        let result = '';
+        for (const key in pseudoLegalMoves) {
+            result += key + ' ';
+        }
+        console.log(result);
+    }
+
+    /**
+     * unfiltered moves for `pos`
+     * @param {Coord} pos
+     * @param {boolean} attackOnly
+     * @return {{}}
+     */
+    pseudoLegalMovesAtPos (pos, attackOnly) {
+        const piece = this.pieceAt(pos);
+        switch (piece.type()) {
+        case PIECE_TYPE.PAWN:
+            return Moves.pawn(this, pos, attackOnly);
+        default:
+            // return {};
+        }
+    }
+
+    /**
+     * unfiltered moves for color
+     * @param {PIECE_COLOR} color
+     * @param {boolean} attackOnly
+     * @return {{}}
+     */
+    pseudoLegalMovesWithColor (color, attackOnly) {
+        let availableMoves = {};
+        for (let i = 0; i < 8; i++) {
+            for (let j = 0; j < 8; j++) {
+                const pos = new Coord(i, j);
+                if (this.pieceAt(pos).color() === color) {
+                    availableMoves = Object.assign(availableMoves, this.pseudoLegalMovesAtPos(pos, attackOnly));
+                }
+            }
+        }
+        return availableMoves;
+    }
+
+    /**
+     * unfiltered moves
+     * @param attackOnly
+     * @return {{}}
+     */
+    pseudoLegalMoves (attackOnly) {
+        let availableMoves = {};
+        availableMoves = Object.assign(availableMoves, this.pseudoLegalMovesWithColor(PIECE_COLOR.WHITE, attackOnly));
+        availableMoves = Object.assign(availableMoves, this.pseudoLegalMovesWithColor(PIECE_COLOR.BLACK, attackOnly));
+
+        return availableMoves;
+    }
+
+    removeEnPassant () {
+        for (let i = 0; i < 8; i++) {
+            for (let j = 0; j < 8; j++) {
+                const pos = new Coord(i, j);
+                if (this.pieceAt(pos).type() === PIECE_TYPE.EN_PASSANT) {
+                    this.setPieceAt(pos, Piece.em());
+                    break;
+                }
+            }
+        }
     }
 }
