@@ -139,6 +139,8 @@ export default class Board {
             return Moves.rook(this, pos);
         case PIECE_TYPE.QUEEN:
             return Moves.queen(this, pos);
+        case PIECE_TYPE.KING:
+            return Moves.king(this, pos);
         default:
             // return {};
         }

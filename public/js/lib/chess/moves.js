@@ -224,4 +224,34 @@ export default class Moves {
 
         return availableMoves;
     }
+
+    /**
+     * king moves
+     * @param {Board} board
+     * @param {Coord} pos
+     * @param {boolean} attackOnly
+     */
+    static king (board, pos, attackOnly) {
+        let availableMoves = {};
+        const king = board.pieceAt(pos);
+
+        const steps = [
+            new Coord(0, -1), new Coord(1, -1), new Coord(1, 0), new Coord(1, 1),
+            new Coord(0, 1), new Coord(-1, 1), new Coord(-1, 0), new Coord(-1, -1)
+        ];
+
+        steps.forEach(stepRel => {
+            const stepAbs = stepRel.add(pos);
+            const piece = board.pieceAt(stepAbs);
+            if (piece.type() === PIECE_TYPE.EMPTY || piece.type() === PIECE_TYPE.EN_PASSANT ||
+                (piece.color() !== king.color() && piece.type() !== PIECE_TYPE.NONE)) {
+                let moveBoard = board.copy();
+                moveBoard.movePiece(pos, stepAbs);
+                moveBoard.removeEnPassant();
+                availableMoves[Utils.coordsToUcis(pos, stepAbs)] = moveBoard;
+            }
+        });
+
+        return availableMoves;
+    }
 }
