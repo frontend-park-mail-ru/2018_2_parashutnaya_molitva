@@ -97,4 +97,36 @@ export default class Moves {
 
         return availableMoves;
     }
+
+    /**
+     *  knight moves
+     * @param {Board} board
+     * @param {Coord} pos
+     * @return {{}}
+     */
+    static knight (board, pos) {
+        let availableMoves = {};
+        const knight = board.pieceAt(pos);
+
+        const steps = [
+            new Coord(-2, 1), new Coord(-1, 2), new Coord(1, 2), new Coord(2, 1),
+            new Coord(2, -1), new Coord(1, -2), new Coord(-1, -2), new Coord(-2, -1)
+        ];
+
+        steps.forEach(step => {
+            const stepAbs = step.add(pos);
+            const piece = board.pieceAt(stepAbs);
+            if ((piece.color() !== knight.color() && piece.color() !== PIECE_COLOR.NONE) ||
+                piece.type() === PIECE_TYPE.EN_PASSANT ||
+                piece.type() === PIECE_TYPE.EMPTY) {
+                let moveBoard = board.copy();
+                moveBoard.movePiece(pos, stepAbs);
+                moveBoard.removeEnPassant();
+
+                availableMoves[Utils.coordsToUcis(pos, stepAbs)] = moveBoard;
+            }
+        });
+
+        return availableMoves;
+    }
 }

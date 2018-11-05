@@ -131,6 +131,8 @@ export default class Board {
         switch (piece.type()) {
         case PIECE_TYPE.PAWN:
             return Moves.pawn(this, pos, attackOnly);
+        case PIECE_TYPE.KNIGHT:
+            return Moves.knight(this, pos);
         default:
             // return {};
         }
