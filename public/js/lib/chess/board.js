@@ -159,7 +159,7 @@ export default class Board {
         case PIECE_TYPE.KING:
             return Moves.king(this, pos, attackOnly);
         default:
-            // return {};
+            return {};
         }
     }
 
