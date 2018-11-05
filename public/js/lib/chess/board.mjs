@@ -140,7 +140,7 @@ export default class Board {
         case PIECE_TYPE.QUEEN:
             return Moves.queen(this, pos);
         case PIECE_TYPE.KING:
-            return Moves.king(this, pos);
+            return Moves.king(this, pos, attackOnly);
         default:
             // return {};
         }
@@ -188,5 +188,39 @@ export default class Board {
                 }
             }
         }
+    }
+
+    /**
+     * is king of `color` in check
+     * @param {PIECE_COLOR} color
+     * @return {boolean}
+     */
+    isCheck (color) {
+        const oppositeColor = color === PIECE_COLOR.WHITE ? PIECE_COLOR.BLACK : PIECE_COLOR.WHITE;
+        const pseudoMoves = this.pseudoLegalMovesWithColor(oppositeColor, true);
+
+        for (const key in pseudoMoves) {
+            if (!pseudoMoves[key].kingExists(color)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * checks if king of `color` exists
+     * @param color
+     * @return {boolean}
+     */
+    kingExists (color) {
+        for (let i = 0; i < 8; i++) {
+            for (let j = 0; j < 8; j++) {
+                const piece = this.pieceAt(new Coord(i, j));
+                if (piece.type() === PIECE_TYPE.KING && piece.color() === color) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

@@ -252,6 +252,74 @@ export default class Moves {
             }
         });
 
+        if (!attackOnly) {
+            // king-side castling
+            const kingSideRookAbs = new Coord(0, 3).add(pos);
+            const kingKMovementsAbs = [
+                new Coord(0, 1).add(pos), new Coord(0, 2).add(pos)
+            ];
+
+            const kRook = board.pieceAt(kingSideRookAbs);
+            if (!board.isCheck(king.color()) && !king.isMoved() &&
+                kRook.type() === PIECE_TYPE.ROOK && !kRook.isMoved()) {
+                let castlingIsLegal = true;
+                for (let i = 0; i < kingKMovementsAbs.length; i++) {
+                    if (board.pieceAt(kingKMovementsAbs[i]).type() !== PIECE_TYPE.EMPTY) {
+                        castlingIsLegal = false;
+                        break;
+                    }
+                    let moveBoard = board.copy();
+                    moveBoard.movePiece(pos, kingKMovementsAbs[i]);
+                    moveBoard.removeEnPassant();
+                    if (moveBoard.isCheck(king.color())) {
+                        castlingIsLegal = false;
+                        break;
+                    }
+                }
+                if (castlingIsLegal) {
+                    let moveBoard = board.copy();
+                    moveBoard.movePiece(pos, kingKMovementsAbs[kingKMovementsAbs.length - 1]);
+                    moveBoard.movePiece(kingSideRookAbs, kingKMovementsAbs[kingKMovementsAbs.length - 2]);
+                    moveBoard.removeEnPassant();
+                    availableMoves[Utils.coordsToUcis(pos, kingKMovementsAbs[kingKMovementsAbs.length - 1])] = moveBoard;
+                }
+            }
+
+            // queen-side castling
+            const queenSideRookAbs = new Coord(0, -4).add(pos);
+            const kingQMovementsAbs = [
+                new Coord(0, -1).add(pos), new Coord(0, -2).add(pos)
+            ];
+            const rookJumpAbs = new Coord(0, -3).add(pos);
+
+            const qRook = board.pieceAt(queenSideRookAbs);
+            if (!board.isCheck(king.color()) && !king.isMoved() &&
+                qRook.type() === PIECE_TYPE.ROOK && !qRook.isMoved() &&
+                board.pieceAt(rookJumpAbs).type() === PIECE_TYPE.EMPTY) {
+                let castlingIsLegal = true;
+                for (let i = 0; i < kingQMovementsAbs.length; i++) {
+                    if (board.pieceAt(kingQMovementsAbs[i]).type() !== PIECE_TYPE.EMPTY) {
+                        castlingIsLegal = false;
+                        break;
+                    }
+                    let moveBoard = board.copy();
+                    moveBoard.movePiece(pos, kingQMovementsAbs[i]);
+                    moveBoard.removeEnPassant();
+                    if (moveBoard.isCheck(king.color())) {
+                        castlingIsLegal = false;
+                        break;
+                    }
+                }
+                if (castlingIsLegal) {
+                    let moveBoard = board.copy();
+                    moveBoard.movePiece(pos, kingQMovementsAbs[kingQMovementsAbs.length - 1]);
+                    moveBoard.movePiece(queenSideRookAbs, kingQMovementsAbs[kingQMovementsAbs.length - 2]);
+                    moveBoard.removeEnPassant();
+                    availableMoves[Utils.coordsToUcis(pos, kingQMovementsAbs[kingQMovementsAbs.length - 1])] = moveBoard;
+                }
+            }
+        }
+
         return availableMoves;
     }
 }
