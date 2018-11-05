@@ -121,6 +121,23 @@ export default class Board {
     }
 
     /**
+     * legal moves for `color`
+     * @param color
+     * @return {{}}
+     */
+    legalMoves (color) {
+        const pseudoLegalMoves = this.pseudoLegalMovesWithColor(color, false);
+        const legalMoves = {};
+        for (const key in pseudoLegalMoves) {
+            const board = pseudoLegalMoves[key];
+            if (!board.isCheck(color)) {
+                legalMoves[key] = board;
+            }
+        }
+        return legalMoves;
+    }
+
+    /**
      * unfiltered moves for `pos`
      * @param {Coord} pos
      * @param {boolean} attackOnly
@@ -222,5 +239,13 @@ export default class Board {
             }
         }
         return false;
+    }
+
+    isCheckmate (color) {
+        return this.isCheck(color) && Object.keys(this.legalMoves(color)).length === 0;
+    }
+
+    isStalemate (color) {
+        return !this.isCheck(color) && Object.keys(this.legalMoves(color)).length === 0;
     }
 }

@@ -9,6 +9,7 @@ import HeaderBarController from './controllers/HeaderBarController.js';
 import NotFoundView from './views/notfound/NotFoundView.js';
 import EventBus from './lib/eventbus.js';
 import User from './lib/user.js';
+import SingleplayerController from './controllers/SingleplayerController';
 
 document.addEventListener('DOMContentLoaded', () => {
     const page = document.querySelector('#page');
@@ -31,6 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const signinController = new SigninController({ router, globalEventBus });
     const signupContoller = new SignupController({ router, globalEventBus });
     const profilerControlleer = new ProfileController({ router, globalEventBus });
+    const singleplayerController = new SingleplayerController();
 
     router.add('/about', main, aboutController.aboutView);
     router.add('/scoreboard', main, scoreboardController.scoreboardView);
@@ -38,6 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
     router.add('/profile', main, profilerControlleer.profileView);
     router.add('/signup', main, signupContoller.signupView);
     router.add('/', main, menuController.menuView);
+    router.add('/singleplayer', main, singleplayerController.singleplayerView);
 
     router.setNotFoundView(main, new NotFoundView());
 
