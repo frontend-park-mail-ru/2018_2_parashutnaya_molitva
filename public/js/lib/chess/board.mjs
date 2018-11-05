@@ -133,6 +133,8 @@ export default class Board {
             return Moves.pawn(this, pos, attackOnly);
         case PIECE_TYPE.KNIGHT:
             return Moves.knight(this, pos);
+        case PIECE_TYPE.BISHOP:
+            return Moves.bishop(this, pos);
         default:
             // return {};
         }

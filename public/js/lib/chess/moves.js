@@ -126,7 +126,47 @@ export default class Moves {
                 availableMoves[Utils.coordsToUcis(pos, stepAbs)] = moveBoard;
             }
         });
+        return availableMoves;
+    }
 
+    /**
+     *  bishop moves
+     * @param {Board} board
+     * @param {Coord} pos
+     * @return {{}}
+     */
+    static bishop (board, pos) {
+        let availableMoves = {};
+        const bishop = board.pieceAt(pos);
+
+        let steps = [];
+        const rMultipliers = [1, 1, -1, -1];
+        const cMultipliers = [1, -1, 1, -1];
+        for (let i = 0; i < rMultipliers.length; i++) {
+            for (let j = 1; j < 8; j++) {
+                const stepRel = new Coord(j * rMultipliers[i], j * cMultipliers[i]);
+                const stepAbs = stepRel.add(pos);
+                const piece = board.pieceAt(stepAbs);
+                if (piece.type() === PIECE_TYPE.EMPTY || piece.type() === PIECE_TYPE.EN_PASSANT) {
+                    steps.push(stepAbs);
+                    continue;
+                }
+                if (piece.color() === bishop.color() || piece.type() === PIECE_TYPE.NONE) {
+                    break;
+                }
+                if (piece.color() !== bishop.color()) {
+                    steps.push(stepAbs);
+                    break;
+                }
+            }
+        }
+
+        steps.forEach(stepAbs => {
+            let moveBoard = board.copy();
+            moveBoard.movePiece(pos, stepAbs);
+            moveBoard.removeEnPassant();
+            availableMoves[Utils.coordsToUcis(pos, stepAbs)] = moveBoard;
+        });
         return availableMoves;
     }
 }
