@@ -210,4 +210,18 @@ export default class Moves {
         });
         return availableMoves;
     }
+
+    /**
+     * queen moves
+     * @param {Board} board
+     * @param {Coord} pos
+     * @return {{}}
+     */
+    static queen (board, pos) {
+        let availableMoves = {};
+        availableMoves = Object.assign(availableMoves, this.rook(board, pos));
+        availableMoves = Object.assign(availableMoves, this.bishop(board, pos));
+
+        return availableMoves;
+    }
 }

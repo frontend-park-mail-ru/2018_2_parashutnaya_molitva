@@ -137,6 +137,8 @@ export default class Board {
             return Moves.bishop(this, pos);
         case PIECE_TYPE.ROOK:
             return Moves.rook(this, pos);
+        case PIECE_TYPE.QUEEN:
+            return Moves.queen(this, pos);
         default:
             // return {};
         }
