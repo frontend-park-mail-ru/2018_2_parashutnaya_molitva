@@ -24,22 +24,48 @@ export default class Game {
         this._turn = this._turn === PIECE_COLOR.WHITE ? PIECE_COLOR.BLACK : PIECE_COLOR.WHITE;
     }
 
+    /**
+     * is checkmate for current turn
+     * @return {boolean}
+     */
     isCheckmate () {
         return this._board.isCheckmate(this._turn);
     }
 
+    /**
+     * is stalemate for current turn
+     * @return {boolean}
+     */
     isStalemate () {
         return this._board.isStalemate(this._turn);
     }
 
-    isGameOver () {
-        return this.isCheckmate() || this.isStalemate();
+    /**
+     * return true if only 2 kings left
+     * @return {boolean}
+     */
+    isInsufficientMaterial () {
+        return this._board.isInsufficientMaterial();
     }
 
+    /**
+     * returns true if game ended
+     * @return {boolean}
+     */
+    isGameOver () {
+        return this.isCheckmate() || this.isStalemate() || this.isInsufficientMaterial();
+    }
+
+    /**
+     * prints board
+     */
     printBoard () {
         this._board.print();
     }
 
+    /**
+     * prints legal moves for current turn
+     */
     printLegalMoves () {
         const legalMoves = this._board.legalMoves(this._turn);
         let result = '';

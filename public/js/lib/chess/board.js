@@ -51,15 +51,6 @@ export default class Board {
         return copied;
     }
 
-    moveUci (uci) {
-        const availableMoves = this.pseudoLegalMoves(false);
-        const newBoard = availableMoves[uci];
-        if (newBoard === 'undefined') {
-            return;
-        }
-        this.assign(newBoard);
-    }
-
     /**
      * moves piece from `from` to `to`
      * @param {Coord} from
@@ -106,18 +97,6 @@ export default class Board {
         }
 
         console.log(field);
-    }
-
-    /**
-     * prints unfiltered moves
-     */
-    printPseudoLegalMoves () {
-        const pseudoLegalMoves = this.pseudoLegalMoves(false);
-        let result = '';
-        for (const key in pseudoLegalMoves) {
-            result += key + ' ';
-        }
-        console.log(result);
     }
 
     /**
@@ -183,18 +162,8 @@ export default class Board {
     }
 
     /**
-     * unfiltered moves
-     * @param attackOnly
-     * @return {{}}
+     * removes en passant cell from board
      */
-    pseudoLegalMoves (attackOnly) {
-        let availableMoves = {};
-        availableMoves = Object.assign(availableMoves, this.pseudoLegalMovesWithColor(PIECE_COLOR.WHITE, attackOnly));
-        availableMoves = Object.assign(availableMoves, this.pseudoLegalMovesWithColor(PIECE_COLOR.BLACK, attackOnly));
-
-        return availableMoves;
-    }
-
     removeEnPassant () {
         for (let i = 0; i < 8; i++) {
             for (let j = 0; j < 8; j++) {
@@ -241,11 +210,42 @@ export default class Board {
         return false;
     }
 
+    /**
+     * is checkmate for king of `color`
+     * @param {PIECE_COLOR} color
+     * @return {boolean}
+     */
     isCheckmate (color) {
         return this.isCheck(color) && Object.keys(this.legalMoves(color)).length === 0;
     }
 
+    /**
+     * is stalemate for king of `color`
+     * @param {PIECE_COLOR} color
+     * @return {boolean}
+     */
     isStalemate (color) {
         return !this.isCheck(color) && Object.keys(this.legalMoves(color)).length === 0;
+    }
+
+    /**
+     * checks if only 2 kings are on board
+     * @return {boolean}
+     */
+    isInsufficientMaterial () {
+        let pieceCounter = 0;
+        for (let i = 0; i < 8; i++) {
+            for (let j = 0; j < 8; j++) {
+                const piece = this.pieceAt(new Coord(i, j));
+                if (piece.type() !== PIECE_TYPE.EMPTY && piece.type() !== PIECE_TYPE.NONE &&
+                    piece.type() !== PIECE_TYPE.EN_PASSANT) {
+                    pieceCounter++;
+                    if (pieceCounter > 2) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
     }
 }
