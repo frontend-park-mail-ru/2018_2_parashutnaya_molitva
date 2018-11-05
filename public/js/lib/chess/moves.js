@@ -169,4 +169,45 @@ export default class Moves {
         });
         return availableMoves;
     }
+
+    /**
+     * rook moves
+     * @param {Board} board
+     * @param {Coord} pos
+     * @return {{}}
+     */
+    static rook (board, pos) {
+        let availableMoves = {};
+        const rook = board.pieceAt(pos);
+
+        let steps = [];
+        const rMultipliers = [1, 0, -1, 0];
+        const cMultipliers = [0, 1, 0, -1];
+        for (let i = 0; i < rMultipliers.length; i++) {
+            for (let j = 1; j < 8; j++) {
+                const stepRel = new Coord(j * rMultipliers[i], j * cMultipliers[i]);
+                const stepAbs = stepRel.add(pos);
+                const piece = board.pieceAt(stepAbs);
+                if (piece.type() === PIECE_TYPE.EMPTY || piece.type() === PIECE_TYPE.EN_PASSANT) {
+                    steps.push(stepAbs);
+                    continue;
+                }
+                if (piece.color() === rook.color() || piece.type() === PIECE_TYPE.NONE) {
+                    break;
+                }
+                if (piece.color() !== rook.color()) {
+                    steps.push(stepAbs);
+                    break;
+                }
+            }
+        }
+
+        steps.forEach(stepAbs => {
+            let moveBoard = board.copy();
+            moveBoard.movePiece(pos, stepAbs);
+            moveBoard.removeEnPassant();
+            availableMoves[Utils.coordsToUcis(pos, stepAbs)] = moveBoard;
+        });
+        return availableMoves;
+    }
 }
