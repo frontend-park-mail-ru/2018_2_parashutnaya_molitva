@@ -23,6 +23,11 @@ const conf = {
                 exclude: /(node_modules)/
             },
         ]
+    },
+    module: {
+        loaders: [
+            { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" }
+        ]
     }
 };
 

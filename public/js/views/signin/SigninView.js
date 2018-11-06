@@ -1,8 +1,6 @@
 import View from '../../lib/view.js';
 
-// import template from './signin.tmpl.xml';
-
-import template from './signin.tmpl.js';
+import template from './signin.tmpl.xml';
 
 export default class SigninView extends View {
     constructor ({ eventBus = {} } = {}) {

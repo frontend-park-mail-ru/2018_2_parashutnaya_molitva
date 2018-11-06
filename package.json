@@ -29,6 +29,8 @@
   },
   "homepage": "https://github.com/frontend-park-mail-ru/2018_2_parashutnaya_molitva#readme",
   "devDependencies": {
+    "@babel/core": "^7.1.2",
+    "babel-loader": "^8.0.4",
     "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.3",
     "debug": "^3.1.0",
