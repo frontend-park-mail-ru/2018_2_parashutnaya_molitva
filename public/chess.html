@@ -1,0 +1,179 @@
+<style>
+    /* переменные(пока так, потом less) */
+    :root {
+        --cell-size: 50px;
+        --board-size: 400px;
+    }
+    /* фигуры */
+    .figure {
+        background-size: var(--cell-size);
+        width: var(--cell-size);
+        height: var(--cell-size);
+        z-index: 1;
+    }
+    /* Белые фигуры */
+    .figure_rook.figure_white {
+        background-image: url("images/rook-white.png");
+    }
+    .figure_queen.figure_white {
+        background-image: url("images/queen-white.png");
+    }
+    .figure_king.figure_white {
+        background-image: url("images/king-white.png");
+    }
+    .figure_bishop.figure_white {
+        background-image: url("images/bishop-white.png");
+    }
+    .figure_pawn.figure_white {
+        background-image: url("images/pawn-white.png");
+    }
+    .figure_knight.figure_white {
+        background-image: url("images/knight-white.png");
+    }
+    /* Черные фигуры */
+    .figure_rook.figure_black {
+        background-image: url("images/rook-black.png");
+    }
+    .figure_queen.figure_black {
+        background-image: url("images/queen-black.png");
+    }
+    .figure_king.figure_black {
+        background-image: url("images/king-black.png");
+    }
+    .figure_bishop.figure_black {
+        background-image: url("images/bishop-black.png");
+    }
+    .figure_pawn.figure_black {
+        background-image: url("images/pawn-black.png");
+    }
+    .figure_knight.figure_black {
+        background-image: url("images/knight-black.png");
+    }
+    /*  доска */
+    .board {
+        display: flex;
+        border: solid black;
+        width: var(--board-size);
+        height: var(--board-size);
+    }
+    .column {
+        width:var(--cell-size);
+        height: var(--board-size);
+    }
+    .cell {
+        width: var(--cell-size);
+        height: var(--cell-size);
+    }
+    .cell_black {
+        background-color: #00263B;
+    }
+    .cell_white {
+        background-color: #ffa500;
+    }
+</style>
+<div class="board">
+    <div class="column">
+        <div class="cell cell_black">
+            <div class="figure figure_rook figure_white">
+            </div>
+        </div>
+        <div class="cell cell_white"></div>
+        <div class="cell cell_black"></div>
+        <div class="cell cell_white"></div>
+        <div class="cell cell_black"></div>
+        <div class="cell cell_white"></div>
+        <div class="cell cell_black"></div>
+        <div class="cell cell_white"></div>
+    </div>
+    <div class="column">
+        <div class="cell cell_white">
+            <div class="figure figure_knight figure_white">
+            </div>
+        </div>
+        <div class="cell cell_black"></div>
+        <div class="cell cell_white"></div>
+        <div class="cell cell_black"></div>
+        <div class="cell cell_white"></div>
+        <div class="cell cell_black"></div>
+        <div class="cell cell_white"></div>
+        <div class="cell cell_black"></div>
+    </div>
+    <div class="column">
+        <div class="cell cell_black">
+            <div class="figure figure_rook figure_black">
+            </div>
+        </div>
+        <div class="cell cell_white"></div>
+        <div class="cell cell_black"></div>
+        <div class="cell cell_white"></div>
+        <div class="cell cell_black"></div>
+        <div class="cell cell_white"></div>
+        <div class="cell cell_black"></div>
+        <div class="cell cell_white"></div>
+    </div>
+    <div class="column">
+        <div class="cell cell_white">
+            <div class="figure figure_knight figure_black">
+            </div>
+        </div>
+        <div class="cell cell_black"></div>
+        <div class="cell cell_white"></div>
+        <div class="cell cell_black"></div>
+        <div class="cell cell_white"></div>
+        <div class="cell cell_black"></div>
+        <div class="cell cell_white"></div>
+        <div class="cell cell_black"></div>
+    </div>
+    <div class="column">
+        <div class="cell cell_black">
+            <div class="figure figure_rook figure_white">
+            </div>
+        </div>
+        <div class="cell cell_white"></div>
+        <div class="cell cell_black"></div>
+        <div class="cell cell_white"></div>
+        <div class="cell cell_black"></div>
+        <div class="cell cell_white"></div>
+        <div class="cell cell_black"></div>
+        <div class="cell cell_white"></div>
+    </div>
+    <div class="column">
+        <div class="cell cell_white">
+            <div class="figure figure_knight figure_white">
+            </div>
+        </div>
+        <div class="cell cell_black"></div>
+        <div class="cell cell_white"></div>
+        <div class="cell cell_black"></div>
+        <div class="cell cell_white"></div>
+        <div class="cell cell_black"></div>
+        <div class="cell cell_white"></div>
+        <div class="cell cell_black"></div>
+    </div>
+    <div class="column">
+        <div class="cell cell_black">
+            <div class="figure figure_rook figure_white">
+            </div>
+        </div>
+        <div class="cell cell_white"></div>
+        <div class="cell cell_black"></div>
+        <div class="cell cell_white"></div>
+        <div class="cell cell_black"></div>
+        <div class="cell cell_white"></div>
+        <div class="cell cell_black"></div>
+        <div class="cell cell_white"></div>
+    </div>
+    <div class="column">
+        <div class="cell cell_white">
+            <div class="figure figure_knight figure_white">
+            </div>
+        </div>
+        <div class="cell cell_black"></div>
+        <div class="cell cell_white"></div>
+        <div class="cell cell_black"></div>
+        <div class="cell cell_white"></div>
+        <div class="cell cell_black"></div>
+        <div class="cell cell_white"></div>
+        <div class="cell cell_black"></div>
+    </div>
+</div>
