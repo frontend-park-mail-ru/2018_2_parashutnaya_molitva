@@ -1,5 +1,5 @@
 import View from '../../lib/view';
-import template from '../signup/signup.tmpl.xml';
+import template from '../notfound/notfound.tmpl.xml';
 import Game from '../../lib/chess/game';
 
 export default class SingleplayerView extends View {
