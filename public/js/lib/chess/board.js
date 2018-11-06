@@ -154,7 +154,7 @@ export default class Board {
             for (let j = 0; j < 8; j++) {
                 const pos = new Coord(i, j);
                 if (this.pieceAt(pos).color() === color) {
-                    availableMoves = Object.assign(availableMoves, this.pseudoLegalMovesAtPos(pos, attackOnly));
+                    availableMoves = { ...availableMoves, ...this.pseudoLegalMovesAtPos(pos, attackOnly) };
                 }
             }
         }

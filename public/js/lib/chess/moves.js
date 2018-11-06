@@ -219,8 +219,8 @@ export default class Moves {
      */
     static queen (board, pos) {
         let availableMoves = {};
-        availableMoves = Object.assign(availableMoves, this.rook(board, pos));
-        availableMoves = Object.assign(availableMoves, this.bishop(board, pos));
+        availableMoves = { ...availableMoves, ...this.rook(board, pos) };
+        availableMoves = { ...availableMoves, ...this.bishop(board, pos) };
 
         return availableMoves;
     }
