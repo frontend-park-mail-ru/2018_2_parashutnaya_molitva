@@ -74,4 +74,22 @@ export default class Game {
         }
         console.log(result);
     }
+
+    /**
+     * returns board state
+     * example (new game): 'RNBQKBNRPPPPPPPP................................pppppppprnbqkbnr'
+     * @return {string}
+     */
+    boardString () {
+        return this._board.toString();
+    }
+
+    /**
+     * returns true if white
+     * returns false if black
+     * @return {boolean}
+     */
+    turn () {
+        return this._turn === PIECE_COLOR.WHITE;
+    }
 }

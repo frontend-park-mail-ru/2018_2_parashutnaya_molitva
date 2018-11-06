@@ -248,4 +248,19 @@ export default class Board {
         }
         return true;
     }
+
+    /**
+     * returns board state
+     * example (new game): 'RNBQKBNRPPPPPPPP................................pppppppprnbqkbnr'
+     * @return {string}
+     */
+    toString () {
+        let result = '';
+        for (let i = 0; i < 8; i++) {
+            for (let j = 0; j < 8; j++) {
+                result += this.pieceAt(new Coord(i, j)).shortName();
+            }
+        }
+        return result;
+    }
 }
