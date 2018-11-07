@@ -2,7 +2,6 @@
     <section class="section game">
         <input type="text" name="message" class="js-input"/>
         <button class="button js-button">Send</button>
-        Output:
-        <output class="js-output">Output...</output>
+        <div class="singleplayer"></div>
     </section>
 </fest:template>

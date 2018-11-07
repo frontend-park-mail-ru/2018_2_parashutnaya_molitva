@@ -8,9 +8,15 @@ const events = [
     'startGameResponse',
     'findGame',
     'findGameResponse',
-    'turn',
-    'sendTurn',
+    'tryMove',
+    'moveSuccess',
+    'moveFailure',
+    'gameOver',
+    'onClose',
+    'errorResp',
 ];
+
+
 
 export default class MultiplayerController {
     constructor ({ globalEventBus = {}, root = {} } = {}) {

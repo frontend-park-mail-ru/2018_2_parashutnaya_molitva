@@ -35,7 +35,6 @@ export default class MenuView extends View {
 
     render (root, data = {}) {
         super.render(root, data);
-
         this._eventBus.triggerEvent('checkAuth')
     }
 }

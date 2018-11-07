@@ -1,13 +1,15 @@
 import Api from "../lib/api";
+import Game from "../lib/chess/game";
 
 export default class GameOnlineModel {
-    constructor({eventBus = {}} = {}){
+    constructor({eventBus = {}} = {}) {
         this._eventBus = eventBus;
 
-        this._eventBus.subscribeToEvent('sendTurn', this._sendTurn.bind(this))
+        this._eventBus.subscribeToEvent('tryMove', this._onTryMove.bind(this));
+        this._game = new Game();
     }
 
-    initGameConnection({roomid = ''} = {}){
+    initGameConnection({roomid = ''} = {}) {
         this._ws = new WebSocket(Api.getGameAddress());
         this._ws.onopen = () => {
             this._ws.send(JSON.stringify({MsgType: "init", Data: {roomid}}));
@@ -22,22 +24,30 @@ export default class GameOnlineModel {
             const msg = JSON.parse(event.data);
             switch (msg.MsgType) {
                 case "start":
-                     this._eventBus.triggerEvent('startGame', msg.color);
-                     break;
+                    this._eventBus.triggerEvent('startGame', msg.Data);
+                    break;
                 case "turn":
-                    this._eventBus.triggerEvent('turn', msg.turn);
+                    this._game.move(msg.Data.turn);
+                    this._eventBus.triggerEvent('moveSuccess', this._game.boardString());
+                    break;
+                case "result":
+                    this._eventBus.triggerEvent('gameOver', msg.Data);
+                    break;
+                case "error":
+                    this._eventBus.triggerEvent('errorResp', msg.Data);
                     break;
             }
             console.log("On message" + event.data);
         };
 
         this._ws.onclose = (event) => {
-            console.log("On close" + event.reason);
+            console.log("Close - Code: " + event.code + " reason" + event.reason);
+            this._eventBus.triggerEvent('onClose'. event)
         };
     }
 
-    _sendTurn(data){
-        if (!data.turn){
+    _onTryMove(data) {
+        if (!data.turn) {
             console.log("no turn");
             return;
         }
