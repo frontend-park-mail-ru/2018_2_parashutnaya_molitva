@@ -1,0 +1,8 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="params">
+    <section class="section game">
+        <input type="text" name="message" class="js-input"/>
+        <button class="button js-button">Send</button>
+        Output:
+        <output class="js-output">Output...</output>
+    </section>
+</fest:template>

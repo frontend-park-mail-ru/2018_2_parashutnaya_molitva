@@ -1,5 +1,7 @@
 import Net from './net.js';
 
+const gameAddres = "ws://localhost:8080/api/game/ws";
+
 export default class Api {
     /**
      * Загрузить пользователя по guid
@@ -103,7 +105,7 @@ export default class Api {
      */
     static getUserCount () {
         return Net.doGet({
-            url: `/api/user/count/`
+            url: `/api/user/count`
         });
     }
 
@@ -117,5 +119,18 @@ export default class Api {
         return Net.doGet({
             url: `/api/user/score/?limit=${limit}&offset=${offset}`
         });
+    }
+
+    static findRoom({duration = 5} = {}) {
+        return Net.doPost({
+            url: `/api/game`,
+            body: {
+                duration,
+            },
+        });
+    }
+
+    static getGameAddress() {
+        return gameAddres;
     }
 }

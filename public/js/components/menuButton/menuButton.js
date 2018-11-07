@@ -2,6 +2,8 @@ import './menuButton.css';
 
 const noop = () => null;
 const elementClass = 'button menu__button';
+const disableClass = 'menu__button_disable';
+
 export default class MenuButton {
     /**
      * Конструктор кнопки меню
@@ -14,11 +16,14 @@ export default class MenuButton {
         element.innerText = textLabel;
         if (href !== '') {
             element.href = href;
+        }else {
+            element.classList.add(disableClass);
         }
         if (clickCallback !== noop) {
             element.addEventListener('click', clickCallback);
         }
-        element.className = elementClass;
+
+        element.classList.add(...elementClass.split(" "));
         this._element = element;
     }
 

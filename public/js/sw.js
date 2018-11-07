@@ -1,5 +1,3 @@
-console.log('SW HELLO');
-
 const CACHE_NAME = new Date().toString();
 const assets = [...global.serviceWorkerOption.assets.map( asset => "/dist" + asset), '/', '/favicon.ico', '/about','/profile'];
 
@@ -41,6 +39,12 @@ self.addEventListener('fetch', event => {
     const url = new URL(event.request.url);
     console.log(url);
     console.log(event.request);
+
+    if (event.request.method !== "GET"){
+        return;
+    }
+
+
     event.respondWith(
         fetch(event.request).catch(() => global.caches.match(url.pathname))
     )

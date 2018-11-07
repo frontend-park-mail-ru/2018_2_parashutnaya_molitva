@@ -1,0 +1,11 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="params">
+    <section class="section multiplayer">
+        <select class="js-select">
+            <option>1</option>
+            <option>3</option>
+            <option>5</option>
+            <option>10</option>
+        </select>
+        <button>StartGame</button>
+    </section>
+</fest:template>
