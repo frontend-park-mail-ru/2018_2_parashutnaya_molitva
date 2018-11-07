@@ -15,14 +15,14 @@ export default class MenuView extends View {
         const menuSection = this.el.querySelector('.menu.section');
         if (!isAuth) {
             menu = new Menu([
-                { textLabel: 'Singleplayer' },
+                { textLabel: 'Singleplayer', href: '/singleplayer' },
                 { textLabel: 'Multiplayer'},
                 { textLabel: 'Scoreboard', href: '/scoreboard' },
                 { textLabel: 'About', href: '/about' }
             ]);
         } else {
             menu = new Menu([
-                { textLabel: 'Singleplayer' },
+                { textLabel: 'Singleplayer', href: '/singleplayer' },
                 { textLabel: 'Multiplayer', href: '/multiplayer'},
                 { textLabel: 'Scoreboard', href: '/scoreboard' },
                 { textLabel: 'About', href: '/about' }
@@ -35,7 +35,6 @@ export default class MenuView extends View {
 
     render (root, data = {}) {
         super.render(root, data);
-
 
         this._eventBus.triggerEvent('checkAuth')
     }

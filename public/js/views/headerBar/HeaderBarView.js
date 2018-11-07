@@ -21,7 +21,7 @@ export default class HeaderBarView extends View {
 
     _onLoadAvatarResponse (data) {
         if (!data.avatar) {
-            data.avatar = 'default-avatar.svg';
+            data.avatar = 'images/default-avatar.svg';
         }
 
         super.render(null, data);

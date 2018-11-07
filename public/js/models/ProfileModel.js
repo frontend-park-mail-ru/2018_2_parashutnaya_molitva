@@ -127,12 +127,12 @@ export default class ProfileModel {
                         this._globalEventBus.triggerEvent('setUser', {...user});
 
                         this._currentUserGUID = user.guid;
-                        user.avatar = !user.avatar ? 'default-avatar.svg' : Net.getStorageURL() + user.avatar;
+                        user.avatar = !user.avatar ? 'images/default-avatar.svg' : Net.getStorageURL() + user.avatar;
                         this._eventBus.triggerEvent('loadUserResponse', {user});
                     }
                 });
         } else {
-            data.user.avatar = !data.user.avatar ? 'default-avatar.svg' : Net.getStorageURL() + data.user.avatar;
+            data.user.avatar = !data.user.avatar ? 'images/default-avatar.svg' : Net.getStorageURL() + data.user.avatar;
             this._currentUserGUID = data.user.guid;
             this._eventBus.triggerEvent('loadUserResponse', {user: data.user});
         }
