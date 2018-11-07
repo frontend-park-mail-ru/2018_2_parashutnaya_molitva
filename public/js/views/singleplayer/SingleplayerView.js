@@ -1,36 +1,40 @@
 import View from '../../lib/view';
 import template from './singleplayer.tmpl.xml';
-import Game from '../../lib/chess/game';
 import Board from '../../components/chess/board';
 
 export default class SingleplayerView extends View {
     constructor ({ eventBus = {} } = {}) {
         super(template, eventBus);
+        this._eventBus.subscribeToEvent('moveSuccess', this._onMoveSuccess.bind(this));
+        this._eventBus.subscribeToEvent('moveFailure', this._onMoveFailure.bind(this));
+        this._eventBus.subscribeToEvent('gameOver', this._onGameOver.bind(this));
+
+        this._board = new Board({ moveCallback: this._moveCallback.bind(this) });
     }
 
     render (root, data = {}) {
         super.render(root, data);
 
         const singlePlayerElement = this.el.querySelector('.singleplayer');
-        const board = new Board();
-        board.render(singlePlayerElement);
+        this._board.render(singlePlayerElement);
+    }
 
-        const game = new Game();
-        game.printBoard();
-        game.printLegalMoves();
+    _moveCallback (move) {
+        this._eventBus.triggerEvent('tryMove', move);
+    }
 
-        while (!game.isGameOver()) {
-            try {
-                const input = prompt('your move (open console)');
-                game.move(input);
-                game.printBoard();
-                game.printLegalMoves();
-            } catch (e) {
-                console.error(e);
-                if (e.message === 'null is illegal') {
-                    break;
-                }
-            }
-        }
+    _onMoveSuccess (state) {
+        console.log('making a move', state);
+        const singlePlayerElement = this.el.querySelector('.singleplayer');
+        this._board.setState({ boardState: state });
+        this._board.render(singlePlayerElement);
+    }
+
+    _onMoveFailure () {
+        console.log('move is illegal');
+    }
+
+    _onGameOver () {
+        console.log('gameover');
     }
 }
