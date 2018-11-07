@@ -25,6 +25,15 @@ export default class Game {
     }
 
     /**
+     * returns array of moves
+     * @return {string[]}
+     */
+    legalMoves () {
+        const legalMoves = this._board.legalMoves(this._turn);
+        return Object.keys(legalMoves);
+    }
+
+    /**
      * is checkmate for current turn
      * @return {boolean}
      */
