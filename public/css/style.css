@@ -43,6 +43,10 @@ body {
     display: none !important;
 }
 
+.game {
+    height: 700px;
+    margin-top: -320px;
+}
 /*signup components*/
 
 .signup_form {
