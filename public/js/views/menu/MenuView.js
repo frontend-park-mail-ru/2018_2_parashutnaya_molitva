@@ -12,7 +12,7 @@ export default class MenuView extends View {
 
         const menuSection = this.el.querySelector('.menu.section');
         const menu = new Menu([
-            { textLabel: 'Singleplayer' },
+            { textLabel: 'Singleplayer', href: '/singleplayer' },
             { textLabel: 'Multiplayer' },
             { textLabel: 'Scoreboard', href: '/scoreboard' },
             { textLabel: 'About', href: '/about' }
