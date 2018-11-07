@@ -1,0 +1,25 @@
+:root {
+    --cell-size: 64px;
+    --board-size: 512px; /* = 64 * 8 */
+}
+
+.board {
+    display: flex;
+    border: solid black;
+    width: var(--board-size);
+    height: var(--board-size);
+    border-spacing: 0;
+    border-collapse: collapse;
+
+}
+.board tr {
+    width: var(--board-size);
+    height: var(--cell-size);
+    margin: 0;
+    padding: 0;
+}
+
+.board td {
+    margin: 0;
+    padding: 0;
+}

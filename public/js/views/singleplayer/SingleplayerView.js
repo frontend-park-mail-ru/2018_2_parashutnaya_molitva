@@ -1,6 +1,7 @@
 import View from '../../lib/view';
-import template from '../notfound/notfound.tmpl.xml';
+import template from './singleplayer.tmpl.xml';
 import Game from '../../lib/chess/game';
+import Board from '../../components/chess/board';
 
 export default class SingleplayerView extends View {
     constructor ({ eventBus = {} } = {}) {
@@ -9,6 +10,11 @@ export default class SingleplayerView extends View {
 
     render (root, data = {}) {
         super.render(root, data);
+
+        const singlePlayerElement = this.el.querySelector('.singleplayer');
+        const board = new Board();
+        board.render(singlePlayerElement);
+
         const game = new Game();
         game.printBoard();
         game.printLegalMoves();
