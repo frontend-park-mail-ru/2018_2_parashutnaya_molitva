@@ -5,13 +5,23 @@ export default class Router {
 
         this.currentRoute = null;
         this.isCurrentNotFound = false;
+
+        window.addEventListener('popstate', () => {
+            const pathname = Router._normalizePath(location.pathname);
+            this._change(pathname, false);
+        });
     }
 
     /**
      * Переходит на начальную страницу с путем '/'
+     * @param delPrev удаляет из истории Путь из которого сделан переход
      */
-    toStartPage () {
-        this._change('/');
+    toStartPage (delPrev = false) {
+        if (delPrev) {
+            window.history.replaceState(null, null, "/");
+        }
+
+        this._change('/', !delPrev);
     }
 
     /**
@@ -40,9 +50,10 @@ export default class Router {
     /**
      * Переход на маршрут с путем path
      * @param path путь
+     * @param addToHistory добавлять Path в History Api или нет.
      * @private
      */
-    _change (path) {
+    _change (path, addToHistory = true) {
         if (this.currentRoute === path) {
             return;
         }
@@ -54,6 +65,10 @@ export default class Router {
 
         if (this.isCurrentNotFound) {
             this.notFoundView.hide(this.notFoundViewRoot);
+        }
+
+        if (addToHistory){
+            window.history.pushState(null, null, path);
         }
 
         if (this.routes.has(path)) {
@@ -82,12 +97,12 @@ export default class Router {
      */
     start () {
         this.root.addEventListener('click', (ev) => {
-            if (ev.target.tagName === 'A') {
+            if (ev.target.tagName === 'A' && ev.target.hostname === location.hostname) {
                 ev.preventDefault();
                 this._change(Router._normalizePath(ev.target.pathname));
             }
         });
 
-        this._change(Router._normalizePath(window.location.pathname));
+        this._change(Router._normalizePath(window.location.pathname), false);
     }
 }

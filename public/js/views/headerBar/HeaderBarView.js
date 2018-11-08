@@ -1,5 +1,4 @@
 import View from '../../lib/view.js';
-
 import template from './headerBar.tmpl.xml';
 
 export default class HeaderBarView extends View {
@@ -22,7 +21,7 @@ export default class HeaderBarView extends View {
 
     _onLoadAvatarResponse (data) {
         if (!data.avatar) {
-            data.avatar = 'default-avatar.svg';
+            data.avatar = 'images/default-avatar.svg';
         }
 
         super.render(null, data);
@@ -31,8 +30,6 @@ export default class HeaderBarView extends View {
             let avatar = this.el.querySelector('.header-bar__avatar');
 
             avatar.style.backgroundImage = `url(${data.avatar})`;
-            const avatarRect = avatar.getBoundingClientRect();
-            avatar.style.backgroundSize = `${avatarRect.width}px ${avatarRect.height}px`;
 
             let signoutButton = this.el.querySelector('.header-bar__button-signout');
             signoutButton.addEventListener('click', () => {
@@ -42,7 +39,7 @@ export default class HeaderBarView extends View {
     }
 
     _onAuthResponse (data) {
-        if (data.isAuth === undefined || data.isAuth === null) {
+        if (data.isAuth == null) {
             console.log('No isAuth param');
             super.render(null);
             return;

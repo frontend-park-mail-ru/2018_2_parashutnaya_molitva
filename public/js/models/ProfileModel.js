@@ -3,7 +3,7 @@ import Net from '../lib/net.js';
 import Api from '../lib/api.js';
 
 export default class ProfileModel {
-    constructor (eventBus, globalEventBus) {
+    constructor(eventBus, globalEventBus) {
         this._eventBus = eventBus;
         this._globalEventBus = globalEventBus;
 
@@ -18,28 +18,35 @@ export default class ProfileModel {
         this._globalEventBus.subscribeToEvent('checkUserResponse', this._onCheckUserResponse.bind(this));
     }
 
-    _onChangeAvatar (data) {
+    _onChangeAvatar(data) {
         const avatar = data.avatar;
 
-        Api.uploadAvatar({ avatar })
+        const errAvatar = Validation.validateAvatar(avatar);
+        if (errAvatar) {
+            this._eventBus.triggerEvent('changeAvatarResponse', {error: errAvatar});
+            console.log(errAvatar);
+            return;
+        }
+
+        Api.uploadAvatar({avatar})
             .then(res => res.json())
             .then(res => {
                 if (!res.avatar || res.error) {
                     this._eventBus.triggerEvent('changeAvatarResponse', res);
                 } else {
-                    Api.updateUser({ guid: this._currentUserGUID, avatar: res.avatar });
-                    this._eventBus.triggerEvent('changeAvatarSuccess', { avatar: Net.getStorageURL() + res.avatar });
+                    Api.updateUser({guid: this._currentUserGUID, avatar: res.avatar});
+                    this._eventBus.triggerEvent('changeAvatarSuccess', {avatar: Net.getStorageURL() + res.avatar});
                     this._globalEventBus.triggerEvent('removeUser');
                     this._globalEventBus.triggerEvent('renderHeaderBar');
                 }
             });
     }
 
-    _onSubmitPassword (data) {
+    _onSubmitPassword(data) {
         const pass = data.pass;
         const errPass = Validation.validatePassword(pass, true);
         if (errPass) {
-            this._eventBus.triggerEvent('changePasswordResponse', { error: errPass });
+            this._eventBus.triggerEvent('changePasswordResponse', {error: errPass});
             return;
         }
 
@@ -47,17 +54,23 @@ export default class ProfileModel {
             guid: this._currentUserGUID,
             password: pass
         }).then(res => {
-            if (res.status === 200) {
-                this._eventBus.triggerEvent('submitPasswordSuccess', { password: pass });
+            if (res.ok) {
+                this._eventBus.triggerEvent('submitPasswordSuccess', {password: pass});
+            } else {
+                res.json().then(dataResponse => {
+                    if (dataResponse.field === 'password') {
+                        this._eventBus.triggerEvent('changePasswordResponse', {error: dataResponse.error});
+                    }
+                });
             }
         });
     }
 
-    _onSubmitEmail (data) {
+    _onSubmitEmail(data) {
         const email = data.email;
         const errEmail = Validation.validateEmail(email, true);
         if (errEmail) {
-            this._eventBus.triggerEvent('changeEmailResponse', { error: errEmail });
+            this._eventBus.triggerEvent('changeEmailResponse', {error: errEmail});
             return;
         }
 
@@ -65,36 +78,42 @@ export default class ProfileModel {
             guid: this._currentUserGUID,
             email
         }).then(res => {
-            if (res.status === 200) {
-                this._eventBus.triggerEvent('submitEmailSuccess', { email });
+            if (res.ok) {
+                this._eventBus.triggerEvent('submitEmailSuccess', {email});
+            } else {
+                res.json().then(dataResponse => {
+                    if (dataResponse.field === 'email') {
+                        this._eventBus.triggerEvent('changeEmailResponse', {error: dataResponse.error});
+                    }
+                });
             }
         });
     }
 
-    _onChangePassword (data) {
+    _onChangePassword(data) {
         const pass = data.pass;
         const errPass = Validation.validatePassword(pass, true);
         if (errPass) {
-            this._eventBus.triggerEvent('changePasswordResponse', { error: errPass });
+            this._eventBus.triggerEvent('changePasswordResponse', {error: errPass});
             return;
         }
 
         this._eventBus.triggerEvent('changePasswordResponse', {});
     }
 
-    _onChangeEmail (data) {
+    _onChangeEmail(data) {
         const email = data.email;
         const errEmail = Validation.validateEmail(email, true);
 
         if (errEmail) {
-            this._eventBus.triggerEvent('changeEmailResponse', { error: errEmail });
+            this._eventBus.triggerEvent('changeEmailResponse', {error: errEmail});
             return;
         }
 
         this._eventBus.triggerEvent('changeEmailResponse', {});
     }
 
-    _onCheckUserResponse (data = {}) {
+    _onCheckUserResponse(data = {}) {
         if (!data.isUpload) {
             if (!this._currentUserGUID) {
                 this._eventBus.triggerEvent('loadUserResponse', {});
@@ -105,27 +124,27 @@ export default class ProfileModel {
                     if (user.error) {
                         this._eventBus.triggerEvent('loadUserResponse', {});
                     } else {
-                        this._globalEventBus.triggerEvent('setUser', { ...user });
+                        this._globalEventBus.triggerEvent('setUser', {...user});
 
                         this._currentUserGUID = user.guid;
-                        user.avatar = !user.avatar ? 'default-avatar.svg' : Net.getStorageURL() + user.avatar;
-                        this._eventBus.triggerEvent('loadUserResponse', { user });
+                        user.avatar = !user.avatar ? 'images/default-avatar.svg' : Net.getStorageURL() + user.avatar;
+                        this._eventBus.triggerEvent('loadUserResponse', {user});
                     }
                 });
         } else {
-            data.user.avatar = !data.user.avatar ? 'default-avatar.svg' : Net.getStorageURL() + data.user.avatar;
+            data.user.avatar = !data.user.avatar ? 'images/default-avatar.svg' : Net.getStorageURL() + data.user.avatar;
             this._currentUserGUID = data.user.guid;
-            this._eventBus.triggerEvent('loadUserResponse', { user: data.user });
+            this._eventBus.triggerEvent('loadUserResponse', {user: data.user});
         }
     }
 
-    _onLoadUser (data = {}) {
+    _onLoadUser(data = {}) {
         this._currentUserGUID = data.user_guid;
         this._globalEventBus.triggerEvent('checkUser');
     }
 
-    _onCheckAuth () {
-        Net.doGet({ url: '/api/session' })
+    _onCheckAuth() {
+        Net.doGet({url: '/api/session'})
             .then(response => {
                 if (response.status !== 200) {
                     response.json().then(data => this._eventBus.triggerEvent('checkAuthResponse', {
@@ -141,6 +160,9 @@ export default class ProfileModel {
                     });
                 }
             })
-            .catch(error => console.error(error));
+            .catch((error) => {
+                    this._eventBus.triggerEvent('checkAuthResponse', {error});
+                }
+            )
     }
 }

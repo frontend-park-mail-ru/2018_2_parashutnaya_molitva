@@ -43,24 +43,10 @@ body {
     display: none !important;
 }
 
-/* paginator components */
-
-.paginator__button_current {
-    background-color: #3e8e41;
+.game {
+    height: 700px;
+    margin-top: -320px;
 }
-
-/*menu components*/
-
-.menu__button {
-    color: initial;
-
-    text-align: center;
-    background-color: lightgray;
-
-    margin: 10px 2px;
-    width: 128px;
-}
-
 /*signup components*/
 
 .signup_form {
@@ -154,6 +140,7 @@ body {
 
 .header-bar__avatar {
     background-color: white;
+    background-size: cover;
     margin: 10px 2px;
 }
 
@@ -194,6 +181,10 @@ body {
 
 .profile__info {
     flex: 4;
+}
+
+.profile__form{
+    padding-bottom: 5px;
 }
 
 /*table*/
