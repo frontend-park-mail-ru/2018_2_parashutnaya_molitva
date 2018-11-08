@@ -24,10 +24,20 @@ const conf = {
                 exclude: /(node_modules)/
             },
             {
+                test: /\.m?js$/,
+                exclude: /(node_modules)/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env']
+                    }
+                }
+            },
+            {
                 test: /\.css$/,
                 use: [
-                    { loader: MiniCssExtractPlugin.loader},
-                    { loader: "css-loader" }
+                    {loader: MiniCssExtractPlugin.loader},
+                    {loader: "css-loader"}
                 ]
             },
             {
@@ -36,12 +46,12 @@ const conf = {
             },
         ]
     },
-    plugins : [
+    plugins: [
         new ServiceWorkerWebpackPlugin({
             entry: path.join(__dirname, 'public/js/sw.js'),
         }),
         new MiniCssExtractPlugin({
-           filename: "style.css",
+            filename: "style.css",
         }),
     ]
 };

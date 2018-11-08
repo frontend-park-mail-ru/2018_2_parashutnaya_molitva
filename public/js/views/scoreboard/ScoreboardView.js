@@ -2,6 +2,7 @@ import View from '../../lib/view.js';
 import template from './scoreboard.tmpl.xml';
 import Paginator from '../../components/paginator/paginator.js';
 
+
 class ScoreboardView extends View {
     constructor ({ eventBus = {}, globalEventBus = {} } = {}) {
         super(template, eventBus, globalEventBus);
