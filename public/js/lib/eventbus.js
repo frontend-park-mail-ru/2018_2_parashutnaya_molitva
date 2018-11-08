@@ -16,7 +16,7 @@ export default class EventBus {
      */
     subscribeToEvent (eventName, callback) {
         if (!this.events.has(eventName)) {
-            throw new Error('EventBus: Unknown event in');
+            throw new Error(`EventBus: Unknown event ${eventName}`);
         }
 
         this.events.get(eventName).push(callback);
@@ -29,7 +29,7 @@ export default class EventBus {
      */
     triggerEvent (eventName, ...args) {
         if (!this.events.has(eventName)) {
-            throw new Error('EventBus: Unknown event in');
+            throw new Error(`EventBus: Unknown event ${eventName}`);
         }
         let eventListeners = this.events.get(eventName);
         eventListeners.forEach((callback) =>

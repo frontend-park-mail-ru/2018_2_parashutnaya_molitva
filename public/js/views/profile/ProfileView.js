@@ -1,5 +1,5 @@
 import View from '../../lib/view.js';
-import template from './profile.tmpl.js';
+import template from './profile.tmpl.xml';
 import SignupView from '../signup/SignupView.js';
 
 export default class ProfileView extends View {
@@ -22,7 +22,13 @@ export default class ProfileView extends View {
     }
 
     _onChangeAvatarResponse (data) {
-        console.log(data.error);
+        if (data.error) {
+            this._showElement(this._avatarUploaderWarning);
+            this._avatarUploaderWarning.innerHTML = data.error;
+        } else {
+            this._hideElement(this._avatarUploaderWarning);
+            this._avatarUploaderWarning.innerHTML = '';
+        }
     }
 
     _onChangeAvatarSuccess (data) {
@@ -30,6 +36,9 @@ export default class ProfileView extends View {
             console.log('No avatar');
             return;
         }
+
+        this._avatarUploaderWarning.classList.add('hidden');
+        this._avatarUploaderWarning.innerHTML = '';
 
         this._avatar.src = data.avatar;
     }
@@ -57,9 +66,10 @@ export default class ProfileView extends View {
     _initElements () {
         this._avatar = this.el.querySelector('.js-avatar');
         this._avatarUploader = this.el.querySelector('.js-upload-avatar');
+        this._avatarUploaderWarning = this.el.querySelector('.js-warning-avatar');
 
         this._emailBlock = this.el.querySelector('.js-email-row');
-        this._emailEditButton = this._emailBlock.querySelector('button');
+        // this._emailEditButton = this._emailBlock.querySelector('button');
         this._emailField = this._emailBlock.querySelector('.js-email-field');
 
         this._emailFormWrapper = this.el.querySelector('.js-email-form');
@@ -90,10 +100,10 @@ export default class ProfileView extends View {
             this._eventBus.triggerEvent('changeAvatar', { avatar: this._avatarUploader.files[0] });
         });
 
-        this._emailEditButton.addEventListener('click', () => {
-            this._showElement(this._emailFormWrapper);
-            this._hideElement(this._emailBlock);
-        });
+        // this._emailEditButton.addEventListener('click', () => {
+        //     this._showElement(this._emailFormWrapper);
+        //     this._hideElement(this._emailBlock);
+        // });
         this._emailCancelButton.addEventListener('click', (ev) => {
             ev.preventDefault();
             this._hideElement(this._emailFormWrapper);
@@ -179,8 +189,6 @@ export default class ProfileView extends View {
     }
 
     _hideElement (el) {
-        if (!el.classList.contains('hidden')) {
-            el.classList.add('hidden');
-        }
+        el.classList.add('hidden');
     }
 }

@@ -1,0 +1,19 @@
+.cell {
+    width: var(--cell-size);
+    height: var(--cell-size);
+}
+
+.cell:hover {
+    filter: brightness(95%);
+}
+
+.cell_black {
+    background-image: url("sprites/cell_black.png");
+}
+.cell_white {
+    background-image: url("sprites/cell_white.png");
+}
+
+.cell_selected {
+    filter: brightness(85%);
+}

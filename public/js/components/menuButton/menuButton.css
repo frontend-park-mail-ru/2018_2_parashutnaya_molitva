@@ -1,0 +1,13 @@
+.menu__button {
+    color: initial;
+
+    text-align: center;
+    background-color: lightgray;
+
+    margin: 10px 2px;
+    width: 128px;
+}
+
+.menu__button_disable {
+    background-color: #757575;
+}
