@@ -23,10 +23,10 @@ export default class SingleplayerView extends View {
         this._eventBus.triggerEvent('tryMove', move);
     }
 
-    _onMoveSuccess (state) {
+    _onMoveSuccess (state, turn) {
         console.log('making a move', state);
         const singlePlayerElement = this.el.querySelector('.singleplayer');
-        this._board.setState({ boardState: state });
+        this._board.setState({ boardState: state, turn: turn });
         this._board.render(singlePlayerElement);
     }
 
