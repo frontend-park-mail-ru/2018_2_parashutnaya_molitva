@@ -35,6 +35,7 @@ export default class SingleplayerView extends View {
     }
 
     _onGameOver () {
+
         console.log('gameover');
     }
 }
