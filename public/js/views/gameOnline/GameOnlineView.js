@@ -10,6 +10,7 @@ export default class GameOnlineView extends View{
         this._eventBus.subscribeToEvent('moveFailure', this._onMoveFailure.bind(this));
         this._eventBus.subscribeToEvent('gameOver', this._onGameOver.bind(this));
         this._eventBus.subscribeToEvent('errorResp', this._onErrorResp.bind(this));
+        this._eventBus.subscribeToEvent('errorResp', this._onErrorResp.bind(this));
     }
 
     render(root, data = {}){
@@ -33,10 +34,11 @@ export default class GameOnlineView extends View{
         this._eventBus.triggerEvent('tryMove', {turn:move});
     }
 
-    _onMoveSuccess (state) {
+    _onMoveSuccess (state, turn) {
         console.log('making a move', state);
         const singlePlayerElement = this.el.querySelector('.singleplayer');
         this._board.setState({ boardState: state });
+        this._board.setState({ boardState: state, turn: turn });
         this._board.render(singlePlayerElement);
     }
 

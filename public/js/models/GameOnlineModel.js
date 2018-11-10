@@ -28,7 +28,7 @@ export default class GameOnlineModel {
                     break;
                 case "turn":
                     this._game.move(msg.Data.turn);
-                    this._eventBus.triggerEvent('moveSuccess', this._game.boardString());
+                    this._eventBus.triggerEvent('moveSuccess', this._game.boardString(), this._game.turn());
                     break;
                 case "result":
                     this._eventBus.triggerEvent('gameOver', msg.Data);

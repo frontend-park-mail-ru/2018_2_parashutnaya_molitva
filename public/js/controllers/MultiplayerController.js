@@ -14,6 +14,7 @@ const events = [
     'gameOver',
     'onClose',
     'errorResp',
+    'onClose'
 ];
 
 
