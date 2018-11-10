@@ -17,3 +17,6 @@
 .cell_selected {
     filter: brightness(85%);
 }
+.cell_selected:hover {
+    filter: brightness(75%);
+}
