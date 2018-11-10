@@ -34,8 +34,8 @@ export default class SingleplayerView extends View {
         console.log('move is illegal');
     }
 
-    _onGameOver () {
+    _onGameOver (loser) {
 
-        console.log('gameover');
+        console.log(`gameover ${+loser === 1 ? 'white': 'black'} lost`);
     }
 }

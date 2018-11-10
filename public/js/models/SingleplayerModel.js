@@ -16,7 +16,7 @@ export default class SingleplayerModel {
             this._game.move(move);
             this._eventBus.triggerEvent('moveSuccess', this._game.boardString(), this._game.turn());
             if (this._game.isGameOver()) {
-                this._eventBus.triggerEvent('gameOver');
+                this._eventBus.triggerEvent('gameOver', this._game.turn());
             }
         } else {
             this._eventBus.triggerEvent('moveFailure');
