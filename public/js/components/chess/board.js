@@ -22,12 +22,18 @@ const PIECE_PARAMETERS = {
     '.': [PIECE_TYPE.EMPTY, COLOR.NONE]
 };
 
+const PIECE_COLOR_CLASSES = {
+    [COLOR.WHITE]: 'piece_white',
+    [COLOR.BLACK]: 'piece_black'
+};
+
 const BOARD_CLASS = 'board';
 
 export default class Board {
-    constructor ({ boardState = START_STATE, sideOfView = COLOR.WHITE, moveCallback = (move) => null } = {}) {
+    constructor ({ boardState = START_STATE, turn = COLOR.WHITE, sideOfView = COLOR.WHITE, moveCallback = (move) => null } = {}) {
+        this._turn = +turn;
         this._moveCallback = moveCallback;
-        this.setState({ boardState, sideOfView });
+        this.setState({ boardState, turn, sideOfView });
     }
 
     render (root) {
@@ -35,7 +41,8 @@ export default class Board {
         root.appendChild(this._board);
     }
 
-    setState ({ boardState = START_STATE, sideOfView = this._sideOfView } = {}) {
+    setState ({ boardState = START_STATE, turn = +this._sideOfView, sideOfView = this._sideOfView } = {}) {
+        this._turn = +turn;
         if (START_STATE.length !== 64) {
             throw new Error('boardState must be 64 characters long');
         }
@@ -83,17 +90,21 @@ export default class Board {
 
     _onCellClick (event) {
         console.log(event.currentTarget.id);
-        if (!event.currentTarget.classList.contains('cell_selected')) {
-            event.currentTarget.classList.add('cell_selected');
-            if (this._selectedCell !== '') {
-                this._moveCallback(this._selectedCell + event.currentTarget.id);
-                this._deselectAllCells();
-            } else {
+        if (event.currentTarget.firstChild.classList.contains(PIECE_COLOR_CLASSES[this._turn])) {
+            if (!event.currentTarget.classList.contains('cell_selected')) {
+                if (this._selectedCell !== '') {
+                    const prevSelectedCell = document.getElementById(this._selectedCell);
+                    prevSelectedCell.classList.remove('cell_selected');
+                }
+                event.currentTarget.classList.add('cell_selected');
                 this._selectedCell = event.currentTarget.id;
             }
         } else {
-            event.currentTarget.classList.remove('cell_selected');
-            this._selectedCell = '';
+            console.log('not your piece');
+        }
+
+        if (this._selectedCell !== '' && this._selectedCell !== event.currentTarget.id) {
+            this._moveCallback(this._selectedCell + event.currentTarget.id);
         }
     }
 

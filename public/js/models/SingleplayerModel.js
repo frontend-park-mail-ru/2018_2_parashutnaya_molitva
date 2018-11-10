@@ -14,7 +14,7 @@ export default class SingleplayerModel {
         const legalMoves = this._game.legalMoves();
         if (legalMoves.includes(move)) {
             this._game.move(move);
-            this._eventBus.triggerEvent('moveSuccess', this._game.boardString());
+            this._eventBus.triggerEvent('moveSuccess', this._game.boardString(), this._game.turn());
             if (this._game.isGameOver()) {
                 this._eventBus.triggerEvent('gameOver');
             }
