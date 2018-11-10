@@ -1,7 +1,12 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="params">
     <section class="section game">
-        <input type="text" name="message" class="js-input"/>
-        <button class="button js-button">Send</button>
+        <h3 class="js-turn">Turn: white</h3>
         <div class="singleplayer"></div>
+    </section>
+    <section class="section js-gameover hidden">
+        <h1>Game over</h1>
+        <h2>You:</h2>
+        <h2 class="js-result"></h2>
+        <a class="button signup__back-button" href="/">Menu</a>
     </section>
 </fest:template>

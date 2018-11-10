@@ -16,17 +16,16 @@ export default class GameOnlineView extends View{
     render(root, data = {}){
         super.render(root, data);
 
-        this._input = this.el.querySelector(".js-input");
-        this.el.querySelector('.js-button').addEventListener('click', () => {
-            this._eventBus.triggerEvent('tryMove', {turn: this._input.value});
-        });
         if (data.color === "w") {
             this._board = new Board({moveCallback: this._moveCallback.bind(this), sideOfView: COLOR.WHITE});
         } else {
             this._board = new Board({moveCallback: this._moveCallback.bind(this), sideOfView: COLOR.BLACK});
         }
 
+        this._whoisTurn = this.el.querySelector(".js-turn");
+
         const singlePlayerElement = this.el.querySelector('.singleplayer');
+        this._fullSingleplayer = this.el.querySelector('.game');
         this._board.render(singlePlayerElement);
     }
 
@@ -40,6 +39,15 @@ export default class GameOnlineView extends View{
         this._board.setState({ boardState: state });
         this._board.setState({ boardState: state, turn: turn });
         this._board.render(singlePlayerElement);
+        console.log("Turn: " + turn);
+        if (!turn) {
+            console.log(turn);
+            this._whoisTurn.innerHTML = "Turn: black"
+        } else {
+            console.log(turn);
+            this._whoisTurn.innerHTML = "Turn: white"
+        }
+
     }
 
     _onMoveFailure () {
@@ -47,7 +55,20 @@ export default class GameOnlineView extends View{
     }
 
     _onGameOver (data) {
-        console.log(data.result)
+        const gameOver = this.el.querySelector(".js-gameover");
+        gameOver.classList.remove('hidden');
+
+        // const singlePlayerElement = this.el.querySelector('.singleplayer');
+        // singlePlayerElement.classList.add('hidden');
+        this._fullSingleplayer.classList.add('hidden');
+
+        const jsResult = this.el.querySelector('.js-result');
+        if (data.result = "w") {
+            jsResult.innerHTML = "Winner"
+        } else if (data.result = "l") {
+            jsResult.innerHTML = "Loser"
+        }
+
     }
 
     _onErrorResp(data){
@@ -55,6 +76,7 @@ export default class GameOnlineView extends View{
     }
 
     _onClose(event){
+        console.log("")
     }
 
 }
