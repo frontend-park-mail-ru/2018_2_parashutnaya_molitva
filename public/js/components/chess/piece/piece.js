@@ -1,4 +1,4 @@
-import { COLOR, PIECE_TYPE } from './consts';
+import { COLOR, PIECE_TYPE } from '../consts';
 import './piece.css';
 
 const PIECE_CLASS = 'piece';

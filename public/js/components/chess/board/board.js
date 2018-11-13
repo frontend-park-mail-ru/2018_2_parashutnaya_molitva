@@ -1,6 +1,6 @@
-import { PIECE_TYPE, COLOR } from './consts';
-import Cell from './cell';
-import Piece from './piece';
+import { PIECE_TYPE, COLOR } from '../consts';
+import Cell from '../cell/cell';
+import Piece from '../piece/piece';
 import './board.css';
 
 const START_STATE = 'RNBQKBNRPPPPPPPP................................pppppppprnbqkbnr';

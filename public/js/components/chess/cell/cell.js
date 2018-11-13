@@ -1,4 +1,4 @@
-import { COLOR } from './consts';
+import { COLOR } from '../consts';
 import './cell.css';
 
 const CELL_CLASS = 'cell';
