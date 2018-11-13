@@ -11,6 +11,7 @@ export default class GameOnlineView extends View{
         this._eventBus.subscribeToEvent('gameOver', this._onGameOver.bind(this));
         this._eventBus.subscribeToEvent('errorResp', this._onErrorResp.bind(this));
         this._eventBus.subscribeToEvent('errorResp', this._onErrorResp.bind(this));
+        this._eventBus.subscribeToEvent('onClose', this._onClose.bind(this));
     }
 
     render(root, data = {}){
