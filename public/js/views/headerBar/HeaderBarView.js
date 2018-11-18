@@ -45,6 +45,8 @@ export default class HeaderBarView extends View {
             onCloseCallback: onCloseDropdown,
         });
         if (data.isAuth) {
+            let score = this.el.querySelector('.js-header-score');
+            score.innerHTML = data.score;
             let avatar = this.el.querySelector('.header-bar__avatar');
 
             avatar.style.backgroundImage = `url(${data.avatar})`;

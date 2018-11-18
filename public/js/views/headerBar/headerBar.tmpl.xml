@@ -9,7 +9,7 @@
                             <div class="header-bar__row text-h2">
                                 SinimaWath
                             </div>
-                            <div class="header-bar__row text-base">
+                            <div class="header-bar__row js-header-score text-base">
                                 1001
                             </div>
                         </div>

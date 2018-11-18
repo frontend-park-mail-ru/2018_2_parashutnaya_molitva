@@ -11,9 +11,48 @@ body, html {
     grid-template-areas: 'header header header' 'menu menu menu' ;
     background: linear-gradient(45deg, rgb(216, 201, 154) 25%,transparent 26%,transparent 75%,rgb(216, 201, 154) 76%),
             linear-gradient(-45deg, rgb(216, 201, 154) 25%,transparent 26%,transparent 75%,rgb(216, 201, 154) 76%);
-    background-size: 300px 300px;
+    background-size: 100px 100px;
     background-color: rgba(216, 201, 154, 0.89);
+    transition: background-size 2s;
+    animation-name: backgroud-animation;
+    animation-duration: 500s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
 
+@keyframes backgroud-animation {
+    from {
+        background-position-x: 0%;
+        background-position-y: 0%;
+    }
+    to {
+        background-position-x: 100%;
+        background-position-y: 100%;
+    }
+
+}
+@media (min-width: 320px) {
+    #page {
+        background-size: 150px 150px;
+    }
+}
+
+@media (min-width: 425px) {
+    #page {
+        background-size: 200px 200px;
+    }
+}
+
+@media (min-width: 768px) {
+    #page {
+        background-size: 250px 250px;
+    }
+}
+
+@media (min-width: 1024px) {
+    #page {
+        background-size: 300px 300px;
+    }
 }
 
 .wrapper {
@@ -22,6 +61,10 @@ body, html {
 
 .main {
     grid-area: menu;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
 }
 
 .header {
@@ -50,14 +93,6 @@ body, html {
 }
 
 .section {
-    /*height: 400px;*/
-    /*width: 400px;*/
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    /*margin-top: -200px;*/
-    /*margin-left: -200px;*/
-    transform: translateY(-50%) translateX(-50%);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -257,18 +292,4 @@ body, html {
 
 .tr:nth-child(even) {
     background-color: #dddddd;
-}
-
-
-.about {
-    scroll-snap-type: x mandatory;
-    overflow-x: scroll;
-    display: flex;
-    /*flex-direction: row;*/
-}
-
-.about > div {
-    scroll-snap-align: center;
-    width: 200px;
-    height: 200px;
 }

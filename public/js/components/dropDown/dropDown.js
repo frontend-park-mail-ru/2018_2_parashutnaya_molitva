@@ -44,7 +44,8 @@ export default class Dropdown {
         this._dropdownIsVisible = false;
         this._isStartedDropdownAnimation = false;
 
-        this._setDropdownDisableCondition(this._closeAnimationInterval, this._contentBlockAnimationInterval);
+        this._setDropdownDisableCondition(this._closeAnimationInterval, this._contentBlockAnimationInterval,
+            onCloseCallback);
 
         this._root.addEventListener("click", () => {
             if (this._dropdownIsVisible) {
@@ -98,9 +99,10 @@ export default class Dropdown {
         }.bind(this), 0, closeAnimationInterval);
     }
 
-    _setDropdownDisableCondition(closeAnimationInterval, contentBlockAnimationInterval) {
+    _setDropdownDisableCondition(closeAnimationInterval, contentBlockAnimationInterval, onCloseCallback) {
         window.addEventListener('click', (ev) => {
             if (!(ev.target.classList.contains(dropdownJS)) && this._dropdownIsVisible) {
+                onCloseCallback();
                 this._closeDropdown(closeAnimationInterval, contentBlockAnimationInterval);
             }
         });
