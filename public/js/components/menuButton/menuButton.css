@@ -1,13 +1,44 @@
 .menu__button {
-    color: initial;
-
     text-align: center;
-    background-color: lightgray;
+    background-color: transparent;
+    color: #6a4712;
+    margin: 0px 0px;
+    font-size: px;
+    transition: all 0.3ms linear;
+}
 
-    margin: 10px 2px;
-    width: 128px;
+@media (min-width: 320px) {
+
+}
+
+@media (min-width: 1280px) {
+
 }
 
 .menu__button_disable {
-    background-color: #757575;
+    color: #f0c781 !important;
+}
+
+.menu__button_disable:hover:before {
+    content: ''!important;
+    color: #f0c781!important;
+}
+
+.menu__button_disable:hover {
+    color: #f0c781!important;
+    transform: none!important;
+    cursor: default;
+}
+
+.menu__button:hover:before {
+    content: '\265E';
+    color: #bd9457;
+    position: absolute;
+    right: 105%;
+    top: -20%;
+}
+
+.menu__button:hover {
+    color: #6a3c08;
+    transform: scale(1.1);
 }

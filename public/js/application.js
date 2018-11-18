@@ -1,3 +1,4 @@
+import '../css/style.css';
 import AboutController from './controllers/AboutController.js';
 import ScoreboardController from './controllers/ScoreboardController.js';
 import MenuController from './controllers/MenuController.js';
@@ -10,15 +11,15 @@ import NotFoundView from './views/notfound/NotFoundView.js';
 import EventBus from './lib/eventbus.js';
 import User from './lib/user.js';
 import runtime from 'serviceworker-webpack-plugin/lib/runtime';
-import '../css/style.css';
 import MultiplayerController from "./controllers/MultiplayerController";
 import SingleplayerController from './controllers/SingleplayerController';
 
 document.addEventListener('DOMContentLoaded', () => {
     if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || window.location.hostname === 'localhost')) {
-        const registration = runtime.register();
+        // const registration = runtime.register();
     }
     const page = document.querySelector('#page');
+    createSiteModules(page);
     const main = document.querySelector('.main');
     const header = document.querySelector('header');
 
@@ -55,3 +56,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     router.start();
 });
+
+function createSiteModules(root) {
+    root.innerHTML = `<header class="header"></header>
+<main class="main"></main>`
+}

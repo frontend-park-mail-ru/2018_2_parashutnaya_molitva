@@ -17,7 +17,7 @@ export default class MenuView extends View {
         if (!isAuth) {
             menu = new Menu([
                 { textLabel: 'Singleplayer', href: '/singleplayer' },
-                { textLabel: 'Multiplayer'},
+                { textLabel: 'Multiplayer', href: '/multiplayer'},
                 { textLabel: 'Scoreboard', href: '/scoreboard' },
                 { textLabel: 'About', href: '/about' }
             ]);
