@@ -2,17 +2,22 @@
     text-align: center;
     background-color: transparent;
     color: #6a4712;
-    margin: 0px 0px;
-    font-size: px;
+    font-size: 30px;
     transition: all 0.3ms linear;
 }
 
 @media (min-width: 320px) {
-
+    .menu__button {
+        margin: calc(1vw - 3.2px);
+        font-size: calc(3.125vw + 1.25rem);
+    }
 }
 
 @media (min-width: 1280px) {
-
+    .menu__button {
+        font-size: 60px;
+        margin: 10px 0px;
+    }
 }
 
 .menu__button_disable {
@@ -34,8 +39,7 @@
     content: '\265E';
     color: #bd9457;
     position: absolute;
-    right: 105%;
-    top: -20%;
+    right: 100%;
 }
 
 .menu__button:hover {

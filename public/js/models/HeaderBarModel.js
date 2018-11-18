@@ -22,6 +22,7 @@ export default class HeaderBarModel {
                     this._eventBus.triggerEvent('loadAvatarResponse', data);
                 } else {
                     data.avatar = user.avatar === '' ? '' : Net.getStorageURL() + user.avatar;
+                    data.score = user.score;
                     this._eventBus.triggerEvent('loadAvatarResponse', data);
                     this._globalEventBus.triggerEvent('setUser', { ...user });
                 }
