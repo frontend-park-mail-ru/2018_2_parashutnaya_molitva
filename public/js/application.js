@@ -16,9 +16,10 @@ import SingleplayerController from './controllers/SingleplayerController';
 
 document.addEventListener('DOMContentLoaded', () => {
     if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || window.location.hostname === 'localhost')) {
-        const registration = runtime.register();
+        // const registration = runtime.register();
     }
     const page = document.querySelector('#page');
+    createSiteModules(page);
     const main = document.querySelector('.main');
     const header = document.querySelector('header');
 
@@ -55,3 +56,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     router.start();
 });
+
+function createSiteModules(root) {
+    root.innerHTML = `<header class="header"></header>
+<main class="main"></main>`
+}

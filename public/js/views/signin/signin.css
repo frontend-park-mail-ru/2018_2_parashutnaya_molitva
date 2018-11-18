@@ -1,0 +1,18 @@
+.signin__form {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.signin__input {
+    /*margin-bottom: 10px;*/
+    /*margin-top: 10px;*/
+    /*padding: 5% 20%;*/
+}
+
+.signin__submit {
+    background-color: lightgray;
+    border: none;
+    margin: 10px 2px;
+}
+

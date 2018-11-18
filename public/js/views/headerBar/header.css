@@ -1,0 +1,124 @@
+:root {
+    --dropdown-padding: 0.5vw;
+}
+
+.header-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    background-color: #bd9457;
+    height: 100%;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.header-bar__button {
+    color: #6e4c1a;
+    text-align: center;
+    background-color: transparent;
+    height: max-content;
+    padding: 5px 10px;
+}
+
+.header-bar__button:hover {
+    color: #6a3c08;
+    transform: scale(1.1);
+}
+
+/* m = (10)(1280 - 320) = 0.01
+   b = 10 - 320 * 0.01 = 6.8 px
+
+*/
+
+@media (min-width: 320px) {
+    .header-bar__button {
+        padding: calc(0.5vw + 3.4px) calc(1vw + 6.8px);
+    }
+}
+
+@media (min-width: 1280px){
+    .header-bar__button {
+        padding: 10px 20px;
+    }
+}
+
+.header-bar__label {
+    flex-grow: 1;
+    color: white;
+    height: fit-content;
+    margin-left: 2%;
+    text-decoration: none;
+    animation: linear 10s label-animation infinite;
+    text-transform: uppercase;
+    text-shadow: -5px -5px 0 #ffffff;
+    background: radial-gradient(#f0c781 1px, transparent 1px);
+    background-size: 4px 4px;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.header-bar__label:hover {
+    transform: scale(1.01);
+}
+
+@media (max-width: 319px) {
+    .header-bar {
+        flex-direction: column;
+    }
+}
+
+.header-bar__avatar {
+    background: white url(../../../images/default-avatar.svg);
+    background-size: cover;
+    height: 40px;
+    width: 40px;
+}
+
+.header-bar__user-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.header-bar__column {
+    padding: 2% 0 2% 2%;
+    display: flex;
+    min-width: fit-content;
+}
+
+.header-bar__dropdown-array {
+    height: 10px;
+    width: 10px;
+    align-self: center;
+    transition: transform 1s;
+}
+
+/*
+    m = 0.02
+    b = 40 - 320 * 0.02 = 33.6
+*/
+@media (min-width: 320px) {
+    .header-bar__avatar {
+        height: calc(2vw + 33.6px);
+        width: calc(2vw + 33.6px);
+    }
+}
+
+@media (min-width: 1280px) {
+    .header-bar__avatar {
+        height: 60px;
+        width: 60px
+    }
+}
+
+.header-bar__profile {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.dropdown {
+    cursor: pointer;
+    padding-right: var(--dropdown-padding);
+}

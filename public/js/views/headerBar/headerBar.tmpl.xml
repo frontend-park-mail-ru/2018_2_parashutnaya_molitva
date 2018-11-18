@@ -1,15 +1,31 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="params">
-    <div class="header header-bar">
+    <div class="header-bar">
         <fest:choose>
+            <a href="/" class="header-bar__label text-h1">ChessMate</a>
             <fest:when test="params.isAuth === true">
-                <a href="/profile" class="button header-bar__avatar"></a>
-                <a class="button header-bar__button header-bar__button-signout" href="/">Sign out</a>
+                <div class="dropdown">
+                    <div class="header-bar__profile">
+                        <div class="header-bar__user-info header-bar__column">
+                            <div class="header-bar__row text-h2">
+                                SinimaWath
+                            </div>
+                            <div class="header-bar__row text-base">
+                                1001
+                            </div>
+                        </div>
+                        <div class="header-bar__column">
+                            <img class="header-bar__avatar"></img>
+                        </div>
+                        <div class="header-bar__column">
+                            <img src="../images/dropdown.svg" class="header-bar__dropdown-array js-dropdown-array"></img>
+                        </div>
+                    </div>
+                </div>
             </fest:when>
             <fest:otherwise>
-                <a class="button header-bar__button header-bar__button-signin" href="/signin">Sign in</a>
-                <a class="button header-bar__button header-bar__button-signup" href="/signup">Sign up</a>
+                <a class="button header-bar__button text-h2" href="/signin">Sign in</a>
+                <a class="button header-bar__button text-h2" href="/signup">Sign up</a>
             </fest:otherwise>
         </fest:choose>
-
     </div>
 </fest:template>
