@@ -1,7 +1,7 @@
 import { PIECE_TYPE, COLOR } from './consts';
 import Cell from './cell';
 import Piece from './piece';
-import './board.css';
+import './board.less';
 
 const START_STATE = 'RNBQKBNRPPPPPPPP................................pppppppprnbqkbnr';
 const PIECE_PARAMETERS = {

@@ -1,5 +1,5 @@
 import { COLOR, PIECE_TYPE } from './consts';
-import './piece.css';
+import './piece.less';
 
 const PIECE_CLASS = 'piece';
 

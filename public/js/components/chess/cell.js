@@ -1,5 +1,5 @@
 import { COLOR } from './consts';
-import './cell.css';
+import './cell.less';
 
 const CELL_CLASS = 'cell';
 const WHITE_CLASS = 'cell_white';

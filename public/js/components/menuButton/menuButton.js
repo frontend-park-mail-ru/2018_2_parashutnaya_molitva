@@ -1,4 +1,4 @@
-import './menuButton.css';
+import './menuButton.less';
 
 const noop = () => null;
 const elementClass = 'button menu__button';

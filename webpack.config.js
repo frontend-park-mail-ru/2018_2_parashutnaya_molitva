@@ -29,16 +29,24 @@ const conf = {
                     }
                 }
             },
-            {
-                test: /\.css$/,
-                use: [
-                    {loader: MiniCssExtractPlugin.loader},
-                    {loader: "css-loader"}
-                ]
-            },
+            // {
+            //     test: /\.css$/,
+            //     use: [
+            //         {loader: MiniCssExtractPlugin.loader},
+            //         {loader: "css-loader"}
+            //     ]
+            // },
             {
                 test: /\.(png|woff|woff2|eot|ttf|svg)$/,
                 loader: 'url-loader?limit=100000'
+            },
+            {
+                test: /\.less$/,
+                use: [
+                    {loader: MiniCssExtractPlugin.loader},
+                    {loader: "css-loader"},
+                    {loader: 'less-loader'}
+                ]
             },
         ]
     },

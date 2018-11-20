@@ -1,3 +1,4 @@
+import '../css/style.less';
 import AboutController from './controllers/AboutController.js';
 import ScoreboardController from './controllers/ScoreboardController.js';
 import MenuController from './controllers/MenuController.js';
@@ -10,7 +11,6 @@ import NotFoundView from './views/notfound/NotFoundView.js';
 import EventBus from './lib/eventbus.js';
 import User from './lib/user.js';
 import runtime from 'serviceworker-webpack-plugin/lib/runtime';
-import '../css/style.css';
 import MultiplayerController from "./controllers/MultiplayerController";
 import SingleplayerController from './controllers/SingleplayerController';
 

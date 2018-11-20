@@ -49,6 +49,8 @@
     "express-http-proxy": "^1.4.0",
     "fest": "^0.12.1",
     "fest-webpack-loader": "^1.1.1",
+    "less": "^3.8.1",
+    "less-loader": "^4.1.0",
     "mini-css-extract-plugin": "^0.4.4",
     "style-loader": "^0.23.0",
     "url-loader": "^1.1.2",
