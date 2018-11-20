@@ -1,7 +1,7 @@
 import './signin.less';
 import View from '../../lib/view.js';
 import template from './signin.tmpl.xml';
-import signin from './signin.css';
+import signin from './signin.less';
 
 export default class SigninView extends View {
     constructor ({ eventBus = {} } = {}) {
