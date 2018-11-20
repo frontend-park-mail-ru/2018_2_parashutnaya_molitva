@@ -64,7 +64,6 @@ body, html {
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
 }
 
 .header {
@@ -72,19 +71,40 @@ body, html {
 }
 
 .button {
-    padding: 10px 20px;
+    padding: 5px 10px;
     cursor: pointer;
     display: inline-block;
     text-decoration: none;
     background: transparent;
+    transition: padding 1s;
 }
 
 .input {
-    width: 80%;
     font-size: 16px;
-    padding: 10px 20px;
+    padding: 5px 10px;
+    margin: 1.5vh 0px;
     border-width: 1px;
     border-radius: 2px;
+}
+
+@media all and (min-width: 425px) {
+    .button {
+        padding: 8px 15px;
+    }
+
+    .input {
+        padding: 8px 15px;
+    }
+}
+
+@media all and (min-width: 768px) {
+    .button {
+        padding: 10px 20px;
+    }
+
+    .input {
+        padding: 10px 20px;
+    }
 }
 
 .warning {
@@ -99,6 +119,26 @@ body, html {
     justify-content: center;
 }
 
+.submit {
+    border: none;
+    text-align: center;
+    background-color: #FFFFF2;
+    color: #6e4c1a;
+    transition: background-color 1s, transform 0.5s, box-shadow 1s;
+}
+
+.submit:hover {
+    background-color: #FFCF99;
+    transform: scale(1.05, 1.05);
+    box-shadow: 0px 3px 4px 0px #5b595826, 0px -3px 4px 0px #5b595826;
+}
+
+.form {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
 .hidden {
     display: none !important;
 }
@@ -110,11 +150,18 @@ body, html {
 
 .text-h1 {
     font-size: 1.5rem;
+    transition: font-size 2s;
 }
 
 
 .text-h2 {
     font-size: 1.2rem;
+    transition: font-size 2s;
+}
+
+.text-h3 {
+    font-size: 2vmax;
+    transition: font-size 2s;
 }
 /* 0.8 rem
    1 rem
@@ -131,92 +178,64 @@ body, html {
 	calc(m * 100vh + b)
 */
 
-@media (min-width: 320px) {
-    .text-h2 {
-        font-size: calc(1.9vw + 0.72rem);
+@media all and (orientation: portrait) {
+    @media (min-width: 320px) {
+        .text-h2 {
+            font-size: calc(1.9vw + 0.72rem);
+        }
+
+        .text-h1 {
+            font-size: calc(4.17vw + 0.66875rem);
+        }
+
+        .text-base {
+            font-size: calc(0.33vw + 0.73rem);
+        }
     }
 
-    .text-h1 {
-        font-size: calc(4.17vw + 0.66875rem);
-    }
+    @media (min-width: 1280px) {
+        .text-h2 {
+            font-size: 2.25rem;
+        }
 
-    .text-base {
-        font-size: calc(0.33vw + 0.73rem);
-    }
-}
+        .text-h1{
+            font-size: 4rem;
+        }
 
-@media (min-width: 1280px) {
-    .text-h2 {
-        font-size: 2.25rem;
-    }
-
-    .text-h1{
-        font-size: 4rem;
-    }
-
-    .text-base {
-        font-size: 1rem;
+        .text-base {
+            font-size: 1rem;
+        }
     }
 }
 
+@media all and (orientation: landscape) {
+    @media (min-width: 320px) {
+        .text-h2 {
+            font-size: calc(1.9vh + 0.72rem);
+        }
 
-/*signup components*/
+        .text-h1 {
+            font-size: calc(4.17vh + 0.66875rem);
+        }
 
-.signup__form {
-    padding: 6px;
-    display: flex;
-    flex-direction: column;
-}
+        .text-base {
+            font-size: calc(0.33vh + 0.73rem);
+        }
+    }
 
-.signup__input {
-    margin-bottom: 10px;
-    margin-top: 10px;
-}
+    @media (min-width: 1280px) {
+        .text-h2 {
+            font-size: 2.25rem;
+        }
 
-.signup__warning {
-    margin-top: -5px;
-    margin-bottom: 5px;
-}
+        .text-h1{
+            font-size: 4rem;
+        }
 
-.signup__submit {
-    margin-top: 10px;
-    margin-right: 2px;
-    background-color: #4CAF50;
-    border: 2px solid #4CAF50;
-    color: white;
-    border-radius: 0.2rem;
-}
-
-.signup__submit:hover {
-    border-color: #3e8e41;
-    background-color: #3e8e41;
-}
-
-.signup__submit:focus {
-    display: none;
-}
-
-.signup__input_warning {
-    outline: red auto 3px;
-}
-
-.signup__input_warning:focus {
-    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, .25);
-
-}
-
-.signup__back-button {
-    background-color: #e7e7e7;
-    color: black;
-    margin-top: 10px;
-    border: 2px solid #e7e7e7;
-    border-radius: 0.2rem;
-}
-
-.signup__back-button:hover {
-    background-color: white;
-    color: black;
-    border: 2px solid #e7e7e7;
+        .text-base {
+            font-size: 1rem;
+        }
+    }
 }
 
 @keyframes label-animation {

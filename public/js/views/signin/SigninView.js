@@ -1,6 +1,6 @@
+import './signin.css';
 import View from '../../lib/view.js';
 import template from './signin.tmpl.xml';
-import signin from './signin.css';
 
 export default class SigninView extends View {
     constructor ({ eventBus = {} } = {}) {
@@ -14,7 +14,7 @@ export default class SigninView extends View {
 
         this._loadingEl = this.el.querySelector('.loading');
 
-        let form = this.el.querySelector('.signin__form');
+        let form = this.el.querySelector('.form');
         this.warning = this.el.querySelector('.signin__warning');
         form.addEventListener('submit', this._onSubmit.bind(this, form));
     }
@@ -43,9 +43,7 @@ export default class SigninView extends View {
 
     _endLoadWaiting () {
         clearTimeout(this._loadingTimeOut);
-        if (!this._loadingEl.classList.contains('hidden')) {
-            this._loadingEl.classList.add('hidden');
-        }
+        this._loadingEl.classList.add('hidden');
     }
 
     showWarning (text) {

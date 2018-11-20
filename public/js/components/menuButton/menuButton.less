@@ -2,21 +2,46 @@
     text-align: center;
     background-color: transparent;
     color: #6a4712;
-    font-size: 30px;
-    transition: all 0.3ms linear;
+    transition: all 0.3ms linear, font-size 1s;
 }
 
-@media (min-width: 320px) {
+@media all and (orientation: portrait) {
     .menu__button {
-        margin: calc(1vw - 3.2px);
-        font-size: calc(3.125vw + 1.25rem);
+        font-size: 30px;
+    }
+
+    @media (min-width: 320px) {
+        .menu__button {
+            margin: calc(1vw - 3.2px);
+            font-size: calc(3.125vw + 1.25rem);
+        }
+    }
+
+    @media (min-width: 1280px) {
+        .menu__button {
+            font-size: 60px;
+            margin: 10px 0px;
+        }
     }
 }
 
-@media (min-width: 1280px) {
+@media all and (orientation: landscape){
     .menu__button {
-        font-size: 60px;
-        margin: 10px 0px;
+        font-size: 30px;
+    }
+
+    @media (min-width: 320px) {
+        .menu__button {
+            margin: calc(1vh - 3.2px);
+            font-size: calc(3.125vh + 1.25rem);
+        }
+    }
+
+    @media (min-width: 1280px) {
+        .menu__button {
+            font-size: 60px;
+            margin: 10px 0px;
+        }
     }
 }
 

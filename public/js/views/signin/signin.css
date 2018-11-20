@@ -1,18 +1,27 @@
-.signin__form {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
+.signin {
+    color: #6a4712;
 }
 
 .signin__input {
-    /*margin-bottom: 10px;*/
-    /*margin-top: 10px;*/
-    /*padding: 5% 20%;*/
+    border: 1px grey solid;
+    background-color: #e1e1d7;
+    border-radius: 2px;
+    transition: box-shadow 0.5s, background-color 0.75s;
 }
 
-.signin__submit {
-    background-color: lightgray;
-    border: none;
-    margin: 10px 2px;
+.signin__input:focus {
+    outline: none;
+    box-shadow: inset 0px 0px 6px 1px #c4b78d;
+    background-color: #FFFFF2;
 }
 
+.signin__nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.signin__button {
+
+}
