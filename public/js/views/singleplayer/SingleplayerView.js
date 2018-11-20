@@ -1,6 +1,6 @@
 import View from '../../lib/view';
 import template from './singleplayer.tmpl.xml';
-import Board from '../../components/chess/board';
+import Board from '../../components/chess/board/board';
 
 export default class SingleplayerView extends View {
     constructor ({ eventBus = {} } = {}) {

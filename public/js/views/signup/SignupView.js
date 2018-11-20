@@ -9,6 +9,8 @@ export default class SignupView extends View {
         this._eventBus.subscribeToEvent('changePasswordRepeatResponse', this._onChangeRepassResponse.bind(this));
         this._eventBus.subscribeToEvent('loadWaiting', this._onLoadWaiting.bind(this));
         this._eventBus.subscribeToEvent('signupResponse', this._onSignupResponse.bind(this));
+
+        this._isLoading = false;
     }
 
     render (root, data = {}) {
@@ -112,11 +114,14 @@ export default class SignupView extends View {
 
     _onSubmit (ev) {
         ev.preventDefault();
-        const email = this._form.elements['email'].value;
-        const pass = this._form.elements['password'].value;
-        const repass = this._form.elements['password-repeat'].value;
+        if (!this._isLoading) {
+            const email = this._form.elements['email'].value;
+            const pass = this._form.elements['password'].value;
+            const repass = this._form.elements['password-repeat'].value;
 
-        this._eventBus.triggerEvent('signup', { email, pass, repass });
+            this._eventBus.triggerEvent('signup', {email, pass, repass});
+            this._isLoading = true;
+        }
     }
 
     _onLoadWaiting () {
@@ -125,6 +130,7 @@ export default class SignupView extends View {
     }
 
     _endLoadWaiting () {
+        this._isLoading = false;
         clearTimeout(this._loadingTimeOut);
         if (!this._loadingEl.classList.contains('hidden')) {
             this._loadingEl.classList.add('hidden');

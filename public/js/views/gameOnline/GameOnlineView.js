@@ -1,6 +1,6 @@
 import template from './gameOnline.tmpl.xml';
 import View from "../../lib/view";
-import Board from "../../components/chess/board";
+import Board from "../../components/chess/board/board";
 import {COLOR} from "../../components/chess/consts";
 export default class GameOnlineView extends View{
     constructor({eventBus = {}} = {}){

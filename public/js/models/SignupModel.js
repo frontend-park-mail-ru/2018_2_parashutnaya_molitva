@@ -26,7 +26,16 @@ export default class SignupModel {
                 password: data.pass
             }).then(resp => {
                 if (resp.status === 200) {
-                    this._eventBus.triggerEvent('signupSuccess', {});
+                    Api.signIn({
+                        email: data.email,
+                        password: data.pass,
+                    }).then( (resp) => {
+                        if (resp.status === 200) {
+                            resp
+                                .json()
+                                .then(data => this._eventBus.triggerEvent('signupSuccess', data));
+                        }
+                    });
                 } else {
                     resp
                         .json()
