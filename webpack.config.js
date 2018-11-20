@@ -9,6 +9,11 @@ const conf = {
     output: {
         path: path.resolve(__dirname + '/public/dist/'),
     },
+    resolve: {
+        alias : {
+            Styles: path.resolve(__dirname, 'public/css/'),
+        },
+    },
     module: {
         rules: [
             {
@@ -45,7 +50,9 @@ const conf = {
                 use: [
                     {loader: MiniCssExtractPlugin.loader},
                     {loader: "css-loader"},
-                    {loader: 'less-loader'}
+                    {loader: 'less-loader', options: {
+                       sourceMap: true, path
+                    }}
                 ]
             },
         ]

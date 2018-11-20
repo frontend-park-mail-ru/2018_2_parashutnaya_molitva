@@ -1,4 +1,4 @@
-import './signup.css';
+import './signup.less';
 import View from '../../lib/view.js';
 import template from './signup.tmpl.xml';
 

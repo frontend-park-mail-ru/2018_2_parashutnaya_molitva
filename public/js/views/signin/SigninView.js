@@ -1,4 +1,4 @@
-import './signin.css';
+import './signin.less';
 import View from '../../lib/view.js';
 import template from './signin.tmpl.xml';
 

@@ -1,4 +1,4 @@
-import './dropDown.css';
+import './dropDown.less';
 
 const noop = () => null;
 const dropdownJS = "js-dropdown";
