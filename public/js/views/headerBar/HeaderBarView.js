@@ -2,7 +2,6 @@ import View from '../../lib/view.js';
 import template from './headerBar.tmpl.xml';
 import './header.less';
 import Dropdown from "../../components/dropDown/dropDown";
-
 const onShowDropdownArray = "rotate(180deg)";
 const onCloseDropdownArray = "rotate(0deg)";
 
