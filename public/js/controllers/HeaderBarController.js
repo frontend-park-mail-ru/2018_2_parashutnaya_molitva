@@ -1,6 +1,6 @@
 import HeaderBarView from '../views/headerBar/HeaderBarView.js';
 import HeaderBarModel from '../models/HeaderBarModel.js';
-import EventBus from '../lib/eventbus.js';
+import EventBus from '../lib/eventbus/eventbus.js';
 
 const eventList = [
     'checkAuthResponse',

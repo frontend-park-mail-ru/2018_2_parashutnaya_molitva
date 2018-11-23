@@ -1,5 +1,5 @@
 import SingleplayerView from '../views/singleplayer/SingleplayerView';
-import EventBus from '../lib/eventbus';
+import EventBus from '../lib/eventbus/eventbus';
 import SingleplayerModel from '../models/SingleplayerModel';
 
 const eventList = [

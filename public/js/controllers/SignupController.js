@@ -1,6 +1,6 @@
 import SignupView from '../views/signup/SignupView.js';
 import SignupModel from '../models/SignupModel.js';
-import EventBus from '../lib/eventbus.js';
+import EventBus from '../lib/eventbus/eventbus.js';
 
 const eventList = [
     'signup',

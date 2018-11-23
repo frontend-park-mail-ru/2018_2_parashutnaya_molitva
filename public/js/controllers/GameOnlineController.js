@@ -1,4 +1,4 @@
-import GameOnlineModel from "../models/GameOnlineModel";
+import GameOnlineModel from "../models/game/GameOnlineModel";
 import GameOnlineView from "../views/gameOnline/GameOnlineView";
 
 export default class GameOnlineController {

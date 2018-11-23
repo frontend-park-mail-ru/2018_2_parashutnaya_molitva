@@ -8,11 +8,10 @@ import SigninController from './controllers/SigninController.js';
 import SignupController from './controllers/SignupController.js';
 import HeaderBarController from './controllers/HeaderBarController.js';
 import NotFoundView from './views/notfound/NotFoundView.js';
-import EventBus from './lib/eventbus.js';
+import EventBus from './lib/eventbus/eventbus.js';
 import User from './lib/user.js';
 import runtime from 'serviceworker-webpack-plugin/lib/runtime';
-import MultiplayerController from "./controllers/MultiplayerController";
-import SingleplayerController from './controllers/SingleplayerController';
+import GameController from "./controllers/GameController";
 
 document.addEventListener('DOMContentLoaded', () => {
     if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || window.location.hostname === 'localhost')) {
@@ -39,9 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const signinController = new SigninController({ router, globalEventBus });
     const signupContoller = new SignupController({ router, globalEventBus });
     const profilerControlleer = new ProfileController({ router, globalEventBus });
-
-    const multiplayerController = new MultiplayerController({root: main});
-    const singleplayerController = new SingleplayerController();
+    const gameController = new GameController();
 
     router.add('/about', main, aboutController.aboutView);
     router.add('/scoreboard', main, scoreboardController.scoreboardView);
@@ -49,8 +46,8 @@ document.addEventListener('DOMContentLoaded', () => {
     router.add('/profile', main, profilerControlleer.profileView);
     router.add('/signup', main, signupContoller.signupView);
     router.add('/', main, menuController.menuView);
-    router.add('/multiplayer', main, multiplayerController.multiplayerView);
-    router.add('/singleplayer', main, singleplayerController.singleplayerView);
+    router.add('/multiplayer', main, gameController.multiplayerView);
+    router.add('/singleplayer', main, gameController.singleplayerView);
 
     router.setNotFoundView(main, new NotFoundView());
 

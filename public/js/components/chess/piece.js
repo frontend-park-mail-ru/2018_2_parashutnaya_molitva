@@ -37,4 +37,8 @@ export default class Piece {
         root.innerHTML = '';
         root.appendChild(this._div);
     }
+
+    resize({width = 32, height = 32}) {
+
+    }
 }

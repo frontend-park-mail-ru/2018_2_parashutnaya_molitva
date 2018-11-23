@@ -1,15 +1,16 @@
-import Api from "../lib/api";
-import Game from "../lib/chess/game";
+import Api from "../../lib/api";
+import Game from "../../lib/chess/game";
 
 export default class GameOnlineModel {
     constructor({eventBus = {}} = {}) {
         this._eventBus = eventBus;
 
         this._eventBus.subscribeToEvent('tryMove', this._onTryMove.bind(this));
+        this._eventBus.subscribeToEvent('initGame', this._onInitGame.bind(this));
         this._game = new Game();
     }
 
-    initGameConnection({roomid = ''} = {}) {
+    _onInitGame({roomid = ''} = {}) {
         this._ws = new WebSocket(Api.getGameAddress());
         this._ws.onopen = () => {
             this._ws.send(JSON.stringify({MsgType: "init", Data: {roomid}}));

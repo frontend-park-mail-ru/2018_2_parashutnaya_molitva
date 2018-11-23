@@ -3,6 +3,9 @@ import Piece from './piece';
 import Coord from './coord';
 import Moves from './moves';
 
+let deadWhite = [];
+let deadBlack = [];
+
 export default class Board {
     /**
      * constructor
