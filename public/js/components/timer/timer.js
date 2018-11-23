@@ -1,13 +1,15 @@
 import './timer.less';
+
+const noop = () => null;
 const SECOND = 1000;
 const TIMER_ACTIVE_CLASS = "timer_active";
 
 export default class Timer {
-    constructor({duration = 600, root = null} = {}) {
+    constructor({duration = 600, root = null, timerExpireCallback = noop} = {}) {
         this._root = root;
-        this._duration = duration;
-        this._current = duration;
-        this._timerRemaining = duration;
+        this._duration = +duration;
+        this._current = +duration;
+        this._timerExpireCallback = timerExpireCallback();
     }
 
     stop() {
@@ -20,6 +22,7 @@ export default class Timer {
         this._timerID = setInterval(()=> {
             this._update({current: this._formatSecondToTime({seconds: this._current--})});
             if (this._current < 0) {
+                this._timerExpireCallback();
                 this.stop();
             }
         }, SECOND);

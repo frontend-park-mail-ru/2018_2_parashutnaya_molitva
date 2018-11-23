@@ -8,3 +8,7 @@ export const GAME = {
 
     GAMEOVER: "go",
 };
+
+export const ROUTER = {
+    BACK_TO_MENU: 'btm',
+};

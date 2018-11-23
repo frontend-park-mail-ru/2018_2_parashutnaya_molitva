@@ -38,12 +38,13 @@ export default class HeaderBarView extends View {
         const onShowDropdown = () => dropdownArray.style.transform = onShowDropdownArray;
         const onCloseDropdown = () => dropdownArray.style.transform = onCloseDropdownArray;
 
-        this._dropDown.render({
-            root : this.el.querySelector(".dropdown"),
-            onShowCallback:onShowDropdown,
-            onCloseCallback: onCloseDropdown,
-        });
         if (data.isAuth) {
+            this._dropDown.render({
+                root : this.el.querySelector(".dropdown"),
+                onShowCallback:onShowDropdown,
+                onCloseCallback: onCloseDropdown,
+            });
+
             let score = this.el.querySelector('.js-header-score');
             score.innerHTML = data.score;
             let avatar = this.el.querySelector('.header-bar__avatar');

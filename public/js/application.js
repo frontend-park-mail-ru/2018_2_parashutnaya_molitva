@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const signinController = new SigninController({ router, globalEventBus });
     const signupContoller = new SignupController({ router, globalEventBus });
     const profilerControlleer = new ProfileController({ router, globalEventBus });
-    const gameController = new GameController();
+    const gameController = new GameController({router});
 
     router.add('/about', main, aboutController.aboutView);
     router.add('/scoreboard', main, scoreboardController.scoreboardView);

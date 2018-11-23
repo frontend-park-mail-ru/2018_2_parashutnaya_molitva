@@ -1,6 +1,7 @@
 import Game from '../../lib/chess/game';
 import {GAME} from '../../lib/eventbus/events';
 import {COLOR, PIECE_TYPE} from "../../components/chess/consts";
+import Timer from "../../components/timer/timer";
 
 export default class GameOfflineModel {
     constructor ({eventBus = {}} = {}) {
@@ -40,7 +41,7 @@ export default class GameOfflineModel {
             const deadPiece = this._findNewDeadPiece(boardString, turn);
             this._eventBus.triggerEvent(GAME.MOVE_SUCCESS, {state: boardString, turn: this._game.turn(), deadPiece});
             if (this._game.isGameOver()) {
-                this._eventBus.triggerEvent(GAME.GAMEOVER, this._game.turn());
+                this._eventBus.triggerEvent(GAME.GAMEOVER, {turn: this._game.turn()});
             }
         } else {
             this._eventBus.triggerEvent(GAME.MOVE_FAILURE);

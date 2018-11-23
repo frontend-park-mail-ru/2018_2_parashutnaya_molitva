@@ -1,3 +1,4 @@
+import './menu.less';
 import View from '../../lib/view.js';
 import Menu from '../../components/menu/menu.js';
 
@@ -16,15 +17,15 @@ export default class MenuView extends View {
         const menuSection = this.el.querySelector('.menu.section');
         if (!isAuth) {
             menu = new Menu([
-                { textLabel: 'Singleplayer', href: '/singleplayer' },
-                { textLabel: 'Multiplayer', href: '/multiplayer'},
+                { textLabel: 'Singleplayer', href: '/singleplayer'},
+                { textLabel: 'Multiplayer', href: this._onNotAuthMultiplayerClick.bind(this)},
                 { textLabel: 'Scoreboard', href: '/scoreboard' },
                 { textLabel: 'About', href: '/about' }
             ]);
         } else {
             menu = new Menu([
-                { textLabel: 'Singleplayer', href: '/singleplayer' },
-                { textLabel: 'Multiplayer', href: '/multiplayer'},
+                { textLabel: 'Singleplayer', isNavigate: false},
+                { textLabel: 'Multiplayer', isNavigate: false},
                 { textLabel: 'Scoreboard', href: '/scoreboard' },
                 { textLabel: 'About', href: '/about' }
             ]);
@@ -36,6 +37,11 @@ export default class MenuView extends View {
 
     render (root, data = {}) {
         super.render(root, data);
-        this._eventBus.triggerEvent('checkAuth')
+        this._eventBus.triggerEvent('checkAuth');
+        this._gameOptionsPopup = this.el.querySelector('.js-game-options-popup');
+    }
+
+    _onNotAuthMultiplayerClick() {
+        
     }
 }
