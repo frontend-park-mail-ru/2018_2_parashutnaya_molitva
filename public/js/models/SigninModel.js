@@ -18,6 +18,7 @@ export default class SigninModel {
                 error: errEmail
             };
             this._eventBus.triggerEvent('signinResponse', res);
+            return;
         }
 
         const errPass = Validation.validatePassword(pass, false);

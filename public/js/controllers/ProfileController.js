@@ -1,6 +1,6 @@
 import ProfileView from '../views/profile/ProfileView.js';
 import ProfileModel from '../models/ProfileModel.js';
-import EventBus from '../lib/eventbus.js';
+import EventBus from '../lib/eventbus/eventbus.js';
 
 const eventList = [
     'checkAuth',

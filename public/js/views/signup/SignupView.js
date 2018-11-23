@@ -1,3 +1,4 @@
+import './signup.less';
 import View from '../../lib/view.js';
 import template from './signup.tmpl.xml';
 
@@ -22,7 +23,7 @@ export default class SignupView extends View {
         this._passWarning = this.el.querySelector('.js-warning-password');
         this._repassWarning = this.el.querySelector('.js-warning-repassword');
 
-        this._form = this.el.querySelector('.signup__form');
+        this._form = this.el.querySelector('.form');
 
         this._emailInput = this._form.elements['email'];
         this._emailInput.addEventListener('change', this._onChangeEmail.bind(this, this._emailInput));

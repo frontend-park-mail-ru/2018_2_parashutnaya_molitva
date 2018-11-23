@@ -1,0 +1,87 @@
+.text-h1 {
+  font-size: 1.5rem;
+  transition: font-size 2s;
+}
+
+
+.text-h2 {
+  font-size: 1.2rem;
+  transition: font-size 2s;
+}
+
+.text-h3 {
+  font-size: 2vmax;
+  transition: font-size 2s;
+}
+
+.text-base {
+  font-size: 0.8rem;
+}
+
+/*
+	y = m*x + b
+	m = (x2 - x1)(y2 - y1)
+	b = y0 - x0 * m
+
+	calc(m * 100vh + b)
+*/
+
+@media all and (orientation: portrait) {
+  @media (min-width: 320px) {
+    .text-h2 {
+      font-size: calc(1.9vw + 0.72rem);
+    }
+
+    .text-h1 {
+      font-size: calc(4.17vw + 0.66875rem);
+    }
+
+    .text-base {
+      font-size: calc(0.33vw + 0.73rem);
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .text-h2 {
+      font-size: 2.25rem;
+    }
+
+    .text-h1{
+      font-size: 4rem;
+    }
+
+    .text-base {
+      font-size: 1rem;
+    }
+  }
+}
+
+@media all and (orientation: landscape) {
+  @media (min-width: 320px) {
+    .text-h2 {
+      font-size: calc(1.9vh + 0.72rem);
+    }
+
+    .text-h1 {
+      font-size: calc(4.17vh + 0.66875rem);
+    }
+
+    .text-base {
+      font-size: calc(0.33vh + 0.73rem);
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .text-h2 {
+      font-size: 2.25rem;
+    }
+
+    .text-h1{
+      font-size: 4rem;
+    }
+
+    .text-base {
+      font-size: 1rem;
+    }
+  }
+}

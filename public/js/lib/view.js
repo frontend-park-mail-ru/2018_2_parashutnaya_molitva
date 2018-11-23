@@ -1,6 +1,7 @@
 export default class View {
     constructor (template, eventBus, globalEventBus) {
         this.el = document.createElement('div');
+        this.el.classList.add("wrapper");
         this.template = template;
         this._eventBus = eventBus;
         this._globalEventBus = globalEventBus;

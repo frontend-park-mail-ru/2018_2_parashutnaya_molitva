@@ -1,14 +1,11 @@
 import Net from "../lib/net";
 import Api from "../lib/api";
-import GameOnlineModel from "./GameOnlineModel";
 
 export default class MultiplayerModel {
-    constructor (eventBus, gameOnlineModel) {
+    constructor (eventBus) {
         this._eventBus = eventBus;
         // this._eventBus.subscribeToEvent('checkAuth', this._onCheckAuth.bind(this));
         this._eventBus.subscribeToEvent('findGame', this._onFindGame.bind(this));
-
-        this._gameOnlineModel = gameOnlineModel
     }
 
 
@@ -24,7 +21,7 @@ export default class MultiplayerModel {
                                 console.log("Invalid room id:" + data.roomid);
                             } else {
                                 console.log("Connecting");
-                                this._gameOnlineModel.initGameConnection({roomid: data.roomid});
+                                this._eventBus.triggerEvent('initGame', {roomid: data.roomid});
                             }
                         })
                 }

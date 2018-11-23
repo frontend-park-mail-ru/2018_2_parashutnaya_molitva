@@ -1,0 +1,24 @@
+.icon-presenter {
+  display: flex;
+  flex-wrap: wrap;
+
+}
+
+.icon-presenter__icon {
+  background-size: 100%;
+  height: 30px;
+  width: 30px;
+  animation-name: show;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes show {
+  from {
+    transform: scale(0);
+  }
+
+  to {
+    transform: scale(1.0);
+  }
+}

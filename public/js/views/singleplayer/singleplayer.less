@@ -1,0 +1,172 @@
+@import "~Styles/theme";
+
+@first-info-block: info-first;
+@second-info-block: info-second;
+@board-block: board-section;
+
+.game {
+  transition: background 1s;
+  height: 100%;
+  display: grid;
+  grid-template-rows: 1fr 15fr 1fr;
+  grid-template-columns: 2fr 6fr 2fr;
+  grid-template-areas: ". . ." "@{first-info-block} @{board-block} @{second-info-block}" ". . .";
+}
+
+.info-block {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.info-block_first {
+  align-items: flex-end;
+  grid-area: @first-info-block;
+}
+
+.info-block_second {
+  align-items: flex-start;
+  grid-area: @second-info-block;
+}
+
+.board-section {
+  grid-area: @board-block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.user-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.user-block_flipped {
+  align-items: flex-start;
+}
+
+.user-block__element {
+  margin-bottom: 20px;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+.user-info__color-figure {
+  background-size: 100%;
+  height: 64px;
+  width: 64px;
+  image-rendering: pixelated;
+}
+.user-info__color-figure_flipped {
+  transform: scaleX(-1);
+}
+
+.user-info__color-figure_black {
+  background-image: url("../../components/chess/sprites/knight_black.png");
+}
+
+.user-info__color-figure_white {
+  background-image: url("../../components/chess/sprites/knight_white.png");
+}
+
+.user-info__color-text {
+  font-size: 2.5rem;
+  color: @header-bar-button-text-color;
+}
+
+.user-timer {
+  font-size: 1.7rem;
+  color: @header-bar-button-text-color;
+}
+
+.game-options__content {
+  height: 80%;
+  width: 80vw;
+  left: 10vw;
+  top: 10vh;
+}
+
+.game-options__duration {
+  grid-area: content;
+  display: flex;
+  flex-direction: column;
+  max-width: fit-content;
+}
+
+.game-options__title {
+  user-select: none;
+  font-size: 1rem;
+
+  @media screen and (min-width: 320px){
+    font-size: 1.5rem;
+  }
+
+  @media screen and (min-width: 425px){
+    font-size: 2rem;
+  }
+
+  @media screen and (min-width: 768px){
+    font-size: 3rem;
+  }
+
+  @media screen and (min-width: 1024px){
+    font-size: 3.5rem;
+  }
+
+  color: @active-button-color;
+  flex-grow: 1;
+  transition: font-size 1s;
+}
+
+.game-options__button {
+  font-size: 1.2rem;
+
+  @media screen and (min-width: 425px){
+    font-size: 1.5rem;
+  }
+
+  @media screen and (min-width: 768px) {
+    font-size: 2rem;
+  }
+
+  transition: font-size 1s, transform 0.1s;
+  flex-grow: 10;
+  border-bottom: 1px black solid;
+
+  &:hover {
+    border-bottom: none;
+  }
+}
+
+.game-options__x-mark {
+  padding: 1vw 1vw;
+  transition: height 1s, transform 0.1s;
+
+}
+
+.winner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.winner__content {
+  height: 40%;
+  width: 40vw;
+  top: 30vh;
+  left: 30vw;
+}
+
+.winner__title {
+  font-size: 3rem;
+}
+
+.winner__text {
+  color: @active-button-color;
+}
+

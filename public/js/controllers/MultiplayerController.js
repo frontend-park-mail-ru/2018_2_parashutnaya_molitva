@@ -1,6 +1,6 @@
 import MultiplayerView from '../views/multiplayer/MultiplayerView.js';
 import MultiplayerModel from '../models/MultiplayerModel.js';
-import EventBus from '../lib/eventbus.js';
+import EventBus from '../lib/eventbus/eventbus.js';
 import GameOnlineController from "./GameOnlineController";
 
 const events = [

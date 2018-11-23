@@ -1,5 +1,4 @@
 import Net from './net.js';
-
 //const gameAddres = "wss://kekmate.tech/api/game/ws";
 const gameAddres = "ws://localhost:8080/api/game/ws";
 export default class Api {

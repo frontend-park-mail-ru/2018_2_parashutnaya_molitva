@@ -5,4 +5,15 @@
         <a class="button menu__button" href="/scoreboard">Scoreboard</a>
         <a class="button menu__button" href="/about">About</a>
     </div>
+    <div class="popup hidden js-game-options-popup">
+        <div class="popup__content game-options__content">
+            <div class="game-options__duration">
+                <div class="game-options__title">Choose game duration</div>
+                <button class="button submit game-options__button">1 min</button>
+                <button class="button submit game-options__button">3 min</button>
+                <button class="button submit game-options__button">5 min</button>
+                <button class="button submit game-options__button">10 min</button>
+            </div>
+        </div>
+    </div>
 </fest:template>
