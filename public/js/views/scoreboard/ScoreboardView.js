@@ -1,3 +1,4 @@
+import './scoreboard.less';
 import View from '../../lib/view.js';
 import template from './scoreboard.tmpl.xml';
 import Paginator from '../../components/paginator/paginator.js';

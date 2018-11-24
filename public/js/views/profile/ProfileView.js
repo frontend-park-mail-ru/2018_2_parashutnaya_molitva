@@ -1,3 +1,4 @@
+import './profile.less';
 import View from '../../lib/view.js';
 import template from './profile.tmpl.xml';
 import SignupView from '../signup/SignupView.js';

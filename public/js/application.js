@@ -33,13 +33,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const menuController = new MenuController();
     const signinController = new SigninController({ router, globalEventBus });
     const signupContoller = new SignupController({ router, globalEventBus });
-    //const profilerControlleer = new ProfileController({ router, globalEventBus });
+    const profileControlleer = new ProfileController({ router, globalEventBus });
     const gameController = new GameController({router});
 
     router.add('/about', main, aboutController.aboutView);
     router.add('/scoreboard', main, scoreboardController.scoreboardView);
     router.add('/signin', main, signinController.signinView);
-    //router.add('/profile', main, profilerControlleer.profileView);
+    router.add('/profile', main, profileControlleer.profileView);
     router.add('/signup', main, signupContoller.signupView);
     router.add('/', main, menuController.menuView);
     router.add('/multiplayer', main, gameController.multiplayerView);
