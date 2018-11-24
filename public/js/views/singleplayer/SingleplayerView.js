@@ -111,11 +111,13 @@ export default class SingleplayerView extends View {
 
     _whiteTimerExpire() {
         console.log("Black win");
+        this._showWinnerPopup({turn: true});
         this._timerSecond.stop();
     }
 
     _blackTimerExpire() {
         console.log("White win");
+        this._showWinnerPopup({turn: false});
         this._timerFirst.stop();
     }
 
@@ -146,10 +148,11 @@ export default class SingleplayerView extends View {
         this._firstUserBlock.insertAdjacentHTML('afterbegin',userBlockTemplate({isFirst: true}));
 
         this._timerFirstElement = this.el.querySelector('.js-timer-first');
-        this._timerFirst = new Timer({root: this._timerFirstElement, duration});
+        this._timerFirst = new Timer({root: this._timerFirstElement, duration,
+            timerExpireCallback: this._whiteTimerExpire.bind(this)});
         this._timerFirst.render();
 
-        this._whiteFiguresElement = this.el.querySelector('.js-figures-white');
+        this._whiteFiguresElement = this.el.querySelector('.js-figures-first');
         this._whiteFigures = new IconPresenter({root: this._whiteFiguresElement});
         this._whiteFigures.render();
 
@@ -163,10 +166,11 @@ export default class SingleplayerView extends View {
         this._secondUserBlock.insertAdjacentHTML('afterbegin', userBlockTemplate({isFirst: false}));
 
         this._timerSecondElement = this.el.querySelector('.js-timer-second');
-        this._timerSecond = new Timer({root: this._timerSecondElement, duration});
+        this._timerSecond = new Timer({root: this._timerSecondElement, duration,
+            timerExpireCallback: this._blackTimerExpire.bind(this)});
         this._timerSecond.render();
 
-        this._blackFiguresElement = this.el.querySelector('.js-figures-black');
+        this._blackFiguresElement = this.el.querySelector('.js-figures-second');
         this._blackFigures = new IconPresenter({root: this._blackFiguresElement});
         this._blackFigures.render();
 

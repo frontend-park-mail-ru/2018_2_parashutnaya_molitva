@@ -21,7 +21,10 @@ export default class MenuModel {
                 }
             })
             .catch((error) => {
-                    this._eventBus.triggerEvent('checkAuthResponse', {error});
+                    this._eventBus.triggerEvent('checkAuthResponse', {
+                        online: navigator.onLine,
+                        error
+                    });
                 }
             )
     }

@@ -4,19 +4,19 @@
             <a href="/" class="header-bar__label text-h1">ChessMate</a>
             <fest:when test="params.isAuth === true">
                 <div class="dropdown">
-                    <div class="header-bar__profile">
-                        <div class="header-bar__user-info header-bar__column">
-                            <div class="header-bar__row text-h2">
-                                Nickname
+                    <div class="user-bar header-bar__profile">
+                        <div class="user-info-bar user-bar__column header-bar__user-info header-bar__column">
+                            <div class="user-bar__row header-bar__row text-h2">
+                                <fest:value>params.user.login</fest:value>
                             </div>
-                            <div class="header-bar__row js-header-score text-base">
-                                1001
+                            <div class="user-bar__row header-info__row  text-base js-header-score">
+                                <fest:value>params.user.score</fest:value>
                             </div>
                         </div>
-                        <div class="header-bar__column">
-                            <img class="header-bar__avatar"></img>
+                        <div class="user-bar__column header-bar__column">
+                            <img class="user-bar__avatar header-bar__avatar"></img>
                         </div>
-                        <div class="header-bar__column">
+                        <div class="user-bar__column header-bar__column">
                             <img src="../images/dropdown.svg" class="header-bar__dropdown-array js-dropdown-array"></img>
                         </div>
                     </div>

@@ -8,7 +8,7 @@ export default class Router {
 
         window.addEventListener('popstate', () => {
             const pathname = Router._normalizePath(location.pathname);
-            this._change(pathname, false);
+            this.change(pathname, false);
         });
     }
 
@@ -21,7 +21,7 @@ export default class Router {
             window.history.replaceState(null, null, "/");
         }
 
-        this._change('/', !delPrev);
+        this.change('/', !delPrev);
     }
 
     /**
@@ -53,7 +53,7 @@ export default class Router {
      * @param addToHistory добавлять Path в History Api или нет.
      * @private
      */
-    _change (path, addToHistory = true) {
+    change (path, addToHistory = true) {
         if (this.currentRoute === path) {
             return;
         }
@@ -99,10 +99,10 @@ export default class Router {
         this.root.addEventListener('click', (ev) => {
             if (ev.target.tagName === 'A' && ev.target.hostname === location.hostname) {
                 ev.preventDefault();
-                this._change(Router._normalizePath(ev.target.pathname));
+                this.change(Router._normalizePath(ev.target.pathname));
             }
         });
 
-        this._change(Router._normalizePath(window.location.pathname), false);
+        this.change(Router._normalizePath(window.location.pathname), false);
     }
 }

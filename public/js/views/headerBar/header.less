@@ -85,8 +85,6 @@
 @avatar-max-size: 60px;
 
 .header-bar__avatar {
-    background: white url(../../../images/default-avatar.svg);
-    background-size: cover;
     height: @avatar-min-size;
     width: @avatar-min-size;
 
@@ -102,18 +100,11 @@
 }
 
 .header-bar__user-info {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
     align-items: flex-end;
 }
 
-
-
 .header-bar__column {
     padding: 2% 0 2% 2%;
-    display: flex;
-    min-width: fit-content;
 }
 
 .header-bar__dropdown-array {
@@ -121,11 +112,6 @@
     width: 10px;
     align-self: center;
     transition: transform 1s;
-}
-
-.header-bar__profile {
-    display: flex;
-    justify-content: flex-end;
 }
 
 @dropdown-padding: 0.5vw;

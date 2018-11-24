@@ -1,15 +1,12 @@
-export default class User {
-    constructor (globalEventBus) {
+import Net from "./net";
+
+class UserSingleton {
+    constructor () {
+        this.login = null;
         this.email = null;
         this.score = null;
         this.avatar = null;
         this.guid = null;
-
-        this._globalEventBus = globalEventBus;
-
-        this._globalEventBus.subscribeToEvent('setUser', this.setUser.bind(this));
-        this._globalEventBus.subscribeToEvent('removeUser', this.removeUser.bind(this));
-        this._globalEventBus.subscribeToEvent('checkUser', this.checkUser.bind(this));
     }
 
     /**
@@ -17,21 +14,8 @@ export default class User {
      * Перед тем как пойти на сервер, нужно проверить есть ли уже пользователь или нет
      */
     checkUser () {
-        let isUpload = true;
-        if (this.email === null || this.score === null ||
-            this.avatar === null || this.guid === null) {
-            isUpload = false;
-        }
-
-        this._globalEventBus.triggerEvent('checkUserResponse', {
-            isUpload,
-            user: {
-                email: this.email,
-                score: this.score,
-                avatar: this.avatar,
-                guid: this.guid
-            }
-        });
+        return !(this.email === null || this.score === null ||
+            this.avatar === null || this.guid === null || this.login === null);
     }
 
     /**
@@ -40,12 +24,15 @@ export default class User {
      * @param score
      * @param avatar
      * @param guid
+     * @param login
      */
-    setUser ({ email, score, avatar, guid }) {
+    setUser ({ email, score, avatar, guid, login} = {}) {
+
         this.email = email;
         this.score = score;
-        this.avatar = avatar;
+        this.avatar = avatar || 'images/default-avatar.svg';
         this.guid = guid;
+        this.login = login || "Nouserlogin";
     }
 
     /**
@@ -56,5 +43,9 @@ export default class User {
         this.score = null;
         this.avatar = null;
         this.guid = null;
+        this.login = null;
     }
 }
+
+
+export let User = new UserSingleton();

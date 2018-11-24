@@ -2,23 +2,61 @@
     <fest:choose>
         <fest:when test="params.isFirst === true">
             <div class="user-block">
-                <div class="user-block__element user-info">
-                    <div class="user-info__color-figure user-info__color-figure_white"></div>
-                    <div class="user-info__color-text">WHITE</div>
-                </div>
+                <fest:choose>
+                    <fest:when test="params.isOnline">
+                        <div class="user-bar user-block__element multiplayer-user-bar">
+                            <div class="user-info-bar user-bar__column multiplayer-user-info-bar">
+                                <div class="user-bar__row text-h2">
+                                    <fest:value>params.user.login</fest:value>
+                                </div>
+                                <div class="user-bar__row js-header-score text-base">
+                                    <fest:value>params.user.score</fest:value>
+                                </div>
+                            </div>
+                            <div class="user-bar__column multiplayer-user-bar__column">
+                                <img class="user-bar__avatar header-bar__avatar js-first-avatar"></img>
+                            </div>
+                        </div>
+                    </fest:when>
+                    <fest:otherwise>
+                        <div class="user-block__element user-info">
+                            <div class="user-info__color-figure user-info__color-figure_white"></div>
+                            <div class="user-info__color-text">WHITE</div>
+                        </div>
+                    </fest:otherwise>
+                </fest:choose>
                 <div class="user-block__element user-timer js-timer-first"></div>
-                <div class="user-block__element js-figures-white"></div>
+                <div class="user-block__element js-figures-first"></div>
             </div>
         </fest:when>
         <fest:otherwise>
             <div class="user-block user-block_flipped">
-                <div class="user-block__element user-info">
-                    <div class="user-info__color-text">BLACK</div>
-                    <div class="user-info__color-figure user-info__color-figure_black user-info__color-figure_flipped">
-                    </div>
-                </div>
+                <fest:choose>
+                    <fest:when test="params.isOnline">
+                        <div class="user-bar user-block__element">
+                            <div class="user-info-bar user-bar__column multiplayer-user-info-bar_flipped">
+                                <div class="user-bar__row text-h2">
+                                    <fest:value>params.user.login</fest:value>
+                                </div>
+                                <div class="user-bar__row js-header-score text-base">
+                                    <fest:value>params.user.score</fest:value>
+                                </div>
+                            </div>
+                            <div class="user-bar__column multiplayer-user-bar__column">
+                                <img class="user-bar__avatar header-bar__avatar js-second-avatar"></img>
+                            </div>
+                        </div>
+                    </fest:when>
+                    <fest:otherwise>
+                        <div class="user-block__element user-info">
+                            <div class="user-info__color-text">BLACK</div>
+                            <div class="user-info__color-figure user-info__color-figure_black user-info__color-figure_flipped">
+                            </div>
+                        </div>
+                    </fest:otherwise>
+                </fest:choose>
                 <div class="user-block__element user-timer js-timer-second"></div>
-                <div class="user-block__element js-figures-black"></div>
+                <div class="user-block__element js-figures-second"></div>
             </div>
         </fest:otherwise>
     </fest:choose>

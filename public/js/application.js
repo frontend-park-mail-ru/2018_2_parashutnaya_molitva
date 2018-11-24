@@ -9,7 +9,6 @@ import SignupController from './controllers/SignupController.js';
 import HeaderBarController from './controllers/HeaderBarController.js';
 import NotFoundView from './views/notfound/NotFoundView.js';
 import EventBus from './lib/eventbus/eventbus.js';
-import User from './lib/user.js';
 import runtime from 'serviceworker-webpack-plugin/lib/runtime';
 import GameController from "./controllers/GameController";
 
@@ -24,26 +23,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let router = new Router(page);
 
-    const globalEventBus = new EventBus(['renderHeaderBar', 'setUser', 'removeUser',
-        'checkUser', 'checkUserResponse']);
+    const globalEventBus = new EventBus(['renderHeaderBar']);
 
-    const headerBarController = new HeaderBarController({ globalEventBus });
+    const headerBarController = new HeaderBarController({ globalEventBus, router });
     headerBarController.headerBarView.render(header);
-
-    let user = new User(globalEventBus);
 
     const aboutController = new AboutController();
     const scoreboardController = new ScoreboardController();
     const menuController = new MenuController();
     const signinController = new SigninController({ router, globalEventBus });
     const signupContoller = new SignupController({ router, globalEventBus });
-    const profilerControlleer = new ProfileController({ router, globalEventBus });
+    //const profilerControlleer = new ProfileController({ router, globalEventBus });
     const gameController = new GameController({router});
 
     router.add('/about', main, aboutController.aboutView);
     router.add('/scoreboard', main, scoreboardController.scoreboardView);
     router.add('/signin', main, signinController.signinView);
-    router.add('/profile', main, profilerControlleer.profileView);
+    //router.add('/profile', main, profilerControlleer.profileView);
     router.add('/signup', main, signupContoller.signupView);
     router.add('/', main, menuController.menuView);
     router.add('/multiplayer', main, gameController.multiplayerView);

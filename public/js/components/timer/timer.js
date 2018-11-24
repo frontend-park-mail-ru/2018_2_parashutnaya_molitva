@@ -9,7 +9,7 @@ export default class Timer {
         this._root = root;
         this._duration = +duration;
         this._current = +duration;
-        this._timerExpireCallback = timerExpireCallback();
+        this._timerExpireCallback = timerExpireCallback;
     }
 
     stop() {
@@ -19,6 +19,7 @@ export default class Timer {
 
     start() {
         this._output.classList.add(TIMER_ACTIVE_CLASS);
+        this._update({current: this._formatSecondToTime({seconds: this._current--})});
         this._timerID = setInterval(()=> {
             this._update({current: this._formatSecondToTime({seconds: this._current--})});
             if (this._current < 0) {

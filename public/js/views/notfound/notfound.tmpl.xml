@@ -1,3 +1,8 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="params">
-    <p>404 Not Found</p>
+    <div class="section">
+        <div class="text-h1">
+            404 Not Found
+        </div>
+        <a class="button menu__button" href="/">Menu</a>
+    </div>
 </fest:template>
