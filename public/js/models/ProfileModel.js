@@ -2,6 +2,7 @@ import Validation from '../lib/validation.js';
 import Net from '../lib/net.js';
 import Api from '../lib/api.js';
 import {User} from '../lib/user.js';
+import {HEADER} from "../lib/eventbus/events";
 
 export default class ProfileModel {
     constructor(eventBus, globalEventBus) {
@@ -37,7 +38,7 @@ export default class ProfileModel {
                     Api.updateUser({guid: this._currentUserGUID, avatar: res.avatar});
                     this._eventBus.triggerEvent('changeAvatarSuccess', {avatar: Net.getStorageURL() + res.avatar});
                     User.removeUser();
-                    this._globalEventBus.triggerEvent('renderHeaderBar');
+                    this._globalEventBus.triggerEvent(HEADER.LOAD);
                 }
             });
     }

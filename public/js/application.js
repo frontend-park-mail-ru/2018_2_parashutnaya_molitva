@@ -11,6 +11,7 @@ import NotFoundView from './views/notfound/NotFoundView.js';
 import EventBus from './lib/eventbus/eventbus.js';
 import runtime from 'serviceworker-webpack-plugin/lib/runtime';
 import GameController from "./controllers/GameController";
+import {HEADER} from "./lib/eventbus/events";
 
 document.addEventListener('DOMContentLoaded', () => {
     if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || window.location.hostname === 'localhost')) {
@@ -23,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let router = new Router(page);
 
-    const globalEventBus = new EventBus(['renderHeaderBar']);
+    const globalEventBus = new EventBus([HEADER.LOAD]);
 
     const headerBarController = new HeaderBarController({ globalEventBus, router });
     headerBarController.headerBarView.render(header);
@@ -34,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const signinController = new SigninController({ router, globalEventBus });
     const signupContoller = new SignupController({ router, globalEventBus });
     const profileControlleer = new ProfileController({ router, globalEventBus });
-    const gameController = new GameController({router});
+    const gameController = new GameController({router, globalEventBus});
 
     router.add('/about', main, aboutController.aboutView);
     router.add('/scoreboard', main, scoreboardController.scoreboardView);

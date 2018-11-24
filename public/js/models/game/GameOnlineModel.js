@@ -1,6 +1,6 @@
 import Api from "../../lib/api";
 import Game from "../../lib/chess/game";
-import {GAME, ROUTER, SERVICE, VIEW} from "../../lib/eventbus/events";
+import {GAME, HEADER, ROUTER, SERVICE, VIEW} from "../../lib/eventbus/events";
 import {COLOR} from "../../components/chess/consts";
 import Net from "../../lib/net";
 import {User} from '../../lib/user.js';
@@ -9,9 +9,9 @@ const close1013Msg = "Sorry, but there's no opponent for you. Try again later";
 const closeUnexpected = "Unexpected error. Try again later";
 
 export default class GameOnlineModel {
-    constructor({eventBus = {}} = {}) {
+    constructor({eventBus = {}, globalEventBus = {}} = {}) {
         this._eventBus = eventBus;
-
+        this._globalEventBus = globalEventBus;
         this._eventBus.subscribeToEvent(GAME.MOVE, this._onTryMove.bind(this));
         this._eventBus.subscribeToEvent(GAME.FIND_ROOM, this._onFindRoom.bind(this));
         this._eventBus.subscribeToEvent(SERVICE.CHECK_AUTH, this._onCheckAuth.bind(this));
@@ -103,11 +103,13 @@ export default class GameOnlineModel {
                                     avatar: user.avatar === "" ? 'images/default-avatar.svg' : Net.getStorageURL() + user.avatar,
                                     score: user.score,
                                     email: user.email,
+                                    login: user.login,
                                 };
 
                                 const you = {
                                     avatar: User.avatar,
                                     score: User.score,
+                                    login: User.login,
                                 };
 
                                 this._eventBus.triggerEvent(GAME.START_GAME, {duration: this._duration,
@@ -123,6 +125,7 @@ export default class GameOnlineModel {
                     break;
                 case "result":
                     this._eventBus.triggerEvent(GAME.GAMEOVER, {result: msg.Data});
+                    this._globalEventBus.triggerEvent(HEADER.LOAD);
                     break;
                 case "error":
                     this._eventBus.triggerEvent(SERVICE.ON_ERR, msg.Data);
