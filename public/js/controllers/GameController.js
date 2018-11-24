@@ -1,7 +1,7 @@
 import MultiplayerView from "../views/multiplayer/MultiplayerView";
 import SingleplayerView from "../views/singleplayer/SingleplayerView";
 import GameOnlineModel from "../models/game/GameOnlineModel";
-import {GAME, ROUTER, SERVICE} from "../lib/eventbus/events";
+import {GAME, ROUTER, SERVICE as WS, SERVICE} from "../lib/eventbus/events";
 import GameOfflineModel from "../models/game/GameOfflineModel";
 import EventBus from "../lib/eventbus/eventbus";
 
@@ -25,6 +25,7 @@ const onlineEvents = [
     SERVICE.CHECK_AUTH_RESPONSE,
     SERVICE.CHECK_AUTH,
     GAME.SURRENDER,
+    WS.ON_CLOSE,
 
 ];
 

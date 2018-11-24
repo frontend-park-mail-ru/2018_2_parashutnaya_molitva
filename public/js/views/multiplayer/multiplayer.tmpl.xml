@@ -38,5 +38,16 @@
                 </div>
             </div>
         </div>
+        <div class="popup hidden js-waiting-popup">
+            <div class="popup__content waiting__content">
+                <div class="popup__content-block winner">
+                    <div class="popup__title waiting__title winner__text js-waiting-title">Waiting for opponent</div>
+                    <div class="loader-ring js-loader"><div></div><div></div><div></div><div></div></div>
+                </div>
+                <div class="button popup__x-mark game-options__x-mark js-menu-back-x-mark">
+                    <img src="../images/x-mark.svg" draggable="false"></img>
+                </div>
+            </div>
+        </div>
     </div>
 </fest:template>

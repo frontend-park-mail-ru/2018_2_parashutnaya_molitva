@@ -5,6 +5,9 @@ import {COLOR} from "../../components/chess/consts";
 import Net from "../../lib/net";
 import {User} from '../../lib/user.js';
 
+const close1013Msg = "Sorry, but there's no opponent for you. Try again later";
+const closeUnexpected = "Unexpected error. Try again later";
+
 export default class GameOnlineModel {
     constructor({eventBus = {}} = {}) {
         this._eventBus = eventBus;
@@ -120,7 +123,14 @@ export default class GameOnlineModel {
 
         this._ws.onclose = (event) => {
             console.log("Close - Code: " + event.code + " reason" + event.reason);
-            this._eventBus.triggerEvent(SERVICE.ON_CLOSE, event)
+            switch (event.code) {
+                case 1013:
+                    this._eventBus.triggerEvent(SERVICE.ON_CLOSE, {message: close1013Msg});
+                    break;
+                default:
+                    this._eventBus.triggerEvent(SERVICE.ON_CLOSE, {message: closeUnexpected});
+                    break;
+            }
         };
     }
 
