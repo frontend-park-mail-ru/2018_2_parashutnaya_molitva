@@ -1,6 +1,7 @@
 import SignupView from '../views/signup/SignupView.js';
 import SignupModel from '../models/SignupModel.js';
 import EventBus from '../lib/eventbus/eventbus.js';
+import {HEADER} from "../lib/eventbus/events";
 
 const eventList = [
     'signup',
@@ -22,7 +23,7 @@ export default class SignupController {
         const eventBus = new EventBus(eventList);
         eventBus.subscribeToEvent('signupSuccess', () => {
             router.toStartPage();
-            globalEventBus.triggerEvent('renderHeaderBar');
+            globalEventBus.triggerEvent(HEADER.LOAD);
         });
         this.signupView = new SignupView({ eventBus });
         this.signupModel = new SignupModel(eventBus);

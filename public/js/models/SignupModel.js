@@ -29,7 +29,10 @@ export default class SignupModel {
                 password: data.pass
             }).then(resp => {
                 if (resp.status === 200) {
-                    this._eventBus.triggerEvent('signupSuccess', {});
+                    Api.signIn({loginOrEmail: data.login, password: data.pass})
+                        .then(() => {
+                            this._eventBus.triggerEvent('signupSuccess', {});
+                        });
                 } else {
                     resp
                         .json()
@@ -42,6 +45,7 @@ export default class SignupModel {
             this._onChangePassword(data);
             this._onChangePasswordRepeat(data);
             this._onChangeEmail(data);
+            this._onChangeLogin(data);
         }
     }
 
