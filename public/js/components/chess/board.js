@@ -61,31 +61,26 @@ export default class Board {
         }
 
         // table with chess class
-        this._board = document.createElement('table');
+        this._board = document.createElement('div');
         this._board.classList.add(BOARD_CLASS);
 
-        // table won't work without tbody
-        const tbody = document.createElement('tbody');
-
         // 7 -> 0 if white; 0 -> 7 if black
-        for (let i = this._sideOfView === COLOR.WHITE ? 7 : 0; this._sideOfView === COLOR.WHITE ? i >= 0 : i < 8;
-            this._sideOfView === COLOR.WHITE ? i-- : i++) {
-            let tr = document.createElement('tr');
+        for (let i = this._sideOfView === COLOR.BLACK ? 7 : 0; this._sideOfView === COLOR.BLACK ? i >= 0 : i < 8;
+            this._sideOfView === COLOR.BLACK ? i-- : i++) {
+            let column = document.createElement('div');
+            column.classList.add('column');
 
             // 0 -> 7  if white; 7 -> 0 if black
-            for (let j = this._sideOfView === COLOR.WHITE ? 0 : 7; this._sideOfView === COLOR.WHITE ? j < 8 : j >= 0;
-                this._sideOfView === COLOR.WHITE ? j++ : j--) {
-                let td = document.createElement('td');
-                const piece = new Piece(...PIECE_PARAMETERS[stateMatrix[i][j]]);
-                const cell = new Cell(i, j);
+            for (let j = this._sideOfView === COLOR.BLACK ? 0 : 7; this._sideOfView === COLOR.BLACK ? j < 8 : j >= 0;
+                this._sideOfView === COLOR.BLACK ? j++ : j--) {
+                const piece = new Piece(...PIECE_PARAMETERS[stateMatrix[j][i]]);
+                const cell = new Cell(j, i);
                 cell.div.addEventListener('click', (event) => this._onCellClick(event));
                 piece.render(cell.div);
-                cell.render(td);
-                tr.appendChild(td);
+                column.appendChild(cell.div);
             }
-            tbody.appendChild(tr);
+            this._board.appendChild(column);
         }
-        this._board.appendChild(tbody);
     }
 
     _onCellClick (event) {
