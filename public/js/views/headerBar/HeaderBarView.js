@@ -2,7 +2,7 @@ import View from '../../lib/view.js';
 import template from './headerBar.tmpl.xml';
 import './header.less';
 import Dropdown from "../../components/dropDown/dropDown";
-import {ROUTER, SERVICE} from "../../lib/eventbus/events";
+import {HEADER, ROUTER, SERVICE} from "../../lib/eventbus/events";
 const onShowDropdownArray = "rotate(180deg)";
 const onCloseDropdownArray = "rotate(0deg)";
 
@@ -12,7 +12,7 @@ export default class HeaderBarView extends View {
         this._eventBus.subscribeToEvent(SERVICE.CHECK_AUTH_RESPONSE, this._onAuthResponse.bind(this));
         this._eventBus.subscribeToEvent(SERVICE.SIGNOUT_RESPONSE, this._onAuthResponse.bind(this));
         this._eventBus.subscribeToEvent(SERVICE.LOAD_USER_RESPONSE, this._onLoadAvatarResponse.bind(this));
-        this._globalEventBus.subscribeToEvent('renderHeaderBar', this._onRenderHeader.bind(this));
+        this._globalEventBus.subscribeToEvent(HEADER.LOAD, this._onRenderHeader.bind(this));
 
         this._dropDown = new Dropdown({elements: [
                 {path: '/profile', textLabel: "Profile"},

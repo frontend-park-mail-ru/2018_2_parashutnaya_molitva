@@ -31,7 +31,7 @@ const onlineEvents = [
 ];
 
 export default class GameController {
-    constructor({router = {}} = {}) {
+    constructor({router = {}, globalEventBus = {}} = {}) {
         const eventBusOffline = new EventBus(offlineEvents);
         const eventBusOnline = new EventBus(onlineEvents);
 
@@ -50,7 +50,7 @@ export default class GameController {
         this.multiplayerView = new MultiplayerView({eventBus: eventBusOnline});
         this.singleplayerView = new SingleplayerView({eventBus: eventBusOffline});
 
-        this._gameOnlineModel = new GameOnlineModel({eventBus: eventBusOnline});
+        this._gameOnlineModel = new GameOnlineModel({eventBus: eventBusOnline, globalEventBus});
         this._gameOfflineModel = new GameOfflineModel({eventBus: eventBusOffline});
     }
 
