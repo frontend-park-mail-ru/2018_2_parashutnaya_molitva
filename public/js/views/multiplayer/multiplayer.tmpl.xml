@@ -1,11 +1,11 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="params">
     <div class="game">
-        <aside class="info-block info-block_first js-first">
+        <aside class="info-block info-block_first hidden js-first">
             <button class="button submit text-h2 js-surrender-first">Surrender</button>
         </aside>
-        <section class="board-section js-board-section">
+        <section class="board-section hidden js-board-section">
         </section>
-        <aside class="info-block info-block_second js-second">
+        <aside class="info-block info-block_second hidden js-second">
         </aside>
         <div class="popup hidden js-game-options-popup">
             <div class="popup__content game-options__content">
