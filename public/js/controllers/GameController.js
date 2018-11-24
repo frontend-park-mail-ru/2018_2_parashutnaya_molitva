@@ -20,7 +20,11 @@ const onlineEvents = [
     GAME.INIT_GAME,
     GAME.INIT_GAME_RESPONSE,
     SERVICE.ON_ERR,
-    SERVICE.ON_CLOSE
+    SERVICE.ON_CLOSE,
+    ROUTER.TO_SIGNIN,
+    SERVICE.CHECK_AUTH_RESPONSE,
+    SERVICE.CHECK_AUTH,
+
 ];
 
 export default class GameController {
@@ -34,6 +38,10 @@ export default class GameController {
 
         eventBusOnline.subscribeToEvent(ROUTER.BACK_TO_MENU, () => {
             router.toStartPage();
+        });
+
+        eventBusOnline.subscribeToEvent(ROUTER.TO_SIGNIN, () => {
+            router.change('/signin');
         });
 
         this.multiplayerView = new MultiplayerView({eventBus: eventBusOnline});

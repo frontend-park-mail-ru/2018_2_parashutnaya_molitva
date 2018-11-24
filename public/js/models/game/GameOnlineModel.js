@@ -1,8 +1,9 @@
 import Api from "../../lib/api";
 import Game from "../../lib/chess/game";
-import {GAME, SERVICE} from "../../lib/eventbus/events";
+import {GAME, ROUTER, SERVICE} from "../../lib/eventbus/events";
 import {COLOR} from "../../components/chess/consts";
 import Net from "../../lib/net";
+import {User} from '../../lib/user.js';
 
 export default class GameOnlineModel {
     constructor({eventBus = {}} = {}) {
@@ -10,7 +11,30 @@ export default class GameOnlineModel {
 
         this._eventBus.subscribeToEvent(GAME.MOVE, this._onTryMove.bind(this));
         this._eventBus.subscribeToEvent(GAME.FIND_ROOM, this._onFindRoom.bind(this));
+        this._eventBus.subscribeToEvent(SERVICE.CHECK_AUTH, this._onCheckAuth.bind(this));
         this._game = new Game();
+    }
+
+    _onCheckAuth(){
+        if (!User.checkUser()) {
+            Api.checkSession()
+                .then(response => {
+                    if (response.status !== 200) {
+                        response.json().then(data => this._eventBus.triggerEvent(SERVICE.CHECK_AUTH_RESPONSE, {
+                            isAuth: false,
+                        }));
+                    } else {
+                        response.json().then(data => this._eventBus.triggerEvent(SERVICE.CHECK_AUTH_RESPONSE, {
+                            isAuth: true,
+                        }));
+                    }
+                })
+                .catch(error => console.error(error));
+        } else {
+            this._eventBus.triggerEvent(SERVICE.CHECK_AUTH_RESPONSE, {
+                isAuth: true,
+            })
+        }
     }
 
     _onFindRoom({duration = 5*60} = {}) {
@@ -53,12 +77,18 @@ export default class GameOnlineModel {
                         .then((user) => {
                                 const color = (msg.Data.color === 'w'? COLOR.WHITE : COLOR.BLACK);
                                 const rival = {
-                                    avatar: Net.getStorageURL() + user.avatar,
+                                    avatar: user.avatar === "" ? 'images/default-avatar.svg' : Net.getStorageURL() + user.avatar,
                                     score: user.score,
                                     email: user.email,
                                 };
 
-                                this._eventBus.triggerEvent(GAME.START_GAME, {duration: this._duration, color, rival});
+                                const you = {
+                                    avatar: User.avatar,
+                                    score: User.score,
+                                };
+
+                                this._eventBus.triggerEvent(GAME.START_GAME, {duration: this._duration,
+                                    color, rival, you});
                         }).catch(()=> {
                             console.log("error load user");
                         });

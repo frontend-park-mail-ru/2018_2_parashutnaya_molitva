@@ -1,11 +1,12 @@
 import View from "../../lib/view";
 import template from './multiplayer.tmpl.xml';
 import GameView from "../game/GameView";
-import {GAME, ROUTER} from "../../lib/eventbus/events";
+import {GAME, ROUTER, SERVICE} from "../../lib/eventbus/events";
 import Piece from "../../components/chess/piece";
 import userBlockTemplate from "../../components/userblock/userblock.xml";
 import Timer from "../../components/timer/timer";
 import IconPresenter from "../../components/icons-presenter/iconsPresenter";
+import {COLOR} from "../../components/chess/consts";
 
 const BLACK_COLOR_BACKGROUND = "#7f8b9575";
 
@@ -17,11 +18,20 @@ export default class MultiplayerView extends View {
         this._eventBus.subscribeToEvent(GAME.MOVE_SUCCESS, this._onMoveSuccess.bind(this));
         this._eventBus.subscribeToEvent(GAME.GAMEOVER, this._onGameOver.bind(this));
         this._eventBus.subscribeToEvent(GAME.START_GAME, this._onStartGame.bind(this));
+        this._eventBus.subscribeToEvent(SERVICE.CHECK_AUTH_RESPONSE, this._onCheckAuthResponse.bind(this));
 
     }
 
     render (root, data = {}) {
         super.render(root, data);
+        this._eventBus.triggerEvent(SERVICE.CHECK_AUTH);
+    }
+
+    _onCheckAuthResponse({isAuth}) {
+        if (!isAuth) {
+            this._eventBus.triggerEvent(ROUTER.TO_SIGNIN);
+            return;
+        }
         this._gameoptionsPopup = this.el.querySelector('.js-game-options-popup');
         this._firstUserBlock = this.el.querySelector('.js-first');
         this._secondUserBlock = this.el.querySelector('.js-second');
@@ -37,7 +47,6 @@ export default class MultiplayerView extends View {
         this._initPopup();
 
         this._topElement = this.el.querySelector('.game');
-
 
     }
 
@@ -67,15 +76,23 @@ export default class MultiplayerView extends View {
         this._gameoptionsPopup.classList.remove('hidden');
     }
 
-    _onStartGame({duration, rival, color}) {
-        this._renderFirstUserBlock({duration});
+    _onStartGame({duration, rival, you,  color}) {
+        this._renderFirstUserBlock({duration, user: you});
         this._renderSecondUserBlock({duration, user:rival});
+        this._startTimer({color});
 
         this._renderBoard({color});
 
-
         this._showAll();
         this._gameoptionsPopup.classList.add('hidden');
+    }
+
+    _startTimer({color}) {
+        if (color === COLOR.WHITE) {
+            this._timerFirst.start();
+        } else {
+            this._timerSecond.start();
+        }
     }
 
     _onMoveSuccess({turn, deadPiece = null} = {}){
@@ -135,6 +152,8 @@ export default class MultiplayerView extends View {
 
     _renderFirstUserBlock({duration = 600, user = {}} = {}) {
         this._firstUserBlock.insertAdjacentHTML('afterbegin', userBlockTemplate({isFirst: true, user: user, isOnline: true}));
+        this._firstAvatar = this._firstUserBlock.querySelector('.js-first-avatar');
+        this._firstAvatar.style.backgroundImage = `url(${user.avatar})`;
 
         this._timerFirstElement = this.el.querySelector('.js-timer-first');
         this._timerFirst = new Timer({root: this._timerFirstElement, duration});
@@ -152,6 +171,8 @@ export default class MultiplayerView extends View {
 
     _renderSecondUserBlock({duration = 600, user = {}} = {}) {
         this._secondUserBlock.insertAdjacentHTML('afterbegin', userBlockTemplate({isFirst: false, user: user, isOnline: true}));
+        this._secondAvatar = this._secondUserBlock.querySelector('.js-second-avatar');
+        this._secondAvatar.style.backgroundImage = `url(${user.avatar})`;
 
         this._timerSecondElement = this.el.querySelector('.js-timer-second');
         this._timerSecond = new Timer({root: this._timerSecondElement, duration});

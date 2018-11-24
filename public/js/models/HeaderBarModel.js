@@ -1,30 +1,39 @@
 import Net from '../lib/net.js';
 import Api from '../lib/api.js';
+import {User} from '../lib/user.js';
+import {SERVICE} from "../lib/eventbus/events";
 
 export default class HeaderBarModel {
     constructor (eventBus, globalEventBus) {
         this._eventBus = eventBus;
         this._globalEventBus = globalEventBus;
-        this._eventBus.subscribeToEvent('checkAuth', this._onCheckAuth.bind(this));
-        this._eventBus.subscribeToEvent('signout', this._onSignout.bind(this));
-        this._eventBus.subscribeToEvent('loadAvatar', this._onLoadAvatar.bind(this));
+        this._eventBus.subscribeToEvent(SERVICE.CHECK_AUTH, this._onCheckAuth.bind(this));
+        this._eventBus.subscribeToEvent(SERVICE.SIGNOUT, this._onSignout.bind(this));
+        this._eventBus.subscribeToEvent(SERVICE.LOAD_USER, this._onLoadUser.bind(this));
     }
 
-    _onLoadAvatar (data) {
+    _onLoadUser (data) {
         if (!data.user_guid) {
-            this._eventBus.triggerEvent('loadAvatarResponse', {});
+            this._eventBus.triggerEvent(SERVICE.LOAD_USER_RESPONSE, {});
             return;
         }
 
         Api.loadUser(data.user_guid)
             .then(user => {
                 if (user.error) {
-                    this._eventBus.triggerEvent('loadAvatarResponse', data);
+                    this._eventBus.triggerEvent(SERVICE.LOAD_USER_RESPONSE, data);
                 } else {
-                    data.avatar = user.avatar === '' ? '' : Net.getStorageURL() + user.avatar;
-                    data.score = user.score;
-                    this._eventBus.triggerEvent('loadAvatarResponse', data);
-                    this._globalEventBus.triggerEvent('setUser', { ...user });
+
+                    data.user = {
+                        avatar: (user.avatar === '' ? 'images/default-avatar.svg' : Net.getStorageURL() + user.avatar),
+                        score: user.score || 0,
+                        login: user.login || "Nouserlogin",
+                        email: user.email,
+                        guid: user.guid,
+                    };
+
+                    this._eventBus.triggerEvent(SERVICE.LOAD_USER_RESPONSE, data);
+                    User.setUser({...data.user});
                 }
             });
     }
@@ -33,12 +42,12 @@ export default class HeaderBarModel {
         Api.checkSession()
             .then(response => {
                 if (response.status !== 200) {
-                    response.json().then(data => this._eventBus.triggerEvent('checkAuthResponse', {
+                    response.json().then(data => this._eventBus.triggerEvent(SERVICE.CHECK_AUTH_RESPONSE, {
                         isAuth: false,
                         error: data.error
                     }));
                 } else {
-                    response.json().then(data => this._eventBus.triggerEvent('checkAuthResponse', {
+                    response.json().then(data => this._eventBus.triggerEvent(SERVICE.CHECK_AUTH_RESPONSE, {
                         isAuth: true,
                         user_guid: data.user_guid
                     }));
@@ -49,7 +58,7 @@ export default class HeaderBarModel {
 
     _onSignout () {
         Api.removeSession();
-        this._eventBus.triggerEvent('signoutResponse', { isAuth: false });
-        this._globalEventBus.triggerEvent('removeUser');
+        this._eventBus.triggerEvent(SERVICE.CHECK_AUTH_RESPONSE, { isAuth: false });
+        User.removeUser();
     }
 }

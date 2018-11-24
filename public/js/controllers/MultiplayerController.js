@@ -20,10 +20,9 @@ const events = [
 
 
 export default class MultiplayerController {
-    constructor ({ globalEventBus = {}, root = {} } = {}) {
+    constructor ({ globalEventBus = {}, root = {}, router = {} } = {}) {
         this._root = root;
         const eventBus = new EventBus(events);
-        eventBus.subscribeToEvent('startGame', this._startGame.bind(this));
 
         this._gameOnlineController = new GameOnlineController({eventBus});
         this.multiplayerView = new MultiplayerView({ eventBus, globalEventBus });
@@ -31,10 +30,6 @@ export default class MultiplayerController {
 
         this._eventBus = eventBus
 
-    }
-
-    _startGame(data){
-        this._gameOnlineController.gameOnlineView.render(this._root, data)
     }
 
 }

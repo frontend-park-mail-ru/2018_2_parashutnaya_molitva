@@ -7,10 +7,10 @@
                     <div class="header-bar__profile">
                         <div class="header-bar__user-info header-bar__column">
                             <div class="header-bar__row text-h2">
-                                Nickname
+                                <fest:value>params.user.login</fest:value>
                             </div>
                             <div class="header-bar__row js-header-score text-base">
-                                1001
+                                <fest:value>params.user.score</fest:value>
                             </div>
                         </div>
                         <div class="header-bar__column">
