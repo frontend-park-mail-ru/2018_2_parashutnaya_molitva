@@ -198,7 +198,7 @@ export default class Game {
             }, 0);
 
             if (knightCurrentCount < this._blackAlive[PIECE_TYPE.KNIGHT]){
-                this._whiteAlive[PIECE_TYPE.KNIGHT]--;
+                this._blackAlive[PIECE_TYPE.KNIGHT]--;
                 return {piece: PIECE_TYPE.KNIGHT, color: COLOR.BLACK};
             }
 
