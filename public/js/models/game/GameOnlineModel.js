@@ -1,6 +1,6 @@
 import Api from "../../lib/api";
 import Game from "../../lib/chess/game";
-import {GAME, ROUTER, SERVICE} from "../../lib/eventbus/events";
+import {GAME, ROUTER, SERVICE, VIEW} from "../../lib/eventbus/events";
 import {COLOR} from "../../components/chess/consts";
 import Net from "../../lib/net";
 import {User} from '../../lib/user.js';
@@ -16,12 +16,13 @@ export default class GameOnlineModel {
         this._eventBus.subscribeToEvent(GAME.FIND_ROOM, this._onFindRoom.bind(this));
         this._eventBus.subscribeToEvent(SERVICE.CHECK_AUTH, this._onCheckAuth.bind(this));
         this._eventBus.subscribeToEvent(GAME.SURRENDER, this._onSurrender.bind(this));
-        this._eventBus.subscribeToEvent(SERVICE.CLOSE_CONNECTION, this._onCloseConn.bind(this));
+        this._eventBus.subscribeToEvent(VIEW.CLOSE, this._onViewClose.bind(this));
 
-        this._game = new Game();
+        this._game = null;
     }
 
-    _onCloseConn() {
+    _onViewClose() {
+        this._ws.onclose = () => null;
         this._ws.close();
     }
 
@@ -39,7 +40,10 @@ export default class GameOnlineModel {
                         }));
                     }
                 })
-                .catch(error => console.error(error));
+                .catch(error => {
+                    console.error(error);
+                    this._eventBus.triggerEvent(SERVICE.CHECK_AUTH_RESPONSE, {isAuth: false, error});
+                });
         } else {
             this._eventBus.triggerEvent(SERVICE.CHECK_AUTH_RESPONSE, {
                 isAuth: true,
@@ -77,6 +81,7 @@ export default class GameOnlineModel {
     }
 
     _onInitGame({roomid = ''} = {}) {
+        this._game = new Game();
         this._ws = new WebSocket(Api.getGameAddress());
         this._ws.onopen = () => {
             this._ws.send(JSON.stringify({MsgType: "init", Data: {roomid}}));
