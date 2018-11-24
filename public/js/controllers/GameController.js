@@ -1,7 +1,7 @@
 import MultiplayerView from "../views/multiplayer/MultiplayerView";
 import SingleplayerView from "../views/singleplayer/SingleplayerView";
 import GameOnlineModel from "../models/game/GameOnlineModel";
-import {GAME, ROUTER, SERVICE} from "../lib/eventbus/events";
+import {GAME, ROUTER, SERVICE as WS, SERVICE, VIEW} from "../lib/eventbus/events";
 import GameOfflineModel from "../models/game/GameOfflineModel";
 import EventBus from "../lib/eventbus/eventbus";
 
@@ -11,20 +11,22 @@ const offlineEvents = [
     GAME.MOVE_FAILURE,
     GAME.START_GAME,
     GAME.GAMEOVER,
+    GAME.INIT_GAME,
+    GAME.INIT_GAME_RESPONSE,
     ROUTER.BACK_TO_MENU,
 ];
 
 const onlineEvents = [
     ...offlineEvents,
     GAME.FIND_ROOM,
-    GAME.INIT_GAME,
-    GAME.INIT_GAME_RESPONSE,
     SERVICE.ON_ERR,
     SERVICE.ON_CLOSE,
     ROUTER.TO_SIGNIN,
     SERVICE.CHECK_AUTH_RESPONSE,
     SERVICE.CHECK_AUTH,
     GAME.SURRENDER,
+    SERVICE.ON_CLOSE,
+    VIEW.CLOSE,
 
 ];
 

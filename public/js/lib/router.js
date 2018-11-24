@@ -60,10 +60,12 @@ export default class Router {
 
         let currentData = this.routes.get(this.currentRoute);
         if (currentData) {
+            currentData.view.close();
             currentData.view.hide(currentData.root);
         }
 
         if (this.isCurrentNotFound) {
+            this.notFoundView.close();
             this.notFoundView.hide(this.notFoundViewRoot);
         }
 

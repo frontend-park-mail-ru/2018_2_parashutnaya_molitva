@@ -15,15 +15,22 @@ export const GAME = {
     SURRENDER_RESPONSE: "surr",
 };
 
+export const VIEW = {
+    CLOSE: 'vcl',
+    RENDER: 'vrn'
+};
+
 export const ROUTER = {
     BACK_TO_MENU: 'btm',
     TO_SIGNIN:'tsgn',
 };
 
+
 export const SERVICE = {
     ON_CLOSE: 'onc',
     ON_ERR: 'onerr',
-
+    CLOSE_CONNECTION: 'clconn',
+    CLOSE_CONNECTION_RESPONSE: 'clconn',
     LOAD_USER: 'lu',
     LOAD_USER_RESPONSE: 'lur',
 

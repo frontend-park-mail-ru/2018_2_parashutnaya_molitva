@@ -1,9 +1,12 @@
 import Api from "../../lib/api";
 import Game from "../../lib/chess/game";
-import {GAME, ROUTER, SERVICE} from "../../lib/eventbus/events";
+import {GAME, ROUTER, SERVICE, VIEW} from "../../lib/eventbus/events";
 import {COLOR} from "../../components/chess/consts";
 import Net from "../../lib/net";
 import {User} from '../../lib/user.js';
+
+const close1013Msg = "Sorry, but there's no opponent for you. Try again later";
+const closeUnexpected = "Unexpected error. Try again later";
 
 export default class GameOnlineModel {
     constructor({eventBus = {}} = {}) {
@@ -13,8 +16,14 @@ export default class GameOnlineModel {
         this._eventBus.subscribeToEvent(GAME.FIND_ROOM, this._onFindRoom.bind(this));
         this._eventBus.subscribeToEvent(SERVICE.CHECK_AUTH, this._onCheckAuth.bind(this));
         this._eventBus.subscribeToEvent(GAME.SURRENDER, this._onSurrender.bind(this));
+        this._eventBus.subscribeToEvent(VIEW.CLOSE, this._onViewClose.bind(this));
 
-        this._game = new Game();
+        this._game = null;
+    }
+
+    _onViewClose() {
+        this._ws.onclose = () => null;
+        this._ws.close();
     }
 
     _onCheckAuth(){
@@ -31,7 +40,10 @@ export default class GameOnlineModel {
                         }));
                     }
                 })
-                .catch(error => console.error(error));
+                .catch(error => {
+                    console.error(error);
+                    this._eventBus.triggerEvent(SERVICE.CHECK_AUTH_RESPONSE, {isAuth: false, error});
+                });
         } else {
             this._eventBus.triggerEvent(SERVICE.CHECK_AUTH_RESPONSE, {
                 isAuth: true,
@@ -66,17 +78,16 @@ export default class GameOnlineModel {
         };
 
         this._ws.send(JSON.stringify(surrender));
-        this._eventBus.triggerEvent(GAME.GAMEOVER, {result: true});
     }
 
     _onInitGame({roomid = ''} = {}) {
+        this._game = new Game();
         this._ws = new WebSocket(Api.getGameAddress());
         this._ws.onopen = () => {
             this._ws.send(JSON.stringify({MsgType: "init", Data: {roomid}}));
         };
 
         this._ws.onerror = (event) => {
-            // Добавить реконнект
             console.log("On error" + event.message);
         };
 
@@ -122,7 +133,14 @@ export default class GameOnlineModel {
 
         this._ws.onclose = (event) => {
             console.log("Close - Code: " + event.code + " reason" + event.reason);
-            this._eventBus.triggerEvent(SERVICE.ON_CLOSE, event)
+            switch (event.code) {
+                case 1013:
+                    this._eventBus.triggerEvent(SERVICE.ON_CLOSE, {message: close1013Msg});
+                    break;
+                default:
+                    this._eventBus.triggerEvent(SERVICE.ON_CLOSE, {message: closeUnexpected});
+                    break;
+            }
         };
     }
 

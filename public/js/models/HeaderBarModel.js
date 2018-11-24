@@ -21,7 +21,7 @@ export default class HeaderBarModel {
         Api.loadUser(data.user_guid)
             .then(user => {
                 if (user.error) {
-                    this._eventBus.triggerEvent(SERVICE.LOAD_USER_RESPONSE, data);
+                    this._eventBus.triggerEvent(SERVICE.LOAD_USER_RESPONSE);
                 } else {
 
                     data.user = {

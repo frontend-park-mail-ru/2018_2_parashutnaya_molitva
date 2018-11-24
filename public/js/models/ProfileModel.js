@@ -1,6 +1,7 @@
 import Validation from '../lib/validation.js';
 import Net from '../lib/net.js';
 import Api from '../lib/api.js';
+import {User} from '../lib/user.js';
 
 export default class ProfileModel {
     constructor(eventBus, globalEventBus) {
@@ -15,7 +16,6 @@ export default class ProfileModel {
         this._eventBus.subscribeToEvent('submitPassword', this._onSubmitPassword.bind(this));
         this._eventBus.subscribeToEvent('checkAuth', this._onCheckAuth.bind(this));
         this._eventBus.subscribeToEvent('loadUser', this._onLoadUser.bind(this));
-        this._globalEventBus.subscribeToEvent('checkUserResponse', this._onCheckUserResponse.bind(this));
     }
 
     _onChangeAvatar(data) {
@@ -36,7 +36,7 @@ export default class ProfileModel {
                 } else {
                     Api.updateUser({guid: this._currentUserGUID, avatar: res.avatar});
                     this._eventBus.triggerEvent('changeAvatarSuccess', {avatar: Net.getStorageURL() + res.avatar});
-                    this._globalEventBus.triggerEvent('removeUser');
+                    User.removeUser();
                     this._globalEventBus.triggerEvent('renderHeaderBar');
                 }
             });
@@ -113,8 +113,11 @@ export default class ProfileModel {
         this._eventBus.triggerEvent('changeEmailResponse', {});
     }
 
-    _onCheckUserResponse(data = {}) {
-        if (!data.isUpload) {
+
+    _onLoadUser(data = {}) {
+        this._currentUserGUID = data.user_guid;
+
+        if (!User.checkUser()) {
             if (!this._currentUserGUID) {
                 this._eventBus.triggerEvent('loadUserResponse', {});
             }
@@ -124,23 +127,28 @@ export default class ProfileModel {
                     if (user.error) {
                         this._eventBus.triggerEvent('loadUserResponse', {});
                     } else {
-                        this._globalEventBus.triggerEvent('setUser', {...user});
+                        const toSetUser = {
+                            avatar: (user.avatar === '' ? 'images/default-avatar.svg' : Net.getStorageURL() + user.avatar),
+                            score: user.score || 0,
+                            login: user.login || "Nouserlogin",
+                            email: user.email,
+                            guid: user.guid,
+                        };
+                        User.setUser({...toSetUser});
 
                         this._currentUserGUID = user.guid;
-                        user.avatar = !user.avatar ? 'images/default-avatar.svg' : Net.getStorageURL() + user.avatar;
-                        this._eventBus.triggerEvent('loadUserResponse', {user});
+                        this._eventBus.triggerEvent('loadUserResponse', {user: toSetUser});
                     }
                 });
         } else {
-            data.user.avatar = !data.user.avatar ? 'images/default-avatar.svg' : Net.getStorageURL() + data.user.avatar;
-            this._currentUserGUID = data.user.guid;
-            this._eventBus.triggerEvent('loadUserResponse', {user: data.user});
+            this._eventBus.triggerEvent('loadUserResponse', {user: {
+                    login: User.login,
+                    guid: User.guid,
+                    score: User.score,
+                    avatar: User.avatar,
+                    email: User.email,
+                }});
         }
-    }
-
-    _onLoadUser(data = {}) {
-        this._currentUserGUID = data.user_guid;
-        this._globalEventBus.triggerEvent('checkUser');
     }
 
     _onCheckAuth() {
