@@ -9,41 +9,24 @@ export default class MultiplayerModel {
     }
 
 
-    _onFindGame({duration = 5*60} = {}) {
-        Api.findRoom({duration: duration*60})
-            .then(response => {
-                if (response.status !== 200){
-                    console.log("Error status: " + response.status);
-                } else {
-                    response.json()
-                        .then(data => {
-                            if (!data.roomid) {
-                                console.log("Invalid room id:" + data.roomid);
-                            } else {
-                                console.log("Connecting");
-                                this._eventBus.triggerEvent('initGame', {roomid: data.roomid});
-                            }
-                        })
-                }
-            })
-    }
-
     _onCheckAuth() {
         Net.doGet({url: '/api/session'})
             .then(response => {
                 if (response.status !== 200) {
                     response.json().then(data => this._eventBus.triggerEvent('checkAuthResponse', {
                         isAuth: false,
+                        online: navigator.onLine,
                         error: data.error
                     }));
                 } else {
                     this._eventBus.triggerEvent('checkAuthResponse', {
                         isAuth: true,
+                        online: navigator.onLine,
                     });
                 }
             })
             .catch((error) => {
-                    this._eventBus.triggerEvent('checkAuthResponse', {error});
+                    this._eventBus.triggerEvent('checkAuthResponse', {error, online: navigator.onLine});
                 }
             )
     }

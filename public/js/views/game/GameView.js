@@ -14,7 +14,7 @@ export default class GameView extends View {
 
     render (root, data = {}) {
         this._root = root;
-        this._board = new Board({ moveCallback: this._moveCallback.bind(this) });
+        this._board = new Board({ moveCallback: this._moveCallback.bind(this), sideOfView: data.color });
         this._board.render(root);
     }
 

@@ -1,0 +1,77 @@
+@import "~Styles/theme";
+@background-color-popup: #000000b5;
+@background-color-popup__content: #434239;
+
+.popup {
+  user-select: none;
+  height: 100%;
+  width: 100%;
+  top:0;
+  position: fixed;
+  background-color: @background-color-popup;
+}
+
+.popup__content {
+  background-color: @background-color-popup__content;
+  position: fixed;
+  align-items: center;
+  display: grid;
+  grid-template-rows: 5% auto 5%;
+  grid-template-columns: 5% auto 5%;
+  grid-template-areas: ". . x" "content content content";
+}
+
+.popup__x-mark {
+  grid-area: x;
+  height: 75%;
+  width: fit-content;
+  align-self: self-start;
+  justify-self: end;
+
+  @media screen and (min-width: 425px){
+    height: 100%;
+  }
+
+  @media screen and (min-width: 768px){
+    height: 125%;
+  }
+
+  @media screen and (min-width: 1024px){
+    height: 150%;
+  }
+
+  img {
+    height: 100%;
+  }
+
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+.popup__content-block {
+  grid-area: content;
+  height: 100%;
+  align-self: center;
+  justify-self: center;
+}
+
+.popup__title {
+  font-size: 1rem;
+
+  @media screen and (min-width: 320px){
+    font-size: 1.5rem;
+  }
+
+  @media screen and (min-width: 425px){
+    font-size: 2rem;
+  }
+
+  @media screen and (min-width: 768px){
+    font-size: 3rem;
+  }
+
+  @media screen and (min-width: 1024px){
+    font-size: 3.5rem;
+  }
+}

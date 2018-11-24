@@ -30,6 +30,12 @@ export default class GameOfflineModel {
             [PIECE_TYPE.KING]: 1,
         };
 
+
+
+    }
+
+    _onInitGame(){
+
     }
 
     _onMove ({move = ""} = {}) {

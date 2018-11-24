@@ -9,7 +9,7 @@ export default class Timer {
         this._root = root;
         this._duration = +duration;
         this._current = +duration;
-        this._timerExpireCallback = timerExpireCallback();
+        this._timerExpireCallback = timerExpireCallback;
     }
 
     stop() {

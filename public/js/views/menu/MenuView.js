@@ -11,25 +11,34 @@ export default class MenuView extends View {
         this._eventBus.subscribeToEvent('checkAuthResponse', this._onCheckAuthResponse.bind(this));
     }
 
-    _onCheckAuthResponse(data){
-        const isAuth = data.isAuth;
+    _onCheckAuthResponse({isAuth, online = true, error} = {}){
         let menu;
         const menuSection = this.el.querySelector('.menu.section');
-        if (!isAuth) {
+        if (!isAuth && online) {
             menu = new Menu([
                 { textLabel: 'Singleplayer', href: '/singleplayer'},
-                { textLabel: 'Multiplayer', href: this._onNotAuthMultiplayerClick.bind(this)},
+                { textLabel: 'Multiplayer', href: '/signin',
+                    clickCallback: this._onNotAuthMultiplayerClick.bind(this)},
+                { textLabel: 'Scoreboard', href: '/scoreboard' },
+                { textLabel: 'About', href: '/about' }
+            ]);
+        } else if (online === false) {
+            menu = new Menu([
+                { textLabel: 'Singleplayer', href: '/singleplayer'},
+                { textLabel: 'Multiplayer', href: '',
+                    clickCallback: this._onOfflineMultiplayerClick.bind(this)},
                 { textLabel: 'Scoreboard', href: '/scoreboard' },
                 { textLabel: 'About', href: '/about' }
             ]);
         } else {
             menu = new Menu([
-                { textLabel: 'Singleplayer', isNavigate: false},
-                { textLabel: 'Multiplayer', isNavigate: false},
+                { textLabel: 'Singleplayer', href: '/singleplayer'},
+                { textLabel: 'Multiplayer', href: '/multiplayer'},
                 { textLabel: 'Scoreboard', href: '/scoreboard' },
                 { textLabel: 'About', href: '/about' }
             ]);
         }
+
 
         menu.render(menuSection);
 
@@ -41,7 +50,11 @@ export default class MenuView extends View {
         this._gameOptionsPopup = this.el.querySelector('.js-game-options-popup');
     }
 
+    _onOfflineMultiplayerClick(){
+        console.log("offline");
+    }
+
     _onNotAuthMultiplayerClick() {
-        
+
     }
 }
