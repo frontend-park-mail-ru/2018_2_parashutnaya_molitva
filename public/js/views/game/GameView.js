@@ -37,7 +37,6 @@ export default class GameView extends View {
     }
 
     _onGameOver (loser) {
-
         console.log(`gameover ${+loser === 1 ? 'white': 'black'} lost`);
     }
 }

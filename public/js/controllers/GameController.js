@@ -24,6 +24,7 @@ const onlineEvents = [
     ROUTER.TO_SIGNIN,
     SERVICE.CHECK_AUTH_RESPONSE,
     SERVICE.CHECK_AUTH,
+    GAME.SURRENDER,
 
 ];
 

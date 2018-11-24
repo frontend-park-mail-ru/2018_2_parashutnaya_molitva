@@ -21,5 +21,22 @@
                 </div>
             </div>
         </div>
+        <div class="popup js-winner-popup hidden">
+            <div class="popup__content winner__content">
+                <div class="popup__content-block winner">
+                    <div class="popup__title winner__text hidden js-win">Win</div>
+                    <div class="user-block__element user-info js-win hidden">
+                        <div class="winner__text text-h2 js-new-score-win"></div>
+                    </div>
+                    <div class="popup__title winner__text js-lose hidden ">Lose</div>
+                    <div class="user-block__element user-info js-lose hidden">
+                        <div class="winner__text text-h2 js-new-score-lose"></div>
+                    </div>
+                </div>
+                <div class="button popup__x-mark game-options__x-mark js-menu-back-x-mark">
+                    <img src="../images/x-mark.svg" draggable="false"></img>
+                </div>
+            </div>
+        </div>
     </div>
 </fest:template>

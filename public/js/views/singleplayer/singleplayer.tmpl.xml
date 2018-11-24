@@ -39,7 +39,6 @@
                     <img src="../images/x-mark.svg" draggable="false"></img>
                 </div>
             </div>
-
         </div>
     </div>
 </fest:template>

@@ -10,6 +10,9 @@ export const GAME = {
 
     FIND_ROOM: "fr",
     START_GAME: "sg",
+
+    SURRENDER: "sur",
+    SURRENDER_RESPONSE: "surr",
 };
 
 export const ROUTER = {

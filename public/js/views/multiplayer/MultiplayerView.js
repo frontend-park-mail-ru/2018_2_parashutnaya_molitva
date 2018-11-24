@@ -1,4 +1,5 @@
 import View from "../../lib/view";
+import './multiplayer.less';
 import template from './multiplayer.tmpl.xml';
 import GameView from "../game/GameView";
 import {GAME, ROUTER, SERVICE} from "../../lib/eventbus/events";
@@ -90,59 +91,89 @@ export default class MultiplayerView extends View {
     _startTimer({color}) {
         if (color === COLOR.WHITE) {
             this._timerFirst.start();
+            this._timerFirstColor = true;
+            this._timerSecondColor = false;
         } else {
             this._timerSecond.start();
+            this._timerFirstColor = false;
+            this._timerSecondColor = true;
         }
     }
 
-    _onMoveSuccess({turn, deadPiece = null} = {}){
+    _onMoveSuccess({turn, deadPiece = null, yourColor} = {}){
         if (turn) {
-            if (deadPiece != null) {
-                this._blackFigures.add(new Piece(deadPiece.piece, deadPiece.color));
+            if (deadPiece != null && yourColor) {
+                this._secondFigures.add(new Piece(deadPiece.piece, deadPiece.color));
+            } else if (deadPiece != null) {
+                this._firstFigures.add(new Piece(deadPiece.piece, deadPiece.color));
             }
             this._whiteTurn();
         } else {
-            if (deadPiece != null) {
-                this._whiteFigures.add(new Piece(deadPiece.piece, deadPiece.color));
+            if (deadPiece != null && yourColor) {
+                this._firstFigures.add(new Piece(deadPiece.piece, deadPiece.color));
+            } else if (deadPiece != null) {
+                this._secondFigures.add(new Piece(deadPiece.piece, deadPiece.color));
             }
             this._blackTurn();
         }
     }
 
     _whiteTurn() {
-        this._timerSecond.stop();
+        if (this._timerFirstColor) {
+            this._timerSecond.stop();
+            this._timerFirst.start();
+        } else {
+            this._timerFirst.stop();
+            this._timerSecond.start();
+        }
 
         this._topElement.style.backgroundColor = "";
 
-        this._timerFirst.start();
     }
 
     _blackTurn() {
-        this._timerFirst.stop();
+        if (!this._timerSecondColor) {
+            this._timerFirst.stop();
+            this._timerSecond.start();
+        } else {
+            this._timerSecond.stop();
+            this._timerFirst.start();
+        }
 
         this._topElement.style.backgroundColor = BLACK_COLOR_BACKGROUND;
 
-        this._timerSecond.start();
     }
 
 
-    _onGameOver({turn}){
+    _onGameOver({result} = {}){
         this._timerFirst.stop();
         this._timerSecond.stop();
 
-        this._showWinnerPopup({turn});
+        this._showWinnerPopup({result});
     }
 
-    _showWinnerPopup({turn}) {
+    _showWinnerPopup({result}) {
 
         let popup = this.el.querySelector('.js-winner-popup');
         popup.classList.remove('hidden');
 
 
-        if (!turn) {
-            popup.querySelector('.js-white-winner').classList.remove('hidden');
+        if (result.Result === 'win') {
+
+            const win = popup.querySelectorAll('.js-win');
+            win.forEach((el) => {
+                el.classList.remove('hidden')
+            });
+            const newScore = popup.querySelector('.js-new-score-win');
+            newScore.innerHTML = `New score: ${result.score}`;
+
         } else {
-            popup.querySelector('.js-black-winner').classList.remove('hidden');
+            const lose = popup.querySelectorAll('.js-lose');
+            lose.forEach((el) => {
+                el.classList.remove('hidden')
+            });
+            const newScore = popup.querySelector('.js-new-score-lose');
+            newScore.innerHTML = `New score: ${result.score}`;
         }
     }
 
@@ -159,13 +190,13 @@ export default class MultiplayerView extends View {
         this._timerFirst = new Timer({root: this._timerFirstElement, duration});
         this._timerFirst.render();
 
-        this._whiteFiguresElement = this.el.querySelector('.js-figures-white');
-        this._whiteFigures = new IconPresenter({root: this._whiteFiguresElement});
-        this._whiteFigures.render();
+        this._firstFiguresElement = this.el.querySelector('.js-figures-first');
+        this._firstFigures = new IconPresenter({root: this._firstFiguresElement});
+        this._firstFigures.render();
 
         this._buttonSurrenderFirst = this.el.querySelector('.js-surrender-first');
         this._buttonSurrenderFirst.addEventListener('click', () => {
-            this._onGameOver({turn: true})
+            this._eventBus.triggerEvent(GAME.SURRENDER);
         });
     }
 
@@ -178,8 +209,8 @@ export default class MultiplayerView extends View {
         this._timerSecond = new Timer({root: this._timerSecondElement, duration});
         this._timerSecond.render();
 
-        this._blackFiguresElement = this.el.querySelector('.js-figures-black');
-        this._blackFigures = new IconPresenter({root: this._blackFiguresElement});
-        this._blackFigures.render();
+        this._secondFiguresElement = this.el.querySelector('.js-figures-second');
+        this._secondFigures = new IconPresenter({root: this._secondFiguresElement});
+        this._secondFigures.render();
     }
 }

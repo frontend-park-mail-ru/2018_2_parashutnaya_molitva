@@ -152,7 +152,7 @@ export default class SingleplayerView extends View {
             timerExpireCallback: this._whiteTimerExpire.bind(this)});
         this._timerFirst.render();
 
-        this._whiteFiguresElement = this.el.querySelector('.js-figures-white');
+        this._whiteFiguresElement = this.el.querySelector('.js-figures-first');
         this._whiteFigures = new IconPresenter({root: this._whiteFiguresElement});
         this._whiteFigures.render();
 
@@ -170,7 +170,7 @@ export default class SingleplayerView extends View {
             timerExpireCallback: this._blackTimerExpire.bind(this)});
         this._timerSecond.render();
 
-        this._blackFiguresElement = this.el.querySelector('.js-figures-black');
+        this._blackFiguresElement = this.el.querySelector('.js-figures-second');
         this._blackFigures = new IconPresenter({root: this._blackFiguresElement});
         this._blackFigures.render();
 

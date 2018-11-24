@@ -12,6 +12,8 @@ export default class GameOnlineModel {
         this._eventBus.subscribeToEvent(GAME.MOVE, this._onTryMove.bind(this));
         this._eventBus.subscribeToEvent(GAME.FIND_ROOM, this._onFindRoom.bind(this));
         this._eventBus.subscribeToEvent(SERVICE.CHECK_AUTH, this._onCheckAuth.bind(this));
+        this._eventBus.subscribeToEvent(GAME.SURRENDER, this._onSurrender.bind(this));
+
         this._game = new Game();
     }
 
@@ -58,6 +60,15 @@ export default class GameOnlineModel {
             })
     }
 
+    _onSurrender(){
+        const surrender = {
+            "MsgType" : "surrender",
+        };
+
+        this._ws.send(JSON.stringify(surrender));
+        this._eventBus.triggerEvent(GAME.GAMEOVER, {result: true});
+    }
+
     _onInitGame({roomid = ''} = {}) {
         this._ws = new WebSocket(Api.getGameAddress());
         this._ws.onopen = () => {
@@ -76,6 +87,7 @@ export default class GameOnlineModel {
                     Api.loadUser(msg.Data.guid)
                         .then((user) => {
                                 const color = (msg.Data.color === 'w'? COLOR.WHITE : COLOR.BLACK);
+                                this._yourColor = (msg.Data.color === 'w');
                                 const rival = {
                                     avatar: user.avatar === "" ? 'images/default-avatar.svg' : Net.getStorageURL() + user.avatar,
                                     score: user.score,
@@ -95,10 +107,11 @@ export default class GameOnlineModel {
                     break;
                 case "turn":
                     this._game.move(msg.Data.turn);
-                    this._eventBus.triggerEvent(GAME.MOVE_SUCCESS, this._game.boardString(), this._game.turn());
+                    this._eventBus.triggerEvent(GAME.MOVE_SUCCESS, {state: this._game.boardString(),
+                        turn: this._game.turn(), deadPiece: this._game.findNewDeadPiece(), yourColor: this._yourColor});
                     break;
                 case "result":
-                    this._eventBus.triggerEvent(GAME.GAMEOVER, msg.Data);
+                    this._eventBus.triggerEvent(GAME.GAMEOVER, {result: msg.Data});
                     break;
                 case "error":
                     this._eventBus.triggerEvent(SERVICE.ON_ERR, msg.Data);
@@ -114,7 +127,7 @@ export default class GameOnlineModel {
     }
 
     _onTryMove(data) {
-        if (!data.turn) {
+        if (!data.move) {
             console.log("no turn");
             return;
         }
@@ -122,7 +135,7 @@ export default class GameOnlineModel {
         let turn = {
             MsgType: "turn",
             Data: {
-                turn: data.turn,
+                turn: data.move,
             }
         };
 

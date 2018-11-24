@@ -14,7 +14,6 @@ class UserSingleton {
      * Перед тем как пойти на сервер, нужно проверить есть ли уже пользователь или нет
      */
     checkUser () {
-        debugger;
         return !(this.email === null || this.score === null ||
             this.avatar === null || this.guid === null || this.login === null);
     }

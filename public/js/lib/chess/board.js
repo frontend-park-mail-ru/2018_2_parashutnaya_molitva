@@ -2,9 +2,7 @@ import { PIECE_TYPE, PIECE_COLOR } from './enums';
 import Piece from './piece';
 import Coord from './coord';
 import Moves from './moves';
-
-let deadWhite = [];
-let deadBlack = [];
+import {COLOR} from "../../components/chess/consts";
 
 export default class Board {
     /**
@@ -266,4 +264,5 @@ export default class Board {
         }
         return result;
     }
+
 }
