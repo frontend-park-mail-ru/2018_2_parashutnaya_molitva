@@ -3,8 +3,8 @@
         <div class="loading hidden">Loading...</div>
         <div class="warning signin__warning text-h3"></div>
         <form class="form" novalidate="novalidate">
-            <label class="signin__label text-h3" for="email">Email</label>
-            <input class="input signin__input text-h2" type="email" name="email" id="email" placeholder="Email" autofocus="true"
+            <label class="signin__label text-h3" for="login_or_email">Login or email</label>
+            <input class="input signin__input text-h2" type="login_or_email" name="login_or_email" id="login_or_email" placeholder="Login or email" autofocus="true"
                    autocomplete="autocomplete"/>
 
             <label class="signin_label text-h3" for="password">Password</label>

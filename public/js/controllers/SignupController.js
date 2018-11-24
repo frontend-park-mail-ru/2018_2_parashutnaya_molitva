@@ -8,6 +8,8 @@ const eventList = [
     'signupSuccess',
     'changeEmail',
     'changeEmailResponse',
+    'changeLogin',
+    'changeLoginResponse',
     'changePassword',
     'changePasswordResponse',
     'changePasswordRepeat',

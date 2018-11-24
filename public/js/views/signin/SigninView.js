@@ -23,7 +23,7 @@ export default class SigninView extends View {
     _onSubmit (form, ev) {
         ev.preventDefault();
         const data = {
-            email: form.elements['email'].value,
+            loginOrEmail: form.elements['login_or_email'].value,
             pass: form.elements['password'].value
         };
         this._eventBus.triggerEvent('signin', data);

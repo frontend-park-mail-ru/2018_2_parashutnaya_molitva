@@ -1,6 +1,6 @@
 import Net from './net.js';
-//const gameAddres = "wss://kekmate.tech/api/game/ws";
-const gameAddres = "ws://localhost:8080/api/game/ws";
+const gameAddres = "wss://kekmate.tech/api/game/ws";
+//const gameAddres = "ws://localhost:8080/api/game/ws";
 export default class Api {
     /**
      * Загрузить пользователя по guid
@@ -39,11 +39,11 @@ export default class Api {
      * @param password
      * @returns {Promise<Response>}
      */
-    static signIn ({ email, password } = {}) {
+    static signIn ({ loginOrEmail, password } = {}) {
         return Net.doPost({
             url: '/api/session',
             body: {
-                email,
+                'login_or_email': loginOrEmail,
                 password
             }
         });
@@ -55,11 +55,12 @@ export default class Api {
      * @param password
      * @returns {Promise<Response>}
      */
-    static signUp ({ email, password } = {}) {
+    static signUp ({ login, email, password } = {}) {
         return Net.doPost({
             url: '/api/user',
             body: {
                 email,
+                login,
                 password
             }
         });
