@@ -27,6 +27,13 @@ export default class View {
         return this;
     }
 
+    /**
+     * close view
+     */
+    close() {
+
+    }
+
     hide (root) {
         root.innerHTML = '';
         return this;

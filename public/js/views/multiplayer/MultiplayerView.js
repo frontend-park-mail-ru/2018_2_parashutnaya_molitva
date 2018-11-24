@@ -20,11 +20,17 @@ export default class MultiplayerView extends View {
         this._eventBus.subscribeToEvent(GAME.START_GAME, this._onStartGame.bind(this));
         this._eventBus.subscribeToEvent(SERVICE.CHECK_AUTH_RESPONSE, this._onCheckAuthResponse.bind(this));
         this._eventBus.subscribeToEvent(WS.ON_CLOSE, this._onClose.bind(this));
+        this._isClosed = false;
     }
 
     render (root, data = {}) {
         super.render(root, data);
         this._eventBus.triggerEvent(SERVICE.CHECK_AUTH);
+    }
+
+    close() {
+        this._isClosed = true;
+        this._eventBus.triggerEvent(SERVICE.CLOSE_CONNECTION);
     }
 
     _onCheckAuthResponse({isAuth}) {
@@ -53,12 +59,17 @@ export default class MultiplayerView extends View {
     }
 
     _onClose({message = "Unexpected error"} = {}){
-        const title = this._waitingPopup.querySelector('.js-waiting-title');
-        title.innerHTML = message;
+        if (!this._isClosed) {
+            const title = this._waitingPopup.querySelector('.js-waiting-title');
+            if (!title) {
+                return;
+            }
+            title.innerHTML = message;
 
-        const loader = this._waitingPopup.querySelector('.js-loader');
-        loader.innerHTML = "";
-        loader.classList.add('hidden');
+            const loader = this._waitingPopup.querySelector('.js-loader');
+            loader.innerHTML = "";
+            loader.classList.add('hidden');
+        }
     }
 
 

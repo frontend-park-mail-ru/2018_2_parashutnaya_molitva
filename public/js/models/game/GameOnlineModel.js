@@ -16,8 +16,13 @@ export default class GameOnlineModel {
         this._eventBus.subscribeToEvent(GAME.FIND_ROOM, this._onFindRoom.bind(this));
         this._eventBus.subscribeToEvent(SERVICE.CHECK_AUTH, this._onCheckAuth.bind(this));
         this._eventBus.subscribeToEvent(GAME.SURRENDER, this._onSurrender.bind(this));
+        this._eventBus.subscribeToEvent(SERVICE.CLOSE_CONNECTION, this._onCloseConn.bind(this));
 
         this._game = new Game();
+    }
+
+    _onCloseConn() {
+        this._ws.close();
     }
 
     _onCheckAuth(){
