@@ -25,6 +25,9 @@ export const ROUTER = {
     TO_SIGNIN:'tsgn',
 };
 
+export const HEADER = {
+    LOAD: 'ld',
+};
 
 export const SERVICE = {
     ON_CLOSE: 'onc',
