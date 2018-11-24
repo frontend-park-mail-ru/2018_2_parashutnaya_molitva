@@ -7,15 +7,14 @@ export default class GameOfflineModel {
     constructor ({eventBus = {}} = {}) {
         this._eventBus = eventBus;
         this._eventBus.subscribeToEvent(GAME.MOVE, this._onMove.bind(this));
-
-        this._game = new Game();
-        this._game.printBoard();
-        this._game.printLegalMoves();
-
+        this._eventBus.subscribeToEvent(GAME.INIT_GAME, this._onInitGame.bind(this));
+        this._game = null;
     }
 
     _onInitGame(){
-
+        this._game = new Game();
+        this._game.printBoard();
+        this._game.printLegalMoves();
     }
 
     _onMove ({move = ""} = {}) {

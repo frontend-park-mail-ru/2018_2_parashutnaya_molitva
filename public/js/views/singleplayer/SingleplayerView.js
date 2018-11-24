@@ -22,6 +22,8 @@ export default class SingleplayerView extends View {
 
     render (root, data = {}) {
         super.render(root, data);
+        this._eventBus.triggerEvent(GAME.INIT_GAME);
+
         this._gameoptionsPopup = this.el.querySelector('.js-game-options-popup');
         this._firstUserBlock = this.el.querySelector('.js-first');
         this._secondUserBlock = this.el.querySelector('.js-second');

@@ -15,6 +15,11 @@ export const GAME = {
     SURRENDER_RESPONSE: "surr",
 };
 
+export const VIEW = {
+    CLOSE: 'vcl',
+    RENDER: 'vrn'
+};
+
 export const ROUTER = {
     BACK_TO_MENU: 'btm',
     TO_SIGNIN:'tsgn',
