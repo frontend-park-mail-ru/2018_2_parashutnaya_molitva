@@ -66,7 +66,6 @@ export default class GameOnlineModel {
         };
 
         this._ws.send(JSON.stringify(surrender));
-        this._eventBus.triggerEvent(GAME.GAMEOVER, {result: true});
     }
 
     _onInitGame({roomid = ''} = {}) {
@@ -76,7 +75,6 @@ export default class GameOnlineModel {
         };
 
         this._ws.onerror = (event) => {
-            // Добавить реконнект
             console.log("On error" + event.message);
         };
 
