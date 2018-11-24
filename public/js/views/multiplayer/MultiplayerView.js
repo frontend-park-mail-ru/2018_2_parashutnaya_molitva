@@ -19,7 +19,7 @@ export default class MultiplayerView extends View {
         this._eventBus.subscribeToEvent(GAME.GAMEOVER, this._onGameOver.bind(this));
         this._eventBus.subscribeToEvent(GAME.START_GAME, this._onStartGame.bind(this));
         this._eventBus.subscribeToEvent(SERVICE.CHECK_AUTH_RESPONSE, this._onCheckAuthResponse.bind(this));
-        this._eventBus.subscribeToEvent(WS.ON_CLOSE, this._onClose.bind(this));
+        this._eventBus.subscribeToEvent(SERVICE.ON_CLOSE, this._onClose.bind(this));
         this._isClosed = false;
     }
 
@@ -29,11 +29,14 @@ export default class MultiplayerView extends View {
     }
 
     close() {
-        this._isClosed = true;
-        this._eventBus.triggerEvent(SERVICE.CLOSE_CONNECTION);
+        super.close();
     }
 
-    _onCheckAuthResponse({isAuth}) {
+    _onCheckAuthResponse({isAuth, error}) {
+        if (error) {
+            this._eventBus.triggerEvent(ROUTER.BACK_TO_MENU);
+            return;
+        }
         if (!isAuth) {
             this._eventBus.triggerEvent(ROUTER.TO_SIGNIN);
             return;
@@ -59,7 +62,7 @@ export default class MultiplayerView extends View {
     }
 
     _onClose({message = "Unexpected error"} = {}){
-        if (!this._isClosed) {
+        if (!this.isViewClosed) {
             const title = this._waitingPopup.querySelector('.js-waiting-title');
             if (!title) {
                 return;
