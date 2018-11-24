@@ -103,11 +103,13 @@ export default class GameOnlineModel {
                                     avatar: user.avatar === "" ? 'images/default-avatar.svg' : Net.getStorageURL() + user.avatar,
                                     score: user.score,
                                     email: user.email,
+                                    login: user.login,
                                 };
 
                                 const you = {
                                     avatar: User.avatar,
                                     score: User.score,
+                                    login: User.login,
                                 };
 
                                 this._eventBus.triggerEvent(GAME.START_GAME, {duration: this._duration,
