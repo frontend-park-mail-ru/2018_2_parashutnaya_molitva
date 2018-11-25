@@ -7,8 +7,8 @@
                 width: 100%;
                 height: 44px;
                 border: 1px solid black;">
-            <input style="position: relative; width: 75%; display: inline" type="text" placeholder="type here"></input>
-            <button style="width: 25%; height: 100%; display: inline; align-self: stretch;">send</button>
+            <input style="position: relative; width: 75%; display: inline" type="text" placeholder="type here" class="chat__text-field"></input>
+            <button style="width: 25%; height: 100%; display: inline; align-self: stretch;" class="chat__send-button">send</button>
         </div>
     </div>
 </fest:template>
