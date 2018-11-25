@@ -19,7 +19,7 @@ export default class MenuView extends View {
                 { textLabel: 'Singleplayer', href: '/singleplayer'},
                 { textLabel: 'Multiplayer', href: '/signin',
                     clickCallback: this._onNotAuthMultiplayerClick.bind(this)},
-                { textLabel: 'Leaderboard', href: '/scoreboard' },
+                { textLabel: 'Leaderboard', href: '/leaderboard' },
                 { textLabel: 'About', href: '/about' }
             ]);
         } else if (online === false) {
@@ -27,14 +27,14 @@ export default class MenuView extends View {
                 { textLabel: 'Singleplayer', href: '/singleplayer'},
                 { textLabel: 'Multiplayer', href: '',
                     clickCallback: this._onOfflineMultiplayerClick.bind(this)},
-                { textLabel: 'Leaderboard', href: '/scoreboard' },
+                { textLabel: 'Leaderboard', href: '/leaderboard' },
                 { textLabel: 'About', href: '/about' }
             ]);
         } else {
             menu = new Menu([
                 { textLabel: 'Singleplayer', href: '/singleplayer'},
                 { textLabel: 'Multiplayer', href: '/multiplayer'},
-                { textLabel: 'Leaderboard', href: '/scoreboard' },
+                { textLabel: 'Leaderboard', href: '/leaderboard' },
                 { textLabel: 'About', href: '/about' }
             ]);
         }
