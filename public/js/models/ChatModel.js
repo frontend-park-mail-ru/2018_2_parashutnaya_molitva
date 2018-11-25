@@ -1,12 +1,11 @@
 export default class ChatModel {
     constructor ({ eventBus = {} } = {}) {
         this._eventBus = eventBus;
-
         // demo crutch
-        this._eventBus.subscribeToEvent('sendMessage', this._messageReceived.bind(this));
+        this._eventBus.subscribeToEvent('sendMessage', this._onSendMessage.bind(this));
     }
 
-    _messageReceived (message) {
+    _onSendMessage (message) {
         this._eventBus.triggerEvent('messageReceived', message);
     }
 }
