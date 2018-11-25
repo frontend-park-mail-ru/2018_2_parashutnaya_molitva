@@ -1,5 +1,6 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="params">
     <div class="chat">
+<<<<<<< 369bb09853eb3e88f87a0040698b809abeb53000
         <div style="position: absolute;
                 display: flex;
                 bottom: 0;
@@ -8,6 +9,13 @@
                 border: 1px solid black;">
             <input style="position: relative; width: 75%; display: inline" type="text" placeholder="type here" class="chat__text-field"></input>
             <button style="width: 25%; height: 100%; display: inline; align-self: stretch;" class="chat__send-button">send</button>
+=======
+        <div class="chat__messages js-messages">
+        </div>
+        <div class="send-form">
+            <input class="send-form__input js-send-form"></input>
+            <button class="send-form__send">send</button>
+>>>>>>> styles
         </div>
     </div>
 </fest:template>

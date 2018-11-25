@@ -1,3 +1,4 @@
+import './chat.less';
 import template from './chat.tmpl.xml';
 import View from '../../lib/view';
 import ChatMessage from '../../components/chatMessage/chatMessage';
@@ -17,6 +18,7 @@ export default class ChatView extends View {
         this._globalEventBus.triggerEvent(CHAT.CLOSE);
         this._globalEventBus.triggerEvent(GLOBAL.CLEAR_STYLES);
 
+<<<<<<< 369bb09853eb3e88f87a0040698b809abeb53000
         const chat = document.querySelector('.chat');
         const testMessage0 = new ChatMessage({
             message: 'hi'
@@ -41,5 +43,23 @@ export default class ChatView extends View {
         const textField = document.querySelector('.chat__text-field');
         this._eventBus.triggerEvent('sendMessage', textField.value);
         textField.value = '';
+=======
+        const messages = document.querySelector('.js-messages');
+
+        const testMessage0 = new ChatMessage({
+            message: 'hi'
+        });
+
+        testMessage0.appendToChat(messages);
+
+        const testMessage1 = new ChatMessage({
+            message: 'wasup'
+        });
+
+        testMessage1.appendToChat(messages);
+
+        window.scrollTo(0,document.body.scrollHeight);
+
+>>>>>>> styles
     }
 }
