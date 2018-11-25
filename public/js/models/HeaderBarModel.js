@@ -58,7 +58,7 @@ export default class HeaderBarModel {
 
     _onSignout () {
         Api.removeSession();
-        this._eventBus.triggerEvent(SERVICE.CHECK_AUTH_RESPONSE, { isAuth: false });
+        this._eventBus.triggerEvent(SERVICE.CHECK_AUTH_RESPONSE, { isAuth: false, signout: true });
         User.removeUser();
     }
 }
