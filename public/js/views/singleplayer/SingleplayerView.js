@@ -1,4 +1,5 @@
 import './singleplayer.less';
+import '../../components/popup/promotion-popup.less';
 import View from '../../lib/view';
 import template from './singleplayer.tmpl.xml';
 import GameView from "../game/GameView";
@@ -7,6 +8,7 @@ import IconPresenter from '../../components/icons-presenter/iconsPresenter';
 import userBlockTemplate from '../../components/userblock/userblock.xml';
 import Piece from '../../components/chess/piece';
 import {GAME, ROUTER} from "../../lib/eventbus/events";
+import PromotionPopup from "../../components/popup/promotionPopup";
 
 const BLACK_COLOR_BACKGROUND = "#7f8b9575";
 
@@ -17,7 +19,19 @@ export default class SingleplayerView extends View {
 
         this._eventBus.subscribeToEvent(GAME.MOVE_SUCCESS, this._onMoveSuccess.bind(this));
         this._eventBus.subscribeToEvent(GAME.GAMEOVER, this._onGameOver.bind(this));
+        this._eventBus.subscribeToEvent(GAME.PROMOTION, this._onPromotion.bind(this));
 
+    }
+
+    close() {
+        super.close();
+        if (this._timerFirst) {
+            this._timerFirst.stop();
+        }
+
+        if (this._timerSecond) {
+            this._timerSecond.stop();
+        }
     }
 
     render (root, data = {}) {
@@ -25,6 +39,7 @@ export default class SingleplayerView extends View {
         this._eventBus.triggerEvent(GAME.INIT_GAME);
 
         this._gameoptionsPopup = this.el.querySelector('.js-game-options-popup');
+
         this._firstUserBlock = this.el.querySelector('.js-first');
         this._secondUserBlock = this.el.querySelector('.js-second');
         this._board = this.el.querySelector('.js-board-section');
@@ -36,8 +51,7 @@ export default class SingleplayerView extends View {
            });
         });
 
-        this._initPopup();
-
+        this._showGameOptionPopup();
         this._topElement = this.el.querySelector('.game');
 
 
@@ -55,7 +69,7 @@ export default class SingleplayerView extends View {
         this._board.classList.remove('hidden');
     }
 
-    _initPopup() {
+    _showGameOptionPopup() {
         const buttons = this._gameoptionsPopup.querySelectorAll('.js-game-option-button');
 
         buttons.forEach((button) => {
@@ -64,6 +78,7 @@ export default class SingleplayerView extends View {
                this._renderBoard();
                this._renderFirstUserBlock({duration: button.value});
                this._renderSecondUserBlock({duration: button.value});
+               this._renderPromotionPopup();
 
                this._startGame();
 
@@ -80,6 +95,23 @@ export default class SingleplayerView extends View {
     _startGame() {
         this._timerFirst.start();
     }
+
+    _renderPromotionPopup() {
+        this._promotionPopup = new PromotionPopup({promotionCallback : ({figure}) => {
+            this._eventBus.triggerEvent(GAME.PROMOTION_RESPONSE, {figure});
+        }});
+        this._promotionPopupElement = this.el.querySelector('.js-promotion-popup-container');
+        this._promotionPopup.render(this._promotionPopupElement);
+    }
+
+    _onPromotion({turn}) {
+        if (turn) {
+            this._promotionPopup._showPromotionPopupWhite();
+        } else {
+            this._promotionPopup._showPromotionPopupBlack();
+        }
+    }
+
 
     _onMoveSuccess({turn, deadPiece = null} = {}){
         if (turn) {

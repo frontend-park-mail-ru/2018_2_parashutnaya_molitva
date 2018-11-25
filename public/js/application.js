@@ -51,10 +51,10 @@ document.addEventListener('DOMContentLoaded', () => {
         page.classList.remove("page");
     });
 
-    const i = page.querySelector('iframe');
-    i.addEventListener('mouseover', () => {
-        i.click();
-    });
+    // const i = page.querySelector('iframe');
+    // i.addEventListener('mouseover', () => {
+    //     i.click();
+    // });
 
     router.add('/about', main, aboutController.aboutView);
     router.add('/leaderboard', main, scoreboardController.scoreboardView);
@@ -74,6 +74,5 @@ document.addEventListener('DOMContentLoaded', () => {
 function createSiteModules(root) {
     root.innerHTML = `<header class="header"></header>
 <main class="main"></main>
-<iframe src="/chat" class="js-chat-iframe chat-iframe"></iframe>
 `
 }
