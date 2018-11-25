@@ -1,3 +1,4 @@
+import './chat.less';
 import template from './chat.tmpl.xml';
 import View from '../../lib/view';
 import ChatMessage from '../../components/chatMessage/chatMessage';
@@ -16,18 +17,21 @@ export default class ChatView extends View {
         this._globalEventBus.triggerEvent(CHAT.CLOSE);
         this._globalEventBus.triggerEvent(GLOBAL.CLEAR_STYLES);
 
-        const chat = document.querySelector('.chat');
+        const messages = document.querySelector('.js-messages');
 
         const testMessage0 = new ChatMessage({
             message: 'hi'
         });
 
-        testMessage0.appendToChat(chat);
+        testMessage0.appendToChat(messages);
 
         const testMessage1 = new ChatMessage({
             message: 'wasup'
         });
 
-        testMessage1.appendToChat(chat);
+        testMessage1.appendToChat(messages);
+
+        window.scrollTo(0,document.body.scrollHeight);
+
     }
 }

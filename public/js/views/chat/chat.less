@@ -1,5 +1,29 @@
+@input-height: 5vh;
+
+.send-form__input {
+  height: @input-height;
+  width: 100%;
+}
+
+.send-form__send {
+  align-self: stretch;
+}
+
+.chat__messages {
+  padding-bottom: @input-height;
+}
+
 .chat {
-  position: absolute;
-  right: 0;
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.send-form {
+  display: flex;
+  align-items: center;
+  position: fixed;
+  width: 100%;
   bottom: 0;
 }
