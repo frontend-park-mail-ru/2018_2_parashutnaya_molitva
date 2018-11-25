@@ -241,4 +241,18 @@ export default class Game {
 
     }
 
+    /**
+     * example: white pawn e7e8 is promotion if e7e8q, e7e8n, etc. exist
+     * @param {string} move
+     * @return {boolean}
+     */
+    isLegalPromotionMove (move) {
+        const legalMoves = this.legalMoves();
+        for (let i = 0; i < legalMoves.length; i++) {
+            if (legalMoves[i].startsWith(move) && legalMoves[i].length === 5) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
