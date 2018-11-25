@@ -1,5 +1,7 @@
 import Net from './net.js';
 const gameAddres = "wss://kekmate.tech/api/game/ws";
+const chatAddres = "wss://kekmate.tech/api/chat/ws";
+
 //const gameAddres = "ws://localhost:8080/api/game/ws";
 export default class Api {
     /**
@@ -132,5 +134,9 @@ export default class Api {
 
     static getGameAddress() {
         return gameAddres;
+    }
+
+    static getChatAddress() {
+        return chatAddres;
     }
 }
