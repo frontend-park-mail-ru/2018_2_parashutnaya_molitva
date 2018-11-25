@@ -7,12 +7,21 @@ import {CHAT, GLOBAL, HEADER, VIEW} from "../../lib/eventbus/events";
 export default class ChatView extends View {
     constructor ({ eventBus = {}, globalEventBus = {} } = {}) {
         super(template, eventBus);
+        this.defaultTitle = document.title;
         this._globalEventBus = globalEventBus;
         this._eventBus.subscribeToEvent('messageReceived', this._messageReceived.bind(this));
         this._globalEventBus = globalEventBus;
         this._messages = ['hi', 'hey', 'yo'];
         this._openedChats = ['all', 'player_0', 'player_1'];
         this._currentChat = 'all';
+        setInterval(() => {
+            window.parent.document.title = this.defaultTitle;
+        }, 2000);
+        this.pinging;
+        window.parent.onfocus = () => {
+            clearInterval(this.pinging);
+        };
+
     }
 
     render (root) {
@@ -44,6 +53,12 @@ export default class ChatView extends View {
         const chat = document.querySelector('.js-messages');
         const newMessage = new ChatMessage({ message, screeenName: login });
         newMessage.appendToChat(chat);
+        if (!this.pinging) {
+            this.pinging = setInterval(() => {
+                window.parent.document.title = "you've got new message";
+            }, 1000);
+        }
+
         window.scrollTo(0,document.body.scrollHeight);
     }
 

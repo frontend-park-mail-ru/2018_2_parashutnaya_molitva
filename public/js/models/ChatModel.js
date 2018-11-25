@@ -113,6 +113,6 @@ export default class ChatModel {
 
         console.log(JSON.stringify(sendMsg));
 
-        this._eventBus.triggerEvent('messageReceived', {message, login: User.login, avatar: User.avatar});
+        this._eventBus.triggerEvent('messageReceived', {message, login: User.login, avatar: User.aqvatar});
     }
 }
