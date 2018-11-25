@@ -3,13 +3,19 @@
 @import "popup";
 @import "user-bar";
 
+// Need to no display iframe scroll
+::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+
 body, html {
     font-family: arial, sans-serif;
     margin: 0!important;
     height: 100%;
 }
 
-#page {
+.page {
     display: grid;
     grid-template-rows: 1fr 10fr;
     grid-template-columns: 1fr 1fr 1fr;
@@ -89,7 +95,7 @@ body, html {
     border-radius: 2px;
     border: 1px solid grey;
     background-color: @active-button-color-disabled;
-    transition: box-shadow 0.5s, background-color 0.75s;
+    transition: box-shadow 0.1s, background-color 0.25s;
 
     &:focus {
         outline: none;
@@ -146,7 +152,7 @@ body, html {
     text-align: center;
     background-color: @active-button-color;
     color: @header-bar-button-text-color;
-    transition: background-color 1s, transform 0.5s, box-shadow 1s;
+    transition: background-color 0.1s, transform 0.1s, box-shadow 1s;
 
     &:hover {
         background-color: @active-button-color-hover;
@@ -163,6 +169,20 @@ body, html {
 
 .hidden {
     display: none !important;
+}
+
+iframe {
+    border: none;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+
+}
+
+.chat-iframe {
+    height: 40%;
+    background-color: white;
+    border: solid darkgray;
 }
 
 /*table*/

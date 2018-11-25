@@ -53,10 +53,13 @@ export default class HeaderBarView extends View {
     }
 
     _onAuthResponse (data) {
+        if (data.signout) {
+            this._eventBus.triggerEvent(ROUTER.BACK_TO_MENU);
+            return;
+        }
         if (!data.isAuth) {
             console.log('No isAuth');
             super.render(null);
-            this._eventBus.triggerEvent(ROUTER.BACK_TO_MENU);
             return;
         }
 

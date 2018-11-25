@@ -13,7 +13,7 @@ export default class MenuView extends View {
 
     _onCheckAuthResponse({isAuth, online = true, error} = {}){
         let menu;
-        const menuSection = this.el.querySelector('.menu.section');
+        const menuSection = this.el.querySelector('.js-menu');
         if (!isAuth && online) {
             menu = new Menu([
                 { textLabel: 'Singleplayer', href: '/singleplayer'},

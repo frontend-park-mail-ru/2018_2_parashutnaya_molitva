@@ -11,8 +11,8 @@ const dropdownContentBlockActive = "dropdown-content_active";
 const dropdownContentActive = "dropdown-content__button_active";
 
 export default class Dropdown {
-    constructor({showAnimationInterval = 250, closeAnimationInterval = 250,
-                    contentBlockAnimationInterval = 250,
+    constructor({showAnimationInterval = 125, closeAnimationInterval = 125,
+                    contentBlockAnimationInterval = 125,
                 elements = []} = {}) {
 
         this._elements = elements;
