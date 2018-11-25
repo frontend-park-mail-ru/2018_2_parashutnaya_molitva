@@ -27,7 +27,16 @@ export const ROUTER = {
 
 export const HEADER = {
     LOAD: 'ld',
+    CLOSE: 'clh',
 };
+
+export const CHAT = {
+    CLOSE: 'clc',
+};
+
+export const GLOBAL = {
+    CLEAR_STYLES: 'clst',
+}
 
 export const SERVICE = {
     ON_CLOSE: 'onc',

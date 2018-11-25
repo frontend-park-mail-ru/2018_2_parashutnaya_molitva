@@ -43,7 +43,7 @@ export default class View {
         }
     }
 
-    hide (root) {
+            hide (root) {
         root.innerHTML = '';
         return this;
     }
