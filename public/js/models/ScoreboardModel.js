@@ -7,7 +7,7 @@ export default class ScoreboardModel {
         this._eventBus.subscribeToEvent('loadPaginator', this._onLoadPaginator.bind(this));
 
         this._linksCount = 4;
-        this._pageLines = 3;
+        this._pageLines = 5;
     }
 
     _onLoadPaginator () {
