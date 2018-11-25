@@ -1,4 +1,23 @@
+@import "~Styles/theme";
 .scoreboard {
-  width: 50vw;
-  margin-left: 25vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 200px;
+  min-width: fit-content;
+
+  // (300)/(960) = 0.3125
+  // b = 200 - 320 * =
+  @media screen and (min-width: 320px) {
+    width: calc(31.25vw + 100px);
+  }
+
+  @media screen and (min-width: 1280px) {
+    width: 500px;
+  }
+}
+
+.scoreboard__body{
+  background-color: @active-button-color;
 }

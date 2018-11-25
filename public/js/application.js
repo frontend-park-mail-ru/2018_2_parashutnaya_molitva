@@ -36,7 +36,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const signinController = new SigninController({ router, globalEventBus });
     const signupContoller = new SignupController({ router, globalEventBus });
     const profileControlleer = new ProfileController({ router, globalEventBus });
-
     const chatController = new ChatController({router, globalEventBus});
     const gameController = new GameController({router, globalEventBus});
 
@@ -58,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     router.add('/about', main, aboutController.aboutView);
-    router.add('/scoreboard', main, scoreboardController.scoreboardView);
+    router.add('/leaderboard', main, scoreboardController.scoreboardView);
     router.add('/signin', main, signinController.signinView);
     router.add('/profile', main, profileControlleer.profileView);
     router.add('/signup', main, signupContoller.signupView);
