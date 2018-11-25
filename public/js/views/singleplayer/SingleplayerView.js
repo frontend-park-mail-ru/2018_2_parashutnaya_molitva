@@ -8,6 +8,7 @@ import IconPresenter from '../../components/icons-presenter/iconsPresenter';
 import userBlockTemplate from '../../components/userblock/userblock.xml';
 import Piece from '../../components/chess/piece';
 import {GAME, ROUTER} from "../../lib/eventbus/events";
+import PromotionPopup from "../../components/popup/promotionPopup";
 
 const BLACK_COLOR_BACKGROUND = "#7f8b9575";
 
@@ -24,8 +25,13 @@ export default class SingleplayerView extends View {
 
     close() {
         super.close();
-        this._timerFirst.stop();
-        this._timerSecond.stop();
+        if (this._timerFirst) {
+            this._timerFirst.stop();
+        }
+
+        if (this._timerSecond) {
+            this._timerSecond.stop();
+        }
     }
 
     render (root, data = {}) {
@@ -33,7 +39,6 @@ export default class SingleplayerView extends View {
         this._eventBus.triggerEvent(GAME.INIT_GAME);
 
         this._gameoptionsPopup = this.el.querySelector('.js-game-options-popup');
-        this._promotionPopup = this.el.querySelector('.js-promotion-popup');
 
         this._firstUserBlock = this.el.querySelector('.js-first');
         this._secondUserBlock = this.el.querySelector('.js-second');
@@ -73,7 +78,7 @@ export default class SingleplayerView extends View {
                this._renderBoard();
                this._renderFirstUserBlock({duration: button.value});
                this._renderSecondUserBlock({duration: button.value});
-               this._initPromotionPopup();
+               this._renderPromotionPopup();
 
                this._startGame();
 
@@ -91,52 +96,22 @@ export default class SingleplayerView extends View {
         this._timerFirst.start();
     }
 
+    _renderPromotionPopup() {
+        this._promotionPopup = new PromotionPopup({promotionCallback : ({figure}) => {
+            this._eventBus.triggerEvent(GAME.PROMOTION_RESPONSE, {figure});
+        }});
+        this._promotionPopupElement = this.el.querySelector('.js-promotion-popup-container');
+        this._promotionPopup.render(this._promotionPopupElement);
+    }
+
     _onPromotion({turn}) {
         if (turn) {
-            this._showPromotionPopupWhite();
+            this._promotionPopup._showPromotionPopupWhite();
         } else {
-            this._showPromotionPopupBlack();
+            this._promotionPopup._showPromotionPopupBlack();
         }
     }
 
-    _initPromotionPopup() {
-        this._promotionWhiteFigures = this._promotionPopup.querySelectorAll('.js-white-figure');
-        this._promotionBlackFigures = this._promotionPopup.querySelectorAll('.js-black-figure');
-
-        [...this._promotionWhiteFigures, ...this._promotionBlackFigures].forEach((figureElement) => {
-            figureElement.addEventListener('click', () => {
-                this._eventBus.triggerEvent(GAME.PROMOTION_RESPONSE, {figure: figureElement.dataset.figure});
-                this._closePromotionPopup();
-            });
-        });
-
-    }
-
-    _showPromotionPopupWhite() {
-        this._promotionPopup.classList.remove('hidden');
-
-        this._promotionWhiteFigures.forEach((figure) => {
-            figure.classList.remove('hidden');
-        });
-    }
-
-    _showPromotionPopupBlack() {
-        this._promotionPopup.classList.remove('hidden');
-
-        this._promotionBlackFigures.forEach((figure) => {
-            figure.classList.remove('hidden');
-        });
-    }
-
-
-    _closePromotionPopup() {
-        this._promotionPopup.classList.add('hidden');
-
-        [...this._promotionWhiteFigures, ...this._promotionBlackFigures].forEach((figure) => {
-            figure.classList.add('hidden');
-        });
-
-    }
 
     _onMoveSuccess({turn, deadPiece = null} = {}){
         if (turn) {

@@ -8,6 +8,7 @@ import userBlockTemplate from "../../components/userblock/userblock.xml";
 import Timer from "../../components/timer/timer";
 import IconPresenter from "../../components/icons-presenter/iconsPresenter";
 import {COLOR} from "../../components/chess/consts";
+import PromotionPopup from "../../components/popup/promotionPopup";
 
 const BLACK_COLOR_BACKGROUND = "#7f8b9575";
 export default class MultiplayerView extends View {
@@ -20,6 +21,7 @@ export default class MultiplayerView extends View {
         this._eventBus.subscribeToEvent(GAME.START_GAME, this._onStartGame.bind(this));
         this._eventBus.subscribeToEvent(SERVICE.CHECK_AUTH_RESPONSE, this._onCheckAuthResponse.bind(this));
         this._eventBus.subscribeToEvent(SERVICE.ON_CLOSE, this._onClose.bind(this));
+        this._eventBus.subscribeToEvent(GAME.PROMOTION, this._onPromotion.bind(this));
         this._isClosed = false;
     }
 
@@ -88,6 +90,22 @@ export default class MultiplayerView extends View {
         this._board.classList.remove('hidden');
     }
 
+    _renderPromotionPopup() {
+        this._promotionPopup = new PromotionPopup({promotionCallback : ({figure}) => {
+                this._eventBus.triggerEvent(GAME.PROMOTION_RESPONSE, {figure});
+            }});
+        this._promotionPopupElement = this.el.querySelector('.js-promotion-popup-container');
+        this._promotionPopup.render(this._promotionPopupElement);
+    }
+
+    _onPromotion({turn}) {
+        if (turn) {
+            this._promotionPopup._showPromotionPopupWhite();
+        } else {
+            this._promotionPopup._showPromotionPopupBlack();
+        }
+    }
+
     _initPopup() {
         const buttons = this._gameoptionsPopup.querySelectorAll('.js-game-option-button');
 
@@ -112,6 +130,7 @@ export default class MultiplayerView extends View {
         this._renderBoard({color});
         this._showAll();
         this._closeWaitingPopup();
+        this._renderPromotionPopup();
     }
 
     _startTimer({color}) {
