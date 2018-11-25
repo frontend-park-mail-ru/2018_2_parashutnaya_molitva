@@ -19,33 +19,7 @@ export default class ChatView extends View {
         this._globalEventBus.triggerEvent(CHAT.CLOSE);
         this._globalEventBus.triggerEvent(GLOBAL.CLEAR_STYLES);
 
-<<<<<<< 369bb09853eb3e88f87a0040698b809abeb53000
-        const chat = document.querySelector('.chat');
-        const testMessage0 = new ChatMessage({
-            message: 'hi'
-        });
-        testMessage0.appendToChat(chat);
-        const testMessage1 = new ChatMessage({
-            message: 'wasup'
-        });
-        testMessage1.appendToChat(chat);
 
-        const sendButton = document.querySelector('.js-send-button');
-        sendButton.addEventListener('click', this._onSendClick.bind(this));
-    }
-
-    _messageReceived(message) {
-        const chat = document.querySelector('.js-messages');
-        const newMessage = new ChatMessage({ message });
-        newMessage.appendToChat(chat);
-        window.scrollTo(0,document.body.scrollHeight);
-    }
-
-    _onSendClick () {
-        const textField = document.querySelector('.js-send-form');
-        this._eventBus.triggerEvent('sendMessage', textField.value);
-        textField.value = '';
-=======
         const messages = document.querySelector('.js-messages');
 
         const testMessage0 = new ChatMessage({
@@ -62,6 +36,23 @@ export default class ChatView extends View {
 
         window.scrollTo(0,document.body.scrollHeight);
 
->>>>>>> styles
+
+        const sendButton = document.querySelector('.js-send-button');
+        sendButton.addEventListener('click', this._onSendClick.bind(this));
+    }
+
+    _messageReceived(message) {
+        const chat = document.querySelector('.js-messages');
+        const newMessage = new ChatMessage({ message });
+        newMessage.appendToChat(chat);
+        window.scrollTo(0,document.body.scrollHeight);
+    }
+
+    _onSendClick () {
+        const textField = document.querySelector('.js-send-form');
+        this._eventBus.triggerEvent('sendMessage', textField.value);
+        textField.value = '';
+
+        window.scrollTo(0,document.body.scrollHeight);
     }
 }
