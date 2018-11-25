@@ -75,6 +75,6 @@ document.addEventListener('DOMContentLoaded', () => {
 function createSiteModules(root) {
     root.innerHTML = `<header class="header"></header>
 <main class="main"></main>
-<iframe src="/chat" class="js-chat-iframe"></iframe>
+<iframe src="/chat" class="js-chat-iframe chat-iframe"></iframe>
 `
 }
