@@ -11,6 +11,7 @@ import NotFoundView from './views/notfound/NotFoundView.js';
 import EventBus from './lib/eventbus/eventbus.js';
 import runtime from 'serviceworker-webpack-plugin/lib/runtime';
 import GameController from "./controllers/GameController";
+import ChatController from "./controllers/ChatController";
 
 document.addEventListener('DOMContentLoaded', () => {
     if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || window.location.hostname === 'localhost')) {
@@ -35,6 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const signupContoller = new SignupController({ router, globalEventBus });
     const profileControlleer = new ProfileController({ router, globalEventBus });
     const gameController = new GameController({router});
+    const chatController = new ChatController({router});
 
     router.add('/about', main, aboutController.aboutView);
     router.add('/scoreboard', main, scoreboardController.scoreboardView);
@@ -44,6 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
     router.add('/', main, menuController.menuView);
     router.add('/multiplayer', main, gameController.multiplayerView);
     router.add('/singleplayer', main, gameController.singleplayerView);
+    router.add('/chat', main, chatController.chatView);
 
     router.setNotFoundView(main, new NotFoundView());
 
