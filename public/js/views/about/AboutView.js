@@ -10,8 +10,8 @@ class AboutView extends View {
     render (root, data = {}) {
         super.render(root, data);
 
-        // this._chat = this.el.querySelector('.js-chat');
-        // data.chat.render({root: this._chat});
+        this._chat = this.el.querySelector('.js-chat');
+        data.chat.render({root: this._chat});
     }
 }
 
