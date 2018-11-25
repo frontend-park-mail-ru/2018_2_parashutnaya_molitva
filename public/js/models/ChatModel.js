@@ -32,10 +32,8 @@ export default class ChatModel {
     }
 
     _onRender() {
-        // this._ws = new WebSocket(Api.getChatAddress());
-
-        // this._initCallbacks();
-
+        this._ws = new WebSocket(Api.getChatAddress());
+        this._initCallbacks();
 
      }
 
@@ -49,8 +47,7 @@ export default class ChatModel {
 
             switch (frame.MsgType) {
                 case "msg":
-                    const incomeMsg = JSON.parse(msg.Data);
-                    this._resolveMessage({msg:incomeMsg});
+                    this._resolveMessage({msg:frame.Data});
                     break;
                 case "getGlobal":
                     this._resolveGlobal({msg: JSON.parse(msg.Data)});
@@ -72,7 +69,7 @@ export default class ChatModel {
     }
 
     _resolveMessage({msg = {}}) {
-        this._eventBus.triggerEvent('messageReceived', {message: msg.msg, login: msg.login});
+        this._eventBus.triggerEvent('messageReceived', {message: msg.msg, login: msg.from});
     }
 
     _loadGlobal({date = 0, limit = 10}) {
@@ -109,7 +106,7 @@ export default class ChatModel {
             },
         };
 
-        // this._ws.send(sendMsg);
+        this._ws.send(JSON.stringify(sendMsg));
 
         console.log(JSON.stringify(sendMsg));
 
