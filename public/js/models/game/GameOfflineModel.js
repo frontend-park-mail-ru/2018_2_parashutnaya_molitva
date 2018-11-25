@@ -19,6 +19,7 @@ export default class GameOfflineModel {
     }
 
     _onMove ({move = ""} = {}) {
+        console.log(this._game.isLegalPromotionMove(move));
         const legalMoves = this._game.legalMoves();
         if (legalMoves.includes(move)) {
             this._game.move(move);
@@ -28,6 +29,9 @@ export default class GameOfflineModel {
             if (this._game.isGameOver()) {
                 this._eventBus.triggerEvent(GAME.GAMEOVER, {turn: this._game.turn()});
             }
+        } else if (this._game.isLegalPromotionMove(move)) {
+            const promotionPiece = prompt('promotion (q,r,b,n)');
+            this._onMove({ move: move + promotionPiece });
         } else {
             this._eventBus.triggerEvent(GAME.MOVE_FAILURE);
         }
