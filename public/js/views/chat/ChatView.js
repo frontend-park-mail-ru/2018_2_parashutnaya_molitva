@@ -4,6 +4,8 @@ import View from '../../lib/view';
 import ChatMessage from '../../components/chatMessage/chatMessage';
 import {CHAT, GLOBAL, HEADER} from "../../lib/eventbus/events";
 
+const SCROLL_UPDATE_THRESHOLD = 10;
+
 export default class ChatView extends View {
     constructor ({ eventBus = {}, globalEventBus = {} } = {}) {
         super(template, eventBus);
@@ -22,6 +24,12 @@ export default class ChatView extends View {
         this._globalEventBus.triggerEvent(GLOBAL.CLEAR_STYLES);
 
         const messages = document.querySelector('.js-messages');
+
+        window.addEventListener('scroll', e => {
+            if (document.documentElement.scrollTop < 10) {
+                this._requestUpdate();
+            }
+        });
 
         this._messages.forEach(message => {
             const textMessage = new ChatMessage({message});
@@ -70,5 +78,9 @@ export default class ChatView extends View {
             newMessage.appendToChat(messages);
         });
         window.scrollTo(0,document.body.scrollHeight);
+    }
+
+    _requestUpdate() {
+        console.log('requesting update');
     }
 }
