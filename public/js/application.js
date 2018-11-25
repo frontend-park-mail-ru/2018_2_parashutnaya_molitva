@@ -52,6 +52,11 @@ document.addEventListener('DOMContentLoaded', () => {
         page.classList.remove("page");
     });
 
+    const i = page.querySelector('iframe');
+    i.addEventListener('mouseover', () => {
+        i.click();
+    });
+
     router.add('/about', main, aboutController.aboutView);
     router.add('/scoreboard', main, scoreboardController.scoreboardView);
     router.add('/signin', main, signinController.signinView);
