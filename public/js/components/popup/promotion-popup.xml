@@ -1,0 +1,30 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="params">
+    <div class="popup hidden js-promotion-popup">
+        <div class="popup__content promotion__content">
+            <div class="popup__content-block promotion__content-block">
+                <div class="figure-container">
+                    <div class="figure-container__row">
+                        <div class="figure-container__element piece_rook piece_white hidden
+                        js-white-figure" data-figure="r"></div>
+                        <div class="figure-container__element piece_queen piece_white hidden
+                         js-white-figure" data-figure="q"></div>
+                        <div class="figure-container__element piece_rook piece_black hidden
+                         js-black-figure" data-figure="r"></div>
+                        <div class="figure-container__element piece_queen piece_black hidden
+                         js-black-figure " data-figure="q"></div>
+                    </div>
+                    <div class="figure-container__row">
+                        <div class="figure-container__element piece_bishop piece_white hidden
+                         js-white-figure" data-figure="b"></div>
+                        <div class="figure-container__element piece_knight piece_white hidden
+                         js-white-figure" data-figure="n"></div>
+                        <div class="figure-container__element piece_bishop piece_black hidden
+                         js-black-figure" data-figure="b"></div>
+                        <div class="figure-container__element piece_knight piece_black hidden
+                         js-black-figure" data-figure="n"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</fest:template>
