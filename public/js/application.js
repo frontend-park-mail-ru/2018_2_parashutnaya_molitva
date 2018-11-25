@@ -44,10 +44,9 @@ document.addEventListener('DOMContentLoaded', () => {
     router.add('/signup', main, signupContoller.signupView);
     router.add('/', main, menuController.menuView);
     router.add('/multiplayer', main, gameController.multiplayerView);
-    router.add('/singleplayer', main, gameController.singleplayerView);
+    router.add('/leaderboard', main, gameController.singleplayerView);
 
     router.setNotFoundView(main, new NotFoundView());
-
     router.start();
 });
 

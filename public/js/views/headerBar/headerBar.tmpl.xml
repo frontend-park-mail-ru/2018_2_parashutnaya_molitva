@@ -10,7 +10,7 @@
                                 <fest:value>params.user.login</fest:value>
                             </div>
                             <div class="user-bar__row header-info__row  text-base js-header-score">
-                                <fest:value>params.user.score</fest:value>
+                                Rating: <fest:value>params.user.score</fest:value>
                             </div>
                         </div>
                         <div class="user-bar__column header-bar__column">
