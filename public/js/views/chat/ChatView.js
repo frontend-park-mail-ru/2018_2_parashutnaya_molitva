@@ -10,7 +10,9 @@ export default class ChatView extends View {
         this._globalEventBus = globalEventBus;
         this._eventBus.subscribeToEvent('messageReceived', this._messageReceived.bind(this));
         this._globalEventBus = globalEventBus;
-        this._messages = [];
+        this._messages = ['hi', 'hey', 'yo'];
+        this._openedChats = ['all', 'player_0', 'player_1'];
+        this._currentChat = 'all';
     }
 
     render (root) {
@@ -22,22 +24,20 @@ export default class ChatView extends View {
 
         const messages = document.querySelector('.js-messages');
 
-        const testMessage0 = new ChatMessage({
-            message: 'hi'
+        this._messages.forEach(message => {
+            const textMessage = new ChatMessage({message});
+            textMessage.appendToChat(messages);
         });
-
-        testMessage0.appendToChat(messages);
-
-        const testMessage1 = new ChatMessage({
-            message: 'wasup'
-        });
-
-        testMessage1.appendToChat(messages);
 
         window.scrollTo(0,document.body.scrollHeight);
 
         const sendButton = document.querySelector('.js-send-button');
         sendButton.addEventListener('click', this._onSendClick.bind(this));
+
+        const headerButtons = document.querySelectorAll('.chat__header__tab__button');
+        headerButtons.forEach(button => {
+            button.addEventListener('click',this._onHeaderTabClick.bind(this, button.textContent));
+        });
     }
 
     _messageReceived({message, login}) {
@@ -51,6 +51,25 @@ export default class ChatView extends View {
         const textField = document.querySelector('.js-send-form');
         this._eventBus.triggerEvent('sendMessage', {message: textField.value});
         textField.value = '';
+        window.scrollTo(0,document.body.scrollHeight);
+    }
+
+    _onHeaderTabClick(chatName) {
+        // get messages from player `chatName`
+        // demo crutch!!!!!!!!
+        const messages = document.querySelector('.js-messages');
+        messages.innerHTML = '';
+        if (chatName === 'player_0') {
+            this._messages = ['message1 from player_0', 'message2 from player_0'];
+        } else if (chatName === 'player_1') {
+            this._messages = ['message1 from player_1', 'message2 from player_1'];
+        } else {
+            this._messages = ['hi', 'hey', 'yo'];
+        }
+        this._messages.forEach(message => {
+            const newMessage = new ChatMessage({ message });
+            newMessage.appendToChat(messages);
+        });
         window.scrollTo(0,document.body.scrollHeight);
     }
 }
