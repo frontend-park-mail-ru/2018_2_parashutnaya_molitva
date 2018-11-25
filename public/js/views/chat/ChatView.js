@@ -18,10 +18,7 @@ export default class ChatView extends View {
             window.parent.document.title = this.defaultTitle;
         }, 2000);
         this.pinging;
-        window.parent.onfocus = () => {
-            clearInterval(this.pinging);
-        };
-
+        window.parent.document.addEventListener('visibilitychange', () => { clearInterval(this.pinging); this.pinging = false});
     }
 
     render (root) {
