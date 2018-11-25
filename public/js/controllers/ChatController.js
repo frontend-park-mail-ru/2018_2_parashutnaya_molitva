@@ -1,10 +1,12 @@
 import EventBus from '../lib/eventbus/eventbus';
 import ChatView from '../views/chat/ChatView';
 import ChatModel from '../models/ChatModel';
+import {VIEW} from "../lib/eventbus/events";
 
 const eventList = [
     'sendMessage',
-    'messageReceived'
+    'messageReceived',
+    VIEW.RENDER,
 ];
 
 export default class ChatController {

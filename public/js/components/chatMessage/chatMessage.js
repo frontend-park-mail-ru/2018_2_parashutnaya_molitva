@@ -14,6 +14,11 @@ export default class ChatMessage {
         avatarElement.setAttribute('alt', 'Avatar');
         this._div.appendChild(avatarElement);
 
+        const nick = document.createElement('p');
+        nick.classList.add("message__nickname");
+        nick.innerText = this._screenName;
+        this._div.appendChild(nick);
+
         const messageElement = document.createElement('p');
         messageElement.innerText = this._message;
         this._div.appendChild(messageElement);
