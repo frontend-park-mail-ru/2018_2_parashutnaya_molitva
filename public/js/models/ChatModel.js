@@ -69,7 +69,7 @@ export default class ChatModel {
     }
 
     _resolveMessage({msg = {}}) {
-        this._eventBus.triggerEvent('messageReceived', {message: msg.msg, login: msg.from});
+        this._eventBus.triggerEvent('messageReceived', {message: msg.msg, login: msg.from || "anonymous"});
     }
 
     _loadGlobal({date = 0, limit = 10}) {
@@ -107,9 +107,8 @@ export default class ChatModel {
         };
 
         this._ws.send(JSON.stringify(sendMsg));
-
         console.log(JSON.stringify(sendMsg));
 
-        this._eventBus.triggerEvent('messageReceived', {message, login: User.login, avatar: User.avatar});
+        this._eventBus.triggerEvent('messageReceived', {message, login: User.login  || "anonymous", avatar: User.avatar});
     }
 }
