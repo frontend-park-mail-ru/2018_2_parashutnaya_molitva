@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    ЭТО ЧАТ в IFRAME
+    <div class="counter"></div>
+    <script>
+        const counter = document.querySelector('.counter');
+        let c = 0;
+
+        setInterval(() => {
+            counter.innerHTML = c++;
+        });
+    </script>
+</body>
+</html>

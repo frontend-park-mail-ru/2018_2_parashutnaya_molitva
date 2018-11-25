@@ -13,7 +13,7 @@ export default class MenuView extends View {
 
     _onCheckAuthResponse({isAuth, online = true, error} = {}){
         let menu;
-        const menuSection = this.el.querySelector('.menu.section');
+        const menuSection = this.el.querySelector('.js-menu');
         if (!isAuth && online) {
             menu = new Menu([
                 { textLabel: 'Singleplayer', href: '/singleplayer'},
@@ -46,7 +46,9 @@ export default class MenuView extends View {
 
     render (root, data = {}) {
         super.render(root, data);
-        this._eventBus.triggerEvent('checkAuth');
+        // this._chat = this.el.querySelector('.js-chat');
+        // data.chat.render({root: this._chat});
+        // this._eventBus.triggerEvent('checkAuth');
         this._gameOptionsPopup = this.el.querySelector('.js-game-options-popup');
     }
 

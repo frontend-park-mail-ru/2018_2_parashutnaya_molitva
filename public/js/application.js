@@ -11,11 +11,9 @@ import NotFoundView from './views/notfound/NotFoundView.js';
 import EventBus from './lib/eventbus/eventbus.js';
 import runtime from 'serviceworker-webpack-plugin/lib/runtime';
 import GameController from "./controllers/GameController";
-<<<<<<< 8544d6d7b2fe015788e4bc525c0ff3cbc7f98f56
 import ChatController from "./controllers/ChatController";
-=======
 import {HEADER} from "./lib/eventbus/events";
->>>>>>> <79> fix-score-update
+import Chat from "./components/chat/chat";
 
 document.addEventListener('DOMContentLoaded', () => {
     if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || window.location.hostname === 'localhost')) {
@@ -43,22 +41,31 @@ document.addEventListener('DOMContentLoaded', () => {
     const chatController = new ChatController({router});
     const gameController = new GameController({router, globalEventBus});
 
-    router.add('/about', main, aboutController.aboutView);
-    router.add('/scoreboard', main, scoreboardController.scoreboardView);
+    const chat = new Chat();
+
+    router.add('/about', main, aboutController.aboutView, {chat});
+    router.add('/scoreboard', main, scoreboardController.scoreboardView, chat);
     router.add('/signin', main, signinController.signinView);
-    router.add('/profile', main, profileControlleer.profileView);
+    router.add('/profile', main, profileControlleer.profileView, chat);
     router.add('/signup', main, signupContoller.signupView);
-    router.add('/', main, menuController.menuView);
+    router.add('/', main, menuController.menuView, {chat});
     router.add('/multiplayer', main, gameController.multiplayerView);
     router.add('/singleplayer', main, gameController.singleplayerView);
     router.add('/chat', main, chatController.chatView);
 
     router.setNotFoundView(main, new NotFoundView());
-
     router.start();
 });
 
+function testCreateIFRAME(root){
+    const iframe = document.createElement('iframe');
+    iframe.setAttribute('src', '/chat');
+
+    root.appendChild(iframe);
+}
+
 function createSiteModules(root) {
     root.innerHTML = `<header class="header"></header>
-<main class="main"></main>`
+<main class="main"></main>
+<div class="iframe"></div>`
 }
