@@ -8,9 +8,9 @@ const eventList = [
 ];
 
 export default class ChatController {
-    constructor () {
+    constructor ({globalEventBus}) {
         const eventBus = new EventBus(eventList);
-        this.chatView = new ChatView({ eventBus });
+        this.chatView = new ChatView({ eventBus, globalEventBus });
         this.chatModel = new ChatModel({ eventBus });
     }
 }

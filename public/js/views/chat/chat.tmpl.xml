@@ -4,7 +4,7 @@
         </div>
         <div class="send-form">
             <input class="send-form__input js-send-form"></input>
-            <button class="send-form__send">send</button>
+            <button class="send-form__send js-send-button">send</button>
         </div>
     </div>
 </fest:template>

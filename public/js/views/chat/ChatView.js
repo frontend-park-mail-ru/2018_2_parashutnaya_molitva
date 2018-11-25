@@ -7,6 +7,7 @@ import {CHAT, GLOBAL, HEADER} from "../../lib/eventbus/events";
 export default class ChatView extends View {
     constructor ({ eventBus = {}, globalEventBus = {} } = {}) {
         super(template, eventBus);
+        this._globalEventBus = globalEventBus;
         this._eventBus.subscribeToEvent('messageReceived', this._messageReceived.bind(this));
         this._messages = [];
     }
@@ -34,18 +35,19 @@ export default class ChatView extends View {
 
         window.scrollTo(0,document.body.scrollHeight);
 
-        const sendButton = document.querySelector('.chat__send-button');
+        const sendButton = document.querySelector('.js-send-button');
         sendButton.addEventListener('click', this._onSendClick.bind(this));
     }
 
     _messageReceived(message) {
-        const chat = document.querySelector('.chat');
+        const chat = document.querySelector('.js-messages');
         const newMessage = new ChatMessage({ message });
         newMessage.appendToChat(chat);
+        window.scrollTo(0,document.body.scrollHeight);
     }
 
     _onSendClick () {
-        const textField = document.querySelector('.chat__text-field');
+        const textField = document.querySelector('.js-send-form');
         this._eventBus.triggerEvent('sendMessage', textField.value);
         textField.value = '';
     }
