@@ -19,7 +19,6 @@ export default class ChatView extends View {
         this._globalEventBus.triggerEvent(CHAT.CLOSE);
         this._globalEventBus.triggerEvent(GLOBAL.CLEAR_STYLES);
 
-
         const messages = document.querySelector('.js-messages');
 
         const testMessage0 = new ChatMessage({
@@ -36,7 +35,6 @@ export default class ChatView extends View {
 
         window.scrollTo(0,document.body.scrollHeight);
 
-
         const sendButton = document.querySelector('.js-send-button');
         sendButton.addEventListener('click', this._onSendClick.bind(this));
     }
@@ -52,7 +50,6 @@ export default class ChatView extends View {
         const textField = document.querySelector('.js-send-form');
         this._eventBus.triggerEvent('sendMessage', textField.value);
         textField.value = '';
-
         window.scrollTo(0,document.body.scrollHeight);
     }
 }

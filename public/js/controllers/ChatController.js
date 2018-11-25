@@ -10,7 +10,7 @@ const eventList = [
 export default class ChatController {
     constructor ({globalEventBus}) {
         const eventBus = new EventBus(eventList);
-        this.chatModel = new ChatModel({ eventBus });
         this.chatView = new ChatView({ eventBus, globalEventBus });
+        this.chatModel = new ChatModel({ eventBus });
     }
 }
