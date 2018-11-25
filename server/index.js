@@ -20,6 +20,10 @@ app.get('/sw.js', (req, res) => {
     res.sendFile(publicRoot + "/dist/sw.js")
 });
 
+app.get('/chat', (req, res) => {
+   res.sendFile(publicRoot + "/chat.html");
+});
+
 app.get('*', (req, res) => {
     fs.readFile(indexPath, { encoding: 'utf-8' }, (err, file) => {
         if (err) {

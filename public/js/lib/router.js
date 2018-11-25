@@ -29,11 +29,13 @@ export default class Router {
      * @param path путь при переходе на который будет вызвана view
      * @param root элемент куда будет рисоваться view, по-умолчание это this.root
      * @param view компонент, который отрисуется
+     * @param data router data
      */
-    add (path, root = this.root, view) {
+    add (path, root = this.root, view, data) {
         this.routes.set(path, {
             root,
-            view
+            view,
+            data
         });
     }
 
@@ -74,8 +76,8 @@ export default class Router {
         }
 
         if (this.routes.has(path)) {
-            let data = this.routes.get(path);
-            data.view.render(data.root);
+            let route = this.routes.get(path);
+            route.view.render(route.root, route.data);
             this.currentRoute = path;
         } else {
             this.notFoundView.render(this.notFoundViewRoot);
