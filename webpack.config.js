@@ -1,9 +1,14 @@
 const path = require('path');
 const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const webpack = require('webpack');
 
 const conf = {
+    optimization: {
+        minimizer : [],
+    },
     entry: {
         application: './public/js/application.js'
     },
@@ -68,6 +73,15 @@ module.exports = (env, options) => {
     const definePlugin = new webpack.DefinePlugin({
         PRODUCTION: isProduction,
     });
+
+    if (isProduction) {
+        conf.optimization.minimizer.push(
+            new UglifyJsPlugin({
+                cache: true,
+                parallel: true,
+            }),
+            new OptimizeCSSAssetsPlugin({}))
+    }
 
     conf.plugins.push(definePlugin);
 
