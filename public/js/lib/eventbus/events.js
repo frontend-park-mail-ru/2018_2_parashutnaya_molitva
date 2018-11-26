@@ -13,6 +13,9 @@ export const GAME = {
 
     SURRENDER: "sur",
     SURRENDER_RESPONSE: "surr",
+
+    PROMOTION: "pm",
+    PROMOTION_RESPONSE: "pms",
 };
 
 export const VIEW = {
@@ -36,7 +39,7 @@ export const CHAT = {
 
 export const GLOBAL = {
     CLEAR_STYLES: 'clst',
-}
+};
 
 export const SERVICE = {
     ON_CLOSE: 'onc',

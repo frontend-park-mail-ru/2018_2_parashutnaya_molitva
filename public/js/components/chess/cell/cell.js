@@ -1,4 +1,4 @@
-import { COLOR } from './consts';
+import { COLOR } from '../consts';
 import './cell.less';
 
 const CELL_CLASS = 'cell';

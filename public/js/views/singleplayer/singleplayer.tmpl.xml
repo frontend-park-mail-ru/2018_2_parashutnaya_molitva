@@ -8,35 +8,23 @@
         <aside class="info-block info-block_second js-second">
             <button class="button submit text-h2 js-surrender-second">Surrender</button>
         </aside>
-        <div class="popup hidden js-game-options-popup">
-            <div class="popup__content game-options__content">
-                <div class="popup__content-block game-options__duration">
-                    <div class="popup__title game-options__title">Choose game duration</div>
-                    <button class="button submit game-options__button js-game-option-button" value="60">1 min</button>
-                    <button class="button submit game-options__button js-game-option-button" value="180">3 min</button>
-                    <button class="button submit game-options__button js-game-option-button" value="300">5 min</button>
-                    <button class="button submit game-options__button js-game-option-button" value="600">10 min</button>
-                </div>
-                <div class="button popup__x-mark game-options__x-mark js-menu-back-x-mark">
-                    <img src="../images/x-mark.svg" draggable="false"></img>
-                </div>
-            </div>
-        </div>
+        <fest:include src="../../components/popup/game-option-popup.xml"/>
+        <div class="js-promotion-popup-container"></div>
         <div class="popup js-winner-popup hidden">
             <div class="popup__content winner__content">
                 <div class="popup__content-block winner">
                     <div class="popup__title winner__text">Winner</div>
                     <div class="user-block__element user-info js-white-winner hidden">
-                        <div class="user-info__color-figure user-info__color-figure_white"></div>
+                        <div class="user-info__color-figure user-info__color-figure_white"/>
                         <div class="user-info__color-text winner__text">WHITE</div>
                     </div>
                     <div class="user-block__element user-info js-black-winner hidden">
-                        <div class="user-info__color-figure user-info__color-figure_black"></div>
+                        <div class="user-info__color-figure user-info__color-figure_black"/>
                         <div class="user-info__color-text winner__text">BLACK</div>
                     </div>
                 </div>
                 <div class="button popup__x-mark game-options__x-mark js-menu-back-x-mark">
-                    <img src="../images/x-mark.svg" draggable="false"></img>
+                    <div draggable="false" class="x-mark-image"></div>
                 </div>
             </div>
         </div>
