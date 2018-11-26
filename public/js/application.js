@@ -1,3 +1,4 @@
+import 'normalize.css';
 import '../css/style.less';
 import AboutController from './controllers/AboutController.js';
 import ScoreboardController from './controllers/ScoreboardController.js';

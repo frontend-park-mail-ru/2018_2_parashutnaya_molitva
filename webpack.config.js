@@ -45,6 +45,13 @@ const conf = {
                 loader: 'url-loader?limit=100000'
             },
             {
+                test: /\.css$/,
+                use: [
+                    {loader: MiniCssExtractPlugin.loader},
+                    {loader: "css-loader"}
+                ]
+            },
+            {
                 test: /\.less$/,
                 use: [
                     {loader: MiniCssExtractPlugin.loader},

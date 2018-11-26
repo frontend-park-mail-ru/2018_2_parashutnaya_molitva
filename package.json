@@ -60,6 +60,7 @@
     "webpack-dev-server": "^3.1.10"
   },
   "dependencies": {
+    "normalize.css": "^8.0.1",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "serviceworker-webpack-plugin": "^1.0.1",
     "uglifyjs-webpack-plugin": "latest"
