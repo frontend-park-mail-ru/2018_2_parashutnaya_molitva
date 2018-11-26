@@ -1,8 +1,15 @@
 const path = require('path');
 const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const autoprefixer = require('autoprefixer');
+const webpack = require('webpack');
 
 const conf = {
+    optimization: {
+        minimizer : [],
+    },
     entry: {
         application: './public/js/application.js'
     },
@@ -34,25 +41,34 @@ const conf = {
                     }
                 }
             },
-            // {
-            //     test: /\.css$/,
-            //     use: [
-            //         {loader: MiniCssExtractPlugin.loader},
-            //         {loader: "css-loader"}
-            //     ]
-            // },
             {
                 test: /\.(png|woff|woff2|eot|ttf|svg)$/,
                 loader: 'url-loader?limit=100000'
+            },
+            {
+                test: /\.css$/,
+                use: [
+                    {loader: MiniCssExtractPlugin.loader},
+                    {loader: "css-loader"}
+                ]
             },
             {
                 test: /\.less$/,
                 use: [
                     {loader: MiniCssExtractPlugin.loader},
                     {loader: "css-loader"},
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            plugins: [
+                                autoprefixer({})
+                            ],
+                            sourceMap: true
+                        }
+                    },
                     {loader: 'less-loader', options: {
-                       sourceMap: true, path
-                    }}
+                            sourceMap: true, path
+                        }}
                 ]
             },
         ]
@@ -67,8 +83,25 @@ const conf = {
     ]
 };
 
+
 module.exports = (env, options) => {
     const isProduction = options.mode === 'production';
+
+    const definePlugin = new webpack.DefinePlugin({
+        PRODUCTION: isProduction,
+    });
+
+    if (isProduction) {
+        conf.optimization.minimizer.push(
+            new UglifyJsPlugin({
+                cache: true,
+                parallel: true,
+            }),
+            new OptimizeCSSAssetsPlugin({}))
+    }
+
+    conf.plugins.push(definePlugin);
+
     conf.devtool = isProduction ? false : 'eval-source-map';
     return conf
 };

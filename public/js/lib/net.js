@@ -1,6 +1,7 @@
-const serverURL = 'https://kekmate.tech';
-// const serverURL = 'http://localhost:8080';
-const storageURL = serverURL + '/storage/';
+const serverURLProd = 'https://kekmate.tech';
+const serverURLDev = 'http://localhost:8080';
+
+const storageURL = '/storage/';
 
 export default class Net {
     /**
@@ -10,7 +11,7 @@ export default class Net {
      * @returns {Promise<Response>}
      */
     static doPost ({ url = '/', body = {} } = {}) {
-        return fetch(serverURL + url, {
+        return fetch(Net.getServerURL() + url, {
             method: 'POST',
             body: JSON.stringify(body),
             credentials: 'include',
@@ -27,7 +28,7 @@ export default class Net {
      * @returns {Promise<Response>}
      */
     static doGet ({ url = '/' } = {}) {
-        return fetch(serverURL + url, {
+        return fetch(Net.getServerURL() + url, {
             method: 'GET',
             credentials: 'include'
         });
@@ -40,7 +41,7 @@ export default class Net {
      * @returns {Promise<Response>}
      */
     static doDelete ({ url = '/', body = {} } = {}) {
-        return fetch(serverURL + url, {
+        return fetch(Net.getServerURL() + url, {
             method: 'DELETE',
             credentials: 'include'
         });
@@ -51,7 +52,10 @@ export default class Net {
      * @returns {string}
      */
     static getServerURL () {
-        return serverURL;
+        if (PRODUCTION) {
+            return serverURLProd;
+        }
+        return serverURLDev;
     }
 
     /**
@@ -59,7 +63,10 @@ export default class Net {
      * @returns {string}
      */
     static getStorageURL () {
-        return storageURL;
+        if (PRODUCTION) {
+            return serverURLProd + storageURL;
+        }
+        return serverURLDev + storageURL;
     }
 
     /**
@@ -69,7 +76,7 @@ export default class Net {
      * @returns {Promise<Response>}
      */
     static doPut ({ url = '/', body = {} } = {}) {
-        return fetch(serverURL + url, {
+        return fetch(Net.getServerURL() + url, {
             method: 'PUT',
             body: JSON.stringify(body),
             credentials: 'include',
@@ -87,7 +94,7 @@ export default class Net {
      * @returns {Promise<Response>}
      */
     static doPostFormData ({ url = '/', body = {} } = {}) {
-        return fetch(serverURL + url, {
+        return fetch(Net.getServerURL() + url, {
             method: 'POST',
             body,
             mode: 'cors',

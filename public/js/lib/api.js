@@ -1,9 +1,9 @@
 import Net from './net.js';
-const gameAddres = "wss://kekmate.tech/api/game/ws";
-const chatAddres = "wss://kekmate.tech/api/chat/ws";
+const gameAddresProd = "wss://kekmate.tech/api/game/ws";
+const chatAddresProd = "wss://kekmate.tech/api/chat/ws";
 
-// const gameAddres = "ws://localhost:8080/api/game/ws";
-// const chatAddres = "ws://localhost:3335/api/chat/ws";
+const gameAddresDev = "ws://localhost:8080/api/game/ws";
+const chatAddresDev = "ws://localhost:3335/api/chat/ws";
 
 export default class Api {
     /**
@@ -55,6 +55,7 @@ export default class Api {
 
     /**
      * Регистрирует пользователя
+     * @param login
      * @param email
      * @param password
      * @returns {Promise<Response>}
@@ -135,10 +136,16 @@ export default class Api {
     }
 
     static getGameAddress() {
-        return gameAddres;
+        if (PRODUCTION) {
+            return gameAddresProd
+        }
+        return gameAddresDev;
     }
 
     static getChatAddress() {
-        return chatAddres;
+        if (PRODUCTION) {
+            return chatAddresProd
+        }
+        return chatAddresDev;
     }
 }
