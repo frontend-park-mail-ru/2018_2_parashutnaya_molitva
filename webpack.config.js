@@ -3,6 +3,7 @@ const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const autoprefixer = require('autoprefixer');
 const webpack = require('webpack');
 
 const conf = {
@@ -56,6 +57,15 @@ const conf = {
                 use: [
                     {loader: MiniCssExtractPlugin.loader},
                     {loader: "css-loader"},
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            plugins: [
+                                autoprefixer({})
+                            ],
+                            sourceMap: true
+                        }
+                    },
                     {loader: 'less-loader', options: {
                             sourceMap: true, path
                         }}
