@@ -17,7 +17,7 @@
                             <img class="user-bar__avatar header-bar__avatar"></img>
                         </div>
                         <div class="user-bar__column header-bar__column">
-                            <img src="../images/dropdown.svg" class="header-bar__dropdown-array js-dropdown-array"></img>
+                            <div class="header-bar__dropdown-array js-dropdown-array"></div>
                         </div>
                     </div>
                 </div>

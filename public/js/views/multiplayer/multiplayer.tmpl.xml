@@ -22,7 +22,7 @@
                     </div>
                 </div>
                 <div class="button popup__x-mark game-options__x-mark js-menu-back-x-mark">
-                    <img src="../images/x-mark.svg" draggable="false"></img>
+                    <div draggable="false" class="x-mark-image"></div>
                 </div>
             </div>
         </div>
@@ -33,7 +33,7 @@
                     <div class="loader-ring js-loader"><div></div><div></div><div></div><div></div></div>
                 </div>
                 <div class="button popup__x-mark game-options__x-mark js-menu-back-x-mark">
-                    <img src="../images/x-mark.svg" draggable="false"></img>
+                    <div draggable="false" class="x-mark-image"></div>
                 </div>
             </div>
         </div>

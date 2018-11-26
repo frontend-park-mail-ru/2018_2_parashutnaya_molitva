@@ -24,7 +24,7 @@
                     </div>
                 </div>
                 <div class="button popup__x-mark game-options__x-mark js-menu-back-x-mark">
-                    <img src="../images/x-mark.svg" draggable="false"/>
+                    <div draggable="false" class="x-mark-image"></div>
                 </div>
             </div>
         </div>
