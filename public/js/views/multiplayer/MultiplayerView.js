@@ -3,7 +3,7 @@ import './multiplayer.less';
 import template from './multiplayer.tmpl.xml';
 import GameView from "../game/GameView";
 import {GAME, ROUTER, SERVICE as WS, SERVICE} from "../../lib/eventbus/events";
-import Piece from "../../components/chess/piece";
+import Piece from "../../components/chess/piece/piece";
 import userBlockTemplate from "../../components/userblock/userblock.xml";
 import Timer from "../../components/timer/timer";
 import IconPresenter from "../../components/icons-presenter/iconsPresenter";

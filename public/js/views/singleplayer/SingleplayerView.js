@@ -6,7 +6,7 @@ import GameView from "../game/GameView";
 import Timer from '../../components/timer/timer';
 import IconPresenter from '../../components/icons-presenter/iconsPresenter';
 import userBlockTemplate from '../../components/userblock/userblock.xml';
-import Piece from '../../components/chess/piece';
+import Piece from '../../components/chess/piece/piece';
 import {GAME, ROUTER} from "../../lib/eventbus/events";
 import PromotionPopup from "../../components/popup/promotionPopup";
 

@@ -1,9 +1,9 @@
 import Net from './net.js';
-// const gameAddres = "wss://kekmate.tech/api/game/ws";
-// const chatAddres = "wss://kekmate.tech/api/chat/ws";
+const gameAddres = "wss://kekmate.tech/api/game/ws";
+const chatAddres = "wss://kekmate.tech/api/chat/ws";
 
-const gameAddres = "ws://localhost:8080/api/game/ws";
-const chatAddres = "ws://localhost:3335/api/chat/ws";
+// const gameAddres = "ws://localhost:8080/api/game/ws";
+// const chatAddres = "ws://localhost:3335/api/chat/ws";
 
 export default class Api {
     /**
