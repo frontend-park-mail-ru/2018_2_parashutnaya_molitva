@@ -1,5 +1,5 @@
 import View from '../../lib/view';
-import Board from '../../components/chess/board';
+import Board from '../../components/chess/board/board';
 import {GAME} from '../../lib/eventbus/events';
 
 export default class GameView extends View {

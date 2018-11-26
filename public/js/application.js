@@ -17,7 +17,7 @@ import {CHAT, HEADER, GLOBAL} from "./lib/eventbus/events";
 
 document.addEventListener('DOMContentLoaded', () => {
     if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || window.location.hostname === 'localhost')) {
-        // const registration = runtime.register();
+        const registration = runtime.register();
     }
 
     const page = document.querySelector('.page');
