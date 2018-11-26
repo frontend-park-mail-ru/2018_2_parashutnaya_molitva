@@ -1,3 +1,4 @@
+import 'normalize.css';
 import '../css/style.less';
 import AboutController from './controllers/AboutController.js';
 import ScoreboardController from './controllers/ScoreboardController.js';
@@ -18,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || window.location.hostname === 'localhost')) {
         // const registration = runtime.register();
     }
+
     const page = document.querySelector('.page');
     createSiteModules(page);
     const main = document.querySelector('.main');
