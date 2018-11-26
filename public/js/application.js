@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || window.location.hostname === 'localhost')) {
         // const registration = runtime.register();
     }
+
     const page = document.querySelector('.page');
     createSiteModules(page);
     const main = document.querySelector('.main');

@@ -1,6 +1,7 @@
 const path = require('path');
 const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const webpack = require('webpack');
 
 const conf = {
     entry: {
@@ -34,13 +35,6 @@ const conf = {
                     }
                 }
             },
-            // {
-            //     test: /\.css$/,
-            //     use: [
-            //         {loader: MiniCssExtractPlugin.loader},
-            //         {loader: "css-loader"}
-            //     ]
-            // },
             {
                 test: /\.(png|woff|woff2|eot|ttf|svg)$/,
                 loader: 'url-loader?limit=100000'
@@ -51,8 +45,8 @@ const conf = {
                     {loader: MiniCssExtractPlugin.loader},
                     {loader: "css-loader"},
                     {loader: 'less-loader', options: {
-                       sourceMap: true, path
-                    }}
+                            sourceMap: true, path
+                        }}
                 ]
             },
         ]
@@ -67,8 +61,16 @@ const conf = {
     ]
 };
 
+
 module.exports = (env, options) => {
     const isProduction = options.mode === 'production';
+
+    const definePlugin = new webpack.DefinePlugin({
+        PRODUCTION: isProduction,
+    });
+
+    conf.plugins.push(definePlugin);
+
     conf.devtool = isProduction ? false : 'eval-source-map';
     return conf
 };
