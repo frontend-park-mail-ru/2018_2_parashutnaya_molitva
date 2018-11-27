@@ -19,7 +19,7 @@
                         </div>
                     </fest:when>
                     <fest:otherwise>
-                        <div class="user-block__element user-info">
+                        <div class="user-block__element user-info user-info_hide">
                             <div class="user-info__color-figure user-info__color-figure_white"></div>
                             <div class="user-info__text user-info__text_color">WHITE</div>
                         </div>
@@ -48,7 +48,7 @@
                         </div>
                     </fest:when>
                     <fest:otherwise>
-                        <div class="user-block__element user-info">
+                        <div class="user-block__element user-info user-info_hide">
                             <div class="user-info__text user-info__text_color">BLACK</div>
                             <div class="user-info__color-figure user-info__color-figure_black user-info__color-figure_flipped">
                             </div>
