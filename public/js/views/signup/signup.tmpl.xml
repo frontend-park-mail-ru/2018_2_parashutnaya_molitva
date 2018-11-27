@@ -3,27 +3,23 @@
         <div class="loading hidden">Loading...</div>
         <div class="warning signin__warning js-warning-common"></div>
         <form class="form" novalidate="novalidate">
-            <label class="text-h3" for="email">Email</label>
             <input class="input signin__input text-h2" type="email" name="email" id="email" autocomplete="autocomplete"
                    autofocus="true" placeholder="Email"/>
             <div class="warning signup__warning hidden js-warning-email"></div>
 
-            <label class="text-h3" for="login">Login</label>
             <input class="input signin__input text-h2" type="login" name="login" id="login" autocomplete="autocomplete"
                    autofocus="true" placeholder="Login"/>
             <div class="warning signup__warning hidden js-warning-login"></div>
 
-            <label class="text-h3" for="password">Password</label>
             <input class="input signin__input text-h2" type="password" name="password" id="password" autocomplete="autocomplete"
                    placeholder="Password"/>
             <div class="warning signup__warning hidden js-warning-password"></div>
 
-            <label class="text-h3" for="password-repeat">Repeat password</label>
             <input class="input signin__input text-h2" type="password" name="password-repeat" id="password-repeat" autocomplete="autocomplete"
                    placeholder="Repeat Password"/>
             <div class="warning signup__warning hidden js-warning-repassword"></div>
 
-            <input class="button submit text-h2" type="submit" name="submit" value="Sign up"/>
+            <input class="button submit singnin__submit text-h2" type="submit" name="submit" value="Sign up"/>
             <div class="signin__nav">
                 <a class="button header-bar__button text-base" href="/">Menu</a>
                 <div class="text-base">or</div>

@@ -5,4 +5,5 @@
         <a class="button menu__button" href="/leaderboard">Leaderboard</a>
         <a class="button menu__button" href="/about">About</a>
     </div>
+    <fest:include src="../../components/popup/offline-popup.xml"/>
 </fest:template>

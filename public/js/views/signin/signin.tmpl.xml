@@ -3,15 +3,13 @@
         <div class="loading hidden">Loading...</div>
         <div class="warning signin__warning text-h3"></div>
         <form class="form" novalidate="novalidate">
-            <label class="signin__label text-h3" for="login_or_email">Login or email</label>
             <input class="input signin__input text-h2" type="login_or_email" name="login_or_email" id="login_or_email" placeholder="Login or email" autofocus="true"
                    autocomplete="autocomplete"/>
 
-            <label class="signin_label text-h3" for="password">Password</label>
             <input class="input signin__input text-h2" type="password" name="password" id="password" placeholder="Password"
                    autocomplete="autocomplete"/>
 
-            <input class="button submit text-h2" type="submit" name="submit" value="Sign In"/>
+            <input class="button submit singnin__submit text-h2" type="submit" name="submit" value="Sign In"/>
             <div class="signin__nav">
                 <a class="button header-bar__button text-base" href="/">Menu</a>
                 <div class="text-base">or</div>

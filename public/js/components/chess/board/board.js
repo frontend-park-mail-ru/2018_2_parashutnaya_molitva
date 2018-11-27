@@ -36,6 +36,7 @@ export default class Board {
         this.setState({ boardState, turn, sideOfView });
     }
 
+
     render (root) {
         root.innerHTML = '';
         root.appendChild(this._board);
