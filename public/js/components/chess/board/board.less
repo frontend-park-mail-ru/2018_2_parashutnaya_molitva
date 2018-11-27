@@ -4,19 +4,26 @@
 }
 
 .board {
-    border: solid black;
-    border-spacing: 0;
-    border-collapse: collapse;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-}
-.board tr {
-    width: var(--board-size);
-    height: var(--cell-size);
-    margin: 0;
-    padding: 0;
+    @media screen and (orientation: landscape) {
+        border: solid black;
+        height: 80vh;
+        width: 80vh;
+    }
+
+    @media screen and (orientation: portrait) {
+        border-top: 1px solid black;
+        border-bottom: 1px solid black;
+        width: 100vw;
+    }
 }
 
-.board td {
-    margin: 0;
-    padding: 0;
+.column {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
 }

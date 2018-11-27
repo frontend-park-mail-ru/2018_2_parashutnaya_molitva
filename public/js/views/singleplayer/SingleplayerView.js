@@ -1,14 +1,15 @@
 import './singleplayer.less';
-import '../../components/popup/promotion-popup.less';
-import View from '../../lib/view';
 import template from './singleplayer.tmpl.xml';
+import '../../components/userblock/userblock.less';
+import userBlockTemplate from '../../components/userblock/userblock.xml';
+import '../../components/popup/promotion-popup.less';
+import PromotionPopup from "../../components/popup/promotionPopup";
+import View from '../../lib/view';
 import GameView from "../game/GameView";
 import Timer from '../../components/timer/timer';
 import IconPresenter from '../../components/icons-presenter/iconsPresenter';
-import userBlockTemplate from '../../components/userblock/userblock.xml';
 import Piece from '../../components/chess/piece/piece';
 import {GAME, ROUTER} from "../../lib/eventbus/events";
-import PromotionPopup from "../../components/popup/promotionPopup";
 
 const BLACK_COLOR_BACKGROUND = "#7f8b9575";
 
@@ -114,6 +115,7 @@ export default class SingleplayerView extends View {
 
 
     _onMoveSuccess({turn, deadPiece = null} = {}){
+        console.log("m");
         if (turn) {
             if (deadPiece != null) {
                 this._blackFigures.add(new Piece(deadPiece.piece, deadPiece.color));
