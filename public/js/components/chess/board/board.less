@@ -5,13 +5,25 @@
 
 .board {
     display: flex;
-    border: solid black;
-    border-spacing: 0;
-    border-collapse: collapse;
+    align-items: center;
+    justify-content: center;
 
+    @media screen and (orientation: landscape) {
+        border: solid black;
+        height: 80vh;
+        width: 80vh;
+    }
+
+    @media screen and (orientation: portrait) {
+        border-top: 1px solid black;
+        border-bottom: 1px solid black;
+        width: 100vw;
+    }
 }
 
 .column {
-    width:var(--cell-size);
-    height: var(--board-size);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
 }

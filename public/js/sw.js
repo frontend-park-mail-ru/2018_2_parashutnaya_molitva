@@ -36,16 +36,26 @@ self.addEventListener('activate', event => {
 });
 
 self.addEventListener('fetch', event => {
-    const url = new URL(event.request.url);
-    console.log(url);
-    console.log(event.request);
 
     if (event.request.method !== "GET"){
         return;
     }
 
 
+    console.log(url);
+    const url = new URL(event.request.url);
+
+    if (event.request.cache === 'only-if-cached' && event.request.mode !== 'same-origin'){
+        return;
+    }
+
     event.respondWith(
-        fetch(event.request).catch(() => global.caches.match(url.pathname))
+        fetch(event.request).catch(() => {
+            if (url.pathname.indexOf('api') !== -1){
+                return;
+            }
+            console.log("Cache request to api");
+            return global.caches.match(url.pathname)
+        })
     )
 });
