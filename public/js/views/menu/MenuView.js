@@ -47,11 +47,16 @@ export default class MenuView extends View {
     render (root, data = {}) {
         super.render(root, data);
         this._eventBus.triggerEvent('checkAuth');
-        this._gameOptionsPopup = this.el.querySelector('.js-game-options-popup');
+        this._offlinePopup = this.el.querySelector('.js-offline-popup');
+
+        this._offlinePopup.querySelector('.js-menu-back-x-mark').addEventListener('click', () => {
+            this._offlinePopup.classList.add('hidden');
+        });
+
     }
 
     _onOfflineMultiplayerClick(){
-        console.log("offline");
+        this._offlinePopup.classList.remove('hidden');
     }
 
     _onNotAuthMultiplayerClick() {
