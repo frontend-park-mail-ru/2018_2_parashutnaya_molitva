@@ -21,12 +21,12 @@
                     <fest:otherwise>
                         <div class="user-block__element user-info">
                             <div class="user-info__color-figure user-info__color-figure_white"></div>
-                            <div class="user-info__color-text">WHITE</div>
+                            <div class="user-info__text user-info__text_color">WHITE</div>
                         </div>
                     </fest:otherwise>
                 </fest:choose>
                 <div class="user-block__element user-timer js-timer-first"></div>
-                <div class="user-block__element js-figures-first"></div>
+                <div class="user-block__element user-block__figures js-figures-first"></div>
             </div>
         </fest:when>
         <fest:otherwise>
@@ -49,14 +49,14 @@
                     </fest:when>
                     <fest:otherwise>
                         <div class="user-block__element user-info">
-                            <div class="user-info__color-text">BLACK</div>
+                            <div class="user-info__text user-info__text_color">BLACK</div>
                             <div class="user-info__color-figure user-info__color-figure_black user-info__color-figure_flipped">
                             </div>
                         </div>
                     </fest:otherwise>
                 </fest:choose>
                 <div class="user-block__element user-timer js-timer-second"></div>
-                <div class="user-block__element js-figures-second"></div>
+                <div class="user-block__element user-block__figures js-figures-second"></div>
             </div>
         </fest:otherwise>
     </fest:choose>

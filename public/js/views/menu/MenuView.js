@@ -1,5 +1,6 @@
 import './menu.less';
 import View from '../../lib/view.js';
+import '../../components/popup/offline-popup.less';
 import Menu from '../../components/menu/menu.js';
 
 import template from './menu.tmpl.xml';
@@ -18,7 +19,7 @@ export default class MenuView extends View {
             menu = new Menu([
                 { textLabel: 'Singleplayer', href: '/singleplayer'},
                 { textLabel: 'Multiplayer', href: '/signin',
-                    clickCallback: this._onNotAuthMultiplayerClick.bind(this)},
+                    clickCallback: this._onNotAuthMultiplayerClick.bind(this), isNavigate: false},
                 { textLabel: 'Leaderboard', href: '/leaderboard' },
                 { textLabel: 'About', href: '/about' }
             ]);
@@ -26,8 +27,9 @@ export default class MenuView extends View {
             menu = new Menu([
                 { textLabel: 'Singleplayer', href: '/singleplayer'},
                 { textLabel: 'Multiplayer', href: '',
-                    clickCallback: this._onOfflineMultiplayerClick.bind(this)},
-                { textLabel: 'Leaderboard', href: '/leaderboard' },
+                    clickCallback: this._onOfflineMultiplayerClick.bind(this), isNavigate: false},
+                { textLabel: 'Leaderboard', href: '',
+                    clickCallback: this._onOfflineMultiplayerClick.bind(this), isNavigate: false},
                 { textLabel: 'About', href: '/about' }
             ]);
         } else {

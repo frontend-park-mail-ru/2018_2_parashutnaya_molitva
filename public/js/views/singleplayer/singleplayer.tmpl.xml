@@ -1,5 +1,5 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="params">
-    <div class="game">
+    <div class="game game_singleplayer">
         <aside class="info-block info-block_first js-first">
             <button class="button submit text-h2 js-surrender-first">Surrender</button>
         </aside>
@@ -16,11 +16,11 @@
                     <div class="popup__title winner__text">Winner</div>
                     <div class="user-block__element user-info js-white-winner hidden">
                         <div class="user-info__color-figure user-info__color-figure_white"/>
-                        <div class="user-info__color-text winner__text">WHITE</div>
+                        <div class="user-info__text winner__text">WHITE</div>
                     </div>
                     <div class="user-block__element user-info js-black-winner hidden">
                         <div class="user-info__color-figure user-info__color-figure_black"/>
-                        <div class="user-info__color-text winner__text">BLACK</div>
+                        <div class="user-info__text winner__text">BLACK</div>
                     </div>
                 </div>
                 <div class="button popup__x-mark game-options__x-mark js-menu-back-x-mark">

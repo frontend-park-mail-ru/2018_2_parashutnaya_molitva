@@ -10,6 +10,7 @@ export default class MenuButton {
      * @param textLabel текст внутри кнопки
      * @param href
      * @param clickCallback действие при клике на кнопку
+     * @param isNavigate
      */
     constructor ({ textLabel, href = '', clickCallback = noop, isNavigate = true} = {}) {
         const element = document.createElement('a');
