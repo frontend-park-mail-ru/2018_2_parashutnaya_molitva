@@ -1,5 +1,8 @@
 const serverURLProd = 'https://kekmate.tech';
-const serverURLDev = 'http://localhost:8080';
+const serverURLDev = 'http://localhost:3334';
+
+const gameServerURLProd = 'https://kekmate.tech';
+const gameServerURLDev = 'http://localhost:3336';
 
 const storageURL = '/storage/';
 
@@ -8,10 +11,11 @@ export default class Net {
      * Пост запрос, с JSON body
      * @param url
      * @param body
+     * @param host
      * @returns {Promise<Response>}
      */
-    static doPost ({ url = '/', body = {} } = {}) {
-        return fetch(Net.getServerURL() + url, {
+    static doPost ({ url = '/', body = {}, host = Net.getServerURL() } = {}) {
+        return fetch(host + url, {
             method: 'POST',
             body: JSON.stringify(body),
             credentials: 'include',
@@ -56,6 +60,17 @@ export default class Net {
             return serverURLProd;
         }
         return serverURLDev;
+    }
+
+    /**
+     * Возвращает url api server-a
+     * @returns {string}
+     */
+    static getGameServerUrl() {
+        if (PRODUCTION) {
+            return gameServerURLProd;
+        }
+        return gameServerURLDev;
     }
 
     /**
