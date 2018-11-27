@@ -2,7 +2,7 @@ import Net from './net.js';
 const gameAddresProd = "wss://kekmate.tech/api/game/ws";
 const chatAddresProd = "wss://kekmate.tech/api/chat/ws";
 
-const gameAddresDev = "ws://localhost:8080/api/game/ws";
+const gameAddresDev = "ws://localhost:3336/api/game/ws";
 const chatAddresDev = "ws://localhost:3335/api/chat/ws";
 
 export default class Api {
@@ -132,6 +132,7 @@ export default class Api {
             body: {
                 duration,
             },
+            host: Net.getGameServerUrl(),
         });
     }
 

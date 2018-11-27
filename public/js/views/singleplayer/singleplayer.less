@@ -1,4 +1,5 @@
 @import "~Styles/theme";
+@import "~Styles/const";
 
 @first-info-block: info-first;
 @second-info-block: info-second;
@@ -8,25 +9,48 @@
   transition: background 1s;
   height: 100%;
   display: grid;
-  grid-template-rows: 1fr 15fr 1fr;
-  grid-template-columns: 2fr 6fr 2fr;
-  grid-template-areas: ". . ." "@{first-info-block} @{board-block} @{second-info-block}" ". . .";
 }
 
+.game_singleplayer {
+  @media screen and (orientation: landscape) {
+    grid-template-rows: 2% auto 2%;
+    grid-template-columns: 2fr 7fr 2fr;
+    grid-template-areas: ". . ." "@{first-info-block} @{board-block} @{second-info-block}" ". . .";
+  }
+
+  @media screen and (orientation: portrait) {
+    grid-template-rows: 1fr fit-content(100%) 1fr;
+    grid-template-columns: 1fr;
+    grid-template-areas: "@{second-info-block}" "@{board-block}" "@{first-info-block}";
+  }
+}
 .info-block {
   display: flex;
   justify-content: space-between;
   flex-direction: column;
+
+  @media @screen-portrait {
+    flex-direction: row;
+    align-items: center;
+    padding: 1vh;
+  }
 }
 
 .info-block_first {
-  align-items: flex-end;
   grid-area: @first-info-block;
+
+  @media @screen-landscape {
+    align-items: flex-end;
+  }
 }
 
 .info-block_second {
-  align-items: flex-start;
   grid-area: @second-info-block;
+
+  @media @screen-landscape {
+    align-items: flex-start;
+  }
+
 }
 
 .board-section {
@@ -34,53 +58,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.user-block {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-}
-
-.user-block_flipped {
-  align-items: flex-start;
-}
-
-.user-block__element {
-  margin-bottom: 20px;
-}
-
-.user-info {
-  display: flex;
-  align-items: center;
-}
-
-.user-info__color-figure {
-  background-size: 100%;
-  height: 64px;
-  width: 64px;
-  image-rendering: pixelated;
-}
-.user-info__color-figure_flipped {
-  transform: scaleX(-1);
-}
-
-.user-info__color-figure_black {
-  background-image: url("../../components/chess/sprites/knight_black.png");
-}
-
-.user-info__color-figure_white {
-  background-image: url("../../components/chess/sprites/knight_white.png");
-}
-
-.user-info__color-text {
-  font-size: 2.5rem;
-  color: @header-bar-button-text-color;
-}
-
-.user-timer {
-  font-size: 1.7rem;
-  color: @header-bar-button-text-color;
 }
 
 .game-options__content {
@@ -106,11 +83,11 @@
 .game-options__button {
   font-size: 1.2rem;
 
-  @media screen and (min-width: 425px){
+  @media screen and (min-width: @mobile-l-width){
     font-size: 1.5rem;
   }
 
-  @media screen and (min-width: 768px) {
+  @media screen and (min-width: @tablet-width) {
     font-size: 2rem;
   }
 
@@ -130,6 +107,7 @@
 }
 
 .winner {
+  padding: 8vh;
   display: flex;
   flex-direction: column;
   align-items: center;

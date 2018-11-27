@@ -129,19 +129,89 @@ export default class Game {
         const board = this.boardString();
         const turn = this.turn();
 
+
+        // Пересчет количества фигур, для проверки Promotion...
         if (turn) {
-            const pawnCurrentCount = [...board].reduce((count, piece) => {
-                return piece === 'P' ? count + 1 : count
+            const knightCurrentCount = [...board].reduce((count, piece) => {
+                return piece === 'n' ? count + 1 : count
+            }, 0);
+            if (knightCurrentCount > this._blackAlive[PIECE_TYPE.KNIGHT]) {
+                this._blackAlive[PIECE_TYPE.PAWN]--;
+                this._blackAlive[PIECE_TYPE.KNIGHT]++;
+            }
+
+            const bishopCurrentCount = [...board].reduce((count, piece) => {
+                return piece === 'b' ? count + 1 : count
             }, 0);
 
-            if (pawnCurrentCount < this._whiteAlive[PIECE_TYPE.PAWN]) {
-                this._whiteAlive[PIECE_TYPE.PAWN]--;
-                return {piece: PIECE_TYPE.PAWN, color: COLOR.WHITE};
+            if (bishopCurrentCount > this._blackAlive[PIECE_TYPE.BISHOP]) {
+                this._blackAlive[PIECE_TYPE.PAWN]--;
+                this._blackAlive[PIECE_TYPE.BISHOP]++;
             }
+
+            const rookCurrentCount = [...board].reduce((count, piece) => {
+                return piece === 'r' ? count + 1 : count
+            }, 0);
+
+            if (rookCurrentCount > this._blackAlive[PIECE_TYPE.ROOK]) {
+                this._blackAlive[PIECE_TYPE.PAWN]--;
+                this._blackAlive[PIECE_TYPE.ROOK]++;
+            }
+
+            const qCurrentCount = [...board].reduce((count, piece) => {
+                return piece === 'q' ? count + 1 : count
+            }, 0);
+
+            if (qCurrentCount > this._blackAlive[PIECE_TYPE.QUEEN]) {
+                this._blackAlive[PIECE_TYPE.PAWN]--;
+                this._blackAlive[PIECE_TYPE.QUEEN]++;
+            }
+
+        } else {
+            const knightCurrentCount = [...board].reduce((count, piece) => {
+                return piece === 'N' ? count + 1 : count
+            }, 0);
+
+            if (knightCurrentCount > this._whiteAlive[PIECE_TYPE.KNIGHT]) {
+                this._whiteAlive[PIECE_TYPE.PAWN]--;
+                this._whiteAlive[PIECE_TYPE.KNIGHT]++;
+            }
+
+            const bishopCurrentCount = [...board].reduce((count, piece) => {
+                return piece === 'B' ? count + 1 : count
+            }, 0);
+
+            if (bishopCurrentCount > this._whiteAlive[PIECE_TYPE.BISHOP]) {
+                this._whiteAlive[PIECE_TYPE.PAWN]--;
+                this._whiteAlive[PIECE_TYPE.BISHOP]++;
+            }
+
+            const rookCurrentCount = [...board].reduce((count, piece) => {
+                return piece === 'R' ? count + 1 : count
+            }, 0);
+
+            if (rookCurrentCount > this._whiteAlive[PIECE_TYPE.ROOK]) {
+                this._whiteAlive[PIECE_TYPE.PAWN]--;
+                this._whiteAlive[PIECE_TYPE.ROOK]++;
+            }
+
+            const qCurrentCount = [...board].reduce((count, piece) => {
+                return piece === 'Q' ? count + 1 : count
+            }, 0);
+
+            if (qCurrentCount > this._whiteAlive[PIECE_TYPE.QUEEN]) {
+                this._whiteAlive[PIECE_TYPE.PAWN]--;
+                this._whiteAlive[PIECE_TYPE.QUEEN]++;
+            }
+        }
+
+
+        if (turn) {
 
             const knightCurrentCount = [...board].reduce((count, piece) => {
                 return piece === 'N' ? count + 1 : count
             }, 0);
+
 
             if (knightCurrentCount < this._whiteAlive[PIECE_TYPE.KNIGHT]){
                 this._whiteAlive[PIECE_TYPE.KNIGHT]--;
@@ -175,6 +245,15 @@ export default class Game {
                 return {piece: PIECE_TYPE.QUEEN, color: COLOR.WHITE};
             }
 
+            const pawnCurrentCount = [...board].reduce((count, piece) => {
+                return piece === 'P' ? count + 1 : count
+            }, 0);
+
+            if (pawnCurrentCount < this._whiteAlive[PIECE_TYPE.PAWN]) {
+                this._whiteAlive[PIECE_TYPE.PAWN]--;
+                return {piece: PIECE_TYPE.PAWN, color: COLOR.WHITE};
+            }
+
             const kCurrentCount = [...board].reduce((count, piece) => {
                 return piece === 'K' ? count + 1 : count
             }, 0);
@@ -184,15 +263,6 @@ export default class Game {
                 return {piece: PIECE_TYPE.KING, color: COLOR.WHITE};
             }
         } else {
-            const pawnCurrentCount = [...board].reduce((count, piece) => {
-                return piece === 'p' ? count + 1 : count
-            }, 0);
-
-            if (pawnCurrentCount < this._blackAlive[PIECE_TYPE.PAWN]) {
-                this._blackAlive[PIECE_TYPE.PAWN]--;
-                return {piece: PIECE_TYPE.PAWN, color: COLOR.BLACK};
-            }
-
             const knightCurrentCount = [...board].reduce((count, piece) => {
                 return piece === 'n' ? count + 1 : count
             }, 0);
@@ -215,6 +285,7 @@ export default class Game {
                 return piece === 'r' ? count + 1 : count
             }, 0);
 
+
             if (rookCurrentCount < this._blackAlive[PIECE_TYPE.ROOK]){
                 this._blackAlive[PIECE_TYPE.ROOK]--;
                 return {piece: PIECE_TYPE.ROOK, color: COLOR.BLACK};
@@ -227,6 +298,15 @@ export default class Game {
             if (qCurrentCount < this._blackAlive[PIECE_TYPE.QUEEN]){
                 this._blackAlive[PIECE_TYPE.QUEEN]--;
                 return {piece: PIECE_TYPE.QUEEN, color: COLOR.BLACK};
+            }
+
+            const pawnCurrentCount = [...board].reduce((count, piece) => {
+                return piece === 'p' ? count + 1 : count
+            }, 0);
+
+            if (pawnCurrentCount < this._blackAlive[PIECE_TYPE.PAWN]) {
+                this._blackAlive[PIECE_TYPE.PAWN]--;
+                return {piece: PIECE_TYPE.PAWN, color: COLOR.BLACK};
             }
 
             const kCurrentCount = [...board].reduce((count, piece) => {
