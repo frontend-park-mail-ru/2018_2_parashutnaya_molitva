@@ -131,18 +131,19 @@ export default class SingleplayerView extends View {
 
     _whiteTurn() {
         this._timerSecond.stop();
-
-        this._topElement.style.backgroundColor = "";
-
         this._timerFirst.start();
+        this._buttonSurrenderFirst.classList.remove('hidden');
+        this._buttonSurrenderSecond.classList.add('hidden');
+        this._topElement.style.backgroundColor = "";
     }
 
     _blackTurn() {
         this._timerFirst.stop();
-
+        this._timerSecond.start();
+        this._buttonSurrenderSecond.classList.remove('hidden');
+        this._buttonSurrenderFirst.classList.add('hidden');
         this._topElement.style.backgroundColor = BLACK_COLOR_BACKGROUND;
 
-        this._timerSecond.start();
     }
 
     _whiteTimerExpire() {
@@ -163,6 +164,7 @@ export default class SingleplayerView extends View {
 
         this._showWinnerPopup({turn});
     }
+
     _showWinnerPopup({turn}) {
 
         let popup = this.el.querySelector('.js-winner-popup');
@@ -211,9 +213,11 @@ export default class SingleplayerView extends View {
         this._blackFigures.render();
 
         this._buttonSurrenderSecond = this.el.querySelector('.js-surrender-second');
+        this._buttonSurrenderSecond.classList.add('hidden');
         this._buttonSurrenderSecond.addEventListener('click', () => {
             this._onGameOver({turn: false})
         });
+
     }
 
 }
