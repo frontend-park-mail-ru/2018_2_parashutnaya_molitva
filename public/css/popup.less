@@ -1,4 +1,6 @@
 @import "~Styles/theme";
+@import "~Styles/const";
+
 @background-color-popup: #000000b5;
 @background-color-popup__content: #434239;
 
@@ -41,19 +43,19 @@
 .popup__title {
   font-size: 1rem;
 
-  @media screen and (min-width: 320px){
+  @media screen and (min-width: @mobile-s-width){
     font-size: 1.5rem;
   }
 
-  @media screen and (min-width: 425px){
+  @media screen and (min-width: @mobile-l-width){
     font-size: 2rem;
   }
 
-  @media screen and (min-width: 768px){
+  @media screen and (min-width: @tablet-width){
     font-size: 3rem;
   }
 
-  @media screen and (min-width: 1024px){
+  @media screen and (min-width: @laptop-width){
     font-size: 3.5rem;
   }
 }

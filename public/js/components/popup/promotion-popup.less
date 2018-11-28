@@ -1,6 +1,4 @@
-.figure-container__element {
-
-}
+@import "~Styles/const";
 
 @promotion-content-padding: 5vw;
 @promotion-content-padding-number: 5;
@@ -42,12 +40,12 @@
     transform: scale(1.1);
   }
 
-  @media screen and (min-width: 375px) {
+  @media screen and (min-width: @mobile-m-width) {
     height: calc(4.3vw  + 84px);
     width: calc(4.3vw + 84px);
   }
 
-  @media screen and (min-width: 1024px) {
+  @media screen and (min-width: @laptop-width) {
     height: 128px;
     width: 128px;
   }

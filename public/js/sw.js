@@ -1,4 +1,4 @@
-const CACHE_NAME = new Date().toString();
+const CACHE_NAME = "v1.0.1";
 
 const cacheFirstUrl = ['/about', '/singleplayer'];
 const assets = [...global.serviceWorkerOption.assets.map( asset => "/dist" + asset), '/', '/favicon.ico', ...cacheFirstUrl];
@@ -50,7 +50,7 @@ self.addEventListener('fetch', event => {
         return;
     }
 
-    if (url.pathname.indexOf('api') !== -1) {
+    if (url.pathname.indexOf('/api') !== -1 || url.pathname.indexOf('/storage') !== -1) {
         return;
     }
 
