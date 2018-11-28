@@ -1,4 +1,13 @@
 @import "~Styles/const";
+@first-info-block: info-first;
+@second-info-block: info-second;
+@board-block: board-section;
+
+.game_multiplayer {
+  grid-template-rows: 2% auto 2%;
+  grid-template-columns: 2fr 7fr 2fr;
+  grid-template-areas: ". . ." "@{first-info-block} @{board-block} @{second-info-block}" ". . .";
+}
 
 .loader-ring {
   display: inline-block;

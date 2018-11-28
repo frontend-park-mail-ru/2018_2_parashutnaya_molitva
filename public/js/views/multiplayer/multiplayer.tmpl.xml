@@ -1,5 +1,5 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="params">
-    <div class="game">
+    <div class="game game_multiplayer">
         <aside class="info-block info-block_first hidden js-first">
             <button class="button submit text-h2 js-surrender-first">Surrender</button>
         </aside>
