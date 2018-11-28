@@ -1,4 +1,6 @@
 @import "~Styles/theme";
+@import "~Styles/const";
+
 .scoreboard {
   display: flex;
   align-items: center;
@@ -7,9 +9,7 @@
   width: 200px;
   min-width: fit-content;
 
-  // (300)/(960) = 0.3125
-  // b = 200 - 320 * =
-  @media screen and (min-width: 320px) {
+  @media screen and (min-width: @mobile-s-width) {
     width: calc(31.25vw + 100px);
   }
 
@@ -20,4 +20,24 @@
 
 .scoreboard__body{
   background-color: @active-button-color;
+}
+
+.table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.th {
+  text-align: left;
+  padding: 8px;
+}
+
+.td {
+  text-align: left;
+  padding: 8px;
+  border: 1px solid #cccccc;
+}
+
+.tr:nth-child(even) {
+  background-color: #dddddd;
 }

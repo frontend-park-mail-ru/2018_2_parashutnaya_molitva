@@ -9,6 +9,14 @@
     height: 0;
 }
 
+iframe {
+    border: none;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+
+}
+
 body, html {
     font-family: arial, sans-serif;
     margin: 0!important;
@@ -29,42 +37,42 @@ body, html {
     animation-duration: 500s;
     animation-iteration-count: infinite;
     animation-timing-function: linear;
+
+    @media screen and (min-width: @mobile-s-width) {
+        background-size: 150px 150px;
+    }
+
+    @media (min-width: @mobile-l-width) {
+        .page {
+            background-size: 200px 200px;
+        }
+    }
+
+    @media (min-width: @tablet-width) {
+        .page {
+            background-size: 250px 250px;
+        }
+    }
+
+    @media (min-width: @laptop-width) {
+        .page {
+            background-size: 300px 300px;
+        }
+    }
+
 }
 
 
 @keyframes backgroud-animation {
     from {
-        background-position-x: 0%;
-        background-position-y: 0%;
+        background-position-x: 0;
+        background-position-y: 0;
     }
     to {
         background-position-x: 100%;
         background-position-y: 100%;
     }
 
-}
-@media (min-width: 320px) {
-    .page {
-        background-size: 150px 150px;
-    }
-}
-
-@media (min-width: 425px) {
-    .page {
-        background-size: 200px 200px;
-    }
-}
-
-@media (min-width: 768px) {
-    .page {
-        background-size: 250px 250px;
-    }
-}
-
-@media (min-width: 1024px) {
-    .page {
-        background-size: 300px 300px;
-    }
 }
 
 .wrapper {
@@ -114,7 +122,7 @@ body, html {
     transition: padding 0.1s;
 }
 
-@media all and (min-width: 425px) {
+@media all and (min-width: @mobile-l-width) {
     .button {
         padding: @default-padding-top-down-425px @default-padding-top-down-425px;
     }
@@ -124,7 +132,7 @@ body, html {
     }
 }
 
-@media all and (min-width: 768px) {
+@media all and (min-width: @tablet-width) {
     .button {
         padding: @default-padding-top-down-768px @default-padding-top-down-768px;
     }
@@ -157,7 +165,7 @@ body, html {
     &:hover {
         background-color: @active-button-color-hover;
         transform: scale(1.05, 1.05);
-        box-shadow: 0px 3px 4px 0px #5b595826, 0px -3px 4px 0px #5b595826;
+        box-shadow: 0 3px 4px 0 #5b595826, 0px -3px 4px 0px #5b595826;
     }
 }
 
@@ -169,14 +177,6 @@ body, html {
 
 .hidden {
     display: none !important;
-}
-
-iframe {
-    border: none;
-    position: absolute;
-    right: 0;
-    bottom: 0;
-
 }
 
 .chat-iframe {
@@ -205,26 +205,4 @@ iframe {
         height: 40px;
         width: 40px;
     }
-}
-
-/*table*/
-
-.table {
-    border-collapse: collapse;
-    width: 100%;
-}
-
-.th {
-    text-align: left;
-    padding: 8px;
-}
-
-.td {
-    text-align: left;
-    padding: 8px;
-    border: 1px solid #cccccc;
-}
-
-.tr:nth-child(even) {
-    background-color: #dddddd;
 }

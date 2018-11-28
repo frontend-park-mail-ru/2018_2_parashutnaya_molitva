@@ -5,7 +5,7 @@
                 <div class="popup__title waiting__title winner__text js-waiting-title">Sorry, but you're offline</div>
             </div>
             <div class="button popup__x-mark game-options__x-mark js-menu-back-x-mark">
-                <div draggable="false" class="x-mark-image"></div>
+                <div class="x-mark-image"></div>
             </div>
         </div>
     </div>
