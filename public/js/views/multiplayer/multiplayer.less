@@ -46,6 +46,15 @@
 }
 
 
+.multiplayer_user-block_second {
+  align-items: flex-start;
+
+  @media @screen-portrait {
+    align-items: center;
+
+    justify-content: space-between;
+  }
+}
 
 .multiplayer-user-bar_second {
   flex-direction: row-reverse;
@@ -57,15 +66,19 @@
 
 .multiplayer-user-info-bar_first {
   @media @screen-landscape {
+    margin-right: 0.5vw;
     align-items: flex-end;
   }
 }
 
 .multiplayer-user-info-bar_second {
+  @media @screen-landscape {
+    margin-left: 0.5vw;
+  }
+
   @media @screen-portrait {
     justify-content: flex-start;
   }
-
 }
 
 .multiplayer-user-info-bar_flipped{
