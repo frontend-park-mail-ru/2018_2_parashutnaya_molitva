@@ -4,29 +4,51 @@
 .user-block {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
 
   @media @screen-portrait {
+    width: 100%;
     flex-direction: row;
-    justify-content: space-around;
+    align-items: center;
+  }
+
+}
+
+.multiplayer_user-block_second {
+  align-items: flex-start;
+
+  @media @screen-portrait {
+    align-items: center;
+
+    justify-content: space-between;
   }
 }
 
-.user-block_flipped {
-  align-items: flex-start;
+.singleplayer__user-block_second {
+  @media @screen-portrait {
+    align-items: center;
+
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+  }
+}
+
+.singleplayer__user-block_first {
+  @media @screen-landscape {
+    align-items: flex-end;
+  }
 }
 
 .user-block__element {
   margin-bottom: 3vh;
 
   @media @screen-portrait {
-    margin-bottom: 1vh;
+    margin-bottom: 0;
   }
 }
 
 .user-block__figures {
   @media @screen-portrait {
-    width: 65%;
+    max-width: 65%;
   }
 }
 
@@ -85,15 +107,14 @@
   }
 }
 
-
-.multiplayer-user-bar{
-  flex-direction: row-reverse;
+.timer-second {
+  @media @screen-portrait{
+    order: 2;
+  }
 }
 
-.multiplayer-user-info-bar{
-  align-items: flex-start;
-}
-
-.multiplayer-user-info-bar_flipped{
-  align-items: flex-end;
+.figures-second {
+  @media @screen-portrait{
+    order: 1;
+  }
 }
