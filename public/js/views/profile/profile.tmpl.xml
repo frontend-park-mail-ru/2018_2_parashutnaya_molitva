@@ -6,14 +6,16 @@
         <fest:value>params.user.email</fest:value>
     </fest:var>
     <section class="section profile">
-        <figure class="profile__avatar">
+        <div class="profile__avatar">
             <img src="{avatar}" height="200"
                  width="200" class="profile__img js-avatar"></img>
-            <input type="file" class="js-upload-avatar" name="avatar" accept="image/jpeg,image/png" ></input>
+            <div class="profile__input-wrapper">
+                <div>Upload image</div>
+                <input type="file" class="js-upload-avatar" name="avatar" accept="image/jpeg,image/png" ></input>
+            </div>
             <div class="warning signup__warning hidden js-warning-avatar"></div>
-        </figure>
+        </div>
         <article class="profile__info">
-
             <div class="profile-row js-email-row">
                 <div class="profile__data">
                     Login:

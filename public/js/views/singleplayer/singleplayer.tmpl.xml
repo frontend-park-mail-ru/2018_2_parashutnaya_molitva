@@ -8,25 +8,8 @@
         <aside class="info-block info-block_second singleplayer__info-block_second js-second">
             <button class="button submit text-h2 js-surrender-second">Surrender</button>
         </aside>
-        <fest:include src="../../components/popup/game-option-popup.xml"/>
+        <fest:include src="../../components/popup/gameoptionPopup/game-option-popup.xml"/>
+        <fest:include src="../../components/popup/winnerPopup/winnerOfflinePopup.xml"/>
         <div class="js-promotion-popup-container"></div>
-        <div class="popup js-winner-popup hidden">
-            <div class="popup__content offline-popup__content ">
-                <div class="popup__content-block winner">
-                    <div class="popup__title winner__text">Winner</div>
-                    <div class="user-block__element user-info js-white-winner hidden">
-                        <div class="user-info__color-figure user-info__color-figure_white"/>
-                        <div class="user-info__text winner__text">WHITE</div>
-                    </div>
-                    <div class="user-block__element user-info js-black-winner hidden">
-                        <div class="user-info__color-figure user-info__color-figure_black"/>
-                        <div class="user-info__text winner__text">BLACK</div>
-                    </div>
-                </div>
-                <div class="button popup__x-mark game-options__x-mark js-menu-back-x-mark">
-                    <div draggable="false" class="x-mark-image"></div>
-                </div>
-            </div>
-        </div>
     </div>
 </fest:template>
