@@ -14,7 +14,7 @@
 .game_singleplayer {
   @media screen and (orientation: landscape) {
     grid-template-rows: 2% auto 2%;
-    grid-template-columns: 2fr 7fr 2fr;
+    grid-template-columns: auto minmax(auto, max-content) auto;
     grid-template-areas: ". . ." "@{first-info-block} @{board-block} @{second-info-block}" ". . .";
   }
 
@@ -24,33 +24,37 @@
     grid-template-areas: "@{second-info-block}" "@{board-block}" "@{first-info-block}";
   }
 }
+
 .info-block {
   display: flex;
   justify-content: space-between;
   flex-direction: column;
 
   @media @screen-portrait {
+    padding: 1vh;
     flex-direction: row;
     align-items: center;
-    padding: 1vh;
+  }
+
+}
+
+@media @screen-landscape {
+  .singleplayer__info-block_first {
+    justify-self: center;
+  }
+
+  .singleplayer__info-block_second {
+    justify-self: center;
   }
 }
 
+
 .info-block_first {
   grid-area: @first-info-block;
-
-  @media @screen-landscape {
-    align-items: flex-end;
-  }
 }
 
 .info-block_second {
   grid-area: @second-info-block;
-
-  @media @screen-landscape {
-    align-items: flex-start;
-  }
-
 }
 
 .board-section {
@@ -58,74 +62,5 @@
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.game-options__content {
-  height: 80%;
-  width: 80vw;
-  left: 10vw;
-  top: 10vh;
-}
-
-.game-options__duration {
-  grid-area: content;
-  display: flex;
-  flex-direction: column;
-  max-width: fit-content;
-}
-
-.game-options__title {
-  color: @active-button-color;
-  flex-grow: 1;
-  transition: font-size 0.1s;
-}
-
-.game-options__button {
-  font-size: 1.2rem;
-
-  @media screen and (min-width: @mobile-l-width){
-    font-size: 1.5rem;
-  }
-
-  @media screen and (min-width: @tablet-width) {
-    font-size: 2rem;
-  }
-
-  transition: font-size 0.1s, transform 0.1s;
-  flex-grow: 10;
-  border-bottom: 1px black solid;
-
-  &:hover {
-    border-bottom: none;
-  }
-}
-
-.game-options__x-mark {
-  padding: 1vw 1vw;
-  transition: height 0.1s, transform 0.1s;
-
-}
-
-.winner {
-  padding: 8vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
-}
-
-.winner__content {
-  height: 40%;
-  width: 40vw;
-  top: 30vh;
-  left: 30vw;
-}
-
-.winner__title {
-  font-size: 3rem;
-}
-
-.winner__text {
-  color: @active-button-color;
 }
 

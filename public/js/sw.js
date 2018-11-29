@@ -1,8 +1,7 @@
-const CACHE_NAME = "v1.0.1";
+const CACHE_NAME = 'v1.0.1';
 
 const cacheFirstUrl = ['/about', '/singleplayer'];
-const assets = [...global.serviceWorkerOption.assets.map( asset => "/dist" + asset), '/', '/favicon.ico', ...cacheFirstUrl];
-
+const assets = [...global.serviceWorkerOption.assets.map(asset => '/dist' + asset), '/', '/favicon.ico', ...cacheFirstUrl];
 
 self.addEventListener('install', event => {
     console.log(assets);
@@ -10,16 +9,16 @@ self.addEventListener('install', event => {
         global.caches
             .open(CACHE_NAME)
             .then(cache => {
-                return cache.addAll(assets)
+                return cache.addAll(assets);
             })
             .then(() => {
-                console.log("Added to cache: ", assets)
+                console.log('Added to cache: ', assets);
             })
             .catch((err) => {
                 console.log(err);
-                throw err
+                throw err;
             })
-    )
+    );
 });
 
 self.addEventListener('activate', event => {
@@ -28,25 +27,24 @@ self.addEventListener('activate', event => {
             return Promise.all(
                 cacheNames.map(cacheName => {
                     if (cacheName.indexOf(CACHE_NAME) === 0) {
-                        return null
+                        return null;
                     }
 
-                    return global.caches.delete(cacheName)
+                    return global.caches.delete(cacheName);
                 })
-            )
+            );
         })
-    )
+    );
 });
 
 self.addEventListener('fetch', event => {
-
-    if (event.request.method !== "GET") {
+    if (event.request.method !== 'GET') {
         return;
     }
 
     const url = new URL(event.request.url);
     console.log(url);
-    if (event.request.cache === 'only-if-cached' && event.request.mode !== 'same-origin'){
+    if (event.request.cache === 'only-if-cached' && event.request.mode !== 'same-origin') {
         return;
     }
 
@@ -63,10 +61,10 @@ self.addEventListener('fetch', event => {
                             .then((cache) => {
                                 cache.put(event.request, response.clone());
                                 return response;
-                            })
-                })
+                            });
+                    });
             })
-        )
+        );
     } else {
         event.respondWith(
             fetch(event.request)
@@ -74,13 +72,13 @@ self.addEventListener('fetch', event => {
                     if (resp.ok) {
                         return global.caches.open(CACHE_NAME)
                             .then((cache) => {
-                                console.log("update cache");
+                                console.log('update cache');
                                 cache.put(event.request, resp.clone());
                                 return resp;
                             });
                     }
                 })
                 .catch(() => global.caches.match(url.pathname))
-        )
+        );
     }
 });

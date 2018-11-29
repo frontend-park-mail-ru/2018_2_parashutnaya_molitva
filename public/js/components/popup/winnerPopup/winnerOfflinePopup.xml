@@ -1,0 +1,20 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="params">
+    <div class="popup js-winner-popup hidden">
+        <div class="popup__content offline-popup__content ">
+            <div class="popup__content-block winner">
+                <div class="popup__title winner__text">Winner</div>
+                <div class="user-block__element user-info js-white-winner hidden">
+                    <div class="user-info__color-figure user-info__color-figure_white"/>
+                    <div class="user-info__text winner__text text-h2">WHITE</div>
+                </div>
+                <div class="user-block__element user-info js-black-winner hidden">
+                    <div class="user-info__color-figure user-info__color-figure_black"/>
+                    <div class="user-info__text winner__text text-h2">BLACK</div>
+                </div>
+            </div>
+            <div class="button popup__x-mark game-options__x-mark js-menu-back-x-mark">
+                <div draggable="false" class="x-mark-image"></div>
+            </div>
+        </div>
+    </div>
+</fest:template>

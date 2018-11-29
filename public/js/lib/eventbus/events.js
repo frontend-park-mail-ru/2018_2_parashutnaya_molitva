@@ -1,21 +1,21 @@
 export const GAME = {
-    INIT_GAME: "ig",
-    INIT_GAME_RESPONSE: "igr",
+    INIT_GAME: 'ig',
+    INIT_GAME_RESPONSE: 'igr',
 
-    MOVE: "m",
-    MOVE_SUCCESS: "ms",
-    MOVE_FAILURE: "mf",
+    MOVE: 'm',
+    MOVE_SUCCESS: 'ms',
+    MOVE_FAILURE: 'mf',
 
-    GAMEOVER: "go",
+    GAMEOVER: 'go',
 
-    FIND_ROOM: "fr",
-    START_GAME: "sg",
+    FIND_ROOM: 'fr',
+    START_GAME: 'sg',
 
-    SURRENDER: "sur",
-    SURRENDER_RESPONSE: "surr",
+    SURRENDER: 'sur',
+    SURRENDER_RESPONSE: 'surr',
 
-    PROMOTION: "pm",
-    PROMOTION_RESPONSE: "pms",
+    PROMOTION: 'pm',
+    PROMOTION_RESPONSE: 'pms'
 };
 
 export const VIEW = {
@@ -25,20 +25,20 @@ export const VIEW = {
 
 export const ROUTER = {
     BACK_TO_MENU: 'btm',
-    TO_SIGNIN:'tsgn',
+    TO_SIGNIN: 'tsgn'
 };
 
 export const HEADER = {
     LOAD: 'ld',
-    CLOSE: 'clh',
+    CLOSE: 'clh'
 };
 
 export const CHAT = {
-    CLOSE: 'clc',
+    CLOSE: 'clc'
 };
 
 export const GLOBAL = {
-    CLEAR_STYLES: 'clst',
+    CLEAR_STYLES: 'clst'
 };
 
 export const SERVICE = {
@@ -53,5 +53,5 @@ export const SERVICE = {
     CHECK_AUTH_RESPONSE: 'car',
 
     SIGNOUT: 'sout',
-    SIGNOUT_RESPONSE: 'soutr',
+    SIGNOUT_RESPONSE: 'soutr'
 };

@@ -33,47 +33,41 @@ body, html {
     background-size: 100px 100px;
     background-color: rgba(216, 201, 154, 0.89);
     transition: background-size 2s;
-    animation-name: backgroud-animation;
-    animation-duration: 500s;
-    animation-iteration-count: infinite;
-    animation-timing-function: linear;
+    //animation-name: backgroud-animation;
+    //animation-duration: 500s;
+    //animation-iteration-count: infinite;
+    //animation-timing-function: linear;
 
     @media screen and (min-width: @mobile-s-width) {
         background-size: 150px 150px;
     }
 
     @media (min-width: @mobile-l-width) {
-        .page {
-            background-size: 200px 200px;
-        }
+        background-size: 200px 200px;
     }
 
     @media (min-width: @tablet-width) {
-        .page {
-            background-size: 250px 250px;
-        }
+        background-size: 250px 250px;
     }
 
     @media (min-width: @laptop-width) {
-        .page {
-            background-size: 300px 300px;
-        }
+        background-size: 300px 300px;
     }
 
 }
 
-
-@keyframes backgroud-animation {
-    from {
-        background-position-x: 0;
-        background-position-y: 0;
-    }
-    to {
-        background-position-x: 100%;
-        background-position-y: 100%;
-    }
-
-}
+//
+//@keyframes backgroud-animation {
+//    from {
+//        background-position-x: 0;
+//        background-position-y: 0;
+//    }
+//    to {
+//        background-position-x: 100%;
+//        background-position-y: 100%;
+//    }
+//
+//}
 
 .wrapper {
     all: unset;
@@ -179,6 +173,10 @@ body, html {
     display: none !important;
 }
 
+.hidden_visibility {
+    visibility: hidden;
+}
+
 .chat-iframe {
     height: 40%;
     background-color: white;
@@ -196,7 +194,7 @@ body, html {
     background-size: 100%;
     background-image: url("../images/x-mark.svg");
 
-    @media screen and (min-width: 320px) {
+    @media screen and (min-width: @mobile-s-width) {
         height: 3.125vw;
         width: 3.125vw;
     }

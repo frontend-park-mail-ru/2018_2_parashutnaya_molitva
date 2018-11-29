@@ -32,16 +32,6 @@ const conf = {
                 ]
             },
             {
-                test: /\.m?js$/,
-                exclude: /(node_modules)/,
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: ['@babel/preset-env']
-                    }
-                }
-            },
-            {
                 test: /\.(png|woff|woff2|eot|ttf|svg)$/,
                 loader: 'url-loader?limit=100000'
             },
@@ -84,6 +74,23 @@ const conf = {
 };
 
 
+let babelLoader = {
+    test: /\.m?js$/,
+    exclude: /(node_modules)/,
+    include: [
+        path.join(__dirname, 'public/js/sw.js'),
+        path.join(__dirname, 'public/js')
+    ],
+    use: {
+        loader: 'babel-loader',
+        options: {
+            presets: ['@babel/preset-env'],
+            plugins: [],
+        },
+    }
+};
+
+
 module.exports = (env, options) => {
     const isProduction = options.mode === 'production';
 
@@ -92,6 +99,7 @@ module.exports = (env, options) => {
     });
 
     if (isProduction) {
+        babelLoader.use.options.plugins.push('transform-remove-console');
         conf.optimization.minimizer.push(
             new UglifyJsPlugin({
                 cache: true,
@@ -99,6 +107,8 @@ module.exports = (env, options) => {
             }),
             new OptimizeCSSAssetsPlugin({}))
     }
+
+    conf.module.rules.push(babelLoader);
 
     conf.plugins.push(definePlugin);
 

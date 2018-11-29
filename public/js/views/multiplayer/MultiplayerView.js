@@ -1,20 +1,22 @@
-import View from "../../lib/view";
+import View from '../../lib/view';
 import './multiplayer.less';
 import template from './multiplayer.tmpl.xml';
-import GameView from "../game/GameView";
-import {GAME, ROUTER, SERVICE as WS, SERVICE} from "../../lib/eventbus/events";
-import Piece from "../../components/chess/piece/piece";
-import userBlockTemplate from "../../components/userblock/userblock.xml";
-import Timer from "../../components/timer/timer";
-import IconPresenter from "../../components/icons-presenter/iconsPresenter";
-import {COLOR} from "../../components/chess/consts";
-import PromotionPopup from "../../components/popup/promotionPopup";
+import GameView from '../game/GameView';
+import { GAME, ROUTER, SERVICE } from '../../lib/eventbus/events';
+import Piece from '../../components/chess/piece/piece';
+import userBlockTemplate from '../../components/userblock/userblock.xml';
+import Timer from '../../components/timer/timer';
+import IconPresenter from '../../components/icons-presenter/iconsPresenter';
+import { COLOR } from '../../components/chess/consts';
+import PromotionPopup from '../../components/popup/promotionPopup/promotionPopup';
 
-const BLACK_COLOR_BACKGROUND = "#7f8b9575";
+import '../../components/popup/waitingPopup/watingPopup.less';
+
+const BLACK_COLOR_BACKGROUND = '#7f8b9575';
 export default class MultiplayerView extends View {
     constructor ({ eventBus = {} } = {}) {
         super(template, eventBus);
-        this._gameView = new GameView({eventBus});
+        this._gameView = new GameView({ eventBus });
 
         this._eventBus.subscribeToEvent(GAME.MOVE_SUCCESS, this._onMoveSuccess.bind(this));
         this._eventBus.subscribeToEvent(GAME.GAMEOVER, this._onGameOver.bind(this));
@@ -22,7 +24,6 @@ export default class MultiplayerView extends View {
         this._eventBus.subscribeToEvent(SERVICE.CHECK_AUTH_RESPONSE, this._onCheckAuthResponse.bind(this));
         this._eventBus.subscribeToEvent(SERVICE.ON_CLOSE, this._onClose.bind(this));
         this._eventBus.subscribeToEvent(GAME.PROMOTION, this._onPromotion.bind(this));
-        this._isClosed = false;
     }
 
     render (root, data = {}) {
@@ -30,11 +31,11 @@ export default class MultiplayerView extends View {
         this._eventBus.triggerEvent(SERVICE.CHECK_AUTH);
     }
 
-    close() {
+    close () {
         super.close();
     }
 
-    _onCheckAuthResponse({isAuth, error}) {
+    _onCheckAuthResponse ({ isAuth, error }) {
         if (error) {
             this._eventBus.triggerEvent(ROUTER.BACK_TO_MENU);
             return;
@@ -47,12 +48,12 @@ export default class MultiplayerView extends View {
         this._firstUserBlock = this.el.querySelector('.js-first');
         this._secondUserBlock = this.el.querySelector('.js-second');
         this._board = this.el.querySelector('.js-board-section');
-        
+
         this._waitingPopup = this.el.querySelector('.js-waiting-popup');
 
         const backToMenu = this.el.querySelectorAll('.js-menu-back-x-mark');
         backToMenu.forEach((button) => {
-            button.addEventListener('click', ()=> {
+            button.addEventListener('click', () => {
                 this._eventBus.triggerEvent(ROUTER.BACK_TO_MENU);
             });
         });
@@ -60,10 +61,9 @@ export default class MultiplayerView extends View {
         this._initPopup();
 
         this._topElement = this.el.querySelector('.game');
-
     }
 
-    _onClose({message = "Unexpected error"} = {}){
+    _onClose ({ message = 'Unexpected error' } = {}) {
         if (!this.isViewClosed) {
             const title = this._waitingPopup.querySelector('.js-waiting-title');
             if (!title) {
@@ -72,33 +72,32 @@ export default class MultiplayerView extends View {
             title.innerHTML = message;
 
             const loader = this._waitingPopup.querySelector('.js-loader');
-            loader.innerHTML = "";
+            loader.innerHTML = '';
             loader.classList.add('hidden');
         }
     }
 
-
-    _hideAll(){
+    _hideAll () {
         this._firstUserBlock.classList.add('hidden');
         this._secondUserBlock.classList.add('hidden');
         this._board.classList.add('hidden');
     }
 
-    _showAll(){
+    _showAll () {
         this._firstUserBlock.classList.remove('hidden');
         this._secondUserBlock.classList.remove('hidden');
         this._board.classList.remove('hidden');
     }
 
-    _renderPromotionPopup() {
-        this._promotionPopup = new PromotionPopup({promotionCallback : ({figure}) => {
-                this._eventBus.triggerEvent(GAME.PROMOTION_RESPONSE, {figure});
-            }});
+    _renderPromotionPopup () {
+        this._promotionPopup = new PromotionPopup({ promotionCallback: ({ figure }) => {
+            this._eventBus.triggerEvent(GAME.PROMOTION_RESPONSE, { figure });
+        } });
         this._promotionPopupElement = this.el.querySelector('.js-promotion-popup-container');
         this._promotionPopup.render(this._promotionPopupElement);
     }
 
-    _onPromotion({turn}) {
+    _onPromotion ({ turn }) {
         if (turn) {
             this._promotionPopup._showPromotionPopupWhite();
         } else {
@@ -106,34 +105,33 @@ export default class MultiplayerView extends View {
         }
     }
 
-    _initPopup() {
+    _initPopup () {
         const buttons = this._gameoptionsPopup.querySelectorAll('.js-game-option-button');
 
         buttons.forEach((button) => {
             button.addEventListener('click', () => {
                 this._gameoptionsPopup.classList.add('hidden');
                 this._showWaitingPopup();
-                this._eventBus.triggerEvent(GAME.FIND_ROOM, {duration: +button.value});
-
-            })
+                this._eventBus.triggerEvent(GAME.FIND_ROOM, { duration: +button.value });
+            });
         });
 
         this._hideAll();
         this._gameoptionsPopup.classList.remove('hidden');
     }
 
-    _onStartGame({duration, rival, you,  color}) {
-        this._renderFirstUserBlock({duration, user: you});
-        this._renderSecondUserBlock({duration, user:rival});
-        this._startTimer({color});
+    _onStartGame ({ duration, rival, you, color }) {
+        this._renderFirstUserBlock({ duration, user: you });
+        this._renderSecondUserBlock({ duration, user: rival });
+        this._startTimer({ color });
 
-        this._renderBoard({color});
+        this._renderBoard({ color });
         this._showAll();
         this._closeWaitingPopup();
         this._renderPromotionPopup();
     }
 
-    _startTimer({color}) {
+    _startTimer ({ color }) {
         if (color === COLOR.WHITE) {
             this._timerFirst.start();
             this._timerFirstColor = true;
@@ -145,7 +143,7 @@ export default class MultiplayerView extends View {
         }
     }
 
-    _onMoveSuccess({turn, deadPiece = null, yourColor} = {}){
+    _onMoveSuccess ({ turn, deadPiece = null, yourColor } = {}) {
         if (turn) {
             if (deadPiece != null && yourColor) {
                 this._secondFigures.add(new Piece(deadPiece.piece, deadPiece.color));
@@ -163,7 +161,7 @@ export default class MultiplayerView extends View {
         }
     }
 
-    _whiteTurn() {
+    _whiteTurn () {
         if (this._timerFirstColor) {
             this._timerSecond.stop();
             this._timerFirst.start();
@@ -172,11 +170,10 @@ export default class MultiplayerView extends View {
             this._timerSecond.start();
         }
 
-        this._topElement.style.backgroundColor = "";
-
+        this._topElement.style.backgroundColor = '';
     }
 
-    _blackTurn() {
+    _blackTurn () {
         if (!this._timerSecondColor) {
             this._timerFirst.stop();
             this._timerSecond.start();
@@ -186,66 +183,60 @@ export default class MultiplayerView extends View {
         }
 
         this._topElement.style.backgroundColor = BLACK_COLOR_BACKGROUND;
-
     }
 
-
-    _onGameOver({result} = {}){
+    _onGameOver ({ result } = {}) {
         this._timerFirst.stop();
         this._timerSecond.stop();
 
-        this._showWinnerPopup({result});
+        this._showWinnerPopup({ result });
     }
-    
-    _showWaitingPopup() {
+
+    _showWaitingPopup () {
         this._waitingPopup.classList.remove('hidden');
     }
-    
-    _closeWaitingPopup() {
+
+    _closeWaitingPopup () {
         this._waitingPopup.classList.add('hidden');
         this._waitingPopup.innerHTML = '';
     }
 
-    _showWinnerPopup({result}) {
-
+    _showWinnerPopup ({ result }) {
         let popup = this.el.querySelector('.js-winner-popup');
         popup.classList.remove('hidden');
 
-
         if (result.Result === 'win') {
-
             const win = popup.querySelectorAll('.js-win');
             win.forEach((el) => {
-                el.classList.remove('hidden')
+                el.classList.remove('hidden');
             });
             const newScore = popup.querySelector('.js-new-score-win');
             newScore.innerHTML = `New score: ${result.score}`;
-
         } else {
             const lose = popup.querySelectorAll('.js-lose');
             lose.forEach((el) => {
-                el.classList.remove('hidden')
+                el.classList.remove('hidden');
             });
             const newScore = popup.querySelector('.js-new-score-lose');
             newScore.innerHTML = `New score: ${result.score}`;
         }
     }
 
-    _renderBoard({color}) {
-        this._gameView.render(this._board, {color});
+    _renderBoard ({ color }) {
+        this._gameView.render(this._board, { color });
     }
 
-    _renderFirstUserBlock({duration = 600, user = {}} = {}) {
-        this._firstUserBlock.insertAdjacentHTML('afterbegin', userBlockTemplate({isFirst: true, user: user, isOnline: true}));
+    _renderFirstUserBlock ({ duration = 600, user = {} } = {}) {
+        this._firstUserBlock.insertAdjacentHTML('afterbegin', userBlockTemplate({ isFirst: true, user: user, isOnline: true }));
         this._firstAvatar = this._firstUserBlock.querySelector('.js-first-avatar');
         this._firstAvatar.style.backgroundImage = `url(${user.avatar})`;
 
         this._timerFirstElement = this.el.querySelector('.js-timer-first');
-        this._timerFirst = new Timer({root: this._timerFirstElement, duration});
+        this._timerFirst = new Timer({ root: this._timerFirstElement, duration });
         this._timerFirst.render();
 
         this._firstFiguresElement = this.el.querySelector('.js-figures-first');
-        this._firstFigures = new IconPresenter({root: this._firstFiguresElement});
+        this._firstFigures = new IconPresenter({ root: this._firstFiguresElement });
         this._firstFigures.render();
 
         this._buttonSurrenderFirst = this.el.querySelector('.js-surrender-first');
@@ -254,17 +245,17 @@ export default class MultiplayerView extends View {
         });
     }
 
-    _renderSecondUserBlock({duration = 600, user = {}} = {}) {
-        this._secondUserBlock.insertAdjacentHTML('afterbegin', userBlockTemplate({isFirst: false, user: user, isOnline: true}));
+    _renderSecondUserBlock ({ duration = 600, user = {} } = {}) {
+        this._secondUserBlock.insertAdjacentHTML('afterbegin', userBlockTemplate({ isFirst: false, user: user, isOnline: true }));
         this._secondAvatar = this._secondUserBlock.querySelector('.js-second-avatar');
         this._secondAvatar.style.backgroundImage = `url(${user.avatar})`;
 
         this._timerSecondElement = this.el.querySelector('.js-timer-second');
-        this._timerSecond = new Timer({root: this._timerSecondElement, duration});
+        this._timerSecond = new Timer({ root: this._timerSecondElement, duration });
         this._timerSecond.render();
 
         this._secondFiguresElement = this.el.querySelector('.js-figures-second');
-        this._secondFigures = new IconPresenter({root: this._secondFiguresElement});
+        this._secondFigures = new IconPresenter({ root: this._secondFiguresElement });
         this._secondFigures.render();
     }
 }
