@@ -1,14 +1,17 @@
 .profile {
-  width: 50%;
+  width: 80%;
   flex-direction: row;
-  margin-left: 25vw;
+  margin-left: 10vw;
 
+  @media screen and (max-width: 640px){
+    flex-direction: column;
+  }
 }
 
 .profile-row {
   display: flex;
   justify-content: space-between;
-  padding: 10px 20px;
+  padding: 10px;
 }
 
 .profile__data {
@@ -18,10 +21,13 @@
 .profile__avatar {
   display: flex;
   flex-direction: column;
-  flex: 1;
+  flex-basis: auto;
+
 }
 
 .profile__img {
+  margin-left: auto;
+  margin-right: auto;
   border: 1px solid gray;
   border-radius: 3px;
 }
@@ -31,7 +37,9 @@
 }
 
 .profile__info {
-  flex: 4;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .profile__form{

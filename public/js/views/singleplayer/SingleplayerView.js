@@ -1,9 +1,11 @@
 import './singleplayer.less';
+import '../../components/popup/winnerPopup/winnerPopup.less';
+import '../../components/popup/gameoptionPopup/gameoptionPopup.less';
 import template from './singleplayer.tmpl.xml';
 import '../../components/userblock/userblock.less';
 import userBlockTemplate from '../../components/userblock/userblock.xml';
-import '../../components/popup/promotion-popup.less';
-import PromotionPopup from '../../components/popup/promotionPopup';
+import '../../components/popup/promotionPopup/promotion-popup.less';
+import PromotionPopup from '../../components/popup/promotionPopup/promotionPopup';
 import View from '../../lib/view';
 import GameView from '../game/GameView';
 import Timer from '../../components/timer/timer';

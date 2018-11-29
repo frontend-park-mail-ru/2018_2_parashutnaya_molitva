@@ -6,15 +6,25 @@
         <fest:value>params.user.email</fest:value>
     </fest:var>
     <section class="section profile">
-        <figure class="profile__avatar">
-            <form class="profile__form">
-                <img src="{avatar}" height="200"
-                     width="200" class="profile__img js-avatar"></img>
+        <div class="profile__avatar">
+            <img src="{avatar}" height="200"
+                 width="200" class="profile__img js-avatar"></img>
+            <div class="profile__input-wrapper">
+                <div>Upload image</div>
                 <input type="file" class="js-upload-avatar" name="avatar" accept="image/jpeg,image/png" ></input>
-            </form>
+            </div>
             <div class="warning signup__warning hidden js-warning-avatar"></div>
-        </figure>
+        </div>
         <article class="profile__info">
+            <div class="profile-row js-email-row">
+                <div class="profile__data">
+                    Login:
+                </div>
+                <div class="profile__data js-login-field">
+                    <fest:value>params.user.login</fest:value>
+                </div>
+                <button class="profile__edit-button">Edit</button>
+            </div>
 
             <div class="profile-row js-email-row">
                 <div class="profile__data">
@@ -23,7 +33,6 @@
                 <div class="profile__data js-email-field">
                     <fest:value>params.user.email</fest:value>
                 </div>
-                <!--<button class="profile__edit-button">Edit</button>-->
             </div>
 
             <div class="profile-row hidden js-email-form">

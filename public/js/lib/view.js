@@ -1,9 +1,9 @@
-import {VIEW} from "./eventbus/events";
+import { VIEW } from './eventbus/events';
 
 export default class View {
     constructor (template, eventBus, globalEventBus) {
         this.el = document.createElement('div');
-        this.el.classList.add("wrapper");
+        this.el.classList.add('wrapper');
         this.template = template;
         this._eventBus = eventBus;
         this._globalEventBus = globalEventBus;
@@ -34,16 +34,16 @@ export default class View {
     /**
      * close view
      */
-    close() {
+    close () {
         this.isViewClosed = true;
         try {
             this._eventBus.triggerEvent(VIEW.CLOSE);
         } catch (e) {
-            console.log('no such event: VIEW.CLOSE')
+            console.log('no such event: VIEW.CLOSE');
         }
     }
 
-            hide (root) {
+    hide (root) {
         root.innerHTML = '';
         return this;
     }
