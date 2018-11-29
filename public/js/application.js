@@ -11,15 +11,16 @@ import HeaderBarController from './controllers/HeaderBarController.js';
 import NotFoundView from './views/notfound/NotFoundView.js';
 import EventBus from './lib/eventbus/eventbus.js';
 import runtime from 'serviceworker-webpack-plugin/lib/runtime';
-import GameController from "./controllers/GameController";
-import ChatController from "./controllers/ChatController";
-import {CHAT, HEADER, GLOBAL} from "./lib/eventbus/events";
+import GameController from './controllers/GameController';
+import ChatController from './controllers/ChatController';
+import { CHAT, HEADER, GLOBAL } from './lib/eventbus/events';
 
 document.addEventListener('DOMContentLoaded', () => {
     if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || window.location.hostname === 'localhost')) {
-        const registration = runtime.register();
+        runtime.register();
     }
 
+    console.log('start');
     const page = document.querySelector('.page');
     createSiteModules(page);
     const main = document.querySelector('.main');
@@ -38,11 +39,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const signinController = new SigninController({ router, globalEventBus });
     const signupContoller = new SignupController({ router, globalEventBus });
     const profileControlleer = new ProfileController({ router, globalEventBus });
-    const chatController = new ChatController({router, globalEventBus});
-    const gameController = new GameController({router, globalEventBus});
+    const chatController = new ChatController({ router, globalEventBus });
+    const gameController = new GameController({ router, globalEventBus });
 
     globalEventBus.subscribeToEvent(HEADER.CLOSE, () => {
-       header.remove();
+        header.remove();
     });
 
     globalEventBus.subscribeToEvent(CHAT.CLOSE, () => {
@@ -50,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     globalEventBus.subscribeToEvent(GLOBAL.CLEAR_STYLES, () => {
-        page.classList.remove("page");
+        page.classList.remove('page');
     });
 
     // const i = page.querySelector('iframe');
@@ -72,9 +73,8 @@ document.addEventListener('DOMContentLoaded', () => {
     router.start();
 });
 
-
-function createSiteModules(root) {
+function createSiteModules (root) {
     root.innerHTML = `<header class="header"></header>
 <main class="main"></main>
-`
+`;
 }
