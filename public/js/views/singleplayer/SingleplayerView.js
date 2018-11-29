@@ -132,16 +132,16 @@ export default class SingleplayerView extends View {
     _whiteTurn() {
         this._timerSecond.stop();
         this._timerFirst.start();
-        this._buttonSurrenderFirst.classList.remove('hidden');
-        this._buttonSurrenderSecond.classList.add('hidden');
+        this._buttonSurrenderFirst.classList.remove('hidden_visibility');
+        this._buttonSurrenderSecond.classList.add('hidden_visibility');
         this._topElement.style.backgroundColor = "";
     }
 
     _blackTurn() {
         this._timerFirst.stop();
         this._timerSecond.start();
-        this._buttonSurrenderSecond.classList.remove('hidden');
-        this._buttonSurrenderFirst.classList.add('hidden');
+        this._buttonSurrenderSecond.classList.remove('hidden_visibility');
+        this._buttonSurrenderFirst.classList.add('hidden_visibility');
         this._topElement.style.backgroundColor = BLACK_COLOR_BACKGROUND;
 
     }
@@ -183,7 +183,7 @@ export default class SingleplayerView extends View {
     }
 
     _renderFirstUserBlock({duration = 600} = {}) {
-        this._firstUserBlock.insertAdjacentHTML('afterbegin',userBlockTemplate({isFirst: true}));
+        this._firstUserBlock.insertAdjacentHTML('afterbegin', userBlockTemplate({isFirst: true}));
 
         this._timerFirstElement = this.el.querySelector('.js-timer-first');
         this._timerFirst = new Timer({root: this._timerFirstElement, duration,
@@ -213,7 +213,7 @@ export default class SingleplayerView extends View {
         this._blackFigures.render();
 
         this._buttonSurrenderSecond = this.el.querySelector('.js-surrender-second');
-        this._buttonSurrenderSecond.classList.add('hidden');
+        this._buttonSurrenderSecond.classList.add('hidden_visibility');
         this._buttonSurrenderSecond.addEventListener('click', () => {
             this._onGameOver({turn: false})
         });

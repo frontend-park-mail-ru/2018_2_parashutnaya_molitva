@@ -4,9 +4,31 @@
 @board-block: board-section;
 
 .game_multiplayer {
-  grid-template-rows: 2% auto 2%;
-  grid-template-columns: 2fr 7fr 2fr;
+  grid-template-rows: 2vh auto 2vh;
+  grid-template-columns: auto minmax(auto, max-content) auto;
   grid-template-areas: ". . ." "@{first-info-block} @{board-block} @{second-info-block}" ". . .";
+
+
+  @media screen and (orientation: landscape) and (max-width: 600px) {
+    column-gap: 1.5vh;
+    grid-template-rows: 2vh auto auto 2vh;
+    grid-template-columns: 1px minmax(auto, max-content) auto;
+    grid-template-areas: ". . ." ". board-section info-second" ". board-section info-first" ". . .";
+  }
+
+  @media screen and (orientation: portrait) {
+    grid-template-rows: 1fr fit-content(100%) 1fr;
+    grid-template-columns: 1fr;
+    grid-template-areas: "@{second-info-block}" "@{board-block}" "@{first-info-block}";
+  }
+}
+
+.multiplayer__second-surrender {
+  display: none;
+
+  @media screen and (orientation: landscape) and (max-width: 600px) {
+    display: initial;
+  }
 }
 
 .loader-ring {
@@ -55,4 +77,88 @@
   width: 60vw;
   top: 30vh;
   left: 20vw;
+}
+
+.multiplayer-user-bar{
+  flex-direction: row-reverse;
+}
+
+.multiplayer-user-bar_first {
+  @media @screen-portrait {
+    display: none;
+  }
+
+  @media @screen-landscape and (max-width: 600px) {
+    display: none !important;
+  }
+}
+
+
+
+.multiplayer-user-bar_second {
+  flex-direction: row-reverse;
+}
+
+.multiplayer-user-info-bar{
+  align-items: flex-start;
+}
+
+.multiplayer-user-info-bar_first {
+  @media @screen-landscape {
+    align-items: flex-end;
+  }
+}
+
+.multiplayer-user-info-bar_second {
+  @media @screen-portrait {
+    justify-content: flex-start;
+  }
+
+}
+
+.multiplayer-user-info-bar_flipped{
+  align-items: flex-end;
+}
+
+
+.multiplayer__info-block_first {
+  @media @screen-landscape and (min-width: 601px) {
+    padding-right: 1vw;
+    align-items: flex-end;
+    justify-self: center;
+  }
+
+  @media @screen-landscape and (max-width: 600px) {
+    justify-self: flex-start;
+    width: 100%;
+    align-items: flex-start;
+  }
+}
+
+.multiplayer__info-block_second {
+  @media @screen-landscape and (min-width: 601px) {
+    padding-left: 1vw;
+    justify-self: center;
+  }
+
+  @media @screen-landscape and (max-width: 600px) {
+    width: 100%;
+    justify-self: flex-start;
+  }
+}
+
+.multiplayer__user-block_first {
+  @media @screen-landscape and (min-width: 601px){
+    align-items: flex-end;
+  }
+
+  @media @screen-landscape and (max-width: 600px) {
+    width: 100%;
+  }
+}
+
+.multiplayer__figures {
+  @media @screen-landscape and (max-width: 600px) {
+    width: 65%;
+  }
 }
