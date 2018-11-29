@@ -240,6 +240,7 @@ export default class MultiplayerView extends View {
         this._firstFigures.render();
 
         this._buttonSurrenderFirst = this.el.querySelector('.js-surrender-first');
+        this._buttonSurrenderFirst.classList.remove('hidden');
         this._buttonSurrenderFirst.addEventListener('click', () => {
             this._eventBus.triggerEvent(GAME.SURRENDER);
         });

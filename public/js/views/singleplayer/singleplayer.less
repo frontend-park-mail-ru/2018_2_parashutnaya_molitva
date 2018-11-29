@@ -48,6 +48,20 @@
   }
 }
 
+.singleplayer__user-block_second {
+  @media @screen-portrait {
+    align-items: center;
+
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+  }
+}
+
+.singleplayer__user-block_first {
+  @media @screen-landscape {
+    align-items: flex-end;
+  }
+}
 
 .info-block_first {
   grid-area: @first-info-block;
@@ -59,6 +73,7 @@
 
 .board-section {
   grid-area: @board-block;
+  max-height: 80vh;
   display: flex;
   justify-content: center;
   align-items: center;
