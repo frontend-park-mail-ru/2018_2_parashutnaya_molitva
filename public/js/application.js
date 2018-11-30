@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let router = new Router(page);
 
-    const globalEventBus = new EventBus([HEADER.LOAD, HEADER.CLOSE, CHAT.CLOSE, GLOBAL.CLEAR_STYLES]);
+    const globalEventBus = new EventBus([HEADER.LOAD, HEADER.CLOSE]);
 
     const headerBarController = new HeaderBarController({ globalEventBus, router });
     headerBarController.headerBarView.render(header);
@@ -41,23 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const profileControlleer = new ProfileController({ router, globalEventBus });
     const chatController = new ChatController({ router, globalEventBus });
     const gameController = new GameController({ router, globalEventBus });
-
-    globalEventBus.subscribeToEvent(HEADER.CLOSE, () => {
-        header.remove();
-    });
-
-    globalEventBus.subscribeToEvent(CHAT.CLOSE, () => {
-        document.querySelector('.js-chat-iframe').remove();
-    });
-
-    globalEventBus.subscribeToEvent(GLOBAL.CLEAR_STYLES, () => {
-        page.classList.remove('page');
-    });
-
-    // const i = page.querySelector('iframe');
-    // i.addEventListener('mouseover', () => {
-    //     i.click();
-    // });
 
     router.add('/about', main, aboutController.aboutView);
     router.add('/leaderboard', main, scoreboardController.scoreboardView);

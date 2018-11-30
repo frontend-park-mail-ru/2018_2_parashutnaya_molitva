@@ -205,7 +205,7 @@ export default class MultiplayerView extends View {
         let popup = this.el.querySelector('.js-winner-popup');
         popup.classList.remove('hidden');
 
-        if (result.Result === 'win') {
+        if (result.result === 'win') {
             const win = popup.querySelectorAll('.js-win');
             win.forEach((el) => {
                 el.classList.remove('hidden');
