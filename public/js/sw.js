@@ -1,10 +1,11 @@
-const CACHE_NAME = new Date().toISOString();
+let CACHE_NAME;
 
 const cacheFirstNetwork = ['slow-2g', '2g'];
 const cacheFirstUrl = ['/about', '/singleplayer'];
 const assets = [...global.serviceWorkerOption.assets.map(asset => '/dist' + asset), '/', '/favicon.ico', ...cacheFirstUrl];
 
 self.addEventListener('install', event => {
+    CACHE_NAME = new Date().toISOString();
     console.log(assets);
     event.waitUntil(
         global.caches
