@@ -76,8 +76,8 @@ export default class Board {
             // 0 -> 7  if white; 7 -> 0 if black
             for (let j = this._sideOfView === COLOR.BLACK ? 0 : 7; this._sideOfView === COLOR.BLACK ? j < 8 : j >= 0;
                 this._sideOfView === COLOR.BLACK ? j++ : j--) {
-                cells[i].push(new Cell(j, i));
-                pieces[i].push(new Piece(...PIECE_PARAMETERS[stateMatrix[j][i]]));
+                cells[cells.length - 1].push(new Cell(j, i));
+                pieces[pieces.length - 1].push(new Piece(...PIECE_PARAMETERS[stateMatrix[j][i]]));
             }
         }
         this._params.cells = cells;
