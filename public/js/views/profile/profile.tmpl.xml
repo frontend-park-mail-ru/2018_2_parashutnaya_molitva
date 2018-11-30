@@ -9,9 +9,9 @@
         <div class="profile__avatar">
             <img src="{avatar}" height="200"
                  width="200" class="profile__img js-avatar"></img>
-            <div class="profile__input-wrapper">
-                <div>Upload image</div>
-                <input type="file" class="js-upload-avatar" name="avatar" accept="image/jpeg,image/png" ></input>
+            <div class="input-wrapper">
+                <div class="button submit input-wrapper__content">Upload</div>
+                <input type="file" class="input-wrapper__input js-upload-avatar" name="avatar" accept="image/jpeg,image/png" ></input>
             </div>
             <div class="warning signup__warning hidden js-warning-avatar"></div>
         </div>
