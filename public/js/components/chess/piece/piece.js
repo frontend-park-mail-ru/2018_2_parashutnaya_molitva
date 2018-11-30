@@ -29,16 +29,16 @@ const COLOR_CLASSES = {
 
 export default class Piece {
     constructor (piece, color) {
-        this._div = document.createElement('div');
-        this._div.classList.add(PIECE_CLASS, PIECE_CLASSES[piece], COLOR_CLASSES[color]);
+        this.div = document.createElement('div');
+        this.div.classList.add(PIECE_CLASS, PIECE_CLASSES[piece], COLOR_CLASSES[color]);
     }
 
     render (root) {
         root.innerHTML = '';
-        root.appendChild(this._div);
+        root.appendChild(this.div);
     }
 
-    resize({width = 32, height = 32}) {
+    resize ({ width = 32, height = 32 }) {
 
     }
 }
