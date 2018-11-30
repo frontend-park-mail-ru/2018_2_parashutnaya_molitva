@@ -1,5 +1,6 @@
-const CACHE_NAME = 'v1.0.1';
+const CACHE_NAME = new Date().toISOString();
 
+const cacheFirstNetwork = ['slow-2g', '2g'];
 const cacheFirstUrl = ['/about', '/singleplayer'];
 const assets = [...global.serviceWorkerOption.assets.map(asset => '/dist' + asset), '/', '/favicon.ico', ...cacheFirstUrl];
 
@@ -52,33 +53,36 @@ self.addEventListener('fetch', event => {
         return;
     }
 
-    if (cacheFirstUrl.findIndex((path) => url.pathname === path) !== -1) {
+    if (global.navigator.connection !== undefined &&
+        global.navigator.connection.effectiveType !== undefined &&
+        cacheFirstNetwork.includes(global.navigator.connection.effectiveType)) {
+
+        console.log('Connection:' + global.navigator.connection.effectiveType);
         event.respondWith(
-            global.caches.match(url.pathname).then((resp) => {
-                return resp || fetch(event.request)
-                    .then((response) => {
-                        return caches.open(CACHE_NAME)
-                            .then((cache) => {
-                                cache.put(event.request, response.clone());
-                                return response;
-                            });
-                    });
-            })
+            global.caches.match(url.pathname)
+                .catch(() => fetch(event.request))
+        );
+        event.waitUntil(
+            update(event.request)
         );
     } else {
         event.respondWith(
-            fetch(event.request)
-                .then((resp) => {
-                    if (resp.ok) {
-                        return global.caches.open(CACHE_NAME)
-                            .then((cache) => {
-                                console.log('update cache');
-                                cache.put(event.request, resp.clone());
-                                return resp;
-                            });
-                    }
-                })
+            update(event.request)
                 .catch(() => global.caches.match(url.pathname))
         );
     }
 });
+
+function update (request) {
+    return fetch(request)
+        .then((resp) => {
+            if (resp.ok) {
+                return global.caches.open(CACHE_NAME)
+                    .then((cache) => {
+                        console.log('update cache');
+                        cache.put(request, resp.clone());
+                        return resp;
+                    });
+            }
+        });
+}
