@@ -48,15 +48,30 @@
 
 .multiplayer_user-block_second {
   align-items: flex-start;
+  flex-direction: column;
 
   @media @screen-portrait {
     align-items: center;
-
+    flex-direction: row;
     justify-content: space-between;
   }
 }
 
+.multiplayer__user-block_first {
+  @media @screen-landscape {
+    flex-direction: column;
+  }
+  @media @screen-landscape and (min-width: 601px){
+    align-items: flex-end;
+  }
+
+  @media @screen-landscape and (max-width: 600px) {
+    width: 100%;
+  }
+}
+
 .multiplayer-user-bar_second {
+
   flex-direction: row-reverse;
 }
 
@@ -109,16 +124,6 @@
   @media @screen-landscape and (max-width: 600px) {
     width: 100%;
     justify-self: flex-start;
-  }
-}
-
-.multiplayer__user-block_first {
-  @media @screen-landscape and (min-width: 601px){
-    align-items: flex-end;
-  }
-
-  @media @screen-landscape and (max-width: 600px) {
-    width: 100%;
   }
 }
 
