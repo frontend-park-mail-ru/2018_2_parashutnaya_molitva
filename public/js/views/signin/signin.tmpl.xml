@@ -1,18 +1,20 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="params">
     <div class="signin section">
         <div class="loading hidden">Loading...</div>
-        <div class="warning signin__warning"></div>
-        <form class="signin__form" novalidate="novalidate">
-            <label class="signin__label" for="email">Email</label>
-            <input class="input signin__input" type="email" name="email" id="email" placeholder="Email" autofocus="true"
+        <div class="warning signin__warning text-h3"></div>
+        <form class="form" novalidate="novalidate">
+            <input class="input signin__input text-h2" type="login_or_email" name="login_or_email" id="login_or_email" placeholder="Login or email" autofocus="true"
                    autocomplete="autocomplete"/>
 
-            <label class="input signin_label" for="password">Password</label>
-            <input class="input signin__input" type="password" name="password" id="password" placeholder="Password"
+            <input class="input signin__input text-h2" type="password" name="password" id="password" placeholder="Password"
                    autocomplete="autocomplete"/>
 
-            <input class="button signup__submit" type="submit" name="submit" value="Sign in"/>
-            <a class="button signup__back-button" href="/">Menu</a>
+            <input class="button submit singnin__submit text-h2" type="submit" name="submit" value="Sign In"/>
+            <div class="signin__nav">
+                <a class="button header-bar__button text-base" href="/">Menu</a>
+                <div class="text-base">or</div>
+                <a class="button header-bar__button text-base" href="/signup">Sign Up</a>
+            </div>
         </form>
     </div>
 </fest:template>

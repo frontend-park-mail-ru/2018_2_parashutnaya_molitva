@@ -1,0 +1,61 @@
+@import "~Styles/theme";
+@import "~Styles/const";
+
+@background-color-popup: #000000b5;
+@background-color-popup__content: #434239;
+
+.popup {
+  user-select: none;
+  height: 100%;
+  width: 100%;
+  top:0;
+  position: fixed;
+  background-color: @background-color-popup;
+}
+
+.popup__content {
+  background-color: @background-color-popup__content;
+  position: fixed;
+  align-items: center;
+  display: grid;
+  grid-template-rows: 5% auto 5%;
+  grid-template-columns: 5% auto 5%;
+  grid-template-areas: ". . x" "content content content";
+}
+
+.popup__x-mark {
+  grid-area: x;
+  align-self: self-start;
+  justify-self: end;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+.popup__content-block {
+  grid-area: content;
+  height: 100%;
+  align-self: center;
+  justify-self: center;
+}
+
+.popup__title {
+  font-size: 1rem;
+
+  @media screen and (min-width: @mobile-s-width){
+    font-size: 1.5rem;
+  }
+
+  @media screen and (min-width: @mobile-l-width){
+    font-size: 2rem;
+  }
+
+  @media screen and (min-width: @tablet-width){
+    font-size: 3rem;
+  }
+
+  @media screen and (min-width: @laptop-width){
+    font-size: 3.5rem;
+  }
+}

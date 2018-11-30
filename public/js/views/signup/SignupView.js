@@ -1,3 +1,4 @@
+import './signup.less';
 import View from '../../lib/view.js';
 import template from './signup.tmpl.xml';
 
@@ -5,6 +6,7 @@ export default class SignupView extends View {
     constructor ({ eventBus = {} } = {}) {
         super(template, eventBus);
         this._eventBus.subscribeToEvent('changeEmailResponse', this._onChangeEmailResponse.bind(this));
+        this._eventBus.subscribeToEvent('changeLoginResponse', this._onChangeLoginResponse.bind(this));
         this._eventBus.subscribeToEvent('changePasswordResponse', this._onChangePassResponse.bind(this));
         this._eventBus.subscribeToEvent('changePasswordRepeatResponse', this._onChangeRepassResponse.bind(this));
         this._eventBus.subscribeToEvent('loadWaiting', this._onLoadWaiting.bind(this));
@@ -19,13 +21,17 @@ export default class SignupView extends View {
         this._warning = this.el.querySelector('.js-warning-common');
 
         this._emailWarning = this.el.querySelector('.js-warning-email');
+        this._loginWarning = this.el.querySelector('.js-warning-login');
         this._passWarning = this.el.querySelector('.js-warning-password');
         this._repassWarning = this.el.querySelector('.js-warning-repassword');
 
-        this._form = this.el.querySelector('.signup__form');
+        this._form = this.el.querySelector('.form');
 
         this._emailInput = this._form.elements['email'];
         this._emailInput.addEventListener('change', this._onChangeEmail.bind(this, this._emailInput));
+
+        this._loginInput = this._form.elements['login'];
+        this._loginInput.addEventListener('change', this._onChangeLogin.bind(this, this._loginInput));
 
         this._passwordInput = this._form.elements['password'];
         this._repasswordInput = this._form.elements['password-repeat'];
@@ -63,6 +69,9 @@ export default class SignupView extends View {
         case 'email':
             this._onChangeEmailResponse(data);
             break;
+        case 'login':
+            this._onChangeLoginResponse(data);
+            break;
         case 'password':
             this._onChangePassResponse(data);
             break;
@@ -82,6 +91,10 @@ export default class SignupView extends View {
 
     _onChangeEmailResponse (data) {
         this._onChangeResponseTmpl(data.error, this._emailInput, this._emailWarning);
+    }
+
+    _onChangeLoginResponse (data) {
+        this._onChangeResponseTmpl(data.error, this._loginInput, this._loginWarning);
     }
 
     _onChangeResponseTmpl (error, el, warning) {
@@ -110,13 +123,20 @@ export default class SignupView extends View {
         this._eventBus.triggerEvent('changeEmail', { email });
     }
 
+    _onChangeLogin (loginInput) {
+        const login = loginInput.value;
+        this._eventBus.triggerEvent('changeLogin', { login });
+    }
+
+
     _onSubmit (ev) {
         ev.preventDefault();
         const email = this._form.elements['email'].value;
+        const login = this._form.elements['login'].value;
         const pass = this._form.elements['password'].value;
         const repass = this._form.elements['password-repeat'].value;
 
-        this._eventBus.triggerEvent('signup', { email, pass, repass });
+        this._eventBus.triggerEvent('signup', { email, login, pass, repass });
     }
 
     _onLoadWaiting () {

@@ -1,6 +1,9 @@
 import Net from './net.js';
+const gameAddresProd = "wss://kekmate.tech/api/game/ws";
+const chatAddresProd = "wss://kekmate.tech/api/chat/ws";
 
-const gameAddres = "wss://kekmate.tech/api/game/ws";
+const gameAddresDev = "ws://localhost:3336/api/game/ws";
+const chatAddresDev = "ws://localhost:3335/api/chat/ws";
 
 export default class Api {
     /**
@@ -40,11 +43,11 @@ export default class Api {
      * @param password
      * @returns {Promise<Response>}
      */
-    static signIn ({ email, password } = {}) {
+    static signIn ({ loginOrEmail, password } = {}) {
         return Net.doPost({
             url: '/api/session',
             body: {
-                email,
+                'login_or_email': loginOrEmail,
                 password
             }
         });
@@ -52,15 +55,17 @@ export default class Api {
 
     /**
      * Регистрирует пользователя
+     * @param login
      * @param email
      * @param password
      * @returns {Promise<Response>}
      */
-    static signUp ({ email, password } = {}) {
+    static signUp ({ login, email, password } = {}) {
         return Net.doPost({
             url: '/api/user',
             body: {
                 email,
+                login,
                 password
             }
         });
@@ -127,10 +132,21 @@ export default class Api {
             body: {
                 duration,
             },
+            host: Net.getGameServerUrl(),
         });
     }
 
     static getGameAddress() {
-        return gameAddres;
+        if (PRODUCTION) {
+            return gameAddresProd
+        }
+        return gameAddresDev;
+    }
+
+    static getChatAddress() {
+        if (PRODUCTION) {
+            return chatAddresProd
+        }
+        return chatAddresDev;
     }
 }

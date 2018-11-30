@@ -1,0 +1,92 @@
+@import "~Styles/theme";
+@import "~Styles/const";
+
+.user-block {
+  display: flex;
+
+  @media @screen-portrait {
+    width: 100%;
+  }
+
+}
+
+.user-block__element {
+  margin-bottom: 3vh;
+
+  @media @screen-portrait {
+    margin-bottom: 0;
+  }
+}
+
+.user-block__figures {
+  @media @screen-portrait {
+    max-width: 65%;
+  }
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+.user-info_hide {
+  @media @screen-portrait {
+    display: none;
+  }
+}
+
+.user-info__color-figure {
+  background-size: 100%;
+  image-rendering: pixelated;
+
+  @media @screen-landscape {
+    height: 5vw;
+    width: 5vw;
+  }
+
+}
+
+.user-info__color-figure_flipped {
+  transform: scaleX(-1);
+}
+
+.user-info__color-figure_black {
+  background-image: url("../../components/chess/sprites/knight_black.png");
+}
+
+.user-info__color-figure_white {
+  background-image: url("../../components/chess/sprites/knight_white.png");
+}
+
+.user-info__text {
+
+  @media  @screen-landscape{
+    font-size: 3.5vw;
+  }
+}
+
+.user-info__text_color {
+  color: @header-bar-button-text-color;
+}
+
+
+.user-timer {
+  font-size: 5vh;
+  color: @header-bar-button-text-color;
+
+  @media @screen-landscape{
+    font-size: 2.5vw;
+  }
+}
+
+.timer-second {
+  @media @screen-portrait{
+    order: 2;
+  }
+}
+
+.figures-second {
+  @media @screen-portrait{
+    order: 1;
+  }
+}

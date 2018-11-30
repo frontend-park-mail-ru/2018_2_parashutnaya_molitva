@@ -1,4 +1,4 @@
-import './paginator.css';
+import './paginator.less';
 
 const noop = () => null;
 export default class Paginator {

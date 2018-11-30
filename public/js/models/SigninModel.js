@@ -8,16 +8,18 @@ export default class SigninModel {
     }
 
     _onSignin (data) {
-        const email = data.email;
+        const loginOrEmail = data.loginOrEmail;
         const pass = data.pass;
-        const errEmail = Validation.validateEmail(email, true);
 
-        if (errEmail) {
+        const errLoginOrEmail = Validation.validateLoginOrEmail(loginOrEmail);
+
+        if (errLoginOrEmail) {
             const res = {
-                field: 'email',
-                error: errEmail
+                field: 'login_or_email',
+                error: errLoginOrEmail
             };
             this._eventBus.triggerEvent('signinResponse', res);
+            return;
         }
 
         const errPass = Validation.validatePassword(pass, false);
@@ -35,7 +37,7 @@ export default class SigninModel {
         this._eventBus.triggerEvent('loadWaiting');
 
         Api.signIn({
-            email,
+            loginOrEmail,
             password: data.pass
         }).then(resp => {
             if (resp.status === 200) {

@@ -8,7 +8,7 @@ export default class Router {
 
         window.addEventListener('popstate', () => {
             const pathname = Router._normalizePath(location.pathname);
-            this._change(pathname, false);
+            this.change(pathname, false);
         });
     }
 
@@ -21,7 +21,7 @@ export default class Router {
             window.history.replaceState(null, null, "/");
         }
 
-        this._change('/', !delPrev);
+        this.change('/', !delPrev);
     }
 
     /**
@@ -29,11 +29,13 @@ export default class Router {
      * @param path путь при переходе на который будет вызвана view
      * @param root элемент куда будет рисоваться view, по-умолчание это this.root
      * @param view компонент, который отрисуется
+     * @param data router data
      */
-    add (path, root = this.root, view) {
+    add (path, root = this.root, view, data) {
         this.routes.set(path, {
             root,
-            view
+            view,
+            data
         });
     }
 
@@ -53,17 +55,19 @@ export default class Router {
      * @param addToHistory добавлять Path в History Api или нет.
      * @private
      */
-    _change (path, addToHistory = true) {
+    change (path, addToHistory = true) {
         if (this.currentRoute === path) {
             return;
         }
 
         let currentData = this.routes.get(this.currentRoute);
         if (currentData) {
+            currentData.view.close();
             currentData.view.hide(currentData.root);
         }
 
         if (this.isCurrentNotFound) {
+            this.notFoundView.close();
             this.notFoundView.hide(this.notFoundViewRoot);
         }
 
@@ -72,8 +76,8 @@ export default class Router {
         }
 
         if (this.routes.has(path)) {
-            let data = this.routes.get(path);
-            data.view.render(data.root);
+            let route = this.routes.get(path);
+            route.view.render(route.root, route.data);
             this.currentRoute = path;
         } else {
             this.notFoundView.render(this.notFoundViewRoot);
@@ -99,10 +103,10 @@ export default class Router {
         this.root.addEventListener('click', (ev) => {
             if (ev.target.tagName === 'A' && ev.target.hostname === location.hostname) {
                 ev.preventDefault();
-                this._change(Router._normalizePath(ev.target.pathname));
+                this.change(Router._normalizePath(ev.target.pathname));
             }
         });
 
-        this._change(Router._normalizePath(window.location.pathname), false);
+        this.change(Router._normalizePath(window.location.pathname), false);
     }
 }

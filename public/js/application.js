@@ -1,3 +1,5 @@
+import 'normalize.css';
+import '../css/style.less';
 import AboutController from './controllers/AboutController.js';
 import ScoreboardController from './controllers/ScoreboardController.js';
 import MenuController from './controllers/MenuController.js';
@@ -7,51 +9,55 @@ import SigninController from './controllers/SigninController.js';
 import SignupController from './controllers/SignupController.js';
 import HeaderBarController from './controllers/HeaderBarController.js';
 import NotFoundView from './views/notfound/NotFoundView.js';
-import EventBus from './lib/eventbus.js';
-import User from './lib/user.js';
+import EventBus from './lib/eventbus/eventbus.js';
 import runtime from 'serviceworker-webpack-plugin/lib/runtime';
-import '../css/style.css';
-import MultiplayerController from "./controllers/MultiplayerController";
-import SingleplayerController from './controllers/SingleplayerController';
+import GameController from './controllers/GameController';
+import ChatController from './controllers/ChatController';
+import { CHAT, HEADER, GLOBAL } from './lib/eventbus/events';
 
 document.addEventListener('DOMContentLoaded', () => {
     if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || window.location.hostname === 'localhost')) {
-        const registration = runtime.register();
+        runtime.register();
     }
-    const page = document.querySelector('#page');
+
+    console.log('start');
+    const page = document.querySelector('.page');
+    createSiteModules(page);
     const main = document.querySelector('.main');
     const header = document.querySelector('header');
 
     let router = new Router(page);
 
-    const globalEventBus = new EventBus(['renderHeaderBar', 'setUser', 'removeUser',
-        'checkUser', 'checkUserResponse']);
+    const globalEventBus = new EventBus([HEADER.LOAD, HEADER.CLOSE]);
 
-    const headerBarController = new HeaderBarController({ globalEventBus });
+    const headerBarController = new HeaderBarController({ globalEventBus, router });
     headerBarController.headerBarView.render(header);
-
-    let user = new User(globalEventBus);
 
     const aboutController = new AboutController();
     const scoreboardController = new ScoreboardController();
     const menuController = new MenuController();
     const signinController = new SigninController({ router, globalEventBus });
     const signupContoller = new SignupController({ router, globalEventBus });
-    const profilerControlleer = new ProfileController({ router, globalEventBus });
-
-    const multiplayerController = new MultiplayerController({root: main});
-    const singleplayerController = new SingleplayerController();
+    const profileControlleer = new ProfileController({ router, globalEventBus });
+    const chatController = new ChatController({ router, globalEventBus });
+    const gameController = new GameController({ router, globalEventBus });
 
     router.add('/about', main, aboutController.aboutView);
-    router.add('/scoreboard', main, scoreboardController.scoreboardView);
+    router.add('/leaderboard', main, scoreboardController.scoreboardView);
     router.add('/signin', main, signinController.signinView);
-    router.add('/profile', main, profilerControlleer.profileView);
+    router.add('/profile', main, profileControlleer.profileView);
     router.add('/signup', main, signupContoller.signupView);
     router.add('/', main, menuController.menuView);
-    router.add('/multiplayer', main, multiplayerController.multiplayerView);
-    router.add('/singleplayer', main, singleplayerController.singleplayerView);
+    router.add('/multiplayer', main, gameController.multiplayerView);
+    router.add('/singleplayer', main, gameController.singleplayerView);
+    router.add('/chat', main, chatController.chatView);
 
     router.setNotFoundView(main, new NotFoundView());
-
     router.start();
 });
+
+function createSiteModules (root) {
+    root.innerHTML = `<header class="header"></header>
+<main class="main"></main>
+`;
+}

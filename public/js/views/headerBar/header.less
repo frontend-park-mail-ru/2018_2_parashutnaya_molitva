@@ -1,0 +1,123 @@
+.header-bar {
+    user-select: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    background-color: #bd9457;
+    height: 100%;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.header-bar__button {
+    color: #6e4c1a;
+    text-align: center;
+    background-color: transparent;
+    height: max-content;
+    padding: 5px 10px;
+}
+
+.header-bar__button:hover {
+    color: #6a3c08;
+    transform: scale(1.1);
+}
+
+/* m = (10)(1280 - 320) = 0.01
+   b = 10 - 320 * 0.01 = 6.8 px
+
+*/
+
+@media (min-width: 320px) {
+    .header-bar__button {
+        padding: calc(0.5vw + 3.4px) calc(1vw + 6.8px);
+    }
+}
+
+@media (min-width: 1280px){
+    .header-bar__button {
+        padding: 10px 20px;
+    }
+}
+
+.header-bar__label {
+    flex-grow: 1;
+    color: white;
+    height: fit-content;
+    margin-left: 2%;
+    text-decoration: none;
+    animation: linear 10s label-animation infinite;
+    text-transform: uppercase;
+    text-shadow: -5px -5px 0 #ffffff;
+    background: radial-gradient(#f0c781 1px, transparent 1px);
+    background-size: 4px 4px;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+@keyframes label-animation {
+    0% {
+        color: #e7e7e7;
+    }
+    10% {
+
+    }
+    90% {
+
+    }
+    100% {
+        color: #bd9457;
+    }
+}
+
+.header-bar__label:hover {
+    transform: scale(1.01);
+}
+
+@media (max-width: 319px) {
+    .header-bar {
+        flex-direction: column;
+    }
+}
+
+
+@avatar-min-size: 40px;
+@avatar-max-size: 60px;
+
+.header-bar__avatar {
+    height: @avatar-min-size;
+    width: @avatar-min-size;
+
+    @media (min-width: 320px) {
+        height: calc(2vw + 33.6px);
+        width: calc(2vw + 33.6px);
+    }
+
+    @media (min-width: 1280px) {
+        height: @avatar-max-size;
+        width: @avatar-max-size;
+    }
+}
+
+.header-bar__user-info {
+    align-items: flex-end;
+}
+
+.header-bar__column {
+    padding: 2% 0 2% 2%;
+}
+
+.header-bar__dropdown-array {
+    background-image: url("../../../images/dropdown.svg");
+    height: 10px;
+    width: 10px;
+    align-self: center;
+    transition: transform 0.3s;
+}
+
+@dropdown-padding: 0.5vw;
+
+.dropdown {
+    cursor: pointer;
+    padding-right: @dropdown-padding;
+}

@@ -1,0 +1,73 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="params">
+    <fest:choose>
+        <fest:when test="params.isFirst === true">
+            <fest:choose>
+                <fest:when test="params.isOnline">
+                    <div class="user-block multiplayer__user-block_first">
+                        <div class="user-bar user-block__element multiplayer-user-bar_first">
+                            <div class="user-info-bar user-bar__column multiplayer-user-info-bar_first ">
+                                <div class="user-bar__row text-h2">
+                                    <fest:value>params.user.login</fest:value>
+                                </div>
+                                <div class="user-bar__row js-header-score text-base">
+                                    <fest:value>params.user.score</fest:value>
+                                </div>
+                            </div>
+                            <div class="user-bar__column multiplayer-user-bar__column">
+                                <img class="user-bar__avatar header-bar__avatar js-first-avatar"></img>
+                            </div>
+                        </div>
+                        <div class="user-block__element user-timer js-timer-first"></div>
+                        <div class="user-block__element user-block__figures multiplayer__figures js-figures-first"></div>
+                    </div>
+                </fest:when>
+                <fest:otherwise>
+                    <div class="user-block singleplayer__user-block_first">
+                        <div class="user-block__element user-info user-info_hide">
+                            <div class="user-info__color-figure user-info__color-figure_white"></div>
+                            <div class="user-info__text user-info__text_color">WHITE</div>
+                        </div>
+                        <div class="user-block__element user-timer js-timer-first"></div>
+                        <div class="user-block__element user-block__figures multiplayer__figures js-figures-first"></div>
+                    </div>
+                </fest:otherwise>
+            </fest:choose>
+        </fest:when>
+        <fest:otherwise>
+            <fest:choose>
+                <fest:when test="params.isOnline">
+                    <div class="user-block multiplayer_user-block_second">
+                        <div class="user-bar user-block__element multiplayer-user-bar_second">
+                            <div class="user-info-bar user-bar__column multiplayer-user-info-bar_second">
+                                <div class="user-bar__row text-h2">
+                                    <fest:value>params.user.login</fest:value>
+                                </div>
+                                <div class="user-bar__row js-header-score text-base">
+                                    <fest:value>params.user.score</fest:value>
+                                </div>
+                            </div>
+                            <div class="user-bar__column multiplayer-user-bar__column">
+                                <img class="user-bar__avatar header-bar__avatar js-second-avatar"></img>
+                            </div>
+                        </div>
+                        <div class="user-block__element user-timer timer-second js-timer-second"></div>
+                        <div class="user-block__element user-block__figures figures-second multiplayer__figures
+            js-figures-second"></div>
+                    </div>
+                </fest:when>
+                <fest:otherwise>
+                    <div class="user-block singleplayer__user-block_second">
+                        <div class="user-block__element user-info user-info_hide">
+                            <div class="user-info__text user-info__text_color">BLACK</div>
+                            <div class="user-info__color-figure user-info__color-figure_black user-info__color-figure_flipped">
+                            </div>
+                        </div>
+                        <div class="user-block__element user-timer timer-second js-timer-second"></div>
+                        <div class="user-block__element user-block__figures figures-second multiplayer__figures
+            js-figures-second"></div>
+                    </div>
+                </fest:otherwise>
+            </fest:choose>
+        </fest:otherwise>
+    </fest:choose>
+</fest:template>

@@ -1,0 +1,36 @@
+@import "~Styles/theme";
+
+@dropdown-padding: 0.5vh;
+
+.dropdown-content {
+    z-index: 100;
+    display: none;
+    flex-direction: column;
+    right: @dropdown-padding;
+    position: absolute;
+    height: fit-content;
+    width: fit-content;
+}
+
+.dropdown-content_active {
+    display: flex;
+}
+
+.dropdown-content__button {
+    font-size: 1.2rem;
+    text-align: right;
+    background-color: @active-button-color;
+    color: @header-bar-button-text-color;
+    opacity: 0;
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s, opacity 0.3s;
+
+    &:hover {
+        background-color: @active-button-color-hover;
+        transform: scale(1.05, 1.05);
+        box-shadow: 0 3px 4px 0 #5b595826, 0px -3px 4px 0px #5b595826;
+    }
+}
+
+.dropdown-content__button_active {
+    opacity: 1;
+}

@@ -1,6 +1,6 @@
 import { ScoreboardView } from '../views/scoreboard/ScoreboardView.js';
 import ScoreboardModel from '../models/ScoreboardModel.js';
-import EventBus from '../lib/eventbus.js';
+import EventBus from '../lib/eventbus/eventbus.js';
 
 const eventList = [
     'load',

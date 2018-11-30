@@ -1,6 +1,9 @@
+const errLoginIsEmpty = 'Login is empty';
 const errEmailIsEmpty = 'Email is empty';
 const errPassIsEmpty = 'Pass is empty';
+const errLoginOrEmailIsEmpty = 'Input login or email';
 const errRePassIsEmpty = 'RePass is empty';
+const errLoginIsInvalid = 'Must contain at most 12 characters';
 const errEmailIsInvalid = 'Email is invalid';
 const errInvalidPasswordData = 'Must contain at least 8 characters, 1 number, 1 upper and 1 lowercase';
 const errNotEqualPassRePass = 'Password and Password Repeat are not equal';
@@ -26,6 +29,32 @@ export default class Validation {
 
         if (withRegex && !Validation.validateEmailRegex(email)) {
             return errEmailIsInvalid;
+        }
+    }
+
+    /**
+     * Валидирует login.
+     * @param login
+     * @returns {string} если не валидный логин, возвращает ошибку.
+     */
+    static validateLogin (login) {
+        if (!login) {
+            return errLoginIsEmpty;
+        }
+
+        if (login.length > 12) {
+            return errLoginIsInvalid;
+        }
+    }
+
+    /**
+     * Валидирует loginOrEmail.
+     * @param loginOrEmail
+     * @returns {string} если не валидный логин или email, возвращает ошибку.
+     */
+    static validateLoginOrEmail (loginOrEmail) {
+        if (!loginOrEmail) {
+            return errLoginOrEmailIsEmpty;
         }
     }
 

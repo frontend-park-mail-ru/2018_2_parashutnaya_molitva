@@ -1,3 +1,4 @@
+import './scoreboard.less';
 import View from '../../lib/view.js';
 import template from './scoreboard.tmpl.xml';
 import Paginator from '../../components/paginator/paginator.js';
@@ -33,7 +34,7 @@ class ScoreboardView extends View {
                 linksCount: data.linksCount,
                 clickCallback,
                 styleClassesCurrent: ['paginator__button_current'],
-                styleClassesOther: ['button']
+                styleClassesOther: ['button', 'text-h2']
             });
             this._paginator.render(root);
         } else {

@@ -5,12 +5,14 @@ export default class SignupModel {
     constructor (eventBus) {
         this._eventBus = eventBus;
         this._eventBus.subscribeToEvent('changeEmail', this._onChangeEmail.bind(this));
+        this._eventBus.subscribeToEvent('changeLogin', this._onChangeLogin.bind(this));
         this._eventBus.subscribeToEvent('changePassword', this._onChangePassword.bind(this));
         this._eventBus.subscribeToEvent('changePasswordRepeat', this._onChangePasswordRepeat.bind(this));
         this._eventBus.subscribeToEvent('signup', this._onSignup.bind(this));
 
         this._validInputMap = {
             pass: false,
+            login: false,
             repass: false,
             email: false
         };
@@ -23,10 +25,14 @@ export default class SignupModel {
             this._eventBus.triggerEvent('loadWaiting');
             Api.signUp({
                 email: data.email,
+                login: data.login,
                 password: data.pass
             }).then(resp => {
                 if (resp.status === 200) {
-                    this._eventBus.triggerEvent('signupSuccess', {});
+                    Api.signIn({loginOrEmail: data.login, password: data.pass})
+                        .then(() => {
+                            this._eventBus.triggerEvent('signupSuccess', {});
+                        });
                 } else {
                     resp
                         .json()
@@ -39,6 +45,7 @@ export default class SignupModel {
             this._onChangePassword(data);
             this._onChangePasswordRepeat(data);
             this._onChangeEmail(data);
+            this._onChangeLogin(data);
         }
     }
 
@@ -81,5 +88,18 @@ export default class SignupModel {
 
         this._validInputMap['email'] = true;
         this._eventBus.triggerEvent('changeEmailResponse', {});
+    }
+
+    _onChangeLogin (data) {
+        const login = data.login;
+        const errLogin = Validation.validateLogin(login);
+        if (errLogin) {
+            this._validInputMap['login'] = false;
+            this._eventBus.triggerEvent('changeLoginResponse', { error: errLogin });
+            return;
+        }
+
+        this._validInputMap['login'] = true;
+        this._eventBus.triggerEvent('changeLoginResponse', {});
     }
 }

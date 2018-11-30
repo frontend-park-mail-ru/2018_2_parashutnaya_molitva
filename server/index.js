@@ -1,4 +1,4 @@
-const port = 4000;
+const port = 4003;
 
 const path = require('path');
 const express = require('express');
@@ -17,7 +17,12 @@ app.use(express.static(publicRoot));
 app.use(body.json());
 app.get('/sw.js', (req, res) => {
     log('sw.js');
-    res.sendFile(publicRoot + "/dist/sw.js")
+    res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+    res.sendFile(publicRoot + '/dist/sw.js');
+});
+
+app.get('/favicon.ico', (req, res) => {
+    res.sendFile(publicRoot + '/images/favicon.ico');
 });
 
 app.get('*', (req, res) => {

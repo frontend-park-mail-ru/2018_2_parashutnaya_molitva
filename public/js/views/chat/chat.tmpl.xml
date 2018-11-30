@@ -1,0 +1,24 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="params">
+    <div class="chat">
+        <div class="chat__header">
+            <div class="chat__header__tab">
+                <button class="chat__header__tab__button">All</button>
+                <button class="chat__header__tab__button-close">X</button>
+            </div>
+            <div class="chat__header__tab">
+                <button class="chat__header__tab__button">player_0</button>
+                <button class="chat__header__tab__button-close">X</button>
+            </div>
+            <div class="chat__header__tab">
+                <button class="chat__header__tab__button">player_1</button>
+                <button class="chat__header__tab__button-close">X</button>
+            </div>
+        </div>
+        <div class="chat__messages js-messages">
+        </div>
+        <div class="send-form">
+            <input class="send-form__input js-send-form"></input>
+            <button class="send-form__send js-send-button">send</button>
+        </div>
+    </div>
+</fest:template>

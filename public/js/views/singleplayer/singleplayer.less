@@ -1,0 +1,83 @@
+@import "~Styles/theme";
+@import "~Styles/const";
+
+@first-info-block: info-first;
+@second-info-block: info-second;
+@board-block: board-section;
+
+.game {
+  transition: background 1s;
+  height: 100%;
+  display: grid;
+}
+
+.game_singleplayer {
+  @media screen and (orientation: landscape) {
+    grid-template-rows: 2% auto 2%;
+    grid-template-columns: auto minmax(auto, max-content) auto;
+    grid-template-areas: ". . ." "@{first-info-block} @{board-block} @{second-info-block}" ". . .";
+  }
+
+  @media screen and (orientation: portrait) {
+    grid-template-rows: 1fr fit-content(100%) 1fr;
+    grid-template-columns: 1fr;
+    grid-template-areas: "@{second-info-block}" "@{board-block}" "@{first-info-block}";
+  }
+}
+
+.info-block {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+
+  @media @screen-portrait {
+    padding: 1vh;
+    flex-direction: row;
+    align-items: center;
+  }
+
+}
+
+@media @screen-landscape {
+  .singleplayer__info-block_first {
+    justify-self: center;
+  }
+
+  .singleplayer__info-block_second {
+    justify-self: center;
+  }
+}
+
+.singleplayer__user-block_second {
+  flex-direction: column;
+
+  @media @screen-portrait {
+    align-items: center;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+  }
+}
+
+.singleplayer__user-block_first {
+  flex-direction: column;
+  @media @screen-landscape {
+    align-items: flex-end;
+  }
+}
+
+.info-block_first {
+  grid-area: @first-info-block;
+}
+
+.info-block_second {
+  grid-area: @second-info-block;
+}
+
+.board-section {
+  grid-area: @board-block;
+  max-height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+

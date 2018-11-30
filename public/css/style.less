@@ -1,0 +1,206 @@
+@import "text";
+@import "theme";
+@import "popup";
+@import "user-bar";
+
+// Need to no display iframe scroll
+::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+
+iframe {
+    border: none;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+
+}
+
+body, html {
+    font-family: arial, sans-serif;
+    margin: 0!important;
+    height: 100vh;
+}
+
+.page {
+    display: grid;
+    grid-template-rows: 1fr 10fr;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-areas: 'header header header' 'menu menu menu' ;
+    background: linear-gradient(45deg, @background-cell-color 25%,transparent 26%,transparent 75%,@background-cell-color 76%),
+            linear-gradient(-45deg, @background-cell-color 25%,transparent 26%,transparent 75%,@background-cell-color 76%);
+    background-size: 100px 100px;
+    background-color: rgba(216, 201, 154, 0.89);
+    transition: background-size 2s;
+    //animation-name: backgroud-animation;
+    //animation-duration: 500s;
+    //animation-iteration-count: infinite;
+    //animation-timing-function: linear;
+
+    @media screen and (min-width: @mobile-s-width) {
+        background-size: 150px 150px;
+    }
+
+    @media (min-width: @mobile-l-width) {
+        background-size: 200px 200px;
+    }
+
+    @media (min-width: @tablet-width) {
+        background-size: 250px 250px;
+    }
+
+    @media (min-width: @laptop-width) {
+        background-size: 300px 300px;
+    }
+
+}
+
+//
+//@keyframes backgroud-animation {
+//    from {
+//        background-position-x: 0;
+//        background-position-y: 0;
+//    }
+//    to {
+//        background-position-x: 100%;
+//        background-position-y: 100%;
+//    }
+//
+//}
+
+.wrapper {
+    all: unset;
+}
+
+.main {
+    grid-area: menu;
+}
+
+.header {
+    grid-area: header;
+}
+
+@default-padding-top-down: 5px;
+@default-padding-right-left: 10px;
+
+@default-padding-top-down-425px: 8px;
+@default-padding-right-left-425px: 15px;
+
+@default-padding-top-down-768px: 10px;
+@default-padding-right-left-768px: 20px;
+
+
+.input {
+    padding: @default-padding-top-down @default-padding-right-left;
+    margin: 1.5vh 0;
+    border-radius: 2px;
+    border: 1px solid grey;
+    background-color: @active-button-color-disabled;
+    transition: box-shadow 0.1s, background-color 0.25s;
+
+    &:focus {
+        outline: none;
+        box-shadow: inset 0 0 6px 1px #c4b78d;
+        background-color: @active-button-color;
+    }
+}
+
+.button {
+    user-select: none;
+    padding: @default-padding-top-down @default-padding-right-left;
+    cursor: pointer;
+    display: inline-block;
+    text-decoration: none;
+    background: transparent;
+    transition: padding 0.1s;
+}
+
+@media all and (min-width: @mobile-l-width) {
+    .button {
+        padding: @default-padding-top-down-425px @default-padding-top-down-425px;
+    }
+
+    .input {
+        padding: @default-padding-top-down-425px @default-padding-top-down-425px;
+    }
+}
+
+@media all and (min-width: @tablet-width) {
+    .button {
+        padding: @default-padding-top-down-768px @default-padding-top-down-768px;
+    }
+
+    .input {
+        padding: @default-padding-top-down-768px @default-padding-top-down-768px;
+    }
+}
+
+.warning {
+    font-size: 13px;
+    color: @warning-color;
+}
+
+.section {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.submit {
+    border: none;
+    text-align: center;
+    background-color: @active-button-color;
+    color: @header-bar-button-text-color;
+    transition: background-color 0.1s, transform 0.1s, box-shadow 1s;
+
+    &:hover {
+        background-color: @active-button-color-hover;
+        transform: scale(1.05, 1.05);
+        box-shadow: 0 3px 4px 0 #5b595826, 0px -3px 4px 0px #5b595826;
+    }
+}
+
+.form {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.hidden_visibility {
+    visibility: hidden;
+}
+
+.chat-iframe {
+    height: 40%;
+    background-color: white;
+    border: solid darkgray;
+}
+
+// 320 - 10px
+// 1280 - 40px
+// 30 / (960) = 0.03125
+// b = 0
+//
+.x-mark-image {
+    height: 10px;
+    width: 10px;
+    background-size: 100%;
+    background-image: url("../images/x-mark.svg");
+
+    @media screen and (min-width: @mobile-s-width) {
+        height: 3.125vw;
+        width: 3.125vw;
+    }
+
+    @media screen and (min-width: 1280px) {
+        height: 40px;
+        width: 40px;
+    }
+}

@@ -1,0 +1,32 @@
+:root {
+    --cell-size: 64px;
+    --board-size: 512px; /* = 64 * 8 */
+}
+
+.board {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    @media screen and (orientation: landscape) {
+        border: 0.5vh solid black;
+        max-height: 80vh;
+        max-width: 80vh;
+        height: calc(50vw + 30px);
+        width: calc(50vw + 30px);
+    }
+
+    @media screen and (orientation: portrait) {
+        border-top: 1px solid black;
+        border-bottom: 1px solid black;
+        width: 100vw;
+        max-width: 75vh;
+    }
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}

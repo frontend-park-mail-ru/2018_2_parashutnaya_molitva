@@ -1,4 +1,4 @@
-import './menuButton.css';
+import './menuButton.less';
 
 const noop = () => null;
 const elementClass = 'button menu__button';
@@ -10,14 +10,17 @@ export default class MenuButton {
      * @param textLabel текст внутри кнопки
      * @param href
      * @param clickCallback действие при клике на кнопку
+     * @param isNavigate
      */
-    constructor ({ textLabel, href = '', clickCallback = noop } = {}) {
+    constructor ({ textLabel, href = '', clickCallback = noop, isNavigate = true} = {}) {
         const element = document.createElement('a');
         element.innerText = textLabel;
         if (href !== '') {
             element.href = href;
         }else {
-            element.classList.add(disableClass);
+            if (isNavigate) {
+                element.classList.add(disableClass);
+            }
         }
         if (clickCallback !== noop) {
             element.addEventListener('click', clickCallback);
