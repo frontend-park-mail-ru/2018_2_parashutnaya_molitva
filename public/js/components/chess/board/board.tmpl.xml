@@ -1,0 +1,13 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="params">
+    <div class="board">
+        <fest:for iterate="params.cells" index="i">
+            <div class="column">
+                <fest:for iterate="params.cells[i]" index="j">
+                    <div class="{params.cells[i][j].div.classList}" id="{params.cells[i][j].div.id}">
+                        <div class="{params.pieces[i][j].div.classList}"></div>
+                    </div>
+                </fest:for>
+            </div>
+        </fest:for>
+    </div>
+</fest:template>

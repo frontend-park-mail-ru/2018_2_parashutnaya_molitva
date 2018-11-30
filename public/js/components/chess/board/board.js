@@ -2,6 +2,7 @@ import { PIECE_TYPE, COLOR } from '../consts';
 import Cell from '../cell/cell';
 import Piece from '../piece/piece';
 import './board.less';
+import template from './board.tmpl.xml';
 
 const START_STATE = 'RNBQKBNRPPPPPPPP................................pppppppprnbqkbnr';
 const PIECE_PARAMETERS = {
@@ -27,19 +28,21 @@ const PIECE_COLOR_CLASSES = {
     [COLOR.BLACK]: 'piece_black'
 };
 
-const BOARD_CLASS = 'board';
-
 export default class Board {
     constructor ({ boardState = START_STATE, turn = COLOR.WHITE, sideOfView = COLOR.WHITE, moveCallback = (move) => null } = {}) {
         this._turn = +turn;
         this._moveCallback = moveCallback;
+        this._params = {};
         this.setState({ boardState, turn, sideOfView });
     }
 
-
     render (root) {
-        root.innerHTML = '';
-        root.appendChild(this._board);
+        root.innerHTML = template(this._params);
+        const cells = document.querySelectorAll('.cell');
+        console.log(cells);
+        cells.forEach(cell => {
+            cell.addEventListener('click', (event) => this._onCellClick(event));
+        });
     }
 
     setState ({ boardState = START_STATE, turn = +this._sideOfView, sideOfView = this._sideOfView } = {}) {
@@ -61,27 +64,24 @@ export default class Board {
             stateMatrix.push(row);
         }
 
-        // table with chess class
-        this._board = document.createElement('div');
-        this._board.classList.add(BOARD_CLASS);
+        let cells = [];
+        let pieces = [];
 
         // 7 -> 0 if white; 0 -> 7 if black
         for (let i = this._sideOfView === COLOR.BLACK ? 7 : 0; this._sideOfView === COLOR.BLACK ? i >= 0 : i < 8;
             this._sideOfView === COLOR.BLACK ? i-- : i++) {
-            let column = document.createElement('div');
-            column.classList.add('column');
+            cells.push([]);
+            pieces.push([]);
 
             // 0 -> 7  if white; 7 -> 0 if black
             for (let j = this._sideOfView === COLOR.BLACK ? 0 : 7; this._sideOfView === COLOR.BLACK ? j < 8 : j >= 0;
                 this._sideOfView === COLOR.BLACK ? j++ : j--) {
-                const piece = new Piece(...PIECE_PARAMETERS[stateMatrix[j][i]]);
-                const cell = new Cell(j, i);
-                cell.div.addEventListener('click', (event) => this._onCellClick(event));
-                piece.render(cell.div);
-                column.appendChild(cell.div);
+                cells[i].push(new Cell(j, i));
+                pieces[i].push(new Piece(...PIECE_PARAMETERS[stateMatrix[j][i]]));
             }
-            this._board.appendChild(column);
         }
+        this._params.cells = cells;
+        this._params.pieces = pieces;
     }
 
     _onCellClick (event) {
