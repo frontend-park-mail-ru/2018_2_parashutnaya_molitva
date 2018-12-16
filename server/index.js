@@ -9,7 +9,6 @@ const fs = require('fs');
 
 log('Starting server');
 const app = express();
-const projectRoot = path.resolve(__dirname, '..');
 const publicRoot = path.resolve(__dirname, '..', 'public');
 const indexPath = path.resolve(__dirname, '../public/index.html');
 
@@ -22,7 +21,7 @@ app.get('/sw.js', (req, res) => {
 });
 
 app.get('/favicon.ico', (req, res) => {
-    res.sendFile(publicRoot + '/images/favicon.ico');
+    res.sendFile(publicRoot + '/favicon.ico');
 });
 
 app.get('*', (req, res) => {
