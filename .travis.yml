@@ -14,7 +14,7 @@ script:
   - scp -r -v -i ./ssh_key  ./kekmate/* travis@$KSENOBAIT_VSCALE_SERVER:/var/www/kekmate
 branches:
   only:
-    - deploy
+    - master
 before_install:
   - mkdir -p ~/.ssh/travis/
   - openssl aes-256-cbc -K $encrypted_abe27be2c3c2_key -iv $encrypted_abe27be2c3c2_iv
