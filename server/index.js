@@ -17,7 +17,7 @@ app.use(body.json());
 app.get('/sw.js', (req, res) => {
     log('sw.js');
     res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
-    res.sendFile(publicRoot + '/dist/sw.js');
+    res.sendFile(publicRoot + '/sw.js');
 });
 
 app.get('/favicon.ico', (req, res) => {
