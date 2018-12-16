@@ -2,12 +2,16 @@ language: node_js
 node_js:
   - 11
 script:
-  #- npm install
-  #- npm run build-dev
+  - npm install
+  - npm run build-prod
   - ls -la  ~/.ssh/travis/
   - ssh-keyscan -H $KSENOBAIT_VSCALE_SERVER >> ~/.ssh/known_hosts
   - chmod 600 ./ssh_key
-  - scp -r -v -i ./ssh_key  ./public/* travis@$KSENOBAIT_VSCALE_SERVER:/var/www/kekmate
+  - mkdir ./kekmate # создаем папку которая поедет на сервер
+  - cp ./public/*.* ./kekmate
+  - mv ./public/dist ./kekmate
+  - echo "rm -rf /var/www/kekmate/*" | ssh -i ./ssh_key travis@$KSENOBAIT_VSCALE_SERVER
+  - scp -r -v -i ./ssh_key  ./kekmate/* travis@$KSENOBAIT_VSCALE_SERVER:/var/www/kekmate
 branches:
   only:
     - deploy
