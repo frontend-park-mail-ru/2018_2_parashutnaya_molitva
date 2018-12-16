@@ -9,7 +9,6 @@ const fs = require('fs');
 
 log('Starting server');
 const app = express();
-const projectRoot = path.resolve(__dirname, '..');
 const publicRoot = path.resolve(__dirname, '..', 'public');
 const indexPath = path.resolve(__dirname, '../public/index.html');
 
@@ -18,11 +17,11 @@ app.use(body.json());
 app.get('/sw.js', (req, res) => {
     log('sw.js');
     res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
-    res.sendFile(publicRoot + '/dist/sw.js');
+    res.sendFile(publicRoot + '/sw.js');
 });
 
 app.get('/favicon.ico', (req, res) => {
-    res.sendFile(publicRoot + '/images/favicon.ico');
+    res.sendFile(publicRoot + '/favicon.ico');
 });
 
 app.get('*', (req, res) => {
