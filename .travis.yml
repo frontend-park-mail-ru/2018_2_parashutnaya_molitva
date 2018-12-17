@@ -4,7 +4,6 @@ node_js:
 script:
   - npm install
   - npm run build-prod
-  - ls -la  ~/.ssh/travis/
   - ssh-keyscan -H $KSENOBAIT_VSCALE_SERVER >> ~/.ssh/known_hosts
   - chmod 600 ./ssh_key
   - mkdir ./kekmate # создаем папку которая поедет на сервер
@@ -16,6 +15,5 @@ branches:
   only:
     - master
 before_install:
-  - mkdir -p ~/.ssh/travis/
   - openssl aes-256-cbc -K $encrypted_abe27be2c3c2_key -iv $encrypted_abe27be2c3c2_iv
     -in id_rsa.enc -out ./ssh_key -d
