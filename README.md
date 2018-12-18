@@ -10,7 +10,11 @@
 - Цыганков Максим [@Chubasik](https://github.com/Chubasik)
 
 ## Описание
-https://kekmate.now.sh/
+
+Семестровый проект в технопарк МГТУ. Шахматы.
+
+## Ссылка поиграть
+https://kekmate.tech/
 
 ## Репозиторий бекенда
 
