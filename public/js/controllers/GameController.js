@@ -3,6 +3,7 @@ import SingleplayerView from "../views/singleplayer/SingleplayerView";
 import GameOnlineModel from "../models/game/GameOnlineModel";
 import {GAME, ROUTER, SERVICE as WS, SERVICE, VIEW} from "../lib/eventbus/events";
 import GameOfflineModel from "../models/game/GameOfflineModel";
+import GameAIModel from '../models/game/GameAIModel';
 import EventBus from "../lib/eventbus/eventbus";
 
 const offlineEvents = [
@@ -53,7 +54,7 @@ export default class GameController {
         this.singleplayerView = new SingleplayerView({eventBus: eventBusOffline});
 
         this._gameOnlineModel = new GameOnlineModel({eventBus: eventBusOnline, globalEventBus});
-        this._gameOfflineModel = new GameOfflineModel({eventBus: eventBusOffline});
+        this._gameOfflineModel = new GameAIModel({eventBus: eventBusOffline});
     }
 
 }
