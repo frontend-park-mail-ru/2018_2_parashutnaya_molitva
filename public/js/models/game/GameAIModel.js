@@ -2,6 +2,8 @@ import Game from '../../lib/chess/game';
 import {PIECE_COLOR} from '../../lib/chess/enums';
 import { GAME } from '../../lib/eventbus/events';
 
+const TREE_DEPTH = 2;
+
 export default class GameAIModel {
     constructor ({ eventBus = {}, playerColor = 0 } = {}) {
         this._eventBus = eventBus;
@@ -70,7 +72,7 @@ export default class GameAIModel {
             const newBoard = legalMoves[move];
             const newScore = this._minimaxTreeScore(
                 newBoard,
-                2,
+                TREE_DEPTH,
                 this._game.turn() === PIECE_COLOR.WHITE ? PIECE_COLOR.BLACK : PIECE_COLOR.WHITE
             );
 
