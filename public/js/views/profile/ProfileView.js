@@ -1,3 +1,4 @@
+import '../../components/popup/changePasswordPopup/changePasswordPopup.less';
 import './profile.less';
 import View from '../../lib/view.js';
 import template from './profile.tmpl.xml';
@@ -67,16 +68,17 @@ export default class ProfileView extends View {
         this._avatarUploader = this.el.querySelector('.js-upload-avatar');
         this._avatarUploaderWarning = this.el.querySelector('.js-warning-avatar');
 
+        this._passwordChangePopup = this.el.querySelector('.js-change-pass-popup');
         this._passwordBlock = this.el.querySelector('.js-password-row');
         this._passwordEditButton = this._passwordBlock;
 
-        this._passwordFormWrapper = this.el.querySelector('.js-password-form');
-        this._passwordForm = this._passwordFormWrapper.querySelector('form');
-        this._passWarning = this._passwordFormWrapper.querySelector('.js-warning-password');
+        this._passwordForm = this._passwordChangePopup.querySelector('.js-password-form');
 
         this._passwordSubmitButton = this._passwordForm.querySelector('.js-button-submit');
-        this._passwordCancelButton = this._passwordForm.querySelector('.js-button-cancel');
+        this._passwordCancelButton = this._passwordChangePopup.querySelector('.js-change-password-x-mark');
         this._passwordInputPasswordForm = this._passwordForm.elements['password'];
+
+        this._passWarning = this._passwordChangePopup.querySelector('.js-warning-password');
 
         this._initElementsEvents();
         this._initEventBusEvents();
@@ -88,13 +90,11 @@ export default class ProfileView extends View {
         });
 
         this._passwordEditButton.addEventListener('click', () => {
-            this._showElement(this._passwordFormWrapper);
-            this._hideElement(this._passwordBlock);
+            this._showElement(this._passwordChangePopup);
         });
         this._passwordCancelButton.addEventListener('click', (ev) => {
             ev.preventDefault();
-            this._hideElement(this._passwordFormWrapper);
-            this._showElement(this._passwordBlock);
+            this._hideElement(this._passwordChangePopup);
         });
 
         this._passwordSubmitButton.addEventListener('click', (ev) => {
@@ -104,15 +104,13 @@ export default class ProfileView extends View {
     }
 
     _initEventBusEvents () {
-
         this._passwordInputPasswordForm.addEventListener('change',
             this._onChangePass.bind(this, this._passwordInputPasswordForm));
     }
 
 
     _onSubmitPasswordSucces (data) {
-        this._hideElement(this._passwordFormWrapper);
-        this._showElement(this._passwordBlock);
+        this._hideElement(this._passwordChangePopup);
     }
 
     _onChangePass (passEl) {

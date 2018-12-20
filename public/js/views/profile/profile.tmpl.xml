@@ -36,24 +36,12 @@
 
             <div class="profile-row js-password-row">
                 <div class="profile__label">
-                    Password:
+                    Password
                 </div>
                 <div class="button profile__data profile__edit-button profile-data_relative">
                     <div>●●●●●●●</div>
                     <div class="profile__edit-img"/>
                 </div>
-            </div>
-
-            <div class="profile-row hidden js-password-form">
-                <form name="password-form">
-                    <label for="password-pass">Password:</label>
-                    <input type="password" name="password" class="input signup__input" id="password-pass" value="password"
-                           autocomplete="autocomplete" autofocus="true"/>
-                    <div class="warning signup__warning hidden js-warning-password"></div>
-
-                    <input class="button signup__submit js-button-submit" type="submit" name="submit" value="Submit"/>
-                    <button class="button signup__back-button js-button-cancel">Cancel</button>
-                </form>
             </div>
 
             <div class="profile-row js-score-row">
@@ -70,5 +58,5 @@
             <a href="/" class="button menu__button">Menu</a>
         </div>
     </section>
-
+    <fest:include src="../../components/popup/changePasswordPopup/changePasswordPopup.xml"></fest:include>
 </fest:template>
