@@ -59,12 +59,36 @@ export default class GameAIModel {
     }
 
     _aiMove () {
-        console.log('material sum', this._game.materialSum());
-        console.log('minimax best score', this._minimaxTreeScore(
-            this._game._board, 3,
-            this._playerColor === PIECE_COLOR.WHITE ? PIECE_COLOR.BLACK : PIECE_COLOR.WHITE));
-        const legalMoves = this._game.legalMoves();
-        return legalMoves[Math.floor(Math.random() * legalMoves.length)];
+        const legalMoves = this._game._board.legalMoves(this._game._turn);
+        const legalMovesKeys = Object.keys(legalMoves);
+
+        GameAIModel._shuffleMoves(legalMovesKeys);
+
+        let bestScore = this._game.turn() === PIECE_COLOR.WHITE ? -13337 : 13337;
+        let bestMove = this._game.legalMoves[Math.floor(Math.random() * legalMoves.length)];
+        legalMovesKeys.forEach(move => {
+            const newBoard = legalMoves[move];
+            const newScore = this._minimaxTreeScore(
+                newBoard,
+                2,
+                this._game.turn() === PIECE_COLOR.WHITE ? PIECE_COLOR.BLACK : PIECE_COLOR.WHITE
+            );
+
+            if (this._game.turn() === PIECE_COLOR.WHITE) {
+                if (newScore > bestScore) {
+                    bestScore = newScore;
+                    bestMove = move;
+                }
+            } else {
+                if (newScore < bestScore) {
+                    bestScore = newScore;
+                    bestMove = move;
+                }
+            }
+        });
+
+        console.log('best move', bestMove);
+        return bestMove;
     }
 
     _minimaxTreeScore (board, depth, color) {
@@ -86,5 +110,13 @@ export default class GameAIModel {
             bestScore = color === PIECE_COLOR.WHITE ? Math.max(bestScore, newScore) : Math.min(bestScore, newScore);
         });
         return bestScore;
+    }
+
+    static _shuffleMoves (a) {
+        for (let i = a.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [a[i], a[j]] = [a[j], a[i]];
+        }
+        return a;
     }
 }
