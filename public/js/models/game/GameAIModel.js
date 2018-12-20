@@ -1,4 +1,5 @@
 import Game from '../../lib/chess/game';
+import {PIECE_COLOR} from '../../lib/chess/enums';
 import { GAME } from '../../lib/eventbus/events';
 
 export default class GameAIModel {
@@ -59,7 +60,31 @@ export default class GameAIModel {
 
     _aiMove () {
         console.log('material sum', this._game.materialSum());
+        console.log('minimax best score', this._minimaxTreeScore(
+            this._game._board, 3,
+            this._playerColor === PIECE_COLOR.WHITE ? PIECE_COLOR.BLACK : PIECE_COLOR.WHITE));
         const legalMoves = this._game.legalMoves();
         return legalMoves[Math.floor(Math.random() * legalMoves.length)];
+    }
+
+    _minimaxTreeScore (board, depth, color) {
+        if (depth === 0) {
+            return board.materialSum();
+        }
+
+        const legalMoves = board.legalMoves(color);
+        const legalMovesKeys = Object.keys(legalMoves);
+        let bestScore = color === PIECE_COLOR.WHITE ? -13337 : 13337;
+        legalMovesKeys.forEach(move => {
+            const newBoard = legalMoves[move];
+            const newScore = this._minimaxTreeScore(
+                newBoard,
+                depth - 1,
+                color === PIECE_COLOR.WHITE ? PIECE_COLOR.BLACK : PIECE_COLOR.WHITE
+            );
+
+            bestScore = color === PIECE_COLOR.WHITE ? Math.max(bestScore, newScore) : Math.min(bestScore, newScore);
+        });
+        return bestScore;
     }
 }
