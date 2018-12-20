@@ -5,57 +5,43 @@
     <fest:var name="email">
         <fest:value>params.user.email</fest:value>
     </fest:var>
-    <section class="section profile">
+    <section class="section">
+        <div class="profile">
         <div class="profile__avatar">
-            <img src="{avatar}" height="200"
-                 width="200" class="profile__img js-avatar"></img>
+            <img src="{avatar}" class="profile__img js-avatar"></img>
             <div class="input-wrapper">
                 <div class="button submit input-wrapper__content">Upload</div>
-                <input type="file" class="input-wrapper__input js-upload-avatar" name="avatar" accept="image/jpeg,image/png" ></input>
+                <input type="file" class="input-wrapper__input js-upload-avatar" title=" " name="avatar" accept="image/jpeg,image/png" ></input>
             </div>
             <div class="warning signup__warning hidden js-warning-avatar"></div>
         </div>
-        <article class="profile__info">
+        <article class="profile__info profile__h2">
             <div class="profile-row js-email-row">
-                <div class="profile__data">
-                    Login:
+                <div class="profile__label">
+                    Login
                 </div>
                 <div class="profile__data js-login-field">
                     <fest:value>params.user.login</fest:value>
                 </div>
-                <button class="profile__edit-button">Edit</button>
             </div>
 
             <div class="profile-row js-email-row">
-                <div class="profile__data">
-                    Email:
+                <div class=" profile__label">
+                    Email
                 </div>
                 <div class="profile__data js-email-field">
                     <fest:value>params.user.email</fest:value>
                 </div>
             </div>
 
-            <div class="profile-row hidden js-email-form">
-                <form name="email-form">
-                    <label for="email">Email:</label>
-                    <input type="email" name="email" class="input signup__input" id="email" value="{email}"
-                    autocomplete="autocomplete" autofocus="true">
-                    </input>
-                    <div class="warning signup__warning hidden js-warning-email"></div>
-
-                    <input class="button signup__submit js-button-submit" type="submit" name="submit" value="Submit"/>
-                    <button class="button signup__back-button js-button-cancel">Cancel</button>
-                </form>
-            </div>
-
             <div class="profile-row js-password-row">
-                <div class="profile__data">
+                <div class="profile__label">
                     Password:
                 </div>
-                <div class="profile__data">
-                    --
+                <div class="button profile__data profile__edit-button profile-data_relative">
+                    <div>●●●●●●●</div>
+                    <div class="profile__edit-img"/>
                 </div>
-                <button class="profile__edit-button">Edit</button>
             </div>
 
             <div class="profile-row hidden js-password-form">
@@ -71,17 +57,18 @@
             </div>
 
             <div class="profile-row js-score-row">
-                <div class="profile__data">
-                    Score:
+                <div class="profile__label">
+                    Score
                 </div>
                 <div class="profile__data">
                     <fest:value>params.user.score</fest:value>
                 </div>
             </div>
-            <div class="profile__row">
-                <a href="/" class="button menu__button">Menu</a>
-            </div>
         </article>
+        </div>
+        <div class="profile__row profile__data_center">
+            <a href="/" class="button menu__button">Menu</a>
+        </div>
     </section>
 
 </fest:template>
