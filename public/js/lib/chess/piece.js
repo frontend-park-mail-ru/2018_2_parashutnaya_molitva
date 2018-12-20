@@ -1,4 +1,4 @@
-import { PIECE_TYPE, PIECE_COLOR } from './enums';
+import { PIECE_TYPE, PIECE_COLOR, MATERIAL_VALUE } from './enums';
 
 export default class Piece {
     /**
@@ -99,6 +99,11 @@ export default class Piece {
         default:
             return 'X';
         }
+    }
+
+    material () {
+        const absValue = MATERIAL_VALUE[this.type()];
+        return this.color() === PIECE_COLOR.WHITE ? absValue : -absValue;
     }
 
     /**

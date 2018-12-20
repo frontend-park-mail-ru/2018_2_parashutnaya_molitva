@@ -335,4 +335,12 @@ export default class Game {
         }
         return false;
     }
+
+    /**
+     * Board evaluation
+     * @return {number}
+     */
+    materialSum () {
+        return this._board.materialSum();
+    }
 }

@@ -58,6 +58,7 @@ export default class GameAIModel {
     }
 
     _aiMove () {
+        console.log('material sum', this._game.materialSum());
         const legalMoves = this._game.legalMoves();
         return legalMoves[Math.floor(Math.random() * legalMoves.length)];
     }

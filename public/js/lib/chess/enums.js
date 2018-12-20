@@ -15,3 +15,15 @@ export const PIECE_TYPE = {
     QUEEN: 7,
     KING: 8
 };
+
+export const MATERIAL_VALUE = {
+    [PIECE_TYPE.EMPTY]: 0,
+    [PIECE_TYPE.NONE]: 0,
+    [PIECE_TYPE.EN_PASSANT]: 0,
+    [PIECE_TYPE.PAWN]: 1,
+    [PIECE_TYPE.KNIGHT]: 3,
+    [PIECE_TYPE.BISHOP]: 3,
+    [PIECE_TYPE.ROOK]: 5,
+    [PIECE_TYPE.QUEEN]: 9,
+    [PIECE_TYPE.KING]: 1337
+};
