@@ -1,5 +1,23 @@
 import { PIECE_TYPE, PIECE_COLOR, MATERIAL_VALUE } from './enums';
 
+const CAT_MAP = {
+    '.': 0,
+    'e': 1,
+    'p': 2,
+    'n': 3,
+    'b': 4,
+    'r': 5,
+    'q': 6,
+    'k': 7,
+    'E': 8,
+    'P': 9,
+    'N': 10,
+    'B': 11,
+    'R': 12,
+    'Q': 13,
+    'K': 14
+};
+
 export default class Piece {
     /**
      * Конструктор фигуры
@@ -99,6 +117,12 @@ export default class Piece {
         default:
             return 'X';
         }
+    }
+
+    oneHot () {
+        const oneHot = new Array(Object.keys(CAT_MAP).length).fill(0);
+        oneHot[CAT_MAP[this.shortName()]] = 1;
+        return oneHot;
     }
 
     material () {
