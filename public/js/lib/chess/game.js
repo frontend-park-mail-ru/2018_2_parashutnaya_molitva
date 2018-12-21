@@ -41,6 +41,8 @@ export default class Game {
         }
         this._board = newBoard.copy();
         this._turn = this._turn === PIECE_COLOR.WHITE ? PIECE_COLOR.BLACK : PIECE_COLOR.WHITE;
+
+        this.printBoard();
     }
 
     /**

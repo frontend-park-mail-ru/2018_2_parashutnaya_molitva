@@ -2,6 +2,7 @@ import Game from '../../lib/chess/game';
 import {PIECE_COLOR} from '../../lib/chess/enums';
 import { GAME } from '../../lib/eventbus/events';
 import AI from '../../lib/chess/ai';
+import * as tf from '@tensorflow/tfjs';
 
 const TREE_DEPTH = 2;
 
@@ -45,14 +46,41 @@ export default class GameAIModel {
             }
 
             // AI
-            this._game.move(AI.aiMove(this._game, TREE_DEPTH));
+            // this._game.move(AI.aiMove(this._game, TREE_DEPTH));
+            tf.loadModel('keras/model.json').then(model => {
+                const legalMoves = this._game._board.legalMoves(this._game._turn);
+                const legalMovesKeys = Object.keys(legalMoves);
+                const oneHotBoards = [];
+                legalMovesKeys.forEach(move => {
+                    const oneHotBoard = AI.boardToOneHot(legalMoves[move]);
+                    oneHotBoards.push(oneHotBoard);
+                });
+                const boardsTensor = tf.tensor(oneHotBoards);
 
-            this._eventBus.triggerEvent(GAME.MOVE_SUCCESS, { state: this._game.boardString(),
-                turn: this._game.turn(),
-                deadPiece: this._game.findNewDeadPiece() });
-            if (this._game.isGameOver()) {
-                this._eventBus.triggerEvent(GAME.GAMEOVER, { turn: this._game.turn() });
-            }
+                console.log('model loaded');
+                const predictions = model.predict(boardsTensor);
+                const predictionsFloat32Array = predictions.dataSync();
+                const predictionsArray = Array.from(predictionsFloat32Array);
+
+                const bestMoveIndex = predictionsArray.indexOf(Math.min(...predictionsArray));
+                const bestMove = legalMovesKeys[bestMoveIndex];
+
+                console.log(predictionsArray);
+                console.log(legalMovesKeys);
+                console.log(bestMoveIndex);
+                console.log(bestMove);
+                return Promise.resolve(bestMove);
+            }).then(bestMove => {
+                console.log('last then', bestMove);
+                this._game.move(bestMove);
+
+                this._eventBus.triggerEvent(GAME.MOVE_SUCCESS, { state: this._game.boardString(),
+                    turn: this._game.turn(),
+                    deadPiece: this._game.findNewDeadPiece() });
+                if (this._game.isGameOver()) {
+                    this._eventBus.triggerEvent(GAME.GAMEOVER, { turn: this._game.turn() });
+                }
+            });
         } else if (this._game.isLegalPromotionMove(move)) {
             this._promotionMove = move;
             this._eventBus.triggerEvent(GAME.PROMOTION, { turn: this._game.turn() });
