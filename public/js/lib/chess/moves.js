@@ -55,7 +55,7 @@ export default class Moves {
             }
 
             const pieceAtDoubleForward = board.pieceAt(doubleForwardAbs);
-            if (pieceAtDoubleForward.type() === PIECE_TYPE.EMPTY && !pawn.isMoved()) {
+            if (pieceAtDoubleForward.type() === PIECE_TYPE.EMPTY && !pawn.isMoved() && pieceAtForward.type() === PIECE_TYPE.EMPTY) {
                 let moveBoard = board.copy();
                 moveBoard.movePiece(pos, doubleForwardAbs);
                 moveBoard.removeEnPassant();
