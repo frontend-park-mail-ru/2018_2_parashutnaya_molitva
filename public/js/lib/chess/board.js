@@ -265,4 +265,17 @@ export default class Board {
         return result;
     }
 
+    /**
+     * Board evaluation
+     * @return {number}
+     */
+    materialSum () {
+        let result = 0;
+        for (let i = 0; i < 8; i++) {
+            for (let j = 0; j < 8; j++) {
+                result += this.pieceAt(new Coord(i, j)).material();
+            }
+        }
+        return result;
+    }
 }
