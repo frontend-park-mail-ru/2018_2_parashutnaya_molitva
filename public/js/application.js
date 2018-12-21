@@ -39,7 +39,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const signinController = new SigninController({ router, globalEventBus });
     const signupContoller = new SignupController({ router, globalEventBus });
     const profileControlleer = new ProfileController({ router, globalEventBus });
-    const chatController = new ChatController({ router, globalEventBus });
     const gameController = new GameController({ router, globalEventBus });
 
     router.add('/about', main, aboutController.aboutView);
@@ -50,7 +49,6 @@ document.addEventListener('DOMContentLoaded', () => {
     router.add('/', main, menuController.menuView);
     router.add('/multiplayer', main, gameController.multiplayerView);
     router.add('/singleplayer', main, gameController.singleplayerView);
-    router.add('/chat', main, chatController.chatView);
 
     router.setNotFoundView(main, new NotFoundView());
     router.start();

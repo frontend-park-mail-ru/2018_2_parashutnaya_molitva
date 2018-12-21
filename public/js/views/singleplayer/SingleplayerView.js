@@ -13,7 +13,7 @@ import IconPresenter from '../../components/icons-presenter/iconsPresenter';
 import Piece from '../../components/chess/piece/piece';
 import { GAME, ROUTER } from '../../lib/eventbus/events';
 
-const BLACK_COLOR_BACKGROUND = '#7f8b9575';
+const BLACK_COLOR_BACKGROUND = '#7f8b95c2';
 
 export default class SingleplayerView extends View {
     constructor ({ eventBus = {} } = {}) {

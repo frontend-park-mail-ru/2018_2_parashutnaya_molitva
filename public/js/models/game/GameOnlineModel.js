@@ -168,7 +168,9 @@ export default class GameOnlineModel {
         this._eventBus.triggerEvent(GAME.MOVE_SUCCESS, { state: this._game.boardString(),
             turn: this._game.turn(),
             deadPiece: this._game.findNewDeadPiece(),
-            yourColor: this._yourColor });
+            yourColor: this._yourColor,
+            move: msg.Data.turn,
+        });
     }
 
     _onResultMsg ({ msg = {} } = {}) {

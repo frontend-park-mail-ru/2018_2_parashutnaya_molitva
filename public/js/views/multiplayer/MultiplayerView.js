@@ -12,7 +12,7 @@ import PromotionPopup from '../../components/popup/promotionPopup/promotionPopup
 
 import '../../components/popup/waitingPopup/watingPopup.less';
 
-const BLACK_COLOR_BACKGROUND = '#7f8b9575';
+const BLACK_COLOR_BACKGROUND = '#7f8b95c2';
 export default class MultiplayerView extends View {
     constructor ({ eventBus = {} } = {}) {
         super(template, eventBus);
