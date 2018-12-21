@@ -8,6 +8,7 @@ import EventBus from "../lib/eventbus/eventbus";
 
 const offlineEvents = [
     GAME.MOVE,
+    GAME.MODE_CHOOSE,
     GAME.MOVE_SUCCESS,
     GAME.MOVE_FAILURE,
     GAME.START_GAME,
@@ -17,6 +18,7 @@ const offlineEvents = [
     GAME.PROMOTION,
     GAME.PROMOTION_RESPONSE,
     ROUTER.BACK_TO_MENU,
+    VIEW.CLOSE,
 ];
 
 const onlineEvents = [
@@ -29,7 +31,6 @@ const onlineEvents = [
     SERVICE.CHECK_AUTH,
     GAME.SURRENDER,
     SERVICE.ON_CLOSE,
-    VIEW.CLOSE,
 
 ];
 

@@ -12,6 +12,7 @@ import Timer from '../../components/timer/timer';
 import IconPresenter from '../../components/icons-presenter/iconsPresenter';
 import Piece from '../../components/chess/piece/piece';
 import { GAME, ROUTER } from '../../lib/eventbus/events';
+import Toggle from '../../components/toggle/toggle';
 
 const BLACK_COLOR_BACKGROUND = '#7f8b95c2';
 
@@ -40,7 +41,7 @@ export default class SingleplayerView extends View {
         super.render(root, data);
         this._eventBus.triggerEvent(GAME.INIT_GAME);
 
-        this._gameoptionsPopup = this.el.querySelector('.js-game-options-popup');
+        this._renderGameOptionPopup();
 
         this._firstUserBlock = this.el.querySelector('.js-first');
         this._secondUserBlock = this.el.querySelector('.js-second');
@@ -55,6 +56,32 @@ export default class SingleplayerView extends View {
 
         this._showGameOptionPopup();
         this._topElement = this.el.querySelector('.game');
+    }
+
+    _renderGameOptionPopup () {
+        this._gameoptionsPopup = this.el.querySelector('.js-game-options-popup');
+        this._chooseMode = this._gameoptionsPopup.querySelector('.js-mode-choose');
+        this._toggle = new Toggle({
+            values: ['Easy', 'Normal', 'Hard'],
+            callBacks: [this._onEasyCallback.bind(this), this._onNormalCallback.bind(this),
+                this._onHardCallback.bind(this)],
+            classes: ['button', 'submit', 'game-options__button'],
+            activeClass: 'game-options__button_active',
+            disableClass: 'game-options__button_disable'
+        });
+        this._toggle.render(this._chooseMode);
+    }
+
+    _onEasyCallback() {
+        console.log('easy');
+    }
+
+    _onNormalCallback() {
+        console.log('normal');
+    }
+
+    _onHardCallback() {
+        console.log('hard');
     }
 
     _hideAll () {
@@ -83,6 +110,8 @@ export default class SingleplayerView extends View {
 
                 this._showAll();
                 this._gameoptionsPopup.classList.add('hidden');
+
+                this._eventBus.triggerEvent(GAME.MODE_CHOOSE, { mode: 2 });
             });
         });
 

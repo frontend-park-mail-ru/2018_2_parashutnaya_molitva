@@ -11,7 +11,8 @@ const conf = {
         minimizer : [],
     },
     entry: {
-        application: './public/js/application.js'
+        application: './public/js/application.js',
+        aiWorker : './public/js/models/workers/aiWorkerController.js'
     },
     output: {
         path: path.resolve(__dirname + '/public/dist/'),

@@ -15,7 +15,9 @@ export const GAME = {
     SURRENDER_RESPONSE: 'surr',
 
     PROMOTION: 'pm',
-    PROMOTION_RESPONSE: 'pms'
+    PROMOTION_RESPONSE: 'pms',
+
+    MODE_CHOOSE: 'mc',
 };
 
 export const VIEW = {

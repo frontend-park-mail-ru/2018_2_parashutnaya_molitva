@@ -12,7 +12,7 @@ import NotFoundView from './views/notfound/NotFoundView.js';
 import EventBus from './lib/eventbus/eventbus.js';
 import runtime from 'serviceworker-webpack-plugin/lib/runtime';
 import GameController from './controllers/GameController';
-import ChatController from './controllers/ChatController';
+
 import { CHAT, HEADER, GLOBAL } from './lib/eventbus/events';
 
 document.addEventListener('DOMContentLoaded', () => {

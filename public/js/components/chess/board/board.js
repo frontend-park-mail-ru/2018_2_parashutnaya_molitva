@@ -47,12 +47,14 @@ export default class Board {
             this._newPieceCell = data.move.slice(2, 4);
         }
 
-        const prevCell = this._root.querySelector(`#${this._prevPieceCell}`);
-        const newCell = this._root.querySelector(`#${this._newPieceCell}`);
+        if (this._prevPieceCell && this._newPieceCell) {
+            const prevCell = this._root.querySelector(`#${this._prevPieceCell}`);
+            const newCell = this._root.querySelector(`#${this._newPieceCell}`);
 
-        if (prevCell && newCell) {
-            prevCell.classList.add('cell_prev-move');
-            newCell.classList.add('cell_prev-move');
+            if (prevCell && newCell) {
+                prevCell.classList.add('cell_prev-move');
+                newCell.classList.add('cell_prev-move');
+            }
         }
 
         console.log(cells);

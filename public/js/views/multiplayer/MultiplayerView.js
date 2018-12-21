@@ -11,6 +11,7 @@ import { COLOR } from '../../components/chess/consts';
 import PromotionPopup from '../../components/popup/promotionPopup/promotionPopup';
 
 import '../../components/popup/waitingPopup/watingPopup.less';
+import Toggle from '../../components/toggle/toggle';
 
 const BLACK_COLOR_BACKGROUND = '#7f8b95c2';
 export default class MultiplayerView extends View {
@@ -44,7 +45,8 @@ export default class MultiplayerView extends View {
             this._eventBus.triggerEvent(ROUTER.TO_SIGNIN);
             return;
         }
-        this._gameoptionsPopup = this.el.querySelector('.js-game-options-popup');
+
+        this._renderGameOptionPopup();
         this._firstUserBlock = this.el.querySelector('.js-first');
         this._secondUserBlock = this.el.querySelector('.js-second');
         this._board = this.el.querySelector('.js-board-section');
@@ -61,6 +63,27 @@ export default class MultiplayerView extends View {
         this._initPopup();
 
         this._topElement = this.el.querySelector('.game');
+    }
+
+    _renderGameOptionPopup () {
+        this._gameoptionsPopup = this.el.querySelector('.js-game-options-popup');
+        this._chooseMode = this._gameoptionsPopup.querySelector('.js-mode-choose');
+        this._toggle = new Toggle({
+            values: ['Online', 'Offline'],
+            callBacks: [this._onOnlineCallback.bind(this), this._onOfflineCallback.bind(this)],
+            classes: ['button', 'submit', 'game-options__button'],
+            activeClass: 'game-options__button_active',
+            disableClass: 'game-options__button_disable'
+        });
+        this._toggle.render(this._chooseMode);
+    }
+
+    _onOnlineCallback () {
+
+    }
+
+    _onOfflineCallback () {
+
     }
 
     _onClose ({ message = 'Unexpected error' } = {}) {
