@@ -14,61 +14,41 @@ export default class AI {
         //     [[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
         // ];
 
-        tf.loadModel('keras/model.json').then(model => {
-            const legalMoves = game._board.legalMoves(game._turn);
-            const legalMovesKeys = Object.keys(legalMoves);
-            const oneHotBoards = [];
-            legalMovesKeys.forEach(move => {
-                const oneHotBoard = AI.boardToOneHot(legalMoves[move]);
-                oneHotBoards.push(oneHotBoard);
-            });
-            const boardsTensor = tf.tensor(oneHotBoards);
-
-            console.log('model loaded');
-            const predictions = model.predict(boardsTensor);
-            const predictionsFloat32Array = predictions.dataSync();
-            const predictionsArray = Array.from(predictionsFloat32Array);
-
-            const bestMoveIndex = predictionsArray.indexOf(Math.max(...predictionsArray));
-            const bestMove = legalMovesKeys[bestMoveIndex];
-
-            console.log(predictionsArray);
-            console.log(legalMovesKeys);
-            console.log(bestMoveIndex);
-            console.log(bestMove);
-
-            return bestMove;
+        const legalMoves = game._board.legalMoves(game._turn);
+        const legalMovesKeys = Object.keys(legalMoves);
+        const oneHotBoards = [];
+        legalMovesKeys.forEach(move => {
+            const oneHotBoard = AI.boardToOneHot(legalMoves[move]);
+            oneHotBoards.push(oneHotBoard);
         });
-        //
-        // console.log('after promise');
-        //
-        // AI.shuffleMoves(legalMovesKeys);
-        //
-        // let bestScore = game.turn() === PIECE_COLOR.WHITE ? -13337 : 13337;
-        // let bestMove = game.legalMoves[Math.floor(Math.random() * legalMoves.length)];
-        // legalMovesKeys.forEach(move => {
-        //     const newBoard = legalMoves[move];
-        //     const newScore = AI.minimaxTreeScore(
-        //         newBoard,
-        //         depth,
-        //         game.turn() === PIECE_COLOR.WHITE ? PIECE_COLOR.BLACK : PIECE_COLOR.WHITE
-        //     );
-        //
-        //     if (game.turn() === PIECE_COLOR.WHITE) {
-        //         if (newScore > bestScore) {
-        //             bestScore = newScore;
-        //             bestMove = move;
-        //         }
-        //     } else {
-        //         if (newScore < bestScore) {
-        //             bestScore = newScore;
-        //             bestMove = move;
-        //         }
-        //     }
-        // });
-        //
-        // console.log('best move', bestMove);
-        // return bestMove;
+
+        AI.shuffleMoves(legalMovesKeys);
+
+        let bestScore = game.turn() === PIECE_COLOR.WHITE ? -13337 : 13337;
+        let bestMove = game.legalMoves[Math.floor(Math.random() * legalMoves.length)];
+        legalMovesKeys.forEach(move => {
+            const newBoard = legalMoves[move];
+            const newScore = AI.minimaxTreeScore(
+                newBoard,
+                depth,
+                game.turn() === PIECE_COLOR.WHITE ? PIECE_COLOR.BLACK : PIECE_COLOR.WHITE
+            );
+
+            if (game.turn() === PIECE_COLOR.WHITE) {
+                if (newScore > bestScore) {
+                    bestScore = newScore;
+                    bestMove = move;
+                }
+            } else {
+                if (newScore < bestScore) {
+                    bestScore = newScore;
+                    bestMove = move;
+                }
+            }
+        });
+
+        console.log('best move', bestMove);
+        return bestMove;
     }
 
     static minimaxTreeScore (board, depth, color) {
