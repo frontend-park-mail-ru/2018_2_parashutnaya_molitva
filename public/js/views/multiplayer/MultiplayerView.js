@@ -192,7 +192,14 @@ export default class MultiplayerView extends View {
         }
     }
 
-    _onMoveSuccess ({ turn, deadPiece = null, yourColor } = {}) {
+    _onMoveSuccess ({ turn, deadPiece = null, yourColor, timeRemainingFirst, timeRemainingSecond} = {}) {
+        if (yourColor) {
+            this._timerFirst.set({ seconds: timeRemainingFirst });
+            this._timerSecond.set({ seconds: timeRemainingSecond });
+        } else {
+            this._timerFirst.set({ seconds: timeRemainingSecond });
+            this._timerSecond.set({ seconds: timeRemainingFirst });
+        }
         if (turn) {
             if (deadPiece != null && yourColor) {
                 this._secondFigures.add(new Piece(deadPiece.piece, deadPiece.color));

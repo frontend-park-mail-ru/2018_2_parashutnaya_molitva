@@ -50,4 +50,12 @@ export default class Timer {
 
         return ('0' + minute).slice(-2) + ':' + ('0' + second).slice(-2);
     }
+
+    set ({ seconds }) {
+        console.log(`setting time from ${this._current} to ${seconds} seconds`);
+        if (typeof seconds !== 'number') {
+            return;
+        }
+        this._current = seconds;
+    }
 };

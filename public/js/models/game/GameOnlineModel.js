@@ -170,6 +170,8 @@ export default class GameOnlineModel {
             deadPiece: this._game.findNewDeadPiece(),
             yourColor: this._yourColor,
             move: msg.Data.turn,
+            timeRemainingFirst: Math.round(msg.Data.time_remaining_white / 1000), // время приходит к нам в милисекундах
+            timeRemainingSecond: Math.round(msg.Data.time_remaining_black / 1000) // время приходит к нам в милисекундах
         });
     }
 
