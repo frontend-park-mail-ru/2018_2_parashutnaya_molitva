@@ -9,6 +9,7 @@ script:
   - mkdir ./kekmate # создаем папку которая поедет на сервер
   - cp ./public/*.* ./kekmate
   - mv ./public/dist ./kekmate
+  - mv ./public/images ./kekmate
   - echo "rm -rf /var/www/kekmate/*" | ssh -i ./ssh_key travis@$KSENOBAIT_VSCALE_SERVER
   - scp -r -v -i ./ssh_key  ./kekmate/* travis@$KSENOBAIT_VSCALE_SERVER:/var/www/kekmate
 branches:
