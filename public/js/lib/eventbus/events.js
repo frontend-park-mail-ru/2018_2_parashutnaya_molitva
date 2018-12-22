@@ -32,6 +32,8 @@ export const ROUTER = {
 };
 
 export const HEADER = {
+    UNDISABLE_TITLE: 'udtt',
+    DISABLE_TITLE: 'dttl',
     LOAD: 'ld',
     CLOSE: 'clh'
 };

@@ -58,7 +58,7 @@ export default class GameController {
         });
 
         eventBusOnline.subscribeToEvent(ROUTER.TO_OFFLINE, ({ duration }) => {
-            router.change('/singleplayer', true, { duration, mode: GAME_MODE.OFFLINE });
+            router.change('/singleplayer', false, { duration, mode: GAME_MODE.OFFLINE });
         });
 
         this.multiplayerView = new MultiplayerView({ eventBus: eventBusOnline });

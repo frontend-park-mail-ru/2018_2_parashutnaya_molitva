@@ -26,17 +26,26 @@ export default class GameView extends View {
         this._eventBus.triggerEvent(GAME.MOVE, { move });
     }
 
-    _onMoveSuccess ({ state, turn, move } = {}) {
+    _onMoveSuccess ({ state, turn, move, isCheckmate } = {}) {
         console.log('making a move', state);
         if (!this._board) {
             return;
         }
         this._board.setState({ boardState: state, turn: turn });
         this.update({ move });
+        if (isCheckmate) {
+            this._board.highlightKing({ turn });
+        }
     }
 
-    _onMoveFailure () {
+    _onMoveFailure ({ isCheckmate, turn }) {
         console.log('move is illegal');
+        if (!this._board) {
+            return;
+        }
+        if (isCheckmate) {
+            this._board.highlightKing({ turn });
+        }
     }
 
     _onGameOver (loser) {

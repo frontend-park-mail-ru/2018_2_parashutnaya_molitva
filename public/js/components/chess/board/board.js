@@ -29,8 +29,7 @@ const PIECE_COLOR_CLASSES = {
 };
 
 export default class Board {
-    constructor ({ boardState = START_STATE, turn = COLOR.WHITE, sideOfView = COLOR.WHITE, moveCallback = (move) => null} = {}) {
-
+    constructor ({ boardState = START_STATE, turn = COLOR.WHITE, sideOfView = COLOR.WHITE, moveCallback = (move) => null } = {}) {
         this._turn = +turn;
         this._moveCallback = moveCallback;
         this._params = {};
@@ -103,6 +102,16 @@ export default class Board {
         }
         this._params.cells = cells;
         this._params.pieces = pieces;
+    }
+
+    highlightKing ({ turn }) {
+        if (turn) {
+            const whiteKing = this._root.querySelector('.piece_king .piece_white');
+            whiteKing.parent.classList.add('cell__checkmate');
+        } else {
+            const blackKing = this._root.querySelector('.piece_king .piece_black');
+            blackKing.parent.classList.add('cell__checkmate');
+        }
     }
 
     _onCellClick (event) {
