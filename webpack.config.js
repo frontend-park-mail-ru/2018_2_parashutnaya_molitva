@@ -80,7 +80,9 @@ let babelLoader = {
     exclude: /(node_modules)/,
     include: [
         path.join(__dirname, 'public/js/sw.js'),
-        path.join(__dirname, 'public/js')
+        path.join(__dirname, 'public/js'),
+        path.join(__dirname, 'public/js/models/workers/aiWorkerController.js'),
+        path.join(__dirname, 'public/js/models/workers/')
     ],
     use: {
         loader: 'babel-loader',
