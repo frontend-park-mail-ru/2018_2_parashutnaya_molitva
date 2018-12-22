@@ -12,6 +12,7 @@ import PromotionPopup from '../../components/popup/promotionPopup/promotionPopup
 
 import '../../components/popup/waitingPopup/watingPopup.less';
 import Toggle from '../../components/toggle/toggle';
+import voiceRecognition from '../../lib/voice';
 
 const BLACK_COLOR_BACKGROUND = '#7f8b95c2';
 export default class MultiplayerView extends View {
@@ -159,6 +160,24 @@ export default class MultiplayerView extends View {
         this._showAll();
         this._closeWaitingPopup();
         this._renderPromotionPopup();
+
+        // EASTER EGG START
+        let timers = this.el.querySelectorAll(`.user-timer`);
+        timers.forEach(timer => {
+            timer.addEventListener('click', (event) => this._onTimerClick(event));
+        });
+        // EASTER EGG END
+    }
+
+    // easter egg with voice api
+    _onTimerClick (event) {
+        voiceRecognition.onresult = (event) => {
+            console.log(event.results);
+            const last = event.results.length - 1;
+            let move = event.results[last][0].transcript.split(' ').join('').toLowerCase();
+            this._eventBus.triggerEvent(GAME.MOVE, { move });
+        };
+        voiceRecognition.start();
     }
 
     _startTimer ({ color }) {
