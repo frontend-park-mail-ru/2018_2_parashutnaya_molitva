@@ -5,7 +5,7 @@ const errLoginOrEmailIsEmpty = 'Input login or email';
 const errRePassIsEmpty = 'RePass is empty';
 const errLoginIsInvalid = 'Must contain at most 12 characters';
 const errEmailIsInvalid = 'Email is invalid';
-const errInvalidPasswordData = 'Must contain at least 8 characters, 1 number, 1 upper and 1 lowercase';
+const errInvalidPasswordData = 'Must contain at least 4 chars';
 const errNotEqualPassRePass = 'Password and Password Repeat are not equal';
 const errImageExtensionIsInvalid = 'Image extension is not valid';
 const errImageSizeIsNotValid = 'Image size must be less than 5 MB';
@@ -105,7 +105,7 @@ export default class Validation {
      * @returns {boolean}
      */
     static validatePassRegex (pass) {
-        return passRe.test(pass);
+        return pass.length >= 4;
     }
 
     /**
