@@ -1,6 +1,7 @@
 
 import Game from '../../lib/chess/game';
 import AI from '../../lib/chess/ai';
+import * as tf from '@tensorflow/tfjs';
 
 export default class AiModel {
     constructor (mode) {
@@ -14,6 +15,9 @@ export default class AiModel {
         case 2:
             this.move = this.moveSecondMode;
             break;
+        case 3:
+            this.move = this.moveThirdMode;
+            break;
         default:
             console.log('Unknow mode');
             break;
@@ -23,28 +27,50 @@ export default class AiModel {
     move (move) {}
 
     moveFirstMode (move) {
-        try {
+        return new Promise((resolve) => {
             this._game.move(move);
             const aiMove = AI.aiMove(this._game, 1);
             this._game.move(aiMove);
-            return aiMove;
-        } catch (e) {
-
-        }
+            resolve(aiMove);
+        }).catch((err) => {});
     }
 
     moveSecondMode (move) {
-        try {
+        return new Promise((resolve) => {
             this._game.move(move);
             const aiMove = AI.aiMove(this._game, 2);
             this._game.move(aiMove);
-            return aiMove;
-        } catch (e) {
-
-        }
+            resolve(aiMove);
+        }).catch((err) => console.log(err));
     }
 
-    moveThirdMode () {
+    moveThirdMode (move) {
 
+        return tf.loadModel('keras/model.json').then(model => {
+            this._game.move(move);
+            const legalMoves = this._game._board.legalMoves(this._game._turn);
+            const legalMovesKeys = Object.keys(legalMoves);
+            const oneHotBoards = [];
+            legalMovesKeys.forEach(move => {
+                const oneHotBoard = AI.boardToOneHot(legalMoves[move]);
+                oneHotBoards.push(oneHotBoard);
+            });
+            const boardsTensor = tf.tensor(oneHotBoards);
+
+            console.log('model loaded');
+            const predictions = model.predict(boardsTensor);
+            const predictionsFloat32Array = predictions.dataSync();
+            const predictionsArray = Array.from(predictionsFloat32Array);
+
+            const bestMoveIndex = predictionsArray.indexOf(Math.min(...predictionsArray));
+            const bestMove = legalMovesKeys[bestMoveIndex];
+
+            console.log(predictionsArray);
+            console.log(legalMovesKeys);
+            console.log(bestMoveIndex);
+            console.log(bestMove);
+            this._game.move(bestMove);
+            return bestMove;
+        }).catch((err) => console.log(err));
     }
 }
