@@ -55,20 +55,26 @@ export default class SingleplayerView extends View {
         super.render(root, data);
 
         this._gameMode = GAME_MODE.EASY_OFFLINE;
-        if (data.duration && data.mode === GAME_MODE.OFFLINE) {
-            this._gameMode = GAME_MODE.OFFLINE;
-            this._currentEventBus = this._eventBus;
-        } else {
-            this._currentEventBus = this._eventBusAi;
-        }
-
-        this._gameView = new GameView({ eventBus: this._currentEventBus });
-
-        this._currentEventBus.triggerEvent(GAME.INIT_GAME);
 
         this._firstUserBlock = this.el.querySelector('.js-first');
         this._secondUserBlock = this.el.querySelector('.js-second');
         this._board = this.el.querySelector('.js-board-section');
+
+        this._topElement = this.el.querySelector('.game');
+
+        if (data.duration && data.mode === GAME_MODE.OFFLINE) {
+            this._gameMode = GAME_MODE.OFFLINE;
+            this._currentEventBus = this._eventBus;
+            this._gameView = new GameView({ eventBus: this._currentEventBus });
+            this._initGameView({ duration: data.duration });
+        } else {
+            this._currentEventBus = this._eventBusAi;
+            this._gameView = new GameView({ eventBus: this._currentEventBus });
+            this._renderGameOptionPopup();
+            this._showGameOptionPopup();
+        }
+
+        this._currentEventBus.triggerEvent(GAME.INIT_GAME);
 
         const backToMenu = this.el.querySelectorAll('.js-menu-back-x-mark');
         backToMenu.forEach((button) => {
@@ -77,9 +83,6 @@ export default class SingleplayerView extends View {
             });
         });
 
-        this._renderGameOptionPopup();
-        this._showGameOptionPopup();
-        this._topElement = this.el.querySelector('.game');
     }
 
     _renderGameOptionPopup () {
@@ -211,9 +214,7 @@ export default class SingleplayerView extends View {
     }
 
     _onGameOver ({ turn }) {
-        this._timerFirst.stop();
-        this._timerSecond.stop();
-
+        this.close();
         this._showWinnerPopup({ turn });
     }
 

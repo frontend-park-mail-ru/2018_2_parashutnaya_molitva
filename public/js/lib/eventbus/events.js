@@ -26,6 +26,7 @@ export const VIEW = {
 };
 
 export const ROUTER = {
+    TO_OFFLINE: 'tof',
     BACK_TO_MENU: 'btm',
     TO_SIGNIN: 'tsgn'
 };

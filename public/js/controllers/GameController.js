@@ -5,6 +5,7 @@ import { GAME, ROUTER, SERVICE as WS, SERVICE, VIEW } from '../lib/eventbus/even
 import GameOfflineModel from '../models/game/GameOfflineModel';
 import GameAIModel from '../models/game/GameAIModel';
 import EventBus from '../lib/eventbus/eventbus';
+import { GAME_MODE } from '../models/game/mode';
 
 const offlineEvents = [
     GAME.MOVE,
@@ -30,7 +31,8 @@ const onlineEvents = [
     SERVICE.CHECK_AUTH_RESPONSE,
     SERVICE.CHECK_AUTH,
     GAME.SURRENDER,
-    SERVICE.ON_CLOSE
+    SERVICE.ON_CLOSE,
+    ROUTER.TO_OFFLINE
 ];
 
 export default class GameController {
@@ -53,6 +55,10 @@ export default class GameController {
 
         eventBusOnline.subscribeToEvent(ROUTER.TO_SIGNIN, () => {
             router.change('/signin');
+        });
+
+        eventBusOnline.subscribeToEvent(ROUTER.TO_OFFLINE, ({ duration }) => {
+            router.change('/singleplayer', true, { duration, mode: GAME_MODE.OFFLINE });
         });
 
         this.multiplayerView = new MultiplayerView({ eventBus: eventBusOnline });
