@@ -15,6 +15,51 @@ import { GAME, ROUTER } from '../../lib/eventbus/events';
 
 const BLACK_COLOR_BACKGROUND = '#7f8b95c2';
 
+// EASTER EGG (ALSO SHIT CODE, DONT DO THAT IN YOUR PROJECTS
+const SpeechRecognition =
+    window.SpeechRecognition || window.webkitSpeechRecognition;
+const SpeechGrammarList =
+    window.SpeechGrammarList || window.webkitSpeechGrammarList;
+const SpeechRecognitionEvent =
+    window.SpeechRecognitionEvent || window.webkitSpeechRecognitionEvent;
+
+const letters = [
+    'A',
+    'B',
+    'C',
+    'D',
+    'E',
+    'F',
+    'G',
+    'H'
+];
+
+const numbers = [
+    '1',
+    '2',
+    '3',
+    '4',
+    '5',
+    '6',
+    '7',
+    '8'
+];
+
+const grammar =
+    `#JSGF V1.0; grammar chess.turns;
+    public <turn> = <letter><number> <letter><number>;
+    <letter> = [${letters.join(' | ')}];
+    <number> = [${numbers.join(' | ')}];`;
+
+const recognition = new SpeechRecognition();
+const speechRecognitionList = new SpeechGrammarList();
+speechRecognitionList.addFromString(grammar, 1);
+recognition.grammars = speechRecognitionList;
+recognition.lang = 'en-US';
+recognition.interimResults = false;
+recognition.maxAlternatives = 1;
+// END OF EASTER EGG
+
 export default class SingleplayerView extends View {
     constructor ({ eventBus = {} } = {}) {
         super(template, eventBus);
@@ -92,6 +137,23 @@ export default class SingleplayerView extends View {
 
     _startGame () {
         this._timerFirst.start();
+        // EASTER EGG START
+        let timers = document.querySelectorAll(`.user-timer`);
+        timers.forEach(timer => {
+            timer.addEventListener('click', (event) => this._onTimerClick(event));
+        });
+        //EASTER EGG END
+    }
+
+    // easter egg with voice api
+    _onTimerClick (event) {
+        recognition.onresult = (event) => {
+            console.log(event.results);
+            const last = event.results.length - 1;
+            let move = event.results[last][0].transcript.split(' ').join('').toLowerCase();
+            this._eventBus.triggerEvent(GAME.MOVE, { move });
+        };
+        recognition.start();
     }
 
     _renderPromotionPopup () {
