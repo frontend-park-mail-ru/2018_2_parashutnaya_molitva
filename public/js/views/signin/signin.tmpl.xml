@@ -1,5 +1,6 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="params">
     <div class="signin section">
+        <div class="signin__title text-h1 js-signin-title"></div>
         <div class="loading hidden">Loading...</div>
         <div class="warning signin__warning text-h3"></div>
         <form class="form" novalidate="novalidate">

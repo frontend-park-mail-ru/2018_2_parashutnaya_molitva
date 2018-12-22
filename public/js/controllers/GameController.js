@@ -54,6 +54,7 @@ export default class GameController {
         });
 
         eventBusOnline.subscribeToEvent(ROUTER.TO_SIGNIN, () => {
+            sessionStorage.setItem('redirect', 'multi');
             router.change('/signin');
         });
 
