@@ -1,19 +1,15 @@
-const CACHE_NAME = 'v2';
+const CACHE_NAME = 'v3';
 
 const cacheFirstNetwork = ['slow-2g', '2g'];
 const cacheFirstUrl = ['/about', '/singleplayer'];
 const assets = [...global.serviceWorkerOption.assets.map(asset => '/dist' + asset), '/', '/favicon.ico', ...cacheFirstUrl];
 
 self.addEventListener('install', event => {
-    console.log(assets);
     event.waitUntil(
         global.caches
             .open(CACHE_NAME)
             .then(cache => {
                 return cache.addAll(assets);
-            })
-            .then(() => {
-                console.log('Added to cache: ', assets);
             })
             .catch((err) => {
                 console.log(err);
@@ -44,7 +40,6 @@ self.addEventListener('fetch', event => {
     }
 
     const url = new URL(event.request.url);
-    console.log(url);
     if (event.request.cache === 'only-if-cached' && event.request.mode !== 'same-origin') {
         return;
     }
