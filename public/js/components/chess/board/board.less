@@ -7,9 +7,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    box-sizing: border-box;
 
     @media screen and (orientation: landscape) {
-        border: 0.5vh solid black;
+        border: 0.5vh solid #5f3901;
         max-height: 80vh;
         max-width: 80vh;
         height: calc(50vw + 30px);
@@ -17,8 +18,7 @@
     }
 
     @media screen and (orientation: portrait) {
-        border-top: 1px solid black;
-        border-bottom: 1px solid black;
+        border: 0.5vw solid #5f3901;
         width: 100vw;
         max-width: 75vh;
     }
