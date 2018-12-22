@@ -36,6 +36,7 @@ export default class GameAIModel {
     }
 
     _onClose () {
+        this._game = null;
         if (this._worker) {
             this._worker.terminate();
         }

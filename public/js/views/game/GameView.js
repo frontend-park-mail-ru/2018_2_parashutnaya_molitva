@@ -28,6 +28,9 @@ export default class GameView extends View {
 
     _onMoveSuccess ({ state, turn, move } = {}) {
         console.log('making a move', state);
+        if (!this._board) {
+            return;
+        }
         this._board.setState({ boardState: state, turn: turn });
         this.update({ move });
     }

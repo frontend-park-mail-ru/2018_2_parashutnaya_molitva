@@ -23,17 +23,25 @@ export default class AiModel {
     move (move) {}
 
     moveFirstMode (move) {
-        this._game.move(move);
-        const aiMove = AI.aiMove(this._game, 1);
-        this._game.move(aiMove);
-        return aiMove;
+        try {
+            this._game.move(move);
+            const aiMove = AI.aiMove(this._game, 1);
+            this._game.move(aiMove);
+            return aiMove;
+        } catch (e) {
+
+        }
     }
 
     moveSecondMode (move) {
-        this._game.move(move);
-        const aiMove = AI.aiMove(this._game, 2);
-        this._game.move(aiMove);
-        return aiMove;
+        try {
+            this._game.move(move);
+            const aiMove = AI.aiMove(this._game, 2);
+            this._game.move(aiMove);
+            return aiMove;
+        } catch (e) {
+
+        }
     }
 
     moveThirdMode () {
