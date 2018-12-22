@@ -5,21 +5,30 @@ import '../../components/popup/offlinePopup/offline-popup.less';
 import Menu from '../../components/menu/menu.js';
 
 import template from './menu.tmpl.xml';
+import { HEADER } from '../../lib/eventbus/events';
 
 export default class MenuView extends View {
     constructor ({ eventBus = {}, globalEventBus = {} } = {}) {
         super(template, eventBus);
+
+        this._globalEventBus = globalEventBus;
+    }
+
+    close () {
+        this._globalEventBus.triggerEvent(HEADER.UNDISABLE_TITLE);
     }
 
     render (root, data = {}) {
         super.render(root, data);
 
+        this._title = document.querySelector('.header-bar__label');
+        this._globalEventBus.triggerEvent(HEADER.DISABLE_TITLE);
         let menu;
         const menuSection = this.el.querySelector('.js-menu');
         if (navigator.onLine === false) {
             menu = new Menu([
                 { textLabel: 'Singleplayer', href: '/singleplayer' },
-                { textLabel: 'Multiplayer', href: '/multiplayer'},
+                { textLabel: 'Multiplayer', href: '/multiplayer' },
                 { textLabel: 'Leaderboard',
                     href: '',
                     clickCallback: this._onOfflineMultiplayerClick.bind(this),
@@ -47,5 +56,4 @@ export default class MenuView extends View {
     _onOfflineMultiplayerClick () {
         this._offlinePopup.classList.remove('hidden');
     }
-
 }

@@ -28,14 +28,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let router = new Router(page);
 
-    const globalEventBus = new EventBus([HEADER.LOAD, HEADER.CLOSE]);
+    const globalEventBus = new EventBus([HEADER.LOAD, HEADER.CLOSE, HEADER.UNDISABLE_TITLE, HEADER.DISABLE_TITLE]);
 
     const headerBarController = new HeaderBarController({ globalEventBus, router });
     headerBarController.headerBarView.render(header);
 
     const aboutController = new AboutController();
     const scoreboardController = new ScoreboardController();
-    const menuController = new MenuController();
+    const menuController = new MenuController({globalEventBus});
     const signinController = new SigninController({ router, globalEventBus });
     const signupContoller = new SignupController({ router, globalEventBus });
     const profileControlleer = new ProfileController({ router, globalEventBus });

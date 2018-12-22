@@ -1,10 +1,10 @@
 import View from '../../lib/view.js';
 import template from './headerBar.tmpl.xml';
 import './header.less';
-import Dropdown from "../../components/dropDown/dropDown";
-import {HEADER, ROUTER, SERVICE} from "../../lib/eventbus/events";
-const onShowDropdownArray = "rotate(180deg)";
-const onCloseDropdownArray = "rotate(0deg)";
+import Dropdown from '../../components/dropDown/dropDown';
+import { HEADER, ROUTER, SERVICE } from '../../lib/eventbus/events';
+const onShowDropdownArray = 'rotate(180deg)';
+const onCloseDropdownArray = 'rotate(0deg)';
 
 export default class HeaderBarView extends View {
     constructor (eventBus, globalEventBus) {
@@ -14,10 +14,20 @@ export default class HeaderBarView extends View {
         this._eventBus.subscribeToEvent(SERVICE.LOAD_USER_RESPONSE, this._onLoadAvatarResponse.bind(this));
         this._globalEventBus.subscribeToEvent(HEADER.LOAD, this._onRenderHeader.bind(this));
 
-        this._dropDown = new Dropdown({elements: [
-                {path: '/profile', textLabel: "Profile"},
-                {path: '/', textLabel: "Sign out", class:"js-signout"},
-            ]})
+        this._globalEventBus.subscribeToEvent(HEADER.DISABLE_TITLE, () => {
+            this._isTitleDisable = true;
+            document.querySelector('.header-bar__label').style.pointerEvents = 'none';
+        });
+
+        this._globalEventBus.subscribeToEvent(HEADER.UNDISABLE_TITLE, () => {
+            this._isTitleDisable = false;
+            document.querySelector('.header-bar__label').style.pointerEvents = 'auto';
+        });
+
+        this._dropDown = new Dropdown({ elements: [
+            { path: '/profile', textLabel: 'Profile' },
+            { path: '/', textLabel: 'Sign out', class: 'js-signout' }
+        ] });
     }
 
     render (root, data = {}) {
@@ -31,15 +41,20 @@ export default class HeaderBarView extends View {
 
     _onLoadAvatarResponse (data) {
         super.render(null, data);
-        const dropdownArray = this.el.querySelector(".js-dropdown-array");
+        const dropdownArray = this.el.querySelector('.js-dropdown-array');
         const onShowDropdown = () => dropdownArray.style.transform = onShowDropdownArray;
         const onCloseDropdown = () => dropdownArray.style.transform = onCloseDropdownArray;
-
+        const title = this.el.querySelector('.header-bar__label');
+        if (this._isTitleDisable) {
+            title.style.pointerEvents = 'none';
+        } else {
+            title.style.pointerEvents = 'auto';
+        }
         if (data.isAuth) {
             this._dropDown.render({
-                root : this.el.querySelector(".dropdown"),
-                onShowCallback:onShowDropdown,
-                onCloseCallback: onCloseDropdown,
+                root: this.el.querySelector('.dropdown'),
+                onShowCallback: onShowDropdown,
+                onCloseCallback: onCloseDropdown
             });
 
             let avatar = this.el.querySelector('.header-bar__avatar');
