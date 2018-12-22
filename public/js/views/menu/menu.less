@@ -5,11 +5,11 @@
 
 
 .vk-share {
-  top: 1vh;
-  left: 1vh;
+  right: 1vh;
+  bottom: 1vh;
   position: absolute;
-  width: 20px;
-  height: 20px;
+  width: 40px;
+  height: 40px;
   background-image: url("../../../images/vk.svg");
   background-size: cover;
   transition: transform 0.2s;
@@ -18,9 +18,17 @@
   }
 }
 
-@media screen and (min-width: 1024px){
+@media screen and (min-width: 475px){
   .vk-share {
     width: 30px;
     height: 30px;
+  }
+}
+
+
+@media screen and (min-width: 1024px){
+  .vk-share {
+    width: 45px;
+    height: 45px;
   }
 }
