@@ -51,6 +51,13 @@ export default class MenuView extends View {
         this._offlinePopup.querySelector('.js-menu-back-x-mark').addEventListener('click', () => {
             this._offlinePopup.classList.add('hidden');
         });
+
+        if (sessionStorage.getItem('redirect')) {
+            switch (sessionStorage.getItem('redirect')) {
+            case 'multi':
+                sessionStorage.setItem('redirect', '');
+            }
+        }
     }
 
     _onOfflineMultiplayerClick () {
