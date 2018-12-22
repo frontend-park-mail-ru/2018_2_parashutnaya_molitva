@@ -3,7 +3,7 @@ import Board from '../../components/chess/board/board';
 import { GAME } from '../../lib/eventbus/events';
 
 export default class GameView extends View {
-    constructor ({ eventBus = {} } = {}) {
+    constructor ({ eventBus = {}, color = null } = {}) {
         super(null, eventBus);
         this._eventBus.subscribeToEvent(GAME.MOVE_SUCCESS, this._onMoveSuccess.bind(this));
         this._eventBus.subscribeToEvent(GAME.MOVE_FAILURE, this._onMoveFailure.bind(this));

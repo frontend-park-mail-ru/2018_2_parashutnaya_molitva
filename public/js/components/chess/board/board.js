@@ -29,7 +29,8 @@ const PIECE_COLOR_CLASSES = {
 };
 
 export default class Board {
-    constructor ({ boardState = START_STATE, turn = COLOR.WHITE, sideOfView = COLOR.WHITE, moveCallback = (move) => null } = {}) {
+    constructor ({ boardState = START_STATE, turn = COLOR.WHITE, sideOfView = COLOR.WHITE, moveCallback = (move) => null} = {}) {
+
         this._turn = +turn;
         this._moveCallback = moveCallback;
         this._params = {};

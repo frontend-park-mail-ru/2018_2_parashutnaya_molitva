@@ -14,6 +14,7 @@ import Piece from '../../components/chess/piece/piece';
 import { GAME, ROUTER, VIEW } from '../../lib/eventbus/events';
 import Toggle from '../../components/toggle/toggle';
 import { GAME_MODE } from '../../models/game/mode';
+import { COLOR } from '../../components/chess/consts';
 
 const BLACK_COLOR_BACKGROUND = '#7f8b95c2';
 
@@ -66,10 +67,13 @@ export default class SingleplayerView extends View {
             this._gameMode = GAME_MODE.OFFLINE;
             this._currentEventBus = this._eventBus;
             this._gameView = new GameView({ eventBus: this._currentEventBus });
+            this._aiView = false;
             this._initGameView({ duration: data.duration });
         } else {
+            this._aiView = true;
+            this._playerColor = COLOR.WHITE;
             this._currentEventBus = this._eventBusAi;
-            this._gameView = new GameView({ eventBus: this._currentEventBus });
+            this._gameView = new GameView({ eventBus: this._currentEventBus, color: COLOR.WHITE });
             this._renderGameOptionPopup();
             this._showGameOptionPopup();
         }
@@ -82,7 +86,6 @@ export default class SingleplayerView extends View {
                 this._currentEventBus.triggerEvent(ROUTER.BACK_TO_MENU);
             });
         });
-
     }
 
     _renderGameOptionPopup () {
@@ -188,17 +191,27 @@ export default class SingleplayerView extends View {
     _whiteTurn () {
         this._timerSecond.stop();
         this._timerFirst.start();
-        this._buttonSurrenderFirst.classList.remove('hidden_visibility');
-        this._buttonSurrenderSecond.classList.add('hidden_visibility');
         this._topElement.style.backgroundColor = '';
+
+        if (this._aiView && this._playerColor === COLOR.WHITE) {
+            this._board.style.pointerEvents = 'auto';
+        } else {
+            this._buttonSurrenderFirst.classList.remove('hidden_visibility');
+            this._buttonSurrenderSecond.classList.add('hidden_visibility');
+        }
     }
 
     _blackTurn () {
         this._timerFirst.stop();
         this._timerSecond.start();
-        this._buttonSurrenderSecond.classList.remove('hidden_visibility');
-        this._buttonSurrenderFirst.classList.add('hidden_visibility');
         this._topElement.style.backgroundColor = BLACK_COLOR_BACKGROUND;
+
+        if (this._aiView && this._playerColor === COLOR.WHITE) {
+            this._board.style.pointerEvents = 'none';
+        } else {
+            this._buttonSurrenderSecond.classList.remove('hidden_visibility');
+            this._buttonSurrenderFirst.classList.add('hidden_visibility');
+        }
     }
 
     _whiteTimerExpire () {
