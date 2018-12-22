@@ -64,10 +64,39 @@ export default class AI {
             const newScore = AI.minimaxTreeScore(
                 newBoard,
                 depth - 1,
-                color === PIECE_COLOR.WHITE ? PIECE_COLOR.BLACK : PIECE_COLOR.WHITE
+                !color
             );
 
-            bestScore = color === PIECE_COLOR.WHITE ? Math.max(bestScore, newScore) : Math.min(bestScore, newScore);
+            bestScore = color ? Math.min(bestScore, newScore) : Math.max(bestScore, newScore);
+        });
+        return bestScore;
+    }
+
+    static minimaxTreeScoreModel (board, depth, color, model) {
+        if (depth === 0) {
+            const oneHotBoard = AI.boardToOneHot(board);
+            const boardTensor = tf.tensor([oneHotBoard]);
+            const predictions = model.predict(boardTensor);
+            const predictionsFloat32Array = predictions.dataSync();
+            const predictionsArray = Array.from(predictionsFloat32Array);
+
+            return predictionsArray[0];
+        }
+
+        const legalMoves = board.legalMoves(color ? PIECE_COLOR.WHITE : PIECE_COLOR.BLACK);
+        const legalMovesKeys = Object.keys(legalMoves);
+
+        let bestScore = color ? -13337 : 13337;
+        legalMovesKeys.forEach(move => {
+            const newBoard = legalMoves[move];
+            let newScore = AI.minimaxTreeScore(
+                newBoard,
+                depth - 1,
+                !color
+                // model
+            );
+
+            bestScore = color ? Math.max(bestScore, newScore) : Math.min(bestScore, newScore);
         });
         return bestScore;
     }
