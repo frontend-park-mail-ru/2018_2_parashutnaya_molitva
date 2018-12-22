@@ -1,0 +1,26 @@
+.menu {
+  position: relative;
+  height: 100%;
+}
+
+
+.vk-share {
+  top: 1vh;
+  left: 1vh;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-image: url("../../../images/vk.svg");
+  background-size: cover;
+  transition: transform 0.2s;
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+@media screen and (min-width: 1024px){
+  .vk-share {
+    width: 30px;
+    height: 30px;
+  }
+}
