@@ -1,6 +1,5 @@
 import 'normalize.css';
 import '../css/style.less';
-import '../dist/keras/model.json';
 import AboutController from './controllers/AboutController.js';
 import ScoreboardController from './controllers/ScoreboardController.js';
 import MenuController from './controllers/MenuController.js';
