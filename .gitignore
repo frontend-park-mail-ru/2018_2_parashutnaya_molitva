@@ -1,4 +1,4 @@
 .idea
 node_modules
-public/dist
+public/dist/*.*
 **/*.tmpl.js
