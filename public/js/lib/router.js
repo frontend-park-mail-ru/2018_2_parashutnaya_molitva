@@ -53,9 +53,10 @@ export default class Router {
      * Переход на маршрут с путем path
      * @param path путь
      * @param addToHistory добавлять Path в History Api или нет.
+     * @param data
      * @private
      */
-    change (path, addToHistory = true) {
+    change (path, addToHistory = true, data = {}) {
         if (this.currentRoute === path) {
             return;
         }
@@ -77,7 +78,7 @@ export default class Router {
 
         if (this.routes.has(path)) {
             let route = this.routes.get(path);
-            route.view.render(route.root, route.data);
+            route.view.render(route.root, {...route.data, ...data});
             this.currentRoute = path;
         } else {
             this.notFoundView.render(this.notFoundViewRoot);
