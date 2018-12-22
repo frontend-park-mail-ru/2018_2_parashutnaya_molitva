@@ -1,7 +1,8 @@
 import './signin.less';
 import View from '../../lib/view.js';
 import template from './signin.tmpl.xml';
-import signin from './signin.less';
+
+const MULTI_AUTH = 'Sign in to play online';
 
 export default class SigninView extends View {
     constructor ({ eventBus = {} } = {}) {
@@ -14,10 +15,26 @@ export default class SigninView extends View {
         super.render(root, data);
 
         this._loadingEl = this.el.querySelector('.loading');
+        this._title = this.el.querySelector('.js-signin-title');
 
         let form = this.el.querySelector('.form');
         this.warning = this.el.querySelector('.signin__warning');
         form.addEventListener('submit', this._onSubmit.bind(this, form));
+
+        this._checkRedirect();
+    }
+
+    _checkRedirect () {
+        if (sessionStorage.getItem('redirect')) {
+            switch (sessionStorage.getItem('redirect')) {
+            case 'multi':
+                this._title.innerHTML = MULTI_AUTH;
+                break;
+            default:
+                this._title.innerHTML = '';
+                break;
+            }
+        }
     }
 
     _onSubmit (form, ev) {

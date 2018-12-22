@@ -13,6 +13,10 @@ export default class SignupView extends View {
         this._eventBus.subscribeToEvent('signupResponse', this._onSignupResponse.bind(this));
     }
 
+    close() {
+        sessionStorage.setItem('redirect', '');
+    }
+
     render (root, data = {}) {
         super.render(root, data);
 
