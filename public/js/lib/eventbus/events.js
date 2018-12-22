@@ -15,7 +15,9 @@ export const GAME = {
     SURRENDER_RESPONSE: 'surr',
 
     PROMOTION: 'pm',
-    PROMOTION_RESPONSE: 'pms'
+    PROMOTION_RESPONSE: 'pms',
+
+    MODE_CHOOSE: 'mc',
 };
 
 export const VIEW = {
@@ -24,11 +26,14 @@ export const VIEW = {
 };
 
 export const ROUTER = {
+    TO_OFFLINE: 'tof',
     BACK_TO_MENU: 'btm',
     TO_SIGNIN: 'tsgn'
 };
 
 export const HEADER = {
+    UNDISABLE_TITLE: 'udtt',
+    DISABLE_TITLE: 'dttl',
     LOAD: 'ld',
     CLOSE: 'clh'
 };

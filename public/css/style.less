@@ -3,10 +3,18 @@
 @import "popup";
 @import "user-bar";
 
+*:focus {
+    outline:none;
+}
+
 // Need to no display iframe scroll
 ::-webkit-scrollbar {
     width: 0;
     height: 0;
+}
+
+a {
+    -webkit-tap-highlight-color: transparent;
 }
 
 iframe {

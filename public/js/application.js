@@ -12,7 +12,7 @@ import NotFoundView from './views/notfound/NotFoundView.js';
 import EventBus from './lib/eventbus/eventbus.js';
 import runtime from 'serviceworker-webpack-plugin/lib/runtime';
 import GameController from './controllers/GameController';
-import ChatController from './controllers/ChatController';
+
 import { CHAT, HEADER, GLOBAL } from './lib/eventbus/events';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -28,18 +28,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let router = new Router(page);
 
-    const globalEventBus = new EventBus([HEADER.LOAD, HEADER.CLOSE]);
+    const globalEventBus = new EventBus([HEADER.LOAD, HEADER.CLOSE, HEADER.UNDISABLE_TITLE, HEADER.DISABLE_TITLE]);
 
     const headerBarController = new HeaderBarController({ globalEventBus, router });
     headerBarController.headerBarView.render(header);
 
     const aboutController = new AboutController();
     const scoreboardController = new ScoreboardController();
-    const menuController = new MenuController();
+    const menuController = new MenuController({globalEventBus});
     const signinController = new SigninController({ router, globalEventBus });
     const signupContoller = new SignupController({ router, globalEventBus });
     const profileControlleer = new ProfileController({ router, globalEventBus });
-    const chatController = new ChatController({ router, globalEventBus });
     const gameController = new GameController({ router, globalEventBus });
 
     router.add('/about', main, aboutController.aboutView);
@@ -50,7 +49,6 @@ document.addEventListener('DOMContentLoaded', () => {
     router.add('/', main, menuController.menuView);
     router.add('/multiplayer', main, gameController.multiplayerView);
     router.add('/singleplayer', main, gameController.singleplayerView);
-    router.add('/chat', main, chatController.chatView);
 
     router.setNotFoundView(main, new NotFoundView());
     router.start();

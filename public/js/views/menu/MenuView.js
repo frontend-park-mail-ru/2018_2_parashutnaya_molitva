@@ -5,34 +5,30 @@ import '../../components/popup/offlinePopup/offline-popup.less';
 import Menu from '../../components/menu/menu.js';
 
 import template from './menu.tmpl.xml';
+import { HEADER } from '../../lib/eventbus/events';
 
 export default class MenuView extends View {
     constructor ({ eventBus = {}, globalEventBus = {} } = {}) {
         super(template, eventBus);
 
-        this._eventBus.subscribeToEvent('checkAuthResponse', this._onCheckAuthResponse.bind(this));
+        this._globalEventBus = globalEventBus;
     }
 
-    _onCheckAuthResponse ({ isAuth, online = true, error } = {}) {
+    close () {
+        this._globalEventBus.triggerEvent(HEADER.UNDISABLE_TITLE);
+    }
+
+    render (root, data = {}) {
+        super.render(root, data);
+
+        this._title = document.querySelector('.header-bar__label');
+        this._globalEventBus.triggerEvent(HEADER.DISABLE_TITLE);
         let menu;
         const menuSection = this.el.querySelector('.js-menu');
-        if (!isAuth && online) {
+        if (navigator.onLine === false) {
             menu = new Menu([
                 { textLabel: 'Singleplayer', href: '/singleplayer' },
-                { textLabel: 'Multiplayer',
-                    href: '/signin',
-                    clickCallback: this._onNotAuthMultiplayerClick.bind(this),
-                    isNavigate: false },
-                { textLabel: 'Leaderboard', href: '/leaderboard' },
-                { textLabel: 'About', href: '/about' }
-            ]);
-        } else if (online === false) {
-            menu = new Menu([
-                { textLabel: 'Singleplayer', href: '/singleplayer' },
-                { textLabel: 'Multiplayer',
-                    href: '',
-                    clickCallback: this._onOfflineMultiplayerClick.bind(this),
-                    isNavigate: false },
+                { textLabel: 'Multiplayer', href: '/multiplayer' },
                 { textLabel: 'Leaderboard',
                     href: '',
                     clickCallback: this._onOfflineMultiplayerClick.bind(this),
@@ -49,23 +45,22 @@ export default class MenuView extends View {
         }
 
         menu.render(menuSection);
-    }
 
-    render (root, data = {}) {
-        super.render(root, data);
-        this._eventBus.triggerEvent('checkAuth');
         this._offlinePopup = this.el.querySelector('.js-offline-popup');
 
         this._offlinePopup.querySelector('.js-menu-back-x-mark').addEventListener('click', () => {
             this._offlinePopup.classList.add('hidden');
         });
+
+        if (sessionStorage.getItem('redirect')) {
+            switch (sessionStorage.getItem('redirect')) {
+            case 'multi':
+                sessionStorage.setItem('redirect', '');
+            }
+        }
     }
 
     _onOfflineMultiplayerClick () {
         this._offlinePopup.classList.remove('hidden');
-    }
-
-    _onNotAuthMultiplayerClick () {
-
     }
 }

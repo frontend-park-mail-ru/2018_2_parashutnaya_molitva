@@ -11,7 +11,8 @@ const conf = {
         minimizer : [],
     },
     entry: {
-        application: './public/js/application.js'
+        application: './public/js/application.js',
+        aiWorker : './public/js/models/workers/aiWorkerController.js'
     },
     output: {
         path: path.resolve(__dirname + '/public/dist/'),
@@ -79,7 +80,9 @@ let babelLoader = {
     exclude: /(node_modules)/,
     include: [
         path.join(__dirname, 'public/js/sw.js'),
-        path.join(__dirname, 'public/js')
+        path.join(__dirname, 'public/js'),
+        path.join(__dirname, 'public/js/models/workers/aiWorkerController.js'),
+        path.join(__dirname, 'public/js/models/workers/')
     ],
     use: {
         loader: 'babel-loader',

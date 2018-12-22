@@ -11,22 +11,39 @@ import GameView from '../game/GameView';
 import Timer from '../../components/timer/timer';
 import IconPresenter from '../../components/icons-presenter/iconsPresenter';
 import Piece from '../../components/chess/piece/piece';
-import { GAME, ROUTER } from '../../lib/eventbus/events';
+import { GAME, ROUTER, VIEW } from '../../lib/eventbus/events';
+import Toggle from '../../components/toggle/toggle';
+import { GAME_MODE } from '../../models/game/mode';
+import { COLOR } from '../../components/chess/consts';
+import voiceRecognition from '../../lib/voice';
 
-const BLACK_COLOR_BACKGROUND = '#7f8b9575';
+const BLACK_COLOR_BACKGROUND = '#7f8b95c2';
 
 export default class SingleplayerView extends View {
-    constructor ({ eventBus = {} } = {}) {
+    constructor ({ eventBus = {}, eventBusAi = {} } = {}) {
         super(template, eventBus);
-        this._gameView = new GameView({ eventBus });
+        this._gameView = null;
+        this._eventBusAi = eventBusAi;
+
+        this._eventBusAi.subscribeToEvent(GAME.MOVE_SUCCESS, this._onMoveSuccess.bind(this));
+        this._eventBusAi.subscribeToEvent(GAME.GAMEOVER, this._onGameOver.bind(this));
+        this._eventBusAi.subscribeToEvent(GAME.PROMOTION, this._onPromotion.bind(this));
 
         this._eventBus.subscribeToEvent(GAME.MOVE_SUCCESS, this._onMoveSuccess.bind(this));
         this._eventBus.subscribeToEvent(GAME.GAMEOVER, this._onGameOver.bind(this));
         this._eventBus.subscribeToEvent(GAME.PROMOTION, this._onPromotion.bind(this));
+
+        this._currentEventBus = null;
     }
 
     close () {
-        super.close();
+        this.isViewClosed = true;
+        try {
+            this._currentEventBus.triggerEvent(VIEW.CLOSE);
+        } catch (e) {
+            console.log('no such event: VIEW.CLOSE');
+        }
+        this._gameView = null;
         if (this._timerFirst) {
             this._timerFirst.stop();
         }
@@ -38,23 +55,64 @@ export default class SingleplayerView extends View {
 
     render (root, data = {}) {
         super.render(root, data);
-        this._eventBus.triggerEvent(GAME.INIT_GAME);
 
-        this._gameoptionsPopup = this.el.querySelector('.js-game-options-popup');
+        this._gameMode = GAME_MODE.EASY_OFFLINE;
 
         this._firstUserBlock = this.el.querySelector('.js-first');
         this._secondUserBlock = this.el.querySelector('.js-second');
         this._board = this.el.querySelector('.js-board-section');
 
+        this._topElement = this.el.querySelector('.game');
+
+        if (data.duration && data.mode === GAME_MODE.OFFLINE) {
+            this._gameMode = GAME_MODE.OFFLINE;
+            this._currentEventBus = this._eventBus;
+            this._gameView = new GameView({ eventBus: this._currentEventBus });
+            this._aiView = false;
+            this._initGameView({ duration: data.duration });
+        } else {
+            this._aiView = true;
+            this._playerColor = COLOR.WHITE;
+            this._currentEventBus = this._eventBusAi;
+            this._gameView = new GameView({ eventBus: this._currentEventBus, color: COLOR.WHITE });
+            this._renderGameOptionPopup();
+            this._showGameOptionPopup();
+        }
+
+        this._currentEventBus.triggerEvent(GAME.INIT_GAME);
+
         const backToMenu = this.el.querySelectorAll('.js-menu-back-x-mark');
         backToMenu.forEach((button) => {
             button.addEventListener('click', () => {
-                this._eventBus.triggerEvent(ROUTER.BACK_TO_MENU);
+                this._currentEventBus.triggerEvent(ROUTER.BACK_TO_MENU);
             });
         });
+    }
 
-        this._showGameOptionPopup();
-        this._topElement = this.el.querySelector('.game');
+    _renderGameOptionPopup () {
+        this._gameoptionsPopup = this.el.querySelector('.js-game-options-popup');
+        this._chooseMode = this._gameoptionsPopup.querySelector('.js-mode-choose');
+        this._toggle = new Toggle({
+            values: ['Easy', 'Normal', 'Hard'],
+            callBacks: [this._onEasyCallback.bind(this), this._onNormalCallback.bind(this),
+                this._onHardCallback.bind(this)],
+            classes: ['button', 'submit', 'game-options__button'],
+            activeClass: 'game-options__button_active',
+            disableClass: 'game-options__button_disable'
+        });
+        this._toggle.render(this._chooseMode);
+    }
+
+    _onEasyCallback () {
+        this._gameMode = GAME_MODE.EASY_OFFLINE;
+    }
+
+    _onNormalCallback () {
+        this._gameMode = GAME_MODE.NORMAL_OFFLINE;
+    }
+
+    _onHardCallback () {
+        this._gameMode = GAME_MODE.HARD_OFFLINE;
     }
 
     _hideAll () {
@@ -74,14 +132,7 @@ export default class SingleplayerView extends View {
 
         buttons.forEach((button) => {
             button.addEventListener('click', () => {
-                this._renderBoard();
-                this._renderFirstUserBlock({ duration: button.value });
-                this._renderSecondUserBlock({ duration: button.value });
-                this._renderPromotionPopup();
-
-                this._startGame();
-
-                this._showAll();
+                this._initGameView({ duration: +button.value });
                 this._gameoptionsPopup.classList.add('hidden');
             });
         });
@@ -90,13 +141,43 @@ export default class SingleplayerView extends View {
         this._gameoptionsPopup.classList.remove('hidden');
     }
 
+    _initGameView ({ duration }) {
+        this._renderBoard();
+        this._renderFirstUserBlock({ duration: duration });
+        this._renderSecondUserBlock({ duration: duration });
+        this._renderPromotionPopup();
+
+        this._startGame();
+
+        this._showAll();
+
+        this._currentEventBus.triggerEvent(GAME.MODE_CHOOSE, { mode: this._gameMode });
+    }
+
     _startGame () {
         this._timerFirst.start();
+        // EASTER EGG START
+        let timers = this.el.querySelectorAll(`.user-timer`);
+        timers.forEach(timer => {
+            timer.addEventListener('click', (event) => this._onTimerClick(event));
+        });
+        // EASTER EGG END
+    }
+
+    // easter egg with voice api
+    _onTimerClick (event) {
+        voiceRecognition.onresult = (event) => {
+            console.log(event.results);
+            const last = event.results.length - 1;
+            let move = event.results[last][0].transcript.split(' ').join('').toLowerCase();
+            this._currentEventBus.triggerEvent(GAME.MOVE, { move });
+        };
+        voiceRecognition.start();
     }
 
     _renderPromotionPopup () {
         this._promotionPopup = new PromotionPopup({ promotionCallback: ({ figure }) => {
-            this._eventBus.triggerEvent(GAME.PROMOTION_RESPONSE, { figure });
+            this._currentEventBus.triggerEvent(GAME.PROMOTION_RESPONSE, { figure });
         } });
         this._promotionPopupElement = this.el.querySelector('.js-promotion-popup-container');
         this._promotionPopup.render(this._promotionPopupElement);
@@ -128,17 +209,27 @@ export default class SingleplayerView extends View {
     _whiteTurn () {
         this._timerSecond.stop();
         this._timerFirst.start();
-        this._buttonSurrenderFirst.classList.remove('hidden_visibility');
-        this._buttonSurrenderSecond.classList.add('hidden_visibility');
         this._topElement.style.backgroundColor = '';
+
+        if (this._aiView && this._playerColor === COLOR.WHITE) {
+            this._board.style.pointerEvents = 'auto';
+        } else {
+            this._buttonSurrenderFirst.classList.remove('hidden_visibility');
+            this._buttonSurrenderSecond.classList.add('hidden_visibility');
+        }
     }
 
     _blackTurn () {
         this._timerFirst.stop();
         this._timerSecond.start();
-        this._buttonSurrenderSecond.classList.remove('hidden_visibility');
-        this._buttonSurrenderFirst.classList.add('hidden_visibility');
         this._topElement.style.backgroundColor = BLACK_COLOR_BACKGROUND;
+
+        if (this._aiView && this._playerColor === COLOR.WHITE) {
+            this._board.style.pointerEvents = 'none';
+        } else {
+            this._buttonSurrenderSecond.classList.remove('hidden_visibility');
+            this._buttonSurrenderFirst.classList.add('hidden_visibility');
+        }
     }
 
     _whiteTimerExpire () {
@@ -154,9 +245,7 @@ export default class SingleplayerView extends View {
     }
 
     _onGameOver ({ turn }) {
-        this._timerFirst.stop();
-        this._timerSecond.stop();
-
+        this.close();
         this._showWinnerPopup({ turn });
     }
 

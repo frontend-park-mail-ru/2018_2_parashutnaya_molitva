@@ -34,11 +34,29 @@ export default class Board {
         this._moveCallback = moveCallback;
         this._params = {};
         this.setState({ boardState, turn, sideOfView });
+        this._root = null;
     }
 
-    render (root) {
+    render (root, data) {
         root.innerHTML = template(this._params);
-        const cells = document.querySelectorAll('.cell');
+        this._root = root;
+        const cells = this._root.querySelectorAll('.cell');
+
+        if (data && data.move) {
+            this._prevPieceCell = data.move.slice(0, 2);
+            this._newPieceCell = data.move.slice(2, 4);
+        }
+
+        if (this._prevPieceCell && this._newPieceCell) {
+            const prevCell = this._root.querySelector(`#${this._prevPieceCell}`);
+            const newCell = this._root.querySelector(`#${this._newPieceCell}`);
+
+            if (prevCell && newCell) {
+                prevCell.classList.add('cell_prev-move');
+                newCell.classList.add('cell_prev-move');
+            }
+        }
+
         console.log(cells);
         cells.forEach(cell => {
             cell.addEventListener('click', (event) => this._onCellClick(event));
@@ -53,6 +71,8 @@ export default class Board {
 
         this._boardState = boardState;
         this._sideOfView = sideOfView;
+        console.log('selected cell: ' + this._selectedCell);
+        this._prevPieceCell = this._selectedCell;
         this._selectedCell = '';
         // 8 x 8 board
         let stateMatrix = [];
@@ -84,12 +104,22 @@ export default class Board {
         this._params.pieces = pieces;
     }
 
+    highlightKing ({ turn }) {
+        if (turn) {
+            const whiteKing = this._root.querySelector('.piece_king .piece_white');
+            whiteKing.parent.classList.add('cell__checkmate');
+        } else {
+            const blackKing = this._root.querySelector('.piece_king .piece_black');
+            blackKing.parent.classList.add('cell__checkmate');
+        }
+    }
+
     _onCellClick (event) {
         console.log(event.currentTarget.id);
         if (event.currentTarget.firstChild.classList.contains(PIECE_COLOR_CLASSES[this._turn])) {
             if (!event.currentTarget.classList.contains('cell_selected')) {
                 if (this._selectedCell !== '') {
-                    const prevSelectedCell = document.getElementById(this._selectedCell);
+                    const prevSelectedCell = this._root.querySelector(`#${this._selectedCell}`);
                     prevSelectedCell.classList.remove('cell_selected');
                 }
                 event.currentTarget.classList.add('cell_selected');
@@ -100,6 +130,7 @@ export default class Board {
         }
 
         if (this._selectedCell !== '' && this._selectedCell !== event.currentTarget.id) {
+            this._newPieceCell = event.currentTarget.id;
             this._moveCallback(this._selectedCell + event.currentTarget.id);
         }
     }

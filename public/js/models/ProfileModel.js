@@ -45,7 +45,7 @@ export default class ProfileModel {
 
     _onSubmitPassword(data) {
         const pass = data.pass;
-        const errPass = Validation.validatePassword(pass, true);
+        const errPass = Validation.validatePassword(pass);
         if (errPass) {
             this._eventBus.triggerEvent('changePasswordResponse', {error: errPass});
             return;
@@ -93,7 +93,7 @@ export default class ProfileModel {
 
     _onChangePassword(data) {
         const pass = data.pass;
-        const errPass = Validation.validatePassword(pass, true);
+        const errPass = Validation.validatePassword(pass);
         if (errPass) {
             this._eventBus.triggerEvent('changePasswordResponse', {error: errPass});
             return;

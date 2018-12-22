@@ -5,7 +5,7 @@
             <fest:when test="params.isAuth === true">
                 <div class="dropdown">
                     <div class="user-bar header-bar__profile">
-                        <div class="user-info-bar user-bar__column header-bar__user-info header-bar__column">
+                        <div class="user-info-bar user-bar__column header-bar__user-info header-bar__column right-margin">
                             <div class="user-bar__row header-bar__row text-h2">
                                 <fest:value>params.user.login</fest:value>
                             </div>

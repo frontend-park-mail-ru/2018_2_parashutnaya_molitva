@@ -2,6 +2,7 @@
     <div class="popup hidden js-game-options-popup">
         <div class="popup__content game-options__content">
             <div class="popup__content-block game-options__duration">
+                <div class="js-mode-choose"></div>
                 <div class="popup__title game-options__title">Choose game duration</div>
                 <button class="button submit game-options__button js-game-option-button" value="60">1 min</button>
                 <button class="button submit game-options__button js-game-option-button" value="180">3 min</button>

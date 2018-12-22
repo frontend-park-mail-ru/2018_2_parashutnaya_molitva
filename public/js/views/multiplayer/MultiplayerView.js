@@ -11,12 +11,13 @@ import { COLOR } from '../../components/chess/consts';
 import PromotionPopup from '../../components/popup/promotionPopup/promotionPopup';
 
 import '../../components/popup/waitingPopup/watingPopup.less';
+import Toggle from '../../components/toggle/toggle';
+import voiceRecognition from '../../lib/voice';
 
-const BLACK_COLOR_BACKGROUND = '#7f8b9575';
+const BLACK_COLOR_BACKGROUND = '#7f8b95c2';
 export default class MultiplayerView extends View {
     constructor ({ eventBus = {} } = {}) {
         super(template, eventBus);
-        this._gameView = new GameView({ eventBus });
 
         this._eventBus.subscribeToEvent(GAME.MOVE_SUCCESS, this._onMoveSuccess.bind(this));
         this._eventBus.subscribeToEvent(GAME.GAMEOVER, this._onGameOver.bind(this));
@@ -24,27 +25,14 @@ export default class MultiplayerView extends View {
         this._eventBus.subscribeToEvent(SERVICE.CHECK_AUTH_RESPONSE, this._onCheckAuthResponse.bind(this));
         this._eventBus.subscribeToEvent(SERVICE.ON_CLOSE, this._onClose.bind(this));
         this._eventBus.subscribeToEvent(GAME.PROMOTION, this._onPromotion.bind(this));
+
+        this._isOnline = true;
     }
 
     render (root, data = {}) {
         super.render(root, data);
-        this._eventBus.triggerEvent(SERVICE.CHECK_AUTH);
-    }
 
-    close () {
-        super.close();
-    }
-
-    _onCheckAuthResponse ({ isAuth, error }) {
-        if (error) {
-            this._eventBus.triggerEvent(ROUTER.BACK_TO_MENU);
-            return;
-        }
-        if (!isAuth) {
-            this._eventBus.triggerEvent(ROUTER.TO_SIGNIN);
-            return;
-        }
-        this._gameoptionsPopup = this.el.querySelector('.js-game-options-popup');
+        this._renderGameOptionPopup();
         this._firstUserBlock = this.el.querySelector('.js-first');
         this._secondUserBlock = this.el.querySelector('.js-second');
         this._board = this.el.querySelector('.js-board-section');
@@ -61,6 +49,45 @@ export default class MultiplayerView extends View {
         this._initPopup();
 
         this._topElement = this.el.querySelector('.game');
+    }
+
+    close () {
+        super.close();
+    }
+
+    _onCheckAuthResponse ({ isAuth, error }) {
+        if (error) {
+            this._eventBus.triggerEvent(ROUTER.BACK_TO_MENU);
+            return;
+        }
+        if (!isAuth) {
+            this._eventBus.triggerEvent(ROUTER.TO_SIGNIN);
+        }
+
+        this._gameoptionsPopup.classList.add('hidden');
+        this._showWaitingPopup();
+        this._eventBus.triggerEvent(GAME.FIND_ROOM, { duration: +this._gameDuration });
+    }
+
+    _renderGameOptionPopup () {
+        this._gameoptionsPopup = this.el.querySelector('.js-game-options-popup');
+        this._chooseMode = this._gameoptionsPopup.querySelector('.js-mode-choose');
+        this._toggle = new Toggle({
+            values: ['Online', 'Offline'],
+            callBacks: [this._onOnlineCallback.bind(this), this._onOfflineCallback.bind(this)],
+            classes: ['button', 'submit', 'game-options__button'],
+            activeClass: 'game-options__button_active',
+            disableClass: 'game-options__button_disable'
+        });
+        this._toggle.render(this._chooseMode);
+    }
+
+    _onOnlineCallback () {
+        this._isOnline = true;
+    }
+
+    _onOfflineCallback () {
+        this._isOnline = false;
     }
 
     _onClose ({ message = 'Unexpected error' } = {}) {
@@ -110,9 +137,12 @@ export default class MultiplayerView extends View {
 
         buttons.forEach((button) => {
             button.addEventListener('click', () => {
-                this._gameoptionsPopup.classList.add('hidden');
-                this._showWaitingPopup();
-                this._eventBus.triggerEvent(GAME.FIND_ROOM, { duration: +button.value });
+                if (this._isOnline) {
+                    this._gameDuration = +button.value;
+                    this._eventBus.triggerEvent(SERVICE.CHECK_AUTH);
+                } else {
+                    this._eventBus.triggerEvent(ROUTER.TO_OFFLINE, { duration: +button.value });
+                }
             });
         });
 
@@ -121,6 +151,7 @@ export default class MultiplayerView extends View {
     }
 
     _onStartGame ({ duration, rival, you, color }) {
+        this._gameView = new GameView({ eventBus: this._eventBus });
         this._renderFirstUserBlock({ duration, user: you });
         this._renderSecondUserBlock({ duration, user: rival });
         this._startTimer({ color });
@@ -129,6 +160,24 @@ export default class MultiplayerView extends View {
         this._showAll();
         this._closeWaitingPopup();
         this._renderPromotionPopup();
+
+        // EASTER EGG START
+        let timers = this.el.querySelectorAll(`.user-timer`);
+        timers.forEach(timer => {
+            timer.addEventListener('click', (event) => this._onTimerClick(event));
+        });
+        // EASTER EGG END
+    }
+
+    // easter egg with voice api
+    _onTimerClick (event) {
+        voiceRecognition.onresult = (event) => {
+            console.log(event.results);
+            const last = event.results.length - 1;
+            let move = event.results[last][0].transcript.split(' ').join('').toLowerCase();
+            this._eventBus.triggerEvent(GAME.MOVE, { move });
+        };
+        voiceRecognition.start();
     }
 
     _startTimer ({ color }) {
