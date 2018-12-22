@@ -1,8 +1,5 @@
 import Game from '../../lib/chess/game';
-import { PIECE_COLOR } from '../../lib/chess/enums';
 import { GAME, VIEW } from '../../lib/eventbus/events';
-import AI from '../../lib/chess/ai';
-import * as tf from '@tensorflow/tfjs';
 
 const moveMsg = {
     type: 'move'

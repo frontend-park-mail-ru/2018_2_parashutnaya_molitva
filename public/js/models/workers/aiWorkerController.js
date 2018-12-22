@@ -26,7 +26,9 @@ function onMove (data) {
         return;
     }
 
-    postMessage({ ...moveMsg, data: { move: aiModel.move(data.move) } });
+    aiModel.move(data.move).then((move) => {
+        postMessage({ ...moveMsg, data: { move } });
+    });
 }
 
 function onStart (data) {
