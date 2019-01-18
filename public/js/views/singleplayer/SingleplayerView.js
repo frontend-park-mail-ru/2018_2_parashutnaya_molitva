@@ -166,12 +166,12 @@ export default class SingleplayerView extends View {
 
     // easter egg with voice api
     _onTimerClick (event) {
-        voiceRecognition.onresult = (event) => {
+        voiceRecognition.onResult((event) => {
             console.log(event.results);
             const last = event.results.length - 1;
             let move = event.results[last][0].transcript.split(' ').join('').toLowerCase();
             this._currentEventBus.triggerEvent(GAME.MOVE, { move });
-        };
+        });
         voiceRecognition.start();
     }
 
