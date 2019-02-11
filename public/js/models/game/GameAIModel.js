@@ -72,6 +72,10 @@ export default class GameAIModel {
             deadPiece: this._game.findNewDeadPiece(),
             move: data.move
         });
+
+        if (this._game.isGameOver()) {
+            this._eventBus.triggerEvent(GAME.GAMEOVER, { turn: this._game.turn() });
+        }
     }
 
     _onPromotionResponse ({ figure }) {
