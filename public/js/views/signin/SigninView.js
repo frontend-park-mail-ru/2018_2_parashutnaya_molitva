@@ -1,14 +1,16 @@
 import './signin.less';
 import View from '../../lib/view.js';
 import template from './signin.tmpl.xml';
+import autoBind from '../../lib/autobind';
 
 const MULTI_AUTH = 'Sign in to play online';
 
 export default class SigninView extends View {
     constructor ({ eventBus = {} } = {}) {
         super(template, eventBus);
-        this._eventBus.subscribeToEvent('signinResponse', this._onSubmitResponse.bind(this));
-        this._eventBus.subscribeToEvent('loadWaiting', this._onLoadWaiting.bind(this));
+        autoBind(this, '^_on');
+        this._eventBus.subscribeToEvent('signinResponse', this._onSubmitResponse);
+        this._eventBus.subscribeToEvent('loadWaiting', this._onLoadWaiting);
     }
 
     render (root, data) {
@@ -19,7 +21,7 @@ export default class SigninView extends View {
 
         let form = this.el.querySelector('.form');
         this.warning = this.el.querySelector('.signin__warning');
-        form.addEventListener('submit', this._onSubmit.bind(this, form));
+        form.addEventListener('submit', this._onSubmit);
 
         this._checkRedirect();
     }
