@@ -21,7 +21,7 @@ export default class SigninView extends View {
 
         let form = this.el.querySelector('.form');
         this.warning = this.el.querySelector('.signin__warning');
-        form.addEventListener('submit', this._onSubmit);
+        form.addEventListener('submit', this._onSubmit.bind(this, form));
 
         this._checkRedirect();
     }
