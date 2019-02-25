@@ -33,6 +33,7 @@ export default class MultiplayerView extends View {
         super.render(root, data);
 
         this._renderGameOptionPopup();
+
         this._firstUserBlock = this.el.querySelector('.js-first');
         this._secondUserBlock = this.el.querySelector('.js-second');
         this._board = this.el.querySelector('.js-board-section');
@@ -46,13 +47,9 @@ export default class MultiplayerView extends View {
             });
         });
 
-        this._initPopup();
+        this._initGameOptionPopup();
 
         this._topElement = this.el.querySelector('.game');
-    }
-
-    close () {
-        super.close();
     }
 
     _onCheckAuthResponse ({ isAuth, error }) {
@@ -62,6 +59,7 @@ export default class MultiplayerView extends View {
         }
         if (!isAuth) {
             this._eventBus.triggerEvent(ROUTER.TO_SIGNIN);
+            return;
         }
 
         this._gameoptionsPopup.classList.add('hidden');
@@ -72,6 +70,7 @@ export default class MultiplayerView extends View {
     _renderGameOptionPopup () {
         this._gameoptionsPopup = this.el.querySelector('.js-game-options-popup');
         this._chooseMode = this._gameoptionsPopup.querySelector('.js-mode-choose');
+
         this._toggle = new Toggle({
             values: ['Online', 'Offline'],
             callBacks: [this._onOnlineCallback.bind(this), this._onOfflineCallback.bind(this)],
@@ -79,7 +78,26 @@ export default class MultiplayerView extends View {
             activeClass: 'game-options__button_active',
             disableClass: 'game-options__button_disable'
         });
+
         this._toggle.render(this._chooseMode);
+    }
+
+    _initGameOptionPopup () {
+        const buttons = this._gameoptionsPopup.querySelectorAll('.js-game-option-button');
+
+        buttons.forEach((button) => {
+            button.addEventListener('click', () => {
+                if (this._isOnline) {
+                    this._gameDuration = +button.value;
+                    this._eventBus.triggerEvent(SERVICE.CHECK_AUTH);
+                } else {
+                    this._eventBus.triggerEvent(ROUTER.TO_OFFLINE, { duration: +button.value });
+                }
+            });
+        });
+
+        this._hideAll();
+        this._gameoptionsPopup.classList.remove('hidden');
     }
 
     _onOnlineCallback () {
@@ -117,9 +135,11 @@ export default class MultiplayerView extends View {
     }
 
     _renderPromotionPopup () {
-        this._promotionPopup = new PromotionPopup({ promotionCallback: ({ figure }) => {
-            this._eventBus.triggerEvent(GAME.PROMOTION_RESPONSE, { figure });
-        } });
+        this._promotionPopup = new PromotionPopup({
+            promotionCallback: ({ figure }) => {
+                this._eventBus.triggerEvent(GAME.PROMOTION_RESPONSE, { figure });
+            }
+        });
         this._promotionPopupElement = this.el.querySelector('.js-promotion-popup-container');
         this._promotionPopup.render(this._promotionPopupElement);
     }
@@ -130,24 +150,6 @@ export default class MultiplayerView extends View {
         } else {
             this._promotionPopup._showPromotionPopupBlack();
         }
-    }
-
-    _initPopup () {
-        const buttons = this._gameoptionsPopup.querySelectorAll('.js-game-option-button');
-
-        buttons.forEach((button) => {
-            button.addEventListener('click', () => {
-                if (this._isOnline) {
-                    this._gameDuration = +button.value;
-                    this._eventBus.triggerEvent(SERVICE.CHECK_AUTH);
-                } else {
-                    this._eventBus.triggerEvent(ROUTER.TO_OFFLINE, { duration: +button.value });
-                }
-            });
-        });
-
-        this._hideAll();
-        this._gameoptionsPopup.classList.remove('hidden');
     }
 
     _onStartGame ({ duration, rival, you, color }) {
@@ -170,13 +172,13 @@ export default class MultiplayerView extends View {
     }
 
     // easter egg with voice api
-    _onTimerClick (event) {
-        voiceRecognition.onresult = (event) => {
+    _onTimerClick () {
+        voiceRecognition.onResult((event) => {
             console.log(event.results);
             const last = event.results.length - 1;
             let move = event.results[last][0].transcript.split(' ').join('').toLowerCase();
             this._eventBus.triggerEvent(GAME.MOVE, { move });
-        };
+        });
         voiceRecognition.start();
     }
 
@@ -192,7 +194,7 @@ export default class MultiplayerView extends View {
         }
     }
 
-    _onMoveSuccess ({ turn, deadPiece = null, yourColor, timeRemainingFirst, timeRemainingSecond} = {}) {
+    _onMoveSuccess ({ turn, deadPiece = null, yourColor, timeRemainingFirst, timeRemainingSecond } = {}) {
         if (yourColor) {
             this._timerFirst.set({ seconds: timeRemainingFirst });
             this._timerSecond.set({ seconds: timeRemainingSecond });
@@ -283,7 +285,11 @@ export default class MultiplayerView extends View {
     }
 
     _renderFirstUserBlock ({ duration = 600, user = {} } = {}) {
-        this._firstUserBlock.insertAdjacentHTML('afterbegin', userBlockTemplate({ isFirst: true, user: user, isOnline: true }));
+        this._firstUserBlock.insertAdjacentHTML('afterbegin', userBlockTemplate({
+            isFirst: true,
+            user: user,
+            isOnline: true
+        }));
         this._firstAvatar = this._firstUserBlock.querySelector('.js-first-avatar');
         this._firstAvatar.style.backgroundImage = `url(${user.avatar})`;
 
@@ -303,7 +309,11 @@ export default class MultiplayerView extends View {
     }
 
     _renderSecondUserBlock ({ duration = 600, user = {} } = {}) {
-        this._secondUserBlock.insertAdjacentHTML('afterbegin', userBlockTemplate({ isFirst: false, user: user, isOnline: true }));
+        this._secondUserBlock.insertAdjacentHTML('afterbegin', userBlockTemplate({
+            isFirst: false,
+            user: user,
+            isOnline: true
+        }));
         this._secondAvatar = this._secondUserBlock.querySelector('.js-second-avatar');
         this._secondAvatar.style.backgroundImage = `url(${user.avatar})`;
 
