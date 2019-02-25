@@ -68,6 +68,7 @@
     "normalize.css": "^8.0.1",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "serviceworker-webpack-plugin": "^1.0.1",
+    "svgo": "^1.1.1",
     "uglifyjs-webpack-plugin": "latest"
   }
 }
