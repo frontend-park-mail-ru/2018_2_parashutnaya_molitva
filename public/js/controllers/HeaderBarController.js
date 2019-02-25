@@ -1,7 +1,7 @@
 import HeaderBarView from '../views/headerBar/HeaderBarView.js';
 import HeaderBarModel from '../models/HeaderBarModel.js';
 import EventBus from '../lib/eventbus/eventbus.js';
-import {ROUTER, SERVICE} from "../lib/eventbus/events";
+import { ROUTER, SERVICE } from '../lib/eventbus/events';
 
 const eventList = [
     SERVICE.CHECK_AUTH,
@@ -19,8 +19,8 @@ export default class HeaderBarController {
         this.headerBarView = new HeaderBarView(this._eventBus, globalEventBus);
         this.headerBarModel = new HeaderBarModel(this._eventBus, globalEventBus);
 
-        this._eventBus.subscribeToEvent(ROUTER.BACK_TO_MENU, () =>{
-           router.toStartPage();
+        this._eventBus.subscribeToEvent(ROUTER.BACK_TO_MENU, () => {
+            router.toStartPage();
         });
     }
 }
