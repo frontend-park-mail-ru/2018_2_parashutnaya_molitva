@@ -66,7 +66,7 @@ export default class Net {
      * Возвращает url api server-a
      * @returns {string}
      */
-    static getGameServerUrl() {
+    static getGameServerUrl () {
         if (PRODUCTION) {
             return gameServerURLProd;
         }

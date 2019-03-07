@@ -1,5 +1,3 @@
-import Net from "./net";
-
 class UserSingleton {
     constructor () {
         this.login = null;
